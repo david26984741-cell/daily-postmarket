@@ -1,0 +1,49 @@
+{
+ "code": "ND",
+ "name": "威剛期貨",
+ "sid": "3260",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 550,
+    "top5_sell": 1165,
+    "top10_buy": 821,
+    "top10_sell": 1475,
+    "market_oi": 2122,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 272,
+    "top5_sell": 667,
+    "top10_buy": 316,
+    "top10_sell": 737,
+    "market_oi": 2122,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 550,
+    "top5_sell": 1165,
+    "top10_buy": 821,
+    "top10_sell": 1475,
+    "market_oi": 2212,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 272,
+    "top5_sell": 667,
+    "top10_buy": 316,
+    "top10_sell": 737,
+    "market_oi": 2212,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

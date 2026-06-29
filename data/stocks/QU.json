@@ -1,0 +1,49 @@
+{
+ "code": "QU",
+ "name": "南茂期貨",
+ "sid": "8150",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 2185,
+    "top5_sell": 3579,
+    "top10_buy": 3036,
+    "top10_sell": 4434,
+    "market_oi": 5304,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 507,
+    "top5_sell": 3579,
+    "top10_buy": 738,
+    "top10_sell": 4434,
+    "market_oi": 5304,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 2200,
+    "top5_sell": 3636,
+    "top10_buy": 3051,
+    "top10_sell": 4491,
+    "market_oi": 5430,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 522,
+    "top5_sell": 3636,
+    "top10_buy": 753,
+    "top10_sell": 4491,
+    "market_oi": 5430,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

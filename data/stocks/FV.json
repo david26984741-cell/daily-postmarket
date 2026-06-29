@@ -1,0 +1,49 @@
+{
+ "code": "FV",
+ "name": "精英期貨",
+ "sid": "2331",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 243,
+    "top5_sell": 331,
+    "top10_buy": 280,
+    "top10_sell": 349,
+    "market_oi": 353,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 106,
+    "top5_sell": 331,
+    "top10_buy": 106,
+    "top10_sell": 338,
+    "market_oi": 353,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 243,
+    "top5_sell": 333,
+    "top10_buy": 280,
+    "top10_sell": 351,
+    "market_oi": 355,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 106,
+    "top5_sell": 333,
+    "top10_buy": 106,
+    "top10_sell": 340,
+    "market_oi": 355,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

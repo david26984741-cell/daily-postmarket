@@ -1,0 +1,49 @@
+{
+ "code": "II",
+ "name": "晶豪科期貨",
+ "sid": "3006",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1584,
+    "top5_sell": 1891,
+    "top10_buy": 1827,
+    "top10_sell": 2335,
+    "market_oi": 2784,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 736,
+    "top5_sell": 1891,
+    "top10_buy": 736,
+    "top10_sell": 2265,
+    "market_oi": 2784,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1585,
+    "top5_sell": 1891,
+    "top10_buy": 1828,
+    "top10_sell": 2335,
+    "market_oi": 2822,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 737,
+    "top5_sell": 1891,
+    "top10_buy": 737,
+    "top10_sell": 2265,
+    "market_oi": 2822,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

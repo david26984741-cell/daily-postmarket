@@ -1,0 +1,49 @@
+{
+ "code": "DX",
+ "name": "緯創期貨",
+ "sid": "3231",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 880,
+    "top5_sell": 3728,
+    "top10_buy": 1517,
+    "top10_sell": 4458,
+    "market_oi": 4825,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 166,
+    "top5_sell": 3728,
+    "top10_buy": 166,
+    "top10_sell": 4458,
+    "market_oi": 4825,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 920,
+    "top5_sell": 3749,
+    "top10_buy": 1614,
+    "top10_sell": 4600,
+    "market_oi": 5113,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 166,
+    "top5_sell": 3749,
+    "top10_buy": 166,
+    "top10_sell": 4600,
+    "market_oi": 5113,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "SF",
+ "name": "小型台光電期貨",
+ "sid": "2383",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 510,
+    "top5_sell": 1698,
+    "top10_buy": 732,
+    "top10_sell": 2338,
+    "market_oi": 2804,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 169,
+    "top5_sell": 1698,
+    "top10_buy": 169,
+    "top10_sell": 2338,
+    "market_oi": 2804,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 510,
+    "top5_sell": 1730,
+    "top10_buy": 732,
+    "top10_sell": 2374,
+    "market_oi": 2860,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 169,
+    "top5_sell": 1730,
+    "top10_buy": 169,
+    "top10_sell": 2374,
+    "market_oi": 2860,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

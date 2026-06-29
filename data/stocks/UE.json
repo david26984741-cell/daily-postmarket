@@ -1,0 +1,49 @@
+{
+ "code": "UE",
+ "name": "上海商銀期貨",
+ "sid": "5876",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 26,
+    "top5_sell": 31,
+    "top10_buy": 32,
+    "top10_sell": 32,
+    "market_oi": 32,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 7,
+    "top5_sell": 29,
+    "top10_buy": 10,
+    "top10_sell": 29,
+    "market_oi": 32,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 26,
+    "top5_sell": 34,
+    "top10_buy": 35,
+    "top10_sell": 35,
+    "market_oi": 35,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 7,
+    "top5_sell": 32,
+    "top10_buy": 10,
+    "top10_sell": 32,
+    "market_oi": 35,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

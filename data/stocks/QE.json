@@ -1,0 +1,49 @@
+{
+ "code": "QE",
+ "name": "小型國巨期貨",
+ "sid": "2327",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 2740,
+    "top5_sell": 28287,
+    "top10_buy": 4330,
+    "top10_sell": 35418,
+    "market_oi": 38270,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 1053,
+    "top5_sell": 25187,
+    "top10_buy": 1053,
+    "top10_sell": 30218,
+    "market_oi": 38270,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 2740,
+    "top5_sell": 28672,
+    "top10_buy": 4330,
+    "top10_sell": 35833,
+    "market_oi": 39185,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 1053,
+    "top5_sell": 25572,
+    "top10_buy": 1053,
+    "top10_sell": 30633,
+    "market_oi": 39185,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

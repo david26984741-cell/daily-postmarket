@@ -1,0 +1,49 @@
+{
+ "code": "JN",
+ "name": "TPK-KY期貨",
+ "sid": "3673",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 254,
+    "top5_sell": 1032,
+    "top10_buy": 372,
+    "top10_sell": 1377,
+    "market_oi": 1702,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 94,
+    "top5_sell": 1032,
+    "top10_buy": 94,
+    "top10_sell": 1321,
+    "market_oi": 1702,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 254,
+    "top5_sell": 1043,
+    "top10_buy": 372,
+    "top10_sell": 1393,
+    "market_oi": 1729,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 94,
+    "top5_sell": 1043,
+    "top10_buy": 94,
+    "top10_sell": 1337,
+    "market_oi": 1729,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

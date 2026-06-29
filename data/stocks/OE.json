@@ -1,0 +1,49 @@
+{
+ "code": "OE",
+ "name": "彩晶期貨",
+ "sid": "6116",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 3071,
+    "top5_sell": 9283,
+    "top10_buy": 4711,
+    "top10_sell": 9815,
+    "market_oi": 10210,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 1301,
+    "top5_sell": 9283,
+    "top10_buy": 2651,
+    "top10_sell": 9492,
+    "market_oi": 10210,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 3087,
+    "top5_sell": 9339,
+    "top10_buy": 4728,
+    "top10_sell": 9871,
+    "market_oi": 10395,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 1707,
+    "top5_sell": 9339,
+    "top10_buy": 2668,
+    "top10_sell": 9548,
+    "market_oi": 10395,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

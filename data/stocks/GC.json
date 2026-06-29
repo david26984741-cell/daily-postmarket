@@ -1,0 +1,49 @@
+{
+ "code": "GC",
+ "name": "鴻準期貨",
+ "sid": "2354",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 251,
+    "top5_sell": 514,
+    "top10_buy": 337,
+    "top10_sell": 569,
+    "market_oi": 623,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 63,
+    "top5_sell": 437,
+    "top10_buy": 76,
+    "top10_sell": 480,
+    "market_oi": 623,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 255,
+    "top5_sell": 515,
+    "top10_buy": 347,
+    "top10_sell": 585,
+    "market_oi": 652,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 63,
+    "top5_sell": 438,
+    "top10_buy": 76,
+    "top10_sell": 502,
+    "market_oi": 652,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "SB",
+ "name": "華紙期貨",
+ "sid": "1905",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 521,
+    "top5_sell": 783,
+    "top10_buy": 620,
+    "top10_sell": 810,
+    "market_oi": 827,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 157,
+    "top5_sell": 783,
+    "top10_buy": 157,
+    "top10_sell": 794,
+    "market_oi": 827,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 535,
+    "top5_sell": 798,
+    "top10_buy": 634,
+    "top10_sell": 836,
+    "market_oi": 853,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 171,
+    "top5_sell": 798,
+    "top10_buy": 171,
+    "top10_sell": 820,
+    "market_oi": 853,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

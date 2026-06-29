@@ -1,0 +1,49 @@
+{
+ "code": "PV",
+ "name": "緯穎期貨",
+ "sid": "6669",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 704,
+    "top5_sell": 681,
+    "top10_buy": 757,
+    "top10_sell": 799,
+    "market_oi": 825,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 166,
+    "top5_sell": 681,
+    "top10_buy": 183,
+    "top10_sell": 799,
+    "market_oi": 825,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 736,
+    "top5_sell": 720,
+    "top10_buy": 813,
+    "top10_sell": 862,
+    "market_oi": 909,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 144,
+    "top5_sell": 720,
+    "top10_buy": 183,
+    "top10_sell": 862,
+    "market_oi": 909,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

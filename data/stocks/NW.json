@@ -1,0 +1,49 @@
+{
+ "code": "NW",
+ "name": "群聯期貨",
+ "sid": "8299",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1281,
+    "top5_sell": 1763,
+    "top10_buy": 1728,
+    "top10_sell": 2668,
+    "market_oi": 3751,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 413,
+    "top5_sell": 1763,
+    "top10_buy": 413,
+    "top10_sell": 2668,
+    "market_oi": 3751,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1281,
+    "top5_sell": 1783,
+    "top10_buy": 1728,
+    "top10_sell": 2688,
+    "market_oi": 3814,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 413,
+    "top5_sell": 1783,
+    "top10_buy": 413,
+    "top10_sell": 2688,
+    "market_oi": 3814,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

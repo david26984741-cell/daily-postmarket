@@ -1,0 +1,49 @@
+{
+ "code": "DV",
+ "name": "聯發科期貨",
+ "sid": "2454",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 4366,
+    "top5_sell": 4417,
+    "top10_buy": 5059,
+    "top10_sell": 6356,
+    "market_oi": 7856,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 389,
+    "top5_sell": 4417,
+    "top10_buy": 389,
+    "top10_sell": 6356,
+    "market_oi": 7856,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 4737,
+    "top5_sell": 4699,
+    "top10_buy": 5431,
+    "top10_sell": 6683,
+    "market_oi": 8322,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 389,
+    "top5_sell": 4699,
+    "top10_buy": 389,
+    "top10_sell": 6683,
+    "market_oi": 8322,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "PA",
+ "name": "原相期貨",
+ "sid": "3227",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 74,
+    "top5_sell": 176,
+    "top10_buy": 112,
+    "top10_sell": 211,
+    "market_oi": 221,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 36,
+    "top5_sell": 165,
+    "top10_buy": 36,
+    "top10_sell": 200,
+    "market_oi": 221,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 91,
+    "top5_sell": 194,
+    "top10_buy": 132,
+    "top10_sell": 232,
+    "market_oi": 242,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 36,
+    "top5_sell": 194,
+    "top10_buy": 36,
+    "top10_sell": 221,
+    "market_oi": 242,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

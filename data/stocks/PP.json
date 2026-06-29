@@ -1,0 +1,49 @@
+{
+ "code": "PP",
+ "name": "宣德期貨",
+ "sid": "5457",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 38,
+    "top5_sell": 51,
+    "top10_buy": 48,
+    "top10_sell": 56,
+    "market_oi": 56,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 51,
+    "top10_buy": 0,
+    "top10_sell": 52,
+    "market_oi": 56,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 38,
+    "top5_sell": 52,
+    "top10_buy": 49,
+    "top10_sell": 57,
+    "market_oi": 58,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 52,
+    "top10_buy": 0,
+    "top10_sell": 54,
+    "market_oi": 58,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

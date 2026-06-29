@@ -1,0 +1,49 @@
+{
+ "code": "OA",
+ "name": "富邦上証ETF期貨",
+ "sid": "006205",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 700,
+    "top5_sell": 697,
+    "top10_buy": 717,
+    "top10_sell": 726,
+    "market_oi": 728,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 649,
+    "top5_sell": 618,
+    "top10_buy": 653,
+    "top10_sell": 628,
+    "market_oi": 728,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 700,
+    "top5_sell": 700,
+    "top10_buy": 721,
+    "top10_sell": 730,
+    "market_oi": 732,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 649,
+    "top5_sell": 618,
+    "top10_buy": 651,
+    "top10_sell": 628,
+    "market_oi": 732,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

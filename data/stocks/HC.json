@@ -1,0 +1,49 @@
+{
+ "code": "HC",
+ "name": "宏達電期貨",
+ "sid": "2498",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 539,
+    "top5_sell": 1160,
+    "top10_buy": 744,
+    "top10_sell": 1377,
+    "market_oi": 1505,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 133,
+    "top5_sell": 810,
+    "top10_buy": 167,
+    "top10_sell": 1002,
+    "market_oi": 1505,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 580,
+    "top5_sell": 1160,
+    "top10_buy": 791,
+    "top10_sell": 1390,
+    "market_oi": 1585,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 133,
+    "top5_sell": 810,
+    "top10_buy": 170,
+    "top10_sell": 1040,
+    "market_oi": 1585,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

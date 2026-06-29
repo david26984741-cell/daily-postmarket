@@ -1,0 +1,49 @@
+{
+ "code": "PM",
+ "name": "大江期貨",
+ "sid": "8436",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 10,
+    "top5_sell": 10,
+    "top10_buy": 10,
+    "top10_sell": 10,
+    "market_oi": 10,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 10,
+    "top10_buy": 0,
+    "top10_sell": 10,
+    "market_oi": 10,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 12,
+    "top5_sell": 12,
+    "top10_buy": 12,
+    "top10_sell": 12,
+    "market_oi": 12,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 12,
+    "top10_buy": 0,
+    "top10_sell": 12,
+    "market_oi": 12,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

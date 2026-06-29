@@ -1,0 +1,49 @@
+{
+ "code": "NG",
+ "name": "碩禾期貨",
+ "sid": "3691",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 141,
+    "top5_sell": 316,
+    "top10_buy": 188,
+    "top10_sell": 366,
+    "market_oi": 382,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 44,
+    "top5_sell": 242,
+    "top10_buy": 54,
+    "top10_sell": 276,
+    "market_oi": 382,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 147,
+    "top5_sell": 316,
+    "top10_buy": 194,
+    "top10_sell": 367,
+    "market_oi": 397,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 44,
+    "top5_sell": 242,
+    "top10_buy": 54,
+    "top10_sell": 276,
+    "market_oi": 397,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

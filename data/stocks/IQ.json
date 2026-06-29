@@ -1,0 +1,49 @@
+{
+ "code": "IQ",
+ "name": "文曄期貨",
+ "sid": "3036",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1543,
+    "top5_sell": 1736,
+    "top10_buy": 1738,
+    "top10_sell": 2222,
+    "market_oi": 2418,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 1478,
+    "top5_sell": 1576,
+    "top10_buy": 1478,
+    "top10_sell": 2062,
+    "market_oi": 2418,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1565,
+    "top5_sell": 1737,
+    "top10_buy": 1762,
+    "top10_sell": 2267,
+    "market_oi": 2505,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 1500,
+    "top5_sell": 1577,
+    "top10_buy": 1527,
+    "top10_sell": 2107,
+    "market_oi": 2505,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

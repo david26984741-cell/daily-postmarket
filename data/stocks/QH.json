@@ -1,0 +1,49 @@
+{
+ "code": "QH",
+ "name": "小型聯詠期貨",
+ "sid": "3034",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 988,
+    "top5_sell": 1952,
+    "top10_buy": 1159,
+    "top10_sell": 2547,
+    "market_oi": 2909,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 654,
+    "top5_sell": 973,
+    "top10_buy": 654,
+    "top10_sell": 1568,
+    "market_oi": 2909,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1269,
+    "top5_sell": 2022,
+    "top10_buy": 1463,
+    "top10_sell": 2816,
+    "market_oi": 3332,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 654,
+    "top5_sell": 1043,
+    "top10_buy": 654,
+    "top10_sell": 1837,
+    "market_oi": 3332,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

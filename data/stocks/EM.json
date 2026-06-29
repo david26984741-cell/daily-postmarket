@@ -1,0 +1,49 @@
+{
+ "code": "EM",
+ "name": "東元期貨",
+ "sid": "1504",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 456,
+    "top5_sell": 1645,
+    "top10_buy": 654,
+    "top10_sell": 1764,
+    "market_oi": 1814,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 146,
+    "top5_sell": 1645,
+    "top10_buy": 146,
+    "top10_sell": 1748,
+    "market_oi": 1814,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 456,
+    "top5_sell": 1645,
+    "top10_buy": 656,
+    "top10_sell": 1787,
+    "market_oi": 1851,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 146,
+    "top5_sell": 1645,
+    "top10_buy": 146,
+    "top10_sell": 1771,
+    "market_oi": 1851,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

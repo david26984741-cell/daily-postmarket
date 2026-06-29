@@ -1,0 +1,49 @@
+{
+ "code": "KD",
+ "name": "同欣電期貨",
+ "sid": "6271",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 367,
+    "top5_sell": 1069,
+    "top10_buy": 476,
+    "top10_sell": 1264,
+    "market_oi": 1314,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1069,
+    "top10_buy": 24,
+    "top10_sell": 1264,
+    "market_oi": 1314,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 367,
+    "top5_sell": 1071,
+    "top10_buy": 481,
+    "top10_sell": 1266,
+    "market_oi": 1339,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1071,
+    "top10_buy": 24,
+    "top10_sell": 1266,
+    "market_oi": 1339,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

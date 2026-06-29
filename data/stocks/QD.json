@@ -1,0 +1,49 @@
+{
+ "code": "QD",
+ "name": "台勝科期貨",
+ "sid": "3532",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 478,
+    "top5_sell": 788,
+    "top10_buy": 639,
+    "top10_sell": 985,
+    "market_oi": 1170,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 788,
+    "top10_buy": 29,
+    "top10_sell": 948,
+    "market_oi": 1170,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 478,
+    "top5_sell": 788,
+    "top10_buy": 639,
+    "top10_sell": 985,
+    "market_oi": 1193,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 788,
+    "top10_buy": 29,
+    "top10_sell": 948,
+    "market_oi": 1193,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "CS",
+ "name": "華新期貨",
+ "sid": "1605",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 2425,
+    "top5_sell": 4809,
+    "top10_buy": 2959,
+    "top10_sell": 5514,
+    "market_oi": 6028,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4809,
+    "top10_buy": 87,
+    "top10_sell": 5514,
+    "market_oi": 6028,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 2442,
+    "top5_sell": 4833,
+    "top10_buy": 2992,
+    "top10_sell": 5584,
+    "market_oi": 6292,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4833,
+    "top10_buy": 87,
+    "top10_sell": 5584,
+    "market_oi": 6292,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

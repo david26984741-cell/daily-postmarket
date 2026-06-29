@@ -1,0 +1,49 @@
+{
+ "code": "NO",
+ "name": "中美晶期貨",
+ "sid": "5483",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 657,
+    "top5_sell": 1548,
+    "top10_buy": 920,
+    "top10_sell": 2106,
+    "market_oi": 2545,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1548,
+    "top10_buy": 47,
+    "top10_sell": 2106,
+    "market_oi": 2545,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 667,
+    "top5_sell": 1548,
+    "top10_buy": 932,
+    "top10_sell": 2148,
+    "market_oi": 2634,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1548,
+    "top10_buy": 47,
+    "top10_sell": 2148,
+    "market_oi": 2634,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

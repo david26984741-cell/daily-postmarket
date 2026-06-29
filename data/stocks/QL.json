@@ -1,0 +1,49 @@
+{
+ "code": "QL",
+ "name": "精材期貨",
+ "sid": "3374",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 873,
+    "top5_sell": 1241,
+    "top10_buy": 1113,
+    "top10_sell": 1594,
+    "market_oi": 2035,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 302,
+    "top5_sell": 1241,
+    "top10_buy": 353,
+    "top10_sell": 1527,
+    "market_oi": 2035,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 894,
+    "top5_sell": 1255,
+    "top10_buy": 1134,
+    "top10_sell": 1638,
+    "market_oi": 2081,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 302,
+    "top5_sell": 1255,
+    "top10_buy": 353,
+    "top10_sell": 1571,
+    "market_oi": 2081,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

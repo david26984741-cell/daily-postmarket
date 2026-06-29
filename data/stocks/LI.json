@@ -1,0 +1,49 @@
+{
+ "code": "LI",
+ "name": "台郡期貨",
+ "sid": "6269",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 827,
+    "top5_sell": 1201,
+    "top10_buy": 927,
+    "top10_sell": 1503,
+    "market_oi": 1750,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 24,
+    "top5_sell": 1059,
+    "top10_buy": 24,
+    "top10_sell": 1361,
+    "market_oi": 1750,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 828,
+    "top5_sell": 1204,
+    "top10_buy": 928,
+    "top10_sell": 1511,
+    "market_oi": 1760,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 24,
+    "top5_sell": 1062,
+    "top10_buy": 24,
+    "top10_sell": 1369,
+    "market_oi": 1760,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

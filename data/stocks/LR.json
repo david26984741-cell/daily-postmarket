@@ -1,0 +1,49 @@
+{
+ "code": "LR",
+ "name": "凱基金期貨",
+ "sid": "2883",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1157,
+    "top5_sell": 1059,
+    "top10_buy": 1232,
+    "top10_sell": 1269,
+    "market_oi": 1527,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 764,
+    "top5_sell": 834,
+    "top10_buy": 780,
+    "top10_sell": 984,
+    "market_oi": 1527,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1170,
+    "top5_sell": 1074,
+    "top10_buy": 1245,
+    "top10_sell": 1285,
+    "market_oi": 1543,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 764,
+    "top5_sell": 849,
+    "top10_buy": 780,
+    "top10_sell": 1000,
+    "market_oi": 1543,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "GH",
+ "name": "技嘉期貨",
+ "sid": "2376",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 427,
+    "top5_sell": 1548,
+    "top10_buy": 644,
+    "top10_sell": 1634,
+    "market_oi": 1654,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 186,
+    "top5_sell": 1548,
+    "top10_buy": 276,
+    "top10_sell": 1625,
+    "market_oi": 1654,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 430,
+    "top5_sell": 1555,
+    "top10_buy": 663,
+    "top10_sell": 1663,
+    "market_oi": 1694,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 186,
+    "top5_sell": 1555,
+    "top10_buy": 276,
+    "top10_sell": 1663,
+    "market_oi": 1694,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

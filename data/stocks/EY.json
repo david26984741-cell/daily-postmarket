@@ -1,0 +1,49 @@
+{
+ "code": "EY",
+ "name": "中纖期貨",
+ "sid": "1718",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 176,
+    "top5_sell": 319,
+    "top10_buy": 262,
+    "top10_sell": 368,
+    "market_oi": 400,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 301,
+    "top10_buy": 0,
+    "top10_sell": 343,
+    "market_oi": 400,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 176,
+    "top5_sell": 342,
+    "top10_buy": 262,
+    "top10_sell": 392,
+    "market_oi": 425,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 324,
+    "top10_buy": 0,
+    "top10_sell": 367,
+    "market_oi": 425,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "JZ",
+ "name": "嘉聯益期貨",
+ "sid": "6153",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 572,
+    "top5_sell": 1206,
+    "top10_buy": 781,
+    "top10_sell": 1414,
+    "market_oi": 1518,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 731,
+    "top10_buy": 0,
+    "top10_sell": 829,
+    "market_oi": 1518,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 572,
+    "top5_sell": 1208,
+    "top10_buy": 781,
+    "top10_sell": 1416,
+    "market_oi": 1537,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 733,
+    "top10_buy": 0,
+    "top10_sell": 831,
+    "market_oi": 1537,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

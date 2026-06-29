@@ -1,0 +1,49 @@
+{
+ "code": "LO",
+ "name": "合庫金期貨",
+ "sid": "5880",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 110,
+    "top5_sell": 117,
+    "top10_buy": 132,
+    "top10_sell": 133,
+    "market_oi": 133,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 33,
+    "top5_sell": 117,
+    "top10_buy": 44,
+    "top10_sell": 124,
+    "market_oi": 133,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 110,
+    "top5_sell": 124,
+    "top10_buy": 138,
+    "top10_sell": 141,
+    "market_oi": 141,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 33,
+    "top5_sell": 124,
+    "top10_buy": 52,
+    "top10_sell": 131,
+    "market_oi": 141,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

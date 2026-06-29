@@ -1,0 +1,49 @@
+{
+ "code": "QO",
+ "name": "長興期貨",
+ "sid": "1717",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1860,
+    "top5_sell": 3250,
+    "top10_buy": 2241,
+    "top10_sell": 3373,
+    "market_oi": 3431,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 3020,
+    "top10_buy": 157,
+    "top10_sell": 3110,
+    "market_oi": 3431,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 2000,
+    "top5_sell": 3325,
+    "top10_buy": 2381,
+    "top10_sell": 3496,
+    "market_oi": 3591,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 3095,
+    "top10_buy": 157,
+    "top10_sell": 3248,
+    "market_oi": 3591,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

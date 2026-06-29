@@ -1,0 +1,49 @@
+{
+ "code": "QF",
+ "name": "小型台積電期貨",
+ "sid": "2330",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 6541,
+    "top5_sell": 46225,
+    "top10_buy": 8031,
+    "top10_sell": 53949,
+    "market_oi": 59669,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 2510,
+    "top5_sell": 39545,
+    "top10_buy": 2510,
+    "top10_sell": 45649,
+    "market_oi": 59669,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 9506,
+    "top5_sell": 68667,
+    "top10_buy": 11900,
+    "top10_sell": 77571,
+    "market_oi": 86617,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 5475,
+    "top5_sell": 61397,
+    "top10_buy": 5475,
+    "top10_sell": 68681,
+    "market_oi": 86617,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "OK",
+ "name": "富邦深100ETF期貨",
+ "sid": "00639",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 524,
+    "top5_sell": 573,
+    "top10_buy": 552,
+    "top10_sell": 575,
+    "market_oi": 575,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 493,
+    "top5_sell": 287,
+    "top10_buy": 493,
+    "top10_sell": 289,
+    "market_oi": 575,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 524,
+    "top5_sell": 580,
+    "top10_buy": 552,
+    "top10_sell": 582,
+    "market_oi": 582,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 493,
+    "top5_sell": 287,
+    "top10_buy": 493,
+    "top10_sell": 289,
+    "market_oi": 582,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

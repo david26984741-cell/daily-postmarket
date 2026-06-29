@@ -1,0 +1,49 @@
+{
+ "code": "SW",
+ "name": "小型世紀鋼期貨",
+ "sid": "9958",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 259,
+    "top5_sell": 429,
+    "top10_buy": 309,
+    "top10_sell": 491,
+    "market_oi": 491,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 185,
+    "top5_sell": 169,
+    "top10_buy": 185,
+    "top10_sell": 217,
+    "market_oi": 491,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 259,
+    "top5_sell": 439,
+    "top10_buy": 309,
+    "top10_sell": 506,
+    "market_oi": 506,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 185,
+    "top5_sell": 179,
+    "top10_buy": 185,
+    "top10_sell": 228,
+    "market_oi": 506,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

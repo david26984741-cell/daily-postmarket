@@ -1,0 +1,49 @@
+{
+ "code": "CG",
+ "name": "仁寶期貨",
+ "sid": "2324",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 3566,
+    "top5_sell": 8007,
+    "top10_buy": 5066,
+    "top10_sell": 8415,
+    "market_oi": 8573,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 3566,
+    "top5_sell": 7796,
+    "top10_buy": 4500,
+    "top10_sell": 7954,
+    "market_oi": 8573,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 3566,
+    "top5_sell": 8007,
+    "top10_buy": 5068,
+    "top10_sell": 8455,
+    "market_oi": 8691,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 3566,
+    "top5_sell": 7796,
+    "top10_buy": 4500,
+    "top10_sell": 7994,
+    "market_oi": 8691,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

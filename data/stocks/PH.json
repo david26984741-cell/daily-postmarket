@@ -1,0 +1,49 @@
+{
+ "code": "PH",
+ "name": "祥碩期貨",
+ "sid": "5269",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 79,
+    "top5_sell": 216,
+    "top10_buy": 111,
+    "top10_sell": 216,
+    "market_oi": 216,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 52,
+    "top5_sell": 216,
+    "top10_buy": 61,
+    "top10_sell": 216,
+    "market_oi": 216,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 79,
+    "top5_sell": 217,
+    "top10_buy": 111,
+    "top10_sell": 217,
+    "market_oi": 217,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 52,
+    "top5_sell": 216,
+    "top10_buy": 61,
+    "top10_sell": 216,
+    "market_oi": 217,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

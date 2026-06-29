@@ -1,0 +1,49 @@
+{
+ "code": "NV",
+ "name": "元太期貨",
+ "sid": "8069",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 436,
+    "top5_sell": 746,
+    "top10_buy": 580,
+    "top10_sell": 934,
+    "market_oi": 1045,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 252,
+    "top5_sell": 746,
+    "top10_buy": 286,
+    "top10_sell": 934,
+    "market_oi": 1045,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 445,
+    "top5_sell": 748,
+    "top10_buy": 589,
+    "top10_sell": 939,
+    "market_oi": 1073,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 252,
+    "top5_sell": 748,
+    "top10_buy": 286,
+    "top10_sell": 939,
+    "market_oi": 1073,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

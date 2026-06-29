@@ -1,0 +1,49 @@
+{
+ "code": "HL",
+ "name": "興富發期貨",
+ "sid": "2542",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 349,
+    "top5_sell": 713,
+    "top10_buy": 486,
+    "top10_sell": 758,
+    "market_oi": 762,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 261,
+    "top5_sell": 713,
+    "top10_buy": 261,
+    "top10_sell": 744,
+    "market_oi": 762,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 470,
+    "top5_sell": 734,
+    "top10_buy": 611,
+    "top10_sell": 884,
+    "market_oi": 910,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 261,
+    "top5_sell": 665,
+    "top10_buy": 261,
+    "top10_sell": 795,
+    "market_oi": 910,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "KA",
+ "name": "瑞儀期貨",
+ "sid": "6176",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 140,
+    "top5_sell": 644,
+    "top10_buy": 230,
+    "top10_sell": 681,
+    "market_oi": 702,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 25,
+    "top5_sell": 626,
+    "top10_buy": 45,
+    "top10_sell": 653,
+    "market_oi": 702,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 150,
+    "top5_sell": 657,
+    "top10_buy": 246,
+    "top10_sell": 713,
+    "market_oi": 745,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 29,
+    "top5_sell": 639,
+    "top10_buy": 49,
+    "top10_sell": 685,
+    "market_oi": 745,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

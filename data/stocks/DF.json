@@ -1,0 +1,49 @@
+{
+ "code": "DF",
+ "name": "台泥期貨",
+ "sid": "1101",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1005,
+    "top5_sell": 1237,
+    "top10_buy": 1279,
+    "top10_sell": 1778,
+    "market_oi": 2307,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 578,
+    "top5_sell": 1237,
+    "top10_buy": 578,
+    "top10_sell": 1778,
+    "market_oi": 2307,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1450,
+    "top5_sell": 1904,
+    "top10_buy": 1817,
+    "top10_sell": 2571,
+    "market_oi": 3214,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 593,
+    "top5_sell": 1904,
+    "top10_buy": 593,
+    "top10_sell": 2571,
+    "market_oi": 3214,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

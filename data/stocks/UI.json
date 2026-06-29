@@ -1,0 +1,49 @@
+{
+ "code": "UI",
+ "name": "小型達發期貨",
+ "sid": "6526",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 124,
+    "top5_sell": 291,
+    "top10_buy": 173,
+    "top10_sell": 309,
+    "market_oi": 309,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 291,
+    "top10_buy": 0,
+    "top10_sell": 300,
+    "market_oi": 309,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 124,
+    "top5_sell": 294,
+    "top10_buy": 174,
+    "top10_sell": 312,
+    "market_oi": 312,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 294,
+    "top10_buy": 0,
+    "top10_sell": 303,
+    "market_oi": 312,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

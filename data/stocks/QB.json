@@ -1,0 +1,49 @@
+{
+ "code": "QB",
+ "name": "富采期貨",
+ "sid": "3714",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 283,
+    "top5_sell": 1336,
+    "top10_buy": 403,
+    "top10_sell": 1363,
+    "market_oi": 1378,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 31,
+    "top5_sell": 1336,
+    "top10_buy": 53,
+    "top10_sell": 1351,
+    "market_oi": 1378,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 283,
+    "top5_sell": 1336,
+    "top10_buy": 403,
+    "top10_sell": 1372,
+    "market_oi": 1395,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 31,
+    "top5_sell": 1336,
+    "top10_buy": 53,
+    "top10_sell": 1367,
+    "market_oi": 1395,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

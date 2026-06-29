@@ -1,0 +1,49 @@
+{
+ "code": "LM",
+ "name": "美利達期貨",
+ "sid": "9914",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 176,
+    "top5_sell": 291,
+    "top10_buy": 261,
+    "top10_sell": 368,
+    "market_oi": 397,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 151,
+    "top10_buy": 13,
+    "top10_sell": 228,
+    "market_oi": 397,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 176,
+    "top5_sell": 291,
+    "top10_buy": 261,
+    "top10_sell": 368,
+    "market_oi": 397,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 151,
+    "top10_buy": 13,
+    "top10_sell": 228,
+    "market_oi": 397,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

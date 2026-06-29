@@ -1,0 +1,49 @@
+{
+ "code": "DB",
+ "name": "華航期貨",
+ "sid": "2610",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1039,
+    "top5_sell": 1795,
+    "top10_buy": 1377,
+    "top10_sell": 2381,
+    "market_oi": 2614,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 134,
+    "top5_sell": 1795,
+    "top10_buy": 322,
+    "top10_sell": 2381,
+    "market_oi": 2614,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1039,
+    "top5_sell": 1795,
+    "top10_buy": 1377,
+    "top10_sell": 2381,
+    "market_oi": 2625,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 134,
+    "top5_sell": 1795,
+    "top10_buy": 322,
+    "top10_sell": 2381,
+    "market_oi": 2625,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

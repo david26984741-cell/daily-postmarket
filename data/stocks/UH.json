@@ -1,0 +1,49 @@
+{
+ "code": "UH",
+ "name": "小型奇鋐期貨",
+ "sid": "3017",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 649,
+    "top5_sell": 3438,
+    "top10_buy": 869,
+    "top10_sell": 4240,
+    "market_oi": 4642,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 306,
+    "top5_sell": 3438,
+    "top10_buy": 306,
+    "top10_sell": 4056,
+    "market_oi": 4642,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 649,
+    "top5_sell": 3544,
+    "top10_buy": 875,
+    "top10_sell": 4362,
+    "market_oi": 4777,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 306,
+    "top5_sell": 3544,
+    "top10_buy": 352,
+    "top10_sell": 4178,
+    "market_oi": 4777,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

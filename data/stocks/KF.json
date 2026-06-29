@@ -1,0 +1,49 @@
+{
+ "code": "KF",
+ "name": "康舒期貨",
+ "sid": "6282",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 2138,
+    "top5_sell": 3594,
+    "top10_buy": 2650,
+    "top10_sell": 4898,
+    "market_oi": 5532,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 837,
+    "top5_sell": 3594,
+    "top10_buy": 837,
+    "top10_sell": 4898,
+    "market_oi": 5532,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 2138,
+    "top5_sell": 3605,
+    "top10_buy": 2650,
+    "top10_sell": 4909,
+    "market_oi": 5607,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 837,
+    "top5_sell": 3605,
+    "top10_buy": 837,
+    "top10_sell": 4909,
+    "market_oi": 5607,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

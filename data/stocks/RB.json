@@ -1,0 +1,49 @@
+{
+ "code": "RB",
+ "name": "中磊期貨",
+ "sid": "5388",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 195,
+    "top5_sell": 371,
+    "top10_buy": 266,
+    "top10_sell": 438,
+    "market_oi": 472,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 345,
+    "top10_buy": 0,
+    "top10_sell": 388,
+    "market_oi": 472,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 205,
+    "top5_sell": 382,
+    "top10_buy": 276,
+    "top10_sell": 464,
+    "market_oi": 503,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 356,
+    "top10_buy": 0,
+    "top10_sell": 414,
+    "market_oi": 503,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "PF",
+ "name": "元大高股息ETF期貨",
+ "sid": "0056",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 166,
+    "top5_sell": 242,
+    "top10_buy": 221,
+    "top10_sell": 274,
+    "market_oi": 279,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 23,
+    "top5_sell": 214,
+    "top10_buy": 44,
+    "top10_sell": 216,
+    "market_oi": 279,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 166,
+    "top5_sell": 247,
+    "top10_buy": 231,
+    "top10_sell": 287,
+    "market_oi": 301,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 23,
+    "top5_sell": 219,
+    "top10_buy": 44,
+    "top10_sell": 219,
+    "market_oi": 301,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

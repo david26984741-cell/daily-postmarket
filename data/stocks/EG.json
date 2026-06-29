@@ -1,0 +1,49 @@
+{
+ "code": "EG",
+ "name": "中石化期貨",
+ "sid": "1314",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 268,
+    "top5_sell": 556,
+    "top10_buy": 376,
+    "top10_sell": 608,
+    "market_oi": 630,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 35,
+    "top5_sell": 556,
+    "top10_buy": 35,
+    "top10_sell": 598,
+    "market_oi": 630,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 287,
+    "top5_sell": 614,
+    "top10_buy": 407,
+    "top10_sell": 666,
+    "market_oi": 688,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 35,
+    "top5_sell": 614,
+    "top10_buy": 35,
+    "top10_sell": 656,
+    "market_oi": 688,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

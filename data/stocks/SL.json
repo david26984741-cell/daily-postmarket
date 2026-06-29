@@ -1,0 +1,49 @@
+{
+ "code": "SL",
+ "name": "小型技嘉期貨",
+ "sid": "2376",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 257,
+    "top5_sell": 1288,
+    "top10_buy": 361,
+    "top10_sell": 1379,
+    "market_oi": 1404,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1192,
+    "top10_buy": 22,
+    "top10_sell": 1283,
+    "market_oi": 1404,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 262,
+    "top5_sell": 1316,
+    "top10_buy": 367,
+    "top10_sell": 1407,
+    "market_oi": 1435,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1220,
+    "top10_buy": 22,
+    "top10_sell": 1311,
+    "market_oi": 1435,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

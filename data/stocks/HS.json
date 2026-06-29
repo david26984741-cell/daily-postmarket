@@ -1,0 +1,49 @@
+{
+ "code": "HS",
+ "name": "長榮航期貨",
+ "sid": "2618",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1825,
+    "top5_sell": 2767,
+    "top10_buy": 2425,
+    "top10_sell": 3871,
+    "market_oi": 5049,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 1232,
+    "top5_sell": 2242,
+    "top10_buy": 1232,
+    "top10_sell": 3346,
+    "market_oi": 5049,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1838,
+    "top5_sell": 2768,
+    "top10_buy": 2443,
+    "top10_sell": 3872,
+    "market_oi": 5150,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 1245,
+    "top5_sell": 2243,
+    "top10_buy": 1245,
+    "top10_sell": 3347,
+    "market_oi": 5150,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "RN",
+ "name": "合一期貨",
+ "sid": "4743",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 62,
+    "top5_sell": 122,
+    "top10_buy": 87,
+    "top10_sell": 126,
+    "market_oi": 126,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 122,
+    "top10_buy": 0,
+    "top10_sell": 125,
+    "market_oi": 126,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 82,
+    "top5_sell": 150,
+    "top10_buy": 110,
+    "top10_sell": 158,
+    "market_oi": 158,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 150,
+    "top10_buy": 0,
+    "top10_sell": 156,
+    "market_oi": 158,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

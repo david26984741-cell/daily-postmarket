@@ -1,0 +1,49 @@
+{
+ "code": "OQ",
+ "name": "樺漢期貨",
+ "sid": "6414",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 291,
+    "top5_sell": 341,
+    "top10_buy": 315,
+    "top10_sell": 361,
+    "market_oi": 374,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 267,
+    "top5_sell": 308,
+    "top10_buy": 267,
+    "top10_sell": 312,
+    "market_oi": 374,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 291,
+    "top5_sell": 345,
+    "top10_buy": 315,
+    "top10_sell": 365,
+    "market_oi": 378,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 267,
+    "top5_sell": 310,
+    "top10_buy": 267,
+    "top10_sell": 314,
+    "market_oi": 378,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

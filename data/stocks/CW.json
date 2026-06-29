@@ -1,0 +1,49 @@
+{
+ "code": "CW",
+ "name": "佳世達期貨",
+ "sid": "2352",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 152,
+    "top5_sell": 323,
+    "top10_buy": 199,
+    "top10_sell": 357,
+    "market_oi": 367,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 92,
+    "top5_sell": 243,
+    "top10_buy": 104,
+    "top10_sell": 273,
+    "market_oi": 367,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 302,
+    "top5_sell": 517,
+    "top10_buy": 364,
+    "top10_sell": 558,
+    "market_oi": 569,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 92,
+    "top5_sell": 437,
+    "top10_buy": 104,
+    "top10_sell": 478,
+    "market_oi": 569,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

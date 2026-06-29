@@ -1,0 +1,49 @@
+{
+ "code": "LX",
+ "name": "國巨期貨",
+ "sid": "2327",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 3110,
+    "top5_sell": 11760,
+    "top10_buy": 4755,
+    "top10_sell": 16641,
+    "market_oi": 21258,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 11760,
+    "top10_buy": 0,
+    "top10_sell": 16641,
+    "market_oi": 21258,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 3110,
+    "top5_sell": 11844,
+    "top10_buy": 4761,
+    "top10_sell": 16806,
+    "market_oi": 21574,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 11844,
+    "top10_buy": 306,
+    "top10_sell": 16806,
+    "market_oi": 21574,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

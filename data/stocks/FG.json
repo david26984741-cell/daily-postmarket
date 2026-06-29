@@ -1,0 +1,49 @@
+{
+ "code": "FG",
+ "name": "川湖期貨",
+ "sid": "2059",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 17,
+    "top5_sell": 21,
+    "top10_buy": 23,
+    "top10_sell": 26,
+    "market_oi": 26,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 12,
+    "top5_sell": 21,
+    "top10_buy": 16,
+    "top10_sell": 26,
+    "market_oi": 26,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 17,
+    "top5_sell": 21,
+    "top10_buy": 23,
+    "top10_sell": 26,
+    "market_oi": 26,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 12,
+    "top5_sell": 21,
+    "top10_buy": 16,
+    "top10_sell": 26,
+    "market_oi": 26,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "OD",
+ "name": "為升期貨",
+ "sid": "2231",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 96,
+    "top5_sell": 183,
+    "top10_buy": 125,
+    "top10_sell": 184,
+    "market_oi": 184,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 43,
+    "top5_sell": 183,
+    "top10_buy": 53,
+    "top10_sell": 183,
+    "market_oi": 184,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 96,
+    "top5_sell": 183,
+    "top10_buy": 125,
+    "top10_sell": 185,
+    "market_oi": 185,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 43,
+    "top5_sell": 183,
+    "top10_buy": 53,
+    "top10_sell": 183,
+    "market_oi": 185,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

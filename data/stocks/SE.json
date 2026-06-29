@@ -1,0 +1,49 @@
+{
+ "code": "SE",
+ "name": "小型智邦期貨",
+ "sid": "2345",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1478,
+    "top5_sell": 2911,
+    "top10_buy": 1701,
+    "top10_sell": 3558,
+    "market_oi": 4053,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 1211,
+    "top5_sell": 2671,
+    "top10_buy": 1211,
+    "top10_sell": 3318,
+    "market_oi": 4053,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1478,
+    "top5_sell": 2924,
+    "top10_buy": 1701,
+    "top10_sell": 3578,
+    "market_oi": 4160,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 1211,
+    "top5_sell": 2684,
+    "top10_buy": 1211,
+    "top10_sell": 3338,
+    "market_oi": 4160,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

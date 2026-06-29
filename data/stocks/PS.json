@@ -1,0 +1,49 @@
+{
+ "code": "PS",
+ "name": "神達期貨",
+ "sid": "3706",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 2562,
+    "top5_sell": 4341,
+    "top10_buy": 2919,
+    "top10_sell": 4424,
+    "market_oi": 4433,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 2033,
+    "top5_sell": 4341,
+    "top10_buy": 2244,
+    "top10_sell": 4419,
+    "market_oi": 4433,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 2562,
+    "top5_sell": 4341,
+    "top10_buy": 2920,
+    "top10_sell": 4472,
+    "market_oi": 4492,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 2033,
+    "top5_sell": 4341,
+    "top10_buy": 2244,
+    "top10_sell": 4467,
+    "market_oi": 4492,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "NJ",
+ "name": "榮剛期貨",
+ "sid": "5009",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 493,
+    "top5_sell": 573,
+    "top10_buy": 533,
+    "top10_sell": 612,
+    "market_oi": 620,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 548,
+    "top10_buy": 0,
+    "top10_sell": 576,
+    "market_oi": 620,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 508,
+    "top5_sell": 580,
+    "top10_buy": 548,
+    "top10_sell": 626,
+    "market_oi": 638,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 555,
+    "top10_buy": 0,
+    "top10_sell": 590,
+    "market_oi": 638,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "OY",
+ "name": "小型精測期貨",
+ "sid": "6510",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 635,
+    "top5_sell": 874,
+    "top10_buy": 717,
+    "top10_sell": 1073,
+    "market_oi": 1145,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 503,
+    "top5_sell": 874,
+    "top10_buy": 503,
+    "top10_sell": 973,
+    "market_oi": 1145,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 635,
+    "top5_sell": 876,
+    "top10_buy": 725,
+    "top10_sell": 1075,
+    "market_oi": 1161,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 503,
+    "top5_sell": 876,
+    "top10_buy": 503,
+    "top10_sell": 975,
+    "market_oi": 1161,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

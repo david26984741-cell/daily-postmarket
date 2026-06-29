@@ -1,0 +1,49 @@
+{
+ "code": "JS",
+ "name": "和碩期貨",
+ "sid": "4938",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 321,
+    "top5_sell": 627,
+    "top10_buy": 407,
+    "top10_sell": 731,
+    "market_oi": 862,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 260,
+    "top5_sell": 627,
+    "top10_buy": 260,
+    "top10_sell": 684,
+    "market_oi": 862,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 322,
+    "top5_sell": 629,
+    "top10_buy": 413,
+    "top10_sell": 737,
+    "market_oi": 885,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 240,
+    "top5_sell": 629,
+    "top10_buy": 260,
+    "top10_sell": 690,
+    "market_oi": 885,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

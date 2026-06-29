@@ -1,0 +1,49 @@
+{
+ "code": "CM",
+ "name": "台新新光金期貨",
+ "sid": "2887",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1487,
+    "top5_sell": 1817,
+    "top10_buy": 1847,
+    "top10_sell": 2143,
+    "market_oi": 2449,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1817,
+    "top10_buy": 142,
+    "top10_sell": 2041,
+    "market_oi": 2449,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1629,
+    "top5_sell": 2039,
+    "top10_buy": 2033,
+    "top10_sell": 2401,
+    "market_oi": 2796,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 2039,
+    "top10_buy": 142,
+    "top10_sell": 2229,
+    "market_oi": 2796,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

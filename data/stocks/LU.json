@@ -1,0 +1,49 @@
+{
+ "code": "LU",
+ "name": "臻鼎-KY期貨",
+ "sid": "4958",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 855,
+    "top5_sell": 2633,
+    "top10_buy": 1233,
+    "top10_sell": 4013,
+    "market_oi": 5274,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 287,
+    "top5_sell": 2633,
+    "top10_buy": 287,
+    "top10_sell": 4013,
+    "market_oi": 5274,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 899,
+    "top5_sell": 2643,
+    "top10_buy": 1312,
+    "top10_sell": 4122,
+    "market_oi": 5475,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 305,
+    "top5_sell": 2643,
+    "top10_buy": 305,
+    "top10_sell": 4122,
+    "market_oi": 5475,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

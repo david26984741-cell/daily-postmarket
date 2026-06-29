@@ -1,0 +1,49 @@
+{
+ "code": "HI",
+ "name": "冠德期貨",
+ "sid": "2520",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 105,
+    "top5_sell": 282,
+    "top10_buy": 160,
+    "top10_sell": 295,
+    "market_oi": 298,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 29,
+    "top5_sell": 282,
+    "top10_buy": 29,
+    "top10_sell": 289,
+    "market_oi": 298,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 113,
+    "top5_sell": 291,
+    "top10_buy": 168,
+    "top10_sell": 304,
+    "market_oi": 307,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 29,
+    "top5_sell": 291,
+    "top10_buy": 29,
+    "top10_sell": 298,
+    "market_oi": 307,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

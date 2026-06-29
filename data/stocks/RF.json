@@ -1,0 +1,49 @@
+{
+ "code": "RF",
+ "name": "小型嘉澤期貨",
+ "sid": "3533",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 571,
+    "top5_sell": 1311,
+    "top10_buy": 795,
+    "top10_sell": 1498,
+    "market_oi": 1605,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 370,
+    "top5_sell": 1311,
+    "top10_buy": 370,
+    "top10_sell": 1498,
+    "market_oi": 1605,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 577,
+    "top5_sell": 1318,
+    "top10_buy": 801,
+    "top10_sell": 1510,
+    "market_oi": 1621,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 376,
+    "top5_sell": 1318,
+    "top10_buy": 376,
+    "top10_sell": 1510,
+    "market_oi": 1621,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "NI",
+ "name": "晟德期貨",
+ "sid": "4123",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 111,
+    "top5_sell": 198,
+    "top10_buy": 157,
+    "top10_sell": 247,
+    "market_oi": 281,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 39,
+    "top5_sell": 97,
+    "top10_buy": 50,
+    "top10_sell": 97,
+    "market_oi": 281,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 111,
+    "top5_sell": 201,
+    "top10_buy": 158,
+    "top10_sell": 250,
+    "market_oi": 286,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 39,
+    "top5_sell": 97,
+    "top10_buy": 50,
+    "top10_sell": 97,
+    "market_oi": 286,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

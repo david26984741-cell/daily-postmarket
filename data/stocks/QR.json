@@ -1,0 +1,49 @@
+{
+ "code": "QR",
+ "name": "小型華碩期貨",
+ "sid": "2357",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1524,
+    "top5_sell": 2360,
+    "top10_buy": 1731,
+    "top10_sell": 2598,
+    "market_oi": 2732,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 299,
+    "top5_sell": 2360,
+    "top10_buy": 399,
+    "top10_sell": 2545,
+    "market_oi": 2732,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1541,
+    "top5_sell": 2441,
+    "top10_buy": 1766,
+    "top10_sell": 2683,
+    "market_oi": 2843,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 299,
+    "top5_sell": 2441,
+    "top10_buy": 430,
+    "top10_sell": 2656,
+    "market_oi": 2843,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

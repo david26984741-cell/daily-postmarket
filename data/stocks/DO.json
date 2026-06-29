@@ -1,0 +1,49 @@
+{
+ "code": "DO",
+ "name": "元大金期貨",
+ "sid": "2885",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 261,
+    "top5_sell": 333,
+    "top10_buy": 382,
+    "top10_sell": 446,
+    "market_oi": 498,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 67,
+    "top5_sell": 333,
+    "top10_buy": 106,
+    "top10_sell": 370,
+    "market_oi": 498,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 261,
+    "top5_sell": 336,
+    "top10_buy": 382,
+    "top10_sell": 450,
+    "market_oi": 502,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 67,
+    "top5_sell": 336,
+    "top10_buy": 106,
+    "top10_sell": 373,
+    "market_oi": 502,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

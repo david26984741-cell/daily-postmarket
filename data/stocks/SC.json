@@ -1,0 +1,49 @@
+{
+ "code": "SC",
+ "name": "小型聚陽期貨",
+ "sid": "1477",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 235,
+    "top5_sell": 484,
+    "top10_buy": 312,
+    "top10_sell": 551,
+    "market_oi": 553,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 177,
+    "top5_sell": 244,
+    "top10_buy": 177,
+    "top10_sell": 298,
+    "market_oi": 553,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 235,
+    "top5_sell": 486,
+    "top10_buy": 312,
+    "top10_sell": 553,
+    "market_oi": 555,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 177,
+    "top5_sell": 246,
+    "top10_buy": 177,
+    "top10_sell": 300,
+    "market_oi": 555,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

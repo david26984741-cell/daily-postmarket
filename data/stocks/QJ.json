@@ -1,0 +1,49 @@
+{
+ "code": "QJ",
+ "name": "小型玉晶光期貨",
+ "sid": "3406",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 420,
+    "top5_sell": 1528,
+    "top10_buy": 555,
+    "top10_sell": 1993,
+    "market_oi": 2142,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 212,
+    "top5_sell": 1368,
+    "top10_buy": 212,
+    "top10_sell": 1649,
+    "market_oi": 2142,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 480,
+    "top5_sell": 1608,
+    "top10_buy": 634,
+    "top10_sell": 2153,
+    "market_oi": 2338,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 212,
+    "top5_sell": 1608,
+    "top10_buy": 212,
+    "top10_sell": 1809,
+    "market_oi": 2338,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

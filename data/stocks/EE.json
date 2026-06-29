@@ -1,0 +1,49 @@
+{
+ "code": "EE",
+ "name": "國喬期貨",
+ "sid": "1312",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 190,
+    "top5_sell": 369,
+    "top10_buy": 236,
+    "top10_sell": 378,
+    "market_oi": 460,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 100,
+    "top5_sell": 363,
+    "top10_buy": 122,
+    "top10_sell": 369,
+    "market_oi": 460,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 195,
+    "top5_sell": 415,
+    "top10_buy": 262,
+    "top10_sell": 463,
+    "market_oi": 465,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 100,
+    "top5_sell": 415,
+    "top10_buy": 131,
+    "top10_sell": 455,
+    "market_oi": 465,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

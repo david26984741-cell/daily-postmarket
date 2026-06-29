@@ -1,0 +1,49 @@
+{
+ "code": "RD",
+ "name": "中天期貨",
+ "sid": "4128",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 44,
+    "top5_sell": 63,
+    "top10_buy": 61,
+    "top10_sell": 70,
+    "market_oi": 70,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 63,
+    "top10_buy": 0,
+    "top10_sell": 66,
+    "market_oi": 70,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 44,
+    "top5_sell": 63,
+    "top10_buy": 61,
+    "top10_sell": 71,
+    "market_oi": 71,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 63,
+    "top10_buy": 0,
+    "top10_sell": 67,
+    "market_oi": 71,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

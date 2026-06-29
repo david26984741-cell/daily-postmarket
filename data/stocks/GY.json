@@ -1,0 +1,49 @@
+{
+ "code": "GY",
+ "name": "強茂期貨",
+ "sid": "2481",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1110,
+    "top5_sell": 2634,
+    "top10_buy": 1497,
+    "top10_sell": 3674,
+    "market_oi": 4375,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 330,
+    "top5_sell": 2634,
+    "top10_buy": 330,
+    "top10_sell": 3674,
+    "market_oi": 4375,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1110,
+    "top5_sell": 2634,
+    "top10_buy": 1497,
+    "top10_sell": 3674,
+    "market_oi": 4457,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 330,
+    "top5_sell": 2634,
+    "top10_buy": 330,
+    "top10_sell": 3674,
+    "market_oi": 4457,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "IO",
+ "name": "聯詠期貨",
+ "sid": "3034",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 135,
+    "top5_sell": 425,
+    "top10_buy": 203,
+    "top10_sell": 495,
+    "market_oi": 571,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 19,
+    "top5_sell": 425,
+    "top10_buy": 46,
+    "top10_sell": 495,
+    "market_oi": 571,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 170,
+    "top5_sell": 429,
+    "top10_buy": 244,
+    "top10_sell": 520,
+    "market_oi": 632,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 19,
+    "top5_sell": 429,
+    "top10_buy": 33,
+    "top10_sell": 520,
+    "market_oi": 632,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

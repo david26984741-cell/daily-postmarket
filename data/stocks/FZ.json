@@ -1,0 +1,49 @@
+{
+ "code": "FZ",
+ "name": "華邦電期貨",
+ "sid": "2344",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 13182,
+    "top5_sell": 21056,
+    "top10_buy": 16551,
+    "top10_sell": 28071,
+    "market_oi": 34391,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 2126,
+    "top5_sell": 21056,
+    "top10_buy": 2975,
+    "top10_sell": 25931,
+    "market_oi": 34391,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 13182,
+    "top5_sell": 21056,
+    "top10_buy": 16602,
+    "top10_sell": 28246,
+    "market_oi": 35603,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 2126,
+    "top5_sell": 21056,
+    "top10_buy": 3016,
+    "top10_sell": 26106,
+    "market_oi": 35603,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

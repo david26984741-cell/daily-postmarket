@@ -1,0 +1,49 @@
+{
+ "code": "UB",
+ "name": "亞翔期貨",
+ "sid": "6139",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 529,
+    "top5_sell": 502,
+    "top10_buy": 623,
+    "top10_sell": 773,
+    "market_oi": 952,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 46,
+    "top5_sell": 502,
+    "top10_buy": 46,
+    "top10_sell": 773,
+    "market_oi": 952,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 529,
+    "top5_sell": 502,
+    "top10_buy": 623,
+    "top10_sell": 773,
+    "market_oi": 952,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 46,
+    "top5_sell": 502,
+    "top10_buy": 46,
+    "top10_sell": 773,
+    "market_oi": 952,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

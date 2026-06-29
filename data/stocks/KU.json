@@ -1,0 +1,49 @@
+{
+ "code": "KU",
+ "name": "台玻期貨",
+ "sid": "1802",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 6752,
+    "top5_sell": 14455,
+    "top10_buy": 8358,
+    "top10_sell": 14580,
+    "market_oi": 14768,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 6752,
+    "top5_sell": 14355,
+    "top10_buy": 7747,
+    "top10_sell": 14378,
+    "market_oi": 14768,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 6767,
+    "top5_sell": 14627,
+    "top10_buy": 8373,
+    "top10_sell": 14821,
+    "market_oi": 15135,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 6767,
+    "top5_sell": 14477,
+    "top10_buy": 7762,
+    "top10_sell": 14562,
+    "market_oi": 15135,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "RU",
+ "name": "世紀鋼期貨",
+ "sid": "9958",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 79,
+    "top5_sell": 320,
+    "top10_buy": 124,
+    "top10_sell": 325,
+    "market_oi": 326,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 14,
+    "top5_sell": 317,
+    "top10_buy": 14,
+    "top10_sell": 320,
+    "market_oi": 326,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 79,
+    "top5_sell": 323,
+    "top10_buy": 125,
+    "top10_sell": 330,
+    "market_oi": 336,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 14,
+    "top5_sell": 317,
+    "top10_buy": 14,
+    "top10_sell": 319,
+    "market_oi": 336,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

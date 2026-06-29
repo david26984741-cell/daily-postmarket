@@ -1,0 +1,49 @@
+{
+ "code": "SD",
+ "name": "中興電期貨",
+ "sid": "1513",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 274,
+    "top5_sell": 1318,
+    "top10_buy": 384,
+    "top10_sell": 1395,
+    "market_oi": 1410,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1318,
+    "top10_buy": 33,
+    "top10_sell": 1395,
+    "market_oi": 1410,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 290,
+    "top5_sell": 1332,
+    "top10_buy": 432,
+    "top10_sell": 1465,
+    "market_oi": 1515,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 51,
+    "top5_sell": 1332,
+    "top10_buy": 84,
+    "top10_sell": 1437,
+    "market_oi": 1515,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

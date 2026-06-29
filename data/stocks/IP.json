@@ -1,0 +1,49 @@
+{
+ "code": "IP",
+ "name": "智原期貨",
+ "sid": "3035",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 787,
+    "top5_sell": 2298,
+    "top10_buy": 1056,
+    "top10_sell": 2381,
+    "market_oi": 2412,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 317,
+    "top5_sell": 2217,
+    "top10_buy": 371,
+    "top10_sell": 2285,
+    "market_oi": 2412,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 885,
+    "top5_sell": 2402,
+    "top10_buy": 1154,
+    "top10_sell": 2519,
+    "market_oi": 2575,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 335,
+    "top5_sell": 2321,
+    "top10_buy": 389,
+    "top10_sell": 2423,
+    "market_oi": 2575,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

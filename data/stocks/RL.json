@@ -1,0 +1,49 @@
+{
+ "code": "RL",
+ "name": "元晶期貨",
+ "sid": "6443",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202609",
+    "type": "0",
+    "top5_buy": 389,
+    "top5_sell": 892,
+    "top10_buy": 490,
+    "top10_sell": 922,
+    "market_oi": 945,
+    "scope": "當月"
+   },
+   {
+    "month": "202609",
+    "type": "1",
+    "top5_buy": 120,
+    "top5_sell": 694,
+    "top10_buy": 120,
+    "top10_sell": 701,
+    "market_oi": 945,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 389,
+    "top5_sell": 892,
+    "top10_buy": 490,
+    "top10_sell": 924,
+    "market_oi": 958,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 120,
+    "top5_sell": 694,
+    "top10_buy": 120,
+    "top10_sell": 707,
+    "market_oi": 958,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "JM",
+ "name": "健策期貨",
+ "sid": "3653",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 114,
+    "top5_sell": 138,
+    "top10_buy": 135,
+    "top10_sell": 159,
+    "market_oi": 168,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 67,
+    "top5_sell": 138,
+    "top10_buy": 67,
+    "top10_sell": 155,
+    "market_oi": 168,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 116,
+    "top5_sell": 138,
+    "top10_buy": 137,
+    "top10_sell": 159,
+    "market_oi": 170,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 67,
+    "top5_sell": 138,
+    "top10_buy": 67,
+    "top10_sell": 155,
+    "market_oi": 170,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

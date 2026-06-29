@@ -1,0 +1,49 @@
+{
+ "code": "GU",
+ "name": "全新期貨",
+ "sid": "2455",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1252,
+    "top5_sell": 2309,
+    "top10_buy": 1546,
+    "top10_sell": 2782,
+    "market_oi": 3324,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 211,
+    "top5_sell": 2309,
+    "top10_buy": 241,
+    "top10_sell": 2782,
+    "market_oi": 3324,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1253,
+    "top5_sell": 2313,
+    "top10_buy": 1547,
+    "top10_sell": 2786,
+    "market_oi": 3366,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 212,
+    "top5_sell": 2313,
+    "top10_buy": 242,
+    "top10_sell": 2786,
+    "market_oi": 3366,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

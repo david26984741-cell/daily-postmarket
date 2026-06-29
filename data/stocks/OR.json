@@ -1,0 +1,49 @@
+{
+ "code": "OR",
+ "name": "和大期貨",
+ "sid": "1536",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 208,
+    "top5_sell": 425,
+    "top10_buy": 278,
+    "top10_sell": 425,
+    "market_oi": 425,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 66,
+    "top5_sell": 423,
+    "top10_buy": 104,
+    "top10_sell": 423,
+    "market_oi": 425,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 208,
+    "top5_sell": 425,
+    "top10_buy": 278,
+    "top10_sell": 425,
+    "market_oi": 425,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 66,
+    "top5_sell": 423,
+    "top10_buy": 104,
+    "top10_sell": 423,
+    "market_oi": 425,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

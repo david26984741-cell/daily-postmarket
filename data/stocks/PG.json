@@ -1,0 +1,49 @@
+{
+ "code": "PG",
+ "name": "台灣高鐵期貨",
+ "sid": "2633",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 61,
+    "top5_sell": 69,
+    "top10_buy": 72,
+    "top10_sell": 79,
+    "market_oi": 79,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 21,
+    "top5_sell": 58,
+    "top10_buy": 23,
+    "top10_sell": 66,
+    "market_oi": 79,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 61,
+    "top5_sell": 69,
+    "top10_buy": 72,
+    "top10_sell": 79,
+    "market_oi": 79,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 21,
+    "top5_sell": 58,
+    "top10_buy": 23,
+    "top10_sell": 66,
+    "market_oi": 79,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

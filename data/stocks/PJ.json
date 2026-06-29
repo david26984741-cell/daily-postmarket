@@ -1,0 +1,49 @@
+{
+ "code": "PJ",
+ "name": "台光電期貨",
+ "sid": "2383",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 168,
+    "top5_sell": 191,
+    "top10_buy": 206,
+    "top10_sell": 287,
+    "market_oi": 337,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 112,
+    "top5_sell": 191,
+    "top10_buy": 119,
+    "top10_sell": 287,
+    "market_oi": 337,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 168,
+    "top5_sell": 191,
+    "top10_buy": 206,
+    "top10_sell": 287,
+    "market_oi": 338,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 112,
+    "top5_sell": 191,
+    "top10_buy": 119,
+    "top10_sell": 287,
+    "market_oi": 338,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

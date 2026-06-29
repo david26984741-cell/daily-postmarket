@@ -1,0 +1,49 @@
+{
+ "code": "NE",
+ "name": "欣銓期貨",
+ "sid": "3264",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 322,
+    "top5_sell": 512,
+    "top10_buy": 395,
+    "top10_sell": 716,
+    "market_oi": 785,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 264,
+    "top5_sell": 512,
+    "top10_buy": 281,
+    "top10_sell": 716,
+    "market_oi": 785,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 322,
+    "top5_sell": 512,
+    "top10_buy": 395,
+    "top10_sell": 717,
+    "market_oi": 792,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 264,
+    "top5_sell": 512,
+    "top10_buy": 281,
+    "top10_sell": 717,
+    "market_oi": 792,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

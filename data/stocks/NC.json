@@ -1,0 +1,49 @@
+{
+ "code": "NC",
+ "name": "順達期貨",
+ "sid": "3211",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 39,
+    "top5_sell": 141,
+    "top10_buy": 61,
+    "top10_sell": 173,
+    "market_oi": 187,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 141,
+    "top10_buy": 0,
+    "top10_sell": 173,
+    "market_oi": 187,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 39,
+    "top5_sell": 144,
+    "top10_buy": 62,
+    "top10_sell": 177,
+    "market_oi": 191,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 144,
+    "top10_buy": 0,
+    "top10_sell": 177,
+    "market_oi": 191,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "UC",
+ "name": "廣明期貨",
+ "sid": "6188",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 75,
+    "top5_sell": 123,
+    "top10_buy": 94,
+    "top10_sell": 130,
+    "market_oi": 130,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 117,
+    "top10_buy": 0,
+    "top10_sell": 119,
+    "market_oi": 130,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 80,
+    "top5_sell": 124,
+    "top10_buy": 100,
+    "top10_sell": 137,
+    "market_oi": 139,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 124,
+    "top10_buy": 0,
+    "top10_sell": 125,
+    "market_oi": 139,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

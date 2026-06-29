@@ -1,0 +1,49 @@
+{
+ "code": "RG",
+ "name": "小型健策期貨",
+ "sid": "3653",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 900,
+    "top5_sell": 2246,
+    "top10_buy": 1269,
+    "top10_sell": 2923,
+    "market_oi": 3181,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 2246,
+    "top10_buy": 99,
+    "top10_sell": 2923,
+    "market_oi": 3181,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 900,
+    "top5_sell": 2281,
+    "top10_buy": 1281,
+    "top10_sell": 2980,
+    "market_oi": 3254,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 2281,
+    "top10_buy": 99,
+    "top10_sell": 2980,
+    "market_oi": 3254,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

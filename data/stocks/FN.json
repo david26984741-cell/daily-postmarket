@@ -1,0 +1,49 @@
+{
+ "code": "FN",
+ "name": "裕隆期貨",
+ "sid": "2201",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 578,
+    "top5_sell": 906,
+    "top10_buy": 696,
+    "top10_sell": 922,
+    "market_oi": 925,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 240,
+    "top5_sell": 906,
+    "top10_buy": 240,
+    "top10_sell": 919,
+    "market_oi": 925,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 594,
+    "top5_sell": 906,
+    "top10_buy": 712,
+    "top10_sell": 959,
+    "market_oi": 965,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 240,
+    "top5_sell": 906,
+    "top10_buy": 240,
+    "top10_sell": 947,
+    "market_oi": 965,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

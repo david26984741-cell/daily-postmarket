@@ -1,0 +1,49 @@
+{
+ "code": "GV",
+ "name": "飛宏期貨",
+ "sid": "2457",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 54,
+    "top5_sell": 206,
+    "top10_buy": 89,
+    "top10_sell": 255,
+    "market_oi": 267,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 15,
+    "top5_sell": 206,
+    "top10_buy": 15,
+    "top10_sell": 244,
+    "market_oi": 267,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 54,
+    "top5_sell": 212,
+    "top10_buy": 89,
+    "top10_sell": 263,
+    "market_oi": 275,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 15,
+    "top5_sell": 212,
+    "top10_buy": 15,
+    "top10_sell": 252,
+    "market_oi": 275,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

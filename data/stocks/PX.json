@@ -1,0 +1,49 @@
+{
+ "code": "PX",
+ "name": "鈊象期貨",
+ "sid": "3293",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 37,
+    "top5_sell": 77,
+    "top10_buy": 55,
+    "top10_sell": 84,
+    "market_oi": 85,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 11,
+    "top5_sell": 77,
+    "top10_buy": 11,
+    "top10_sell": 81,
+    "market_oi": 85,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 38,
+    "top5_sell": 84,
+    "top10_buy": 60,
+    "top10_sell": 92,
+    "market_oi": 96,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 11,
+    "top5_sell": 84,
+    "top10_buy": 11,
+    "top10_sell": 90,
+    "market_oi": 96,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

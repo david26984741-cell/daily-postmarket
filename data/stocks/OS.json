@@ -1,0 +1,49 @@
+{
+ "code": "OS",
+ "name": "榮成期貨",
+ "sid": "1909",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 175,
+    "top5_sell": 217,
+    "top10_buy": 210,
+    "top10_sell": 234,
+    "market_oi": 234,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 217,
+    "top10_buy": 0,
+    "top10_sell": 234,
+    "market_oi": 234,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 193,
+    "top5_sell": 236,
+    "top10_buy": 228,
+    "top10_sell": 253,
+    "market_oi": 253,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 236,
+    "top10_buy": 0,
+    "top10_sell": 253,
+    "market_oi": 253,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

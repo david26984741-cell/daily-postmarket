@@ -1,0 +1,49 @@
+{
+ "code": "JB",
+ "name": "創意期貨",
+ "sid": "3443",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 468,
+    "top5_sell": 564,
+    "top10_buy": 602,
+    "top10_sell": 794,
+    "market_oi": 1016,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 564,
+    "top10_buy": 57,
+    "top10_sell": 794,
+    "market_oi": 1016,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 468,
+    "top5_sell": 564,
+    "top10_buy": 603,
+    "top10_sell": 795,
+    "market_oi": 1029,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 564,
+    "top10_buy": 58,
+    "top10_sell": 795,
+    "market_oi": 1029,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

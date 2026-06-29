@@ -1,0 +1,49 @@
+{
+ "code": "QY",
+ "name": "高端疫苗期貨",
+ "sid": "6547",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 646,
+    "top5_sell": 527,
+    "top10_buy": 707,
+    "top10_sell": 688,
+    "market_oi": 766,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 22,
+    "top5_sell": 417,
+    "top10_buy": 36,
+    "top10_sell": 442,
+    "market_oi": 766,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 673,
+    "top5_sell": 573,
+    "top10_buy": 756,
+    "top10_sell": 753,
+    "market_oi": 841,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 420,
+    "top10_buy": 36,
+    "top10_sell": 445,
+    "market_oi": 841,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

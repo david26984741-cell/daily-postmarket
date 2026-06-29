@@ -1,0 +1,49 @@
+{
+ "code": "PL",
+ "name": "合晶期貨",
+ "sid": "6182",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 5660,
+    "top5_sell": 11123,
+    "top10_buy": 7848,
+    "top10_sell": 15376,
+    "market_oi": 20402,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 9313,
+    "top10_buy": 466,
+    "top10_sell": 13146,
+    "market_oi": 20402,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 5660,
+    "top5_sell": 11155,
+    "top10_buy": 7868,
+    "top10_sell": 15409,
+    "market_oi": 20529,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 9345,
+    "top10_buy": 486,
+    "top10_sell": 13179,
+    "market_oi": 20529,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

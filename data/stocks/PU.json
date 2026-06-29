@@ -1,0 +1,49 @@
+{
+ "code": "PU",
+ "name": "小型聯發科期貨",
+ "sid": "2454",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 2114,
+    "top5_sell": 12532,
+    "top10_buy": 3101,
+    "top10_sell": 16694,
+    "market_oi": 18608,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 1006,
+    "top5_sell": 11092,
+    "top10_buy": 1006,
+    "top10_sell": 15254,
+    "market_oi": 18608,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 2351,
+    "top5_sell": 13080,
+    "top10_buy": 3381,
+    "top10_sell": 17590,
+    "market_oi": 19784,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 1224,
+    "top5_sell": 11640,
+    "top10_buy": 1224,
+    "top10_sell": 16150,
+    "market_oi": 19784,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

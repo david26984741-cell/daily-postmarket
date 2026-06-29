@@ -1,0 +1,49 @@
+{
+ "code": "QG",
+ "name": "小型瑞昱期貨",
+ "sid": "2379",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 2404,
+    "top5_sell": 5029,
+    "top10_buy": 3122,
+    "top10_sell": 5155,
+    "market_oi": 5200,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 1804,
+    "top5_sell": 4929,
+    "top10_buy": 2262,
+    "top10_sell": 5036,
+    "market_oi": 5200,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 2479,
+    "top5_sell": 5202,
+    "top10_buy": 3270,
+    "top10_sell": 5379,
+    "market_oi": 5451,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 1879,
+    "top5_sell": 5102,
+    "top10_buy": 2373,
+    "top10_sell": 5279,
+    "market_oi": 5451,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

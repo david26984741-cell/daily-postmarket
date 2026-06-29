@@ -1,0 +1,49 @@
+{
+ "code": "RW",
+ "name": "小型創意期貨",
+ "sid": "3443",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1012,
+    "top5_sell": 4248,
+    "top10_buy": 1517,
+    "top10_sell": 5395,
+    "market_oi": 6133,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4248,
+    "top10_buy": 0,
+    "top10_sell": 5154,
+    "market_oi": 6133,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1012,
+    "top5_sell": 4286,
+    "top10_buy": 1517,
+    "top10_sell": 5460,
+    "market_oi": 6220,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4286,
+    "top10_buy": 0,
+    "top10_sell": 5219,
+    "market_oi": 6220,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

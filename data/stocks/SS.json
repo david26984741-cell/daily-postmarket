@@ -1,0 +1,49 @@
+{
+ "code": "SS",
+ "name": "小型元大高股息ETF期貨",
+ "sid": "0056",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 185,
+    "top5_sell": 203,
+    "top10_buy": 205,
+    "top10_sell": 227,
+    "market_oi": 243,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 59,
+    "top10_buy": 0,
+    "top10_sell": 64,
+    "market_oi": 243,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 185,
+    "top5_sell": 208,
+    "top10_buy": 210,
+    "top10_sell": 238,
+    "market_oi": 268,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 63,
+    "top10_buy": 6,
+    "top10_sell": 69,
+    "market_oi": 268,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

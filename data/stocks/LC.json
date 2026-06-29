@@ -1,0 +1,49 @@
+{
+ "code": "LC",
+ "name": "台灣大期貨",
+ "sid": "3045",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1869,
+    "top5_sell": 1968,
+    "top10_buy": 2005,
+    "top10_sell": 2097,
+    "market_oi": 2130,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 1569,
+    "top5_sell": 1644,
+    "top10_buy": 1637,
+    "top10_sell": 1712,
+    "market_oi": 2130,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1949,
+    "top5_sell": 2230,
+    "top10_buy": 2236,
+    "top10_sell": 2359,
+    "market_oi": 2405,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 1649,
+    "top5_sell": 1894,
+    "top10_buy": 1886,
+    "top10_sell": 1962,
+    "market_oi": 2405,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

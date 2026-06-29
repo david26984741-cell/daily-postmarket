@@ -1,0 +1,49 @@
+{
+ "code": "LT",
+ "name": "遠傳期貨",
+ "sid": "4904",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 163,
+    "top5_sell": 167,
+    "top10_buy": 183,
+    "top10_sell": 183,
+    "market_oi": 191,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 152,
+    "top5_sell": 131,
+    "top10_buy": 172,
+    "top10_sell": 140,
+    "market_oi": 191,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 163,
+    "top5_sell": 167,
+    "top10_buy": 184,
+    "top10_sell": 184,
+    "market_oi": 194,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 152,
+    "top5_sell": 131,
+    "top10_buy": 173,
+    "top10_sell": 140,
+    "market_oi": 194,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

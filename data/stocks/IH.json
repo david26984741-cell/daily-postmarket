@@ -1,0 +1,49 @@
+{
+ "code": "IH",
+ "name": "農林期貨",
+ "sid": "2913",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 52,
+    "top5_sell": 76,
+    "top10_buy": 66,
+    "top10_sell": 78,
+    "market_oi": 78,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 11,
+    "top5_sell": 70,
+    "top10_buy": 14,
+    "top10_sell": 72,
+    "market_oi": 78,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 60,
+    "top5_sell": 87,
+    "top10_buy": 76,
+    "top10_sell": 90,
+    "market_oi": 90,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 11,
+    "top5_sell": 81,
+    "top10_buy": 14,
+    "top10_sell": 83,
+    "market_oi": 90,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

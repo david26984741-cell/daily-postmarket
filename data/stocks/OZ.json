@@ -1,0 +1,49 @@
+{
+ "code": "OZ",
+ "name": "日月光投控期貨",
+ "sid": "3711",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1352,
+    "top5_sell": 1916,
+    "top10_buy": 1628,
+    "top10_sell": 2815,
+    "market_oi": 3602,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 817,
+    "top5_sell": 1916,
+    "top10_buy": 955,
+    "top10_sell": 2815,
+    "market_oi": 3602,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1387,
+    "top5_sell": 1946,
+    "top10_buy": 1671,
+    "top10_sell": 2918,
+    "market_oi": 3714,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 817,
+    "top5_sell": 1946,
+    "top10_buy": 955,
+    "top10_sell": 2918,
+    "market_oi": 3714,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

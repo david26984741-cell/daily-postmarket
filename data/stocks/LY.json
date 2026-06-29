@@ -1,0 +1,49 @@
+{
+ "code": "LY",
+ "name": "南電期貨",
+ "sid": "8046",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 510,
+    "top5_sell": 1137,
+    "top10_buy": 733,
+    "top10_sell": 1829,
+    "market_oi": 2438,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 282,
+    "top5_sell": 1137,
+    "top10_buy": 282,
+    "top10_sell": 1829,
+    "market_oi": 2438,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 609,
+    "top5_sell": 1175,
+    "top10_buy": 880,
+    "top10_sell": 1925,
+    "market_oi": 2674,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 282,
+    "top5_sell": 1175,
+    "top10_buy": 282,
+    "top10_sell": 1925,
+    "market_oi": 2674,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

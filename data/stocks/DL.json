@@ -1,0 +1,49 @@
+{
+ "code": "DL",
+ "name": "中華電期貨",
+ "sid": "2412",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 353,
+    "top5_sell": 414,
+    "top10_buy": 452,
+    "top10_sell": 471,
+    "market_oi": 524,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 353,
+    "top5_sell": 238,
+    "top10_buy": 392,
+    "top10_sell": 265,
+    "market_oi": 524,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 363,
+    "top5_sell": 414,
+    "top10_buy": 462,
+    "top10_sell": 474,
+    "market_oi": 536,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 363,
+    "top5_sell": 238,
+    "top10_buy": 402,
+    "top10_sell": 268,
+    "market_oi": 536,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

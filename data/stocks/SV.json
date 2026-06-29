@@ -1,0 +1,49 @@
+{
+ "code": "SV",
+ "name": "小型川湖期貨",
+ "sid": "2059",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 181,
+    "top5_sell": 354,
+    "top10_buy": 251,
+    "top10_sell": 472,
+    "market_oi": 535,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 51,
+    "top5_sell": 254,
+    "top10_buy": 89,
+    "top10_sell": 352,
+    "market_oi": 535,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 181,
+    "top5_sell": 356,
+    "top10_buy": 251,
+    "top10_sell": 474,
+    "market_oi": 539,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 51,
+    "top5_sell": 256,
+    "top10_buy": 89,
+    "top10_sell": 354,
+    "market_oi": 539,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

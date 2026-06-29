@@ -1,0 +1,49 @@
+{
+ "code": "QC",
+ "name": "裕民期貨",
+ "sid": "2606",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 236,
+    "top5_sell": 367,
+    "top10_buy": 334,
+    "top10_sell": 471,
+    "market_oi": 529,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 38,
+    "top5_sell": 367,
+    "top10_buy": 64,
+    "top10_sell": 471,
+    "market_oi": 529,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 236,
+    "top5_sell": 374,
+    "top10_buy": 344,
+    "top10_sell": 478,
+    "market_oi": 546,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 38,
+    "top5_sell": 374,
+    "top10_buy": 64,
+    "top10_sell": 478,
+    "market_oi": 546,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

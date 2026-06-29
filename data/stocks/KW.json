@@ -1,0 +1,49 @@
+{
+ "code": "KW",
+ "name": "廣宇期貨",
+ "sid": "2328",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 247,
+    "top5_sell": 867,
+    "top10_buy": 354,
+    "top10_sell": 883,
+    "market_oi": 883,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 131,
+    "top5_sell": 867,
+    "top10_buy": 131,
+    "top10_sell": 873,
+    "market_oi": 883,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 247,
+    "top5_sell": 885,
+    "top10_buy": 356,
+    "top10_sell": 910,
+    "market_oi": 913,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 131,
+    "top5_sell": 885,
+    "top10_buy": 131,
+    "top10_sell": 900,
+    "market_oi": 913,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

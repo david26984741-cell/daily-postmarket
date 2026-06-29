@@ -1,0 +1,49 @@
+{
+ "code": "RV",
+ "name": "小型台達電期貨",
+ "sid": "2308",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1070,
+    "top5_sell": 9649,
+    "top10_buy": 1409,
+    "top10_sell": 12078,
+    "market_oi": 13613,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 725,
+    "top5_sell": 5588,
+    "top10_buy": 883,
+    "top10_sell": 7617,
+    "market_oi": 13613,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1202,
+    "top5_sell": 10668,
+    "top10_buy": 1684,
+    "top10_sell": 13139,
+    "market_oi": 14862,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 805,
+    "top5_sell": 6607,
+    "top10_buy": 1161,
+    "top10_sell": 8678,
+    "market_oi": 14862,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

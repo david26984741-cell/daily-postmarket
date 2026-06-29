@@ -1,0 +1,49 @@
+{
+ "code": "GW",
+ "name": "義隆期貨",
+ "sid": "2458",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 85,
+    "top5_sell": 449,
+    "top10_buy": 139,
+    "top10_sell": 491,
+    "market_oi": 500,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 436,
+    "top10_buy": 0,
+    "top10_sell": 474,
+    "market_oi": 500,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 85,
+    "top5_sell": 449,
+    "top10_buy": 139,
+    "top10_sell": 492,
+    "market_oi": 504,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 436,
+    "top10_buy": 0,
+    "top10_sell": 475,
+    "market_oi": 504,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

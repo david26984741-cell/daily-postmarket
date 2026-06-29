@@ -1,0 +1,49 @@
+{
+ "code": "KI",
+ "name": "台虹期貨",
+ "sid": "8039",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 690,
+    "top5_sell": 1095,
+    "top10_buy": 898,
+    "top10_sell": 1289,
+    "market_oi": 1384,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 211,
+    "top5_sell": 1095,
+    "top10_buy": 211,
+    "top10_sell": 1244,
+    "market_oi": 1384,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 690,
+    "top5_sell": 1095,
+    "top10_buy": 898,
+    "top10_sell": 1294,
+    "market_oi": 1398,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 211,
+    "top5_sell": 1095,
+    "top10_buy": 211,
+    "top10_sell": 1249,
+    "market_oi": 1398,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

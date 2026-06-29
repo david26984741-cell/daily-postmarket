@@ -1,0 +1,49 @@
+{
+ "code": "PY",
+ "name": "小型鈊象期貨",
+ "sid": "3293",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 211,
+    "top5_sell": 939,
+    "top10_buy": 322,
+    "top10_sell": 1213,
+    "market_oi": 1261,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 86,
+    "top5_sell": 939,
+    "top10_buy": 86,
+    "top10_sell": 1113,
+    "market_oi": 1261,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 234,
+    "top5_sell": 1070,
+    "top10_buy": 354,
+    "top10_sell": 1345,
+    "market_oi": 1395,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 107,
+    "top5_sell": 1070,
+    "top10_buy": 135,
+    "top10_sell": 1245,
+    "market_oi": 1395,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

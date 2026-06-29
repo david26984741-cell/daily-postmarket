@@ -1,0 +1,49 @@
+{
+ "code": "SA",
+ "name": "美時期貨",
+ "sid": "1795",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 151,
+    "top5_sell": 301,
+    "top10_buy": 199,
+    "top10_sell": 310,
+    "market_oi": 313,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 29,
+    "top5_sell": 301,
+    "top10_buy": 45,
+    "top10_sell": 308,
+    "market_oi": 313,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 153,
+    "top5_sell": 301,
+    "top10_buy": 202,
+    "top10_sell": 312,
+    "market_oi": 317,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 29,
+    "top5_sell": 301,
+    "top10_buy": 45,
+    "top10_sell": 310,
+    "market_oi": 317,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

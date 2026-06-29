@@ -1,0 +1,49 @@
+{
+ "code": "FT",
+ "name": "華通期貨",
+ "sid": "2313",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 739,
+    "top5_sell": 1054,
+    "top10_buy": 834,
+    "top10_sell": 1229,
+    "market_oi": 6764,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 607,
+    "top5_sell": 1004,
+    "top10_buy": 638,
+    "top10_sell": 1052,
+    "market_oi": 6764,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1896,
+    "top5_sell": 4089,
+    "top10_buy": 2609,
+    "top10_sell": 5377,
+    "market_oi": 6986,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 727,
+    "top5_sell": 4089,
+    "top10_buy": 1050,
+    "top10_sell": 5377,
+    "market_oi": 6986,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

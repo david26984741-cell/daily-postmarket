@@ -1,0 +1,49 @@
+{
+ "code": "QS",
+ "name": "小型南電期貨",
+ "sid": "8046",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1192,
+    "top5_sell": 9751,
+    "top10_buy": 1579,
+    "top10_sell": 10497,
+    "market_oi": 10963,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 782,
+    "top5_sell": 7231,
+    "top10_buy": 852,
+    "top10_sell": 7977,
+    "market_oi": 10963,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 2099,
+    "top5_sell": 10542,
+    "top10_buy": 2517,
+    "top10_sell": 11595,
+    "market_oi": 12154,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 1790,
+    "top5_sell": 8022,
+    "top10_buy": 1860,
+    "top10_sell": 9075,
+    "market_oi": 12154,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

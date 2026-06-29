@@ -1,0 +1,49 @@
+{
+ "code": "IA",
+ "name": "臺企銀期貨",
+ "sid": "2834",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 183,
+    "top5_sell": 200,
+    "top10_buy": 202,
+    "top10_sell": 213,
+    "market_oi": 213,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 123,
+    "top5_sell": 153,
+    "top10_buy": 133,
+    "top10_sell": 165,
+    "market_oi": 213,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1926,
+    "top5_sell": 1973,
+    "top10_buy": 1973,
+    "top10_sell": 1994,
+    "market_oi": 1994,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 113,
+    "top5_sell": 1934,
+    "top10_buy": 129,
+    "top10_sell": 1946,
+    "market_oi": 1994,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

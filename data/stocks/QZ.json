@@ -1,0 +1,49 @@
+{
+ "code": "QZ",
+ "name": "力積電期貨",
+ "sid": "6770",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 6699,
+    "top5_sell": 18639,
+    "top10_buy": 9409,
+    "top10_sell": 22446,
+    "market_oi": 25827,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 18639,
+    "top10_buy": 0,
+    "top10_sell": 22446,
+    "market_oi": 25827,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 6699,
+    "top5_sell": 18639,
+    "top10_buy": 9409,
+    "top10_sell": 22446,
+    "market_oi": 26156,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 18639,
+    "top10_buy": 0,
+    "top10_sell": 22446,
+    "market_oi": 26156,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

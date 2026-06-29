@@ -1,0 +1,49 @@
+{
+ "code": "RE",
+ "name": "新唐期貨",
+ "sid": "4919",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 801,
+    "top5_sell": 3589,
+    "top10_buy": 1194,
+    "top10_sell": 3794,
+    "market_oi": 3986,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 210,
+    "top5_sell": 3589,
+    "top10_buy": 210,
+    "top10_sell": 3713,
+    "market_oi": 3986,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 837,
+    "top5_sell": 3589,
+    "top10_buy": 1279,
+    "top10_sell": 4131,
+    "market_oi": 4359,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 346,
+    "top5_sell": 3589,
+    "top10_buy": 346,
+    "top10_sell": 4040,
+    "market_oi": 4359,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

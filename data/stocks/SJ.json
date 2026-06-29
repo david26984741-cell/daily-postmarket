@@ -1,0 +1,49 @@
+{
+ "code": "SJ",
+ "name": "神基期貨",
+ "sid": "3005",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 87,
+    "top5_sell": 213,
+    "top10_buy": 130,
+    "top10_sell": 220,
+    "market_oi": 222,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 41,
+    "top5_sell": 198,
+    "top10_buy": 49,
+    "top10_sell": 202,
+    "market_oi": 222,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 87,
+    "top5_sell": 225,
+    "top10_buy": 130,
+    "top10_sell": 233,
+    "market_oi": 235,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 41,
+    "top5_sell": 210,
+    "top10_buy": 49,
+    "top10_sell": 215,
+    "market_oi": 235,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

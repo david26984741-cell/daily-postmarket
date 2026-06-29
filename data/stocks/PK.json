@@ -1,0 +1,49 @@
+{
+ "code": "PK",
+ "name": "信昌電期貨",
+ "sid": "6173",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 645,
+    "top5_sell": 2191,
+    "top10_buy": 888,
+    "top10_sell": 2959,
+    "market_oi": 3613,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 91,
+    "top5_sell": 2191,
+    "top10_buy": 91,
+    "top10_sell": 2959,
+    "market_oi": 3613,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 645,
+    "top5_sell": 2191,
+    "top10_buy": 892,
+    "top10_sell": 2966,
+    "market_oi": 3631,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 91,
+    "top5_sell": 2191,
+    "top10_buy": 91,
+    "top10_sell": 2966,
+    "market_oi": 3631,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

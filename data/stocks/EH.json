@@ -1,0 +1,49 @@
+{
+ "code": "EH",
+ "name": "東陽期貨",
+ "sid": "1319",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 835,
+    "top5_sell": 2054,
+    "top10_buy": 1096,
+    "top10_sell": 2130,
+    "market_oi": 2149,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 117,
+    "top5_sell": 2013,
+    "top10_buy": 333,
+    "top10_sell": 2043,
+    "market_oi": 2149,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 835,
+    "top5_sell": 2080,
+    "top10_buy": 1100,
+    "top10_sell": 2189,
+    "market_oi": 2227,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 117,
+    "top5_sell": 2080,
+    "top10_buy": 337,
+    "top10_sell": 2110,
+    "market_oi": 2227,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

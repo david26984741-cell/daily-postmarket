@@ -1,0 +1,49 @@
+{
+ "code": "RS",
+ "name": "小型力旺期貨",
+ "sid": "3529",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 342,
+    "top5_sell": 560,
+    "top10_buy": 474,
+    "top10_sell": 760,
+    "market_oi": 834,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 370,
+    "top10_buy": 25,
+    "top10_sell": 570,
+    "market_oi": 834,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 342,
+    "top5_sell": 572,
+    "top10_buy": 474,
+    "top10_sell": 772,
+    "market_oi": 847,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 382,
+    "top10_buy": 25,
+    "top10_sell": 582,
+    "market_oi": 847,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

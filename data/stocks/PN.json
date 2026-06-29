@@ -1,0 +1,49 @@
+{
+ "code": "PN",
+ "name": "小型祥碩期貨",
+ "sid": "5269",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 337,
+    "top5_sell": 1720,
+    "top10_buy": 535,
+    "top10_sell": 2179,
+    "market_oi": 2463,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 56,
+    "top5_sell": 1460,
+    "top10_buy": 56,
+    "top10_sell": 1779,
+    "market_oi": 2463,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 337,
+    "top5_sell": 1738,
+    "top10_buy": 535,
+    "top10_sell": 2199,
+    "market_oi": 2509,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 56,
+    "top5_sell": 1478,
+    "top10_buy": 56,
+    "top10_sell": 1799,
+    "market_oi": 2509,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

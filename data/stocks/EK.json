@@ -1,0 +1,49 @@
+{
+ "code": "EK",
+ "name": "南紡期貨",
+ "sid": "1440",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 52,
+    "top5_sell": 73,
+    "top10_buy": 73,
+    "top10_sell": 91,
+    "market_oi": 91,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 73,
+    "top10_buy": 3,
+    "top10_sell": 86,
+    "market_oi": 91,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 52,
+    "top5_sell": 73,
+    "top10_buy": 73,
+    "top10_sell": 91,
+    "market_oi": 91,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 73,
+    "top10_buy": 3,
+    "top10_sell": 86,
+    "market_oi": 91,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

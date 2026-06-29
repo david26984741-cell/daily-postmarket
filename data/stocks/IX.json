@@ -1,0 +1,49 @@
+{
+ "code": "IX",
+ "name": "景碩期貨",
+ "sid": "3189",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1657,
+    "top5_sell": 3560,
+    "top10_buy": 2420,
+    "top10_sell": 4681,
+    "market_oi": 5963,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 424,
+    "top5_sell": 3560,
+    "top10_buy": 740,
+    "top10_sell": 4681,
+    "market_oi": 5963,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1657,
+    "top5_sell": 3560,
+    "top10_buy": 2442,
+    "top10_sell": 4681,
+    "market_oi": 6042,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 424,
+    "top5_sell": 3560,
+    "top10_buy": 762,
+    "top10_sell": 4681,
+    "market_oi": 6042,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

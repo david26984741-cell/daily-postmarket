@@ -1,0 +1,49 @@
+{
+ "code": "QM",
+ "name": "小型上銀期貨",
+ "sid": "2049",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 211,
+    "top5_sell": 1261,
+    "top10_buy": 309,
+    "top10_sell": 1402,
+    "market_oi": 1453,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 122,
+    "top5_sell": 961,
+    "top10_buy": 122,
+    "top10_sell": 1082,
+    "market_oi": 1453,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 211,
+    "top5_sell": 1265,
+    "top10_buy": 309,
+    "top10_sell": 1411,
+    "market_oi": 1465,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 122,
+    "top5_sell": 965,
+    "top10_buy": 122,
+    "top10_sell": 1091,
+    "market_oi": 1465,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

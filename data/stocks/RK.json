@@ -1,0 +1,49 @@
+{
+ "code": "RK",
+ "name": "金像電期貨",
+ "sid": "2368",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 652,
+    "top5_sell": 774,
+    "top10_buy": 751,
+    "top10_sell": 972,
+    "market_oi": 1151,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 427,
+    "top5_sell": 774,
+    "top10_buy": 446,
+    "top10_sell": 972,
+    "market_oi": 1151,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 652,
+    "top5_sell": 774,
+    "top10_buy": 751,
+    "top10_sell": 972,
+    "market_oi": 1156,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 427,
+    "top5_sell": 774,
+    "top10_buy": 446,
+    "top10_sell": 972,
+    "market_oi": 1156,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

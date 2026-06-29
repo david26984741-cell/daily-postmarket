@@ -1,0 +1,49 @@
+{
+ "code": "FW",
+ "name": "友訊期貨",
+ "sid": "2332",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 303,
+    "top5_sell": 415,
+    "top10_buy": 352,
+    "top10_sell": 532,
+    "market_oi": 611,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 20,
+    "top5_sell": 415,
+    "top10_buy": 20,
+    "top10_sell": 519,
+    "market_oi": 611,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 303,
+    "top5_sell": 426,
+    "top10_buy": 352,
+    "top10_sell": 547,
+    "market_oi": 626,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 20,
+    "top5_sell": 426,
+    "top10_buy": 20,
+    "top10_sell": 534,
+    "market_oi": 626,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

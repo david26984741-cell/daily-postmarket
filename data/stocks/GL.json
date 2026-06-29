@@ -1,0 +1,49 @@
+{
+ "code": "GL",
+ "name": "正崴期貨",
+ "sid": "2392",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 183,
+    "top5_sell": 247,
+    "top10_buy": 258,
+    "top10_sell": 315,
+    "market_oi": 321,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 31,
+    "top5_sell": 247,
+    "top10_buy": 31,
+    "top10_sell": 315,
+    "market_oi": 321,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 183,
+    "top5_sell": 250,
+    "top10_buy": 258,
+    "top10_sell": 318,
+    "market_oi": 324,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 31,
+    "top5_sell": 250,
+    "top10_buy": 31,
+    "top10_sell": 318,
+    "market_oi": 324,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

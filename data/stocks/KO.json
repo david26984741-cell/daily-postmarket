@@ -1,0 +1,49 @@
+{
+ "code": "KO",
+ "name": "宏全期貨",
+ "sid": "9939",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 86,
+    "top5_sell": 88,
+    "top10_buy": 102,
+    "top10_sell": 103,
+    "market_oi": 109,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 22,
+    "top5_sell": 64,
+    "top10_buy": 30,
+    "top10_sell": 77,
+    "market_oi": 109,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 111,
+    "top5_sell": 114,
+    "top10_buy": 127,
+    "top10_sell": 129,
+    "market_oi": 135,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 22,
+    "top5_sell": 90,
+    "top10_buy": 30,
+    "top10_sell": 103,
+    "market_oi": 135,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

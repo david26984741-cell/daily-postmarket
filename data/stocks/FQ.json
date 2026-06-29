@@ -1,0 +1,49 @@
+{
+ "code": "FQ",
+ "name": "光寶科期貨",
+ "sid": "2301",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 893,
+    "top5_sell": 1791,
+    "top10_buy": 1250,
+    "top10_sell": 2458,
+    "market_oi": 3068,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 366,
+    "top5_sell": 1791,
+    "top10_buy": 366,
+    "top10_sell": 2458,
+    "market_oi": 3068,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 893,
+    "top5_sell": 1807,
+    "top10_buy": 1250,
+    "top10_sell": 2475,
+    "market_oi": 3135,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 366,
+    "top5_sell": 1807,
+    "top10_buy": 366,
+    "top10_sell": 2475,
+    "market_oi": 3135,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "DN",
+ "name": "玉山金期貨",
+ "sid": "2884",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 660,
+    "top5_sell": 685,
+    "top10_buy": 805,
+    "top10_sell": 848,
+    "market_oi": 938,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 595,
+    "top5_sell": 533,
+    "top10_buy": 697,
+    "top10_sell": 613,
+    "market_oi": 938,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 680,
+    "top5_sell": 723,
+    "top10_buy": 900,
+    "top10_sell": 961,
+    "market_oi": 1104,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 550,
+    "top5_sell": 533,
+    "top10_buy": 711,
+    "top10_sell": 613,
+    "market_oi": 1104,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

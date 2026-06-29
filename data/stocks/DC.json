@@ -1,0 +1,49 @@
+{
+ "code": "DC",
+ "name": "彰銀期貨",
+ "sid": "2801",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 236,
+    "top5_sell": 263,
+    "top10_buy": 264,
+    "top10_sell": 266,
+    "market_oi": 266,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 195,
+    "top5_sell": 227,
+    "top10_buy": 195,
+    "top10_sell": 227,
+    "market_oi": 266,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 270,
+    "top5_sell": 309,
+    "top10_buy": 308,
+    "top10_sell": 313,
+    "market_oi": 313,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 184,
+    "top5_sell": 266,
+    "top10_buy": 195,
+    "top10_sell": 267,
+    "market_oi": 313,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

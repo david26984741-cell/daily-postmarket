@@ -1,0 +1,49 @@
+{
+ "code": "SM",
+ "name": "群益台灣精選高息ETF期貨",
+ "sid": "00919",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 273,
+    "top5_sell": 469,
+    "top10_buy": 369,
+    "top10_sell": 535,
+    "market_oi": 556,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 383,
+    "top10_buy": 0,
+    "top10_sell": 395,
+    "market_oi": 556,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 315,
+    "top5_sell": 572,
+    "top10_buy": 428,
+    "top10_sell": 679,
+    "market_oi": 708,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 385,
+    "top10_buy": 0,
+    "top10_sell": 405,
+    "market_oi": 708,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

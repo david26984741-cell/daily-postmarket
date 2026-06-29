@@ -1,0 +1,49 @@
+{
+ "code": "IT",
+ "name": "晶技期貨",
+ "sid": "3042",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1208,
+    "top5_sell": 3466,
+    "top10_buy": 1689,
+    "top10_sell": 4735,
+    "market_oi": 5714,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 103,
+    "top5_sell": 3466,
+    "top10_buy": 103,
+    "top10_sell": 4735,
+    "market_oi": 5714,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1208,
+    "top5_sell": 3472,
+    "top10_buy": 1689,
+    "top10_sell": 4741,
+    "market_oi": 5753,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 103,
+    "top5_sell": 3472,
+    "top10_buy": 103,
+    "top10_sell": 4741,
+    "market_oi": 5753,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

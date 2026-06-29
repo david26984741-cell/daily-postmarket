@@ -1,0 +1,49 @@
+{
+ "code": "GZ",
+ "name": "兆赫期貨",
+ "sid": "2485",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 493,
+    "top5_sell": 1219,
+    "top10_buy": 700,
+    "top10_sell": 1256,
+    "market_oi": 1314,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 358,
+    "top5_sell": 1161,
+    "top10_buy": 415,
+    "top10_sell": 1176,
+    "market_oi": 1314,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 510,
+    "top5_sell": 1263,
+    "top10_buy": 752,
+    "top10_sell": 1336,
+    "market_oi": 1402,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 287,
+    "top5_sell": 1205,
+    "top10_buy": 442,
+    "top10_sell": 1261,
+    "market_oi": 1402,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "OX",
+ "name": "精測期貨",
+ "sid": "6510",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 37,
+    "top5_sell": 48,
+    "top10_buy": 51,
+    "top10_sell": 64,
+    "market_oi": 69,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 26,
+    "top5_sell": 48,
+    "top10_buy": 26,
+    "top10_sell": 57,
+    "market_oi": 69,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 37,
+    "top5_sell": 48,
+    "top10_buy": 51,
+    "top10_sell": 64,
+    "market_oi": 69,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 26,
+    "top5_sell": 48,
+    "top10_buy": 26,
+    "top10_sell": 57,
+    "market_oi": 69,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

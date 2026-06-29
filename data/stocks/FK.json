@@ -1,0 +1,49 @@
+{
+ "code": "FK",
+ "name": "正新期貨",
+ "sid": "2105",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 590,
+    "top5_sell": 846,
+    "top10_buy": 762,
+    "top10_sell": 1035,
+    "market_oi": 1159,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 241,
+    "top5_sell": 771,
+    "top10_buy": 277,
+    "top10_sell": 864,
+    "market_oi": 1159,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 591,
+    "top5_sell": 848,
+    "top10_buy": 763,
+    "top10_sell": 1037,
+    "market_oi": 1167,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 241,
+    "top5_sell": 773,
+    "top10_buy": 277,
+    "top10_sell": 866,
+    "market_oi": 1167,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

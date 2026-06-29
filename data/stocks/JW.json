@@ -1,0 +1,49 @@
+{
+ "code": "JW",
+ "name": "長虹期貨",
+ "sid": "5534",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 65,
+    "top5_sell": 114,
+    "top10_buy": 87,
+    "top10_sell": 123,
+    "market_oi": 123,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 12,
+    "top5_sell": 95,
+    "top10_buy": 12,
+    "top10_sell": 100,
+    "market_oi": 123,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 267,
+    "top5_sell": 344,
+    "top10_buy": 307,
+    "top10_sell": 353,
+    "market_oi": 353,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 12,
+    "top5_sell": 295,
+    "top10_buy": 12,
+    "top10_sell": 300,
+    "market_oi": 353,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

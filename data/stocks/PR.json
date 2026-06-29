@@ -1,0 +1,49 @@
+{
+ "code": "PR",
+ "name": "宏捷科期貨",
+ "sid": "8086",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 154,
+    "top5_sell": 359,
+    "top10_buy": 205,
+    "top10_sell": 428,
+    "market_oi": 468,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 42,
+    "top5_sell": 359,
+    "top10_buy": 42,
+    "top10_sell": 428,
+    "market_oi": 468,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 154,
+    "top5_sell": 359,
+    "top10_buy": 205,
+    "top10_sell": 428,
+    "market_oi": 474,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 42,
+    "top5_sell": 359,
+    "top10_buy": 42,
+    "top10_sell": 428,
+    "market_oi": 474,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

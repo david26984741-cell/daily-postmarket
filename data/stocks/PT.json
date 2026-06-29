@@ -1,0 +1,49 @@
+{
+ "code": "PT",
+ "name": "雙鴻期貨",
+ "sid": "3324",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 451,
+    "top5_sell": 881,
+    "top10_buy": 585,
+    "top10_sell": 923,
+    "market_oi": 937,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 161,
+    "top5_sell": 881,
+    "top10_buy": 161,
+    "top10_sell": 923,
+    "market_oi": 937,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 570,
+    "top5_sell": 962,
+    "top10_buy": 704,
+    "top10_sell": 1032,
+    "market_oi": 1059,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 161,
+    "top5_sell": 962,
+    "top10_buy": 161,
+    "top10_sell": 1032,
+    "market_oi": 1059,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

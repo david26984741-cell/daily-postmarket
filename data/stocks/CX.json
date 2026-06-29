@@ -1,0 +1,49 @@
+{
+ "code": "CX",
+ "name": "大同期貨",
+ "sid": "2371",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 474,
+    "top5_sell": 1194,
+    "top10_buy": 636,
+    "top10_sell": 1273,
+    "market_oi": 1315,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 94,
+    "top5_sell": 1194,
+    "top10_buy": 133,
+    "top10_sell": 1260,
+    "market_oi": 1315,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 474,
+    "top5_sell": 1197,
+    "top10_buy": 636,
+    "top10_sell": 1291,
+    "market_oi": 1343,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 94,
+    "top5_sell": 1197,
+    "top10_buy": 133,
+    "top10_sell": 1278,
+    "market_oi": 1343,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

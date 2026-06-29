@@ -1,0 +1,49 @@
+{
+ "code": "CY",
+ "name": "南亞科期貨",
+ "sid": "2408",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 5162,
+    "top5_sell": 9932,
+    "top10_buy": 7472,
+    "top10_sell": 13937,
+    "market_oi": 17683,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 9932,
+    "top10_buy": 428,
+    "top10_sell": 13937,
+    "market_oi": 17683,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 5162,
+    "top5_sell": 10036,
+    "top10_buy": 7502,
+    "top10_sell": 14129,
+    "market_oi": 18212,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 10036,
+    "top10_buy": 428,
+    "top10_sell": 14129,
+    "market_oi": 18212,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

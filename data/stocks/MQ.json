@@ -1,0 +1,49 @@
+{
+ "code": "MQ",
+ "name": "矽格期貨",
+ "sid": "6257",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 615,
+    "top5_sell": 1090,
+    "top10_buy": 789,
+    "top10_sell": 1547,
+    "market_oi": 1821,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 372,
+    "top5_sell": 1090,
+    "top10_buy": 406,
+    "top10_sell": 1547,
+    "market_oi": 1821,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 624,
+    "top5_sell": 1100,
+    "top10_buy": 800,
+    "top10_sell": 1561,
+    "market_oi": 1859,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 381,
+    "top5_sell": 1100,
+    "top10_buy": 415,
+    "top10_sell": 1561,
+    "market_oi": 1859,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

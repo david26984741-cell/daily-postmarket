@@ -1,0 +1,49 @@
+{
+ "code": "MJ",
+ "name": "致茂期貨",
+ "sid": "2360",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 91,
+    "top5_sell": 125,
+    "top10_buy": 123,
+    "top10_sell": 173,
+    "market_oi": 191,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 40,
+    "top5_sell": 125,
+    "top10_buy": 40,
+    "top10_sell": 173,
+    "market_oi": 191,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 92,
+    "top5_sell": 125,
+    "top10_buy": 124,
+    "top10_sell": 175,
+    "market_oi": 193,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 41,
+    "top5_sell": 125,
+    "top10_buy": 41,
+    "top10_sell": 175,
+    "market_oi": 193,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

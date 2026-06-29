@@ -1,0 +1,49 @@
+{
+ "code": "DY",
+ "name": "亞泥期貨",
+ "sid": "1102",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 330,
+    "top5_sell": 296,
+    "top10_buy": 388,
+    "top10_sell": 381,
+    "market_oi": 418,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 175,
+    "top5_sell": 273,
+    "top10_buy": 200,
+    "top10_sell": 311,
+    "market_oi": 418,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 331,
+    "top5_sell": 297,
+    "top10_buy": 389,
+    "top10_sell": 382,
+    "market_oi": 422,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 175,
+    "top5_sell": 274,
+    "top10_buy": 200,
+    "top10_sell": 312,
+    "market_oi": 422,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "OL",
+ "name": "小型大立光期貨",
+ "sid": "3008",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1825,
+    "top5_sell": 4430,
+    "top10_buy": 2454,
+    "top10_sell": 5833,
+    "market_oi": 7014,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 1110,
+    "top5_sell": 4430,
+    "top10_buy": 1110,
+    "top10_sell": 5833,
+    "market_oi": 7014,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1896,
+    "top5_sell": 4638,
+    "top10_buy": 2525,
+    "top10_sell": 6056,
+    "market_oi": 7287,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 1181,
+    "top5_sell": 4638,
+    "top10_buy": 1181,
+    "top10_sell": 6056,
+    "market_oi": 7287,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

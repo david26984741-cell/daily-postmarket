@@ -1,0 +1,49 @@
+{
+ "code": "QN",
+ "name": "小型群聯期貨",
+ "sid": "8299",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 4127,
+    "top5_sell": 15350,
+    "top10_buy": 5195,
+    "top10_sell": 18785,
+    "market_oi": 20809,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 15350,
+    "top10_buy": 0,
+    "top10_sell": 18485,
+    "market_oi": 20809,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 4177,
+    "top5_sell": 16019,
+    "top10_buy": 5284,
+    "top10_sell": 19587,
+    "market_oi": 21701,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 16019,
+    "top10_buy": 0,
+    "top10_sell": 19287,
+    "market_oi": 21701,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "RJ",
+ "name": "大亞期貨",
+ "sid": "1609",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 124,
+    "top5_sell": 265,
+    "top10_buy": 170,
+    "top10_sell": 296,
+    "market_oi": 315,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 41,
+    "top5_sell": 245,
+    "top10_buy": 41,
+    "top10_sell": 276,
+    "market_oi": 315,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 124,
+    "top5_sell": 270,
+    "top10_buy": 170,
+    "top10_sell": 301,
+    "market_oi": 320,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 41,
+    "top5_sell": 250,
+    "top10_buy": 41,
+    "top10_sell": 281,
+    "market_oi": 320,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

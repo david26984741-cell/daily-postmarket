@@ -1,0 +1,49 @@
+{
+ "code": "QX",
+ "name": "萬海期貨",
+ "sid": "2615",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1353,
+    "top5_sell": 2470,
+    "top10_buy": 1614,
+    "top10_sell": 2600,
+    "market_oi": 2627,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 795,
+    "top5_sell": 2470,
+    "top10_buy": 795,
+    "top10_sell": 2588,
+    "market_oi": 2627,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1353,
+    "top5_sell": 2472,
+    "top10_buy": 1614,
+    "top10_sell": 2604,
+    "market_oi": 2645,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 795,
+    "top5_sell": 2472,
+    "top10_buy": 795,
+    "top10_sell": 2590,
+    "market_oi": 2645,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "JF",
+ "name": "嘉澤期貨",
+ "sid": "3533",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 28,
+    "top5_sell": 40,
+    "top10_buy": 42,
+    "top10_sell": 55,
+    "market_oi": 59,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 11,
+    "top5_sell": 40,
+    "top10_buy": 14,
+    "top10_sell": 55,
+    "market_oi": 59,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 28,
+    "top5_sell": 40,
+    "top10_buy": 42,
+    "top10_sell": 55,
+    "market_oi": 59,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 11,
+    "top5_sell": 40,
+    "top10_buy": 14,
+    "top10_sell": 55,
+    "market_oi": 59,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "PQ",
+ "name": "金居期貨",
+ "sid": "8358",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 848,
+    "top5_sell": 3392,
+    "top10_buy": 1309,
+    "top10_sell": 3507,
+    "market_oi": 3551,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 206,
+    "top5_sell": 3392,
+    "top10_buy": 411,
+    "top10_sell": 3507,
+    "market_oi": 3551,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 922,
+    "top5_sell": 3433,
+    "top10_buy": 1523,
+    "top10_sell": 3791,
+    "market_oi": 3895,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 228,
+    "top5_sell": 3433,
+    "top10_buy": 359,
+    "top10_sell": 3791,
+    "market_oi": 3895,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

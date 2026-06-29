@@ -1,0 +1,49 @@
+{
+ "code": "KP",
+ "name": "潤泰新期貨",
+ "sid": "9945",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 338,
+    "top5_sell": 459,
+    "top10_buy": 403,
+    "top10_sell": 521,
+    "market_oi": 534,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 231,
+    "top5_sell": 438,
+    "top10_buy": 231,
+    "top10_sell": 500,
+    "market_oi": 534,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 642,
+    "top5_sell": 842,
+    "top10_buy": 756,
+    "top10_sell": 908,
+    "market_oi": 925,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 210,
+    "top5_sell": 821,
+    "top10_buy": 231,
+    "top10_sell": 887,
+    "market_oi": 925,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

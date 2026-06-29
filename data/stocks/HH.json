@@ -1,0 +1,49 @@
+{
+ "code": "HH",
+ "name": "中工期貨",
+ "sid": "2515",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 174,
+    "top5_sell": 342,
+    "top10_buy": 265,
+    "top10_sell": 375,
+    "market_oi": 389,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 36,
+    "top5_sell": 298,
+    "top10_buy": 47,
+    "top10_sell": 326,
+    "market_oi": 389,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 174,
+    "top5_sell": 358,
+    "top10_buy": 265,
+    "top10_sell": 391,
+    "market_oi": 406,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 36,
+    "top5_sell": 311,
+    "top10_buy": 36,
+    "top10_sell": 344,
+    "market_oi": 406,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

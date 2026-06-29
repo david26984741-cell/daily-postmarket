@@ -1,0 +1,49 @@
+{
+ "code": "OT",
+ "name": "聯亞期貨",
+ "sid": "3081",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 555,
+    "top5_sell": 599,
+    "top10_buy": 636,
+    "top10_sell": 790,
+    "market_oi": 919,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 20,
+    "top5_sell": 599,
+    "top10_buy": 52,
+    "top10_sell": 790,
+    "market_oi": 919,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 694,
+    "top5_sell": 690,
+    "top10_buy": 775,
+    "top10_sell": 897,
+    "market_oi": 1059,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 21,
+    "top5_sell": 690,
+    "top10_buy": 53,
+    "top10_sell": 897,
+    "market_oi": 1059,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

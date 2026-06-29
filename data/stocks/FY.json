@@ -1,0 +1,49 @@
+{
+ "code": "FY",
+ "name": "台亞期貨",
+ "sid": "2340",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 287,
+    "top5_sell": 783,
+    "top10_buy": 408,
+    "top10_sell": 812,
+    "market_oi": 829,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 184,
+    "top5_sell": 771,
+    "top10_buy": 239,
+    "top10_sell": 793,
+    "market_oi": 829,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 287,
+    "top5_sell": 799,
+    "top10_buy": 417,
+    "top10_sell": 842,
+    "market_oi": 869,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 184,
+    "top5_sell": 799,
+    "top10_buy": 247,
+    "top10_sell": 817,
+    "market_oi": 869,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

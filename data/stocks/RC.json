@@ -1,0 +1,49 @@
+{
+ "code": "RC",
+ "name": "漢翔期貨",
+ "sid": "2634",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 148,
+    "top5_sell": 343,
+    "top10_buy": 209,
+    "top10_sell": 363,
+    "market_oi": 370,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 108,
+    "top5_sell": 343,
+    "top10_buy": 126,
+    "top10_sell": 357,
+    "market_oi": 370,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 148,
+    "top5_sell": 346,
+    "top10_buy": 209,
+    "top10_sell": 366,
+    "market_oi": 375,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 108,
+    "top5_sell": 346,
+    "top10_buy": 126,
+    "top10_sell": 360,
+    "market_oi": 375,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

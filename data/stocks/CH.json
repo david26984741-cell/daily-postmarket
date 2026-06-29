@@ -1,0 +1,49 @@
+{
+ "code": "CH",
+ "name": "友達期貨",
+ "sid": "2409",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 4829,
+    "top5_sell": 16416,
+    "top10_buy": 7147,
+    "top10_sell": 17694,
+    "market_oi": 18670,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 4229,
+    "top5_sell": 16416,
+    "top10_buy": 5657,
+    "top10_sell": 17218,
+    "market_oi": 18670,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 4829,
+    "top5_sell": 16551,
+    "top10_buy": 7147,
+    "top10_sell": 17901,
+    "market_oi": 19304,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 4229,
+    "top5_sell": 16551,
+    "top10_buy": 5657,
+    "top10_sell": 17517,
+    "market_oi": 19304,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}
