@@ -1,0 +1,49 @@
+{
+ "code": "CK",
+ "name": "國泰金",
+ "sid": "2882",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1536,
+    "top5_sell": 1535,
+    "top10_buy": 1746,
+    "top10_sell": 1906,
+    "market_oi": 2180,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 1213,
+    "top5_sell": 1385,
+    "top10_buy": 1287,
+    "top10_sell": 1701,
+    "market_oi": 2180,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1580,
+    "top5_sell": 1538,
+    "top10_buy": 1790,
+    "top10_sell": 1909,
+    "market_oi": 2264,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 1257,
+    "top5_sell": 1388,
+    "top10_buy": 1331,
+    "top10_sell": 1704,
+    "market_oi": 2264,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

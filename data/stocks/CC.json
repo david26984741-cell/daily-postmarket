@@ -1,0 +1,49 @@
+{
+ "code": "CC",
+ "name": "聯電",
+ "sid": "2303",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 27110,
+    "top5_sell": 57146,
+    "top10_buy": 38426,
+    "top10_sell": 84558,
+    "market_oi": 111594,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 57146,
+    "top10_buy": 1986,
+    "top10_sell": 84558,
+    "market_oi": 111594,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 27110,
+    "top5_sell": 59522,
+    "top10_buy": 39068,
+    "top10_sell": 87462,
+    "market_oi": 116341,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 59522,
+    "top10_buy": 2188,
+    "top10_sell": 87462,
+    "market_oi": 116341,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

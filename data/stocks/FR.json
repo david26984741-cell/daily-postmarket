@@ -1,0 +1,49 @@
+{
+ "code": "FR",
+ "name": "台達電",
+ "sid": "2308",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 3835,
+    "top5_sell": 3750,
+    "top10_buy": 4538,
+    "top10_sell": 5209,
+    "market_oi": 6334,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 282,
+    "top5_sell": 3750,
+    "top10_buy": 520,
+    "top10_sell": 5209,
+    "market_oi": 6334,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 4158,
+    "top5_sell": 4016,
+    "top10_buy": 4926,
+    "top10_sell": 5662,
+    "market_oi": 6828,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 282,
+    "top5_sell": 4016,
+    "top10_buy": 585,
+    "top10_sell": 5662,
+    "market_oi": 6828,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

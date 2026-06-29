@@ -1,0 +1,49 @@
+{
+ "code": "DG",
+ "name": "台化",
+ "sid": "1326",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 2597,
+    "top5_sell": 2504,
+    "top10_buy": 2779,
+    "top10_sell": 3115,
+    "market_oi": 3641,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 2504,
+    "top10_buy": 37,
+    "top10_sell": 3115,
+    "market_oi": 3641,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 2597,
+    "top5_sell": 2511,
+    "top10_buy": 2787,
+    "top10_sell": 3170,
+    "market_oi": 3749,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 2511,
+    "top10_buy": 37,
+    "top10_sell": 3170,
+    "market_oi": 3749,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

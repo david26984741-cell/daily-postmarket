@@ -1,0 +1,28 @@
+{
+ "meta": {
+  "title": "自營選擇權",
+  "source": "臺指選擇權-買賣權分計-未平倉"
+ },
+ "records": {
+  "2026/06/23": {
+   "call": {
+    "buy_oi_lots": 25583,
+    "buy_oi_amt": 1254767,
+    "sell_oi_lots": 19399,
+    "sell_oi_amt": 1610404,
+    "diff_oi_lots": 6184,
+    "diff_oi_amt": -355637,
+    "identity": "自營商"
+   },
+   "put": {
+    "buy_oi_lots": 28186,
+    "buy_oi_amt": 592742,
+    "sell_oi_lots": 24434,
+    "sell_oi_amt": 575117,
+    "diff_oi_lots": 3752,
+    "diff_oi_amt": 17625,
+    "identity": "自營商"
+   }
+  }
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "code": "CN",
+ "name": "中信金",
+ "sid": "2891",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1445,
+    "top5_sell": 1988,
+    "top10_buy": 1701,
+    "top10_sell": 2068,
+    "market_oi": 2112,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 1185,
+    "top5_sell": 1988,
+    "top10_buy": 1276,
+    "top10_sell": 2057,
+    "market_oi": 2112,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1501,
+    "top5_sell": 1997,
+    "top10_buy": 1757,
+    "top10_sell": 2119,
+    "market_oi": 2189,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 1215,
+    "top5_sell": 1997,
+    "top10_buy": 1306,
+    "top10_sell": 2102,
+    "market_oi": 2189,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

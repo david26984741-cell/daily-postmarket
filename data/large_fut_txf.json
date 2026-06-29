@@ -1,0 +1,15 @@
+{
+ "meta": {
+  "title": "大額交易人期貨",
+  "source": "臺股期貨 當月+所有契約"
+ },
+ "records": {
+  "2026/06/23": {
+   "code": "TXF",
+   "name": "臺股期貨",
+   "rows": [],
+   "pending": true,
+   "note": "臺股期貨大額部位將於首次正式排程 (GitHub Actions) 執行時自動填入完整資料。"
+  }
+ }
+}

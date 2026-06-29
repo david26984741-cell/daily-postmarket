@@ -1,0 +1,126 @@
+{
+ "dates": [
+  "2026/06/23"
+ ],
+ "latest_date": "2026/06/23",
+ "updated_at": "2026-06-23T09:12:46",
+ "stocks": [
+  {
+   "code": "CD",
+   "name": "台積電",
+   "sid": "2330"
+  },
+  {
+   "code": "DH",
+   "name": "鴻海",
+   "sid": "2317"
+  },
+  {
+   "code": "CC",
+   "name": "聯電",
+   "sid": "2303"
+  },
+  {
+   "code": "CA",
+   "name": "南亞",
+   "sid": "1303"
+  },
+  {
+   "code": "CB",
+   "name": "中鋼",
+   "sid": "2002"
+  },
+  {
+   "code": "CZ",
+   "name": "長榮",
+   "sid": "2603"
+  },
+  {
+   "code": "CE",
+   "name": "富邦金",
+   "sid": "2881"
+  },
+  {
+   "code": "CK",
+   "name": "國泰金",
+   "sid": "2882"
+  },
+  {
+   "code": "CN",
+   "name": "中信金",
+   "sid": "2891"
+  },
+  {
+   "code": "DK",
+   "name": "廣達",
+   "sid": "2382"
+  },
+  {
+   "code": "DJ",
+   "name": "華碩",
+   "sid": "2357"
+  },
+  {
+   "code": "CF",
+   "name": "台塑",
+   "sid": "1301"
+  },
+  {
+   "code": "FR",
+   "name": "台達電",
+   "sid": "2308"
+  },
+  {
+   "code": "DG",
+   "name": "台化",
+   "sid": "1326"
+  },
+  {
+   "code": "DI",
+   "name": "旺宏",
+   "sid": "2337"
+  }
+ ],
+ "categories": [
+  {
+   "id": "options_foreign",
+   "title": "外資選擇權",
+   "file": "options_foreign.json"
+  },
+  {
+   "id": "options_dealer",
+   "title": "自營選擇權",
+   "file": "options_dealer.json"
+  },
+  {
+   "id": "foreign_fut_spot",
+   "title": "外資期貨、現貨",
+   "file": "foreign_fut_spot.json"
+  },
+  {
+   "id": "large_opt",
+   "title": "大額交易人選擇權",
+   "file": "large_opt.json"
+  },
+  {
+   "id": "large_fut_txf",
+   "title": "大額交易人期貨",
+   "file": "large_fut_txf.json"
+  },
+  {
+   "id": "stocks",
+   "title": "大額交易人股票期貨",
+   "file": null
+  }
+ ],
+ "status_log": {
+  "2026/06/23": {
+   "options_foreign": "ok",
+   "options_dealer": "ok",
+   "foreign_fut_spot": "ok",
+   "large_opt": "ok",
+   "large_fut_txf": "pending(待首次排程)",
+   "stocks": "ok (15 檔, 種子)"
+  }
+ }
+}

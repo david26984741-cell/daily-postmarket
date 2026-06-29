@@ -1,0 +1,25 @@
+{
+ "meta": {
+  "title": "外資期貨、現貨",
+  "source": "臺股期貨外資未平倉 + TWSE外資現貨買賣差額"
+ },
+ "records": {
+  "2026/06/23": {
+   "fut": {
+    "long_oi_lots": 10506,
+    "long_oi_amt": 99682210,
+    "short_oi_lots": 87008,
+    "short_oi_amt": 825614957,
+    "net_oi_lots": -76502,
+    "net_oi_amt": -725932747,
+    "identity": "外資及陸資"
+   },
+   "spot": {
+    "buy_amt": 590443430438,
+    "sell_amt": 629035783079,
+    "net_amt": -38592352641,
+    "unit": "外資及陸資(不含外資自營商)"
+   }
+  }
+ }
+}

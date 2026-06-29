@@ -1,0 +1,49 @@
+{
+ "code": "CD",
+ "name": "台積電",
+ "sid": "2330",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 12034,
+    "top5_sell": 14760,
+    "top10_buy": 15074,
+    "top10_sell": 20758,
+    "market_oi": 30189,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 8362,
+    "top5_sell": 14760,
+    "top10_buy": 8774,
+    "top10_sell": 20758,
+    "market_oi": 30189,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 14568,
+    "top5_sell": 16350,
+    "top10_buy": 18085,
+    "top10_sell": 24880,
+    "market_oi": 38997,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 10896,
+    "top5_sell": 16350,
+    "top10_buy": 11768,
+    "top10_sell": 24880,
+    "market_oi": 38997,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

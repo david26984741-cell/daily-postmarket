@@ -1,0 +1,60 @@
+name: 每日盤後資料抓取與部署
+
+on:
+  schedule:
+    # UTC 07:05 = 台北 15:05 (週一至週五)。腳本內含休市判斷與 30 分鐘重試,非交易日自動略過。
+    - cron: "5 7 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "手動指定日期 YYYY/MM/DD (留空=今天)"
+        required: false
+      no_retry:
+        description: "略過 30 分鐘重試 (true/false)"
+        required: false
+        default: "false"
+
+permissions:
+  contents: write   # 允許 commit 回 main
+
+concurrency:
+  group: daily-postmarket
+  cancel-in-progress: false
+
+jobs:
+  scrape-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    env:
+      TZ: Asia/Taipei
+      RETRY_WAIT: "1800"   # 30 分鐘
+      MAX_RETRY: "6"       # 最多重試 6 次 (約 3 小時)
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 執行抓取
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.date }}" ]; then ARGS="--date ${{ github.event.inputs.date }}"; fi
+          if [ "${{ github.event.inputs.no_retry }}" = "true" ]; then ARGS="$ARGS --no-retry"; fi
+          python scrape.py $ARGS
+
+      - name: Commit 資料更新
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "無資料變更 (可能為非交易日或資料未更新)";
+          else
+            git commit -m "資料更新 $(date '+%Y/%m/%d %H:%M')"
+            git push
+          fi
+
+# 部署:於 GitHub 倉庫 Settings → Pages,將 Source 設為 "Deploy from a branch",
+# 分支選 main、資料夾選 / (root)。每次 push 後 GitHub Pages 會自動重新部署,
+# 客戶連到的固定網址 (https://<帳號>.github.io/<倉庫名>/) 即為當日最新內容。

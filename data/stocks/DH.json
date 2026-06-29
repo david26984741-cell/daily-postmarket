@@ -1,0 +1,49 @@
+{
+ "code": "DH",
+ "name": "鴻海",
+ "sid": "2317",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 12709,
+    "top5_sell": 16759,
+    "top10_buy": 14022,
+    "top10_sell": 19397,
+    "market_oi": 21388,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 12709,
+    "top5_sell": 16759,
+    "top10_buy": 13409,
+    "top10_sell": 19397,
+    "market_oi": 21388,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 16193,
+    "top5_sell": 22905,
+    "top10_buy": 18289,
+    "top10_sell": 25677,
+    "market_oi": 27891,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 16193,
+    "top5_sell": 22905,
+    "top10_buy": 17772,
+    "top10_sell": 25677,
+    "market_oi": 27891,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

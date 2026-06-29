@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>分類明細 — 每日盤後資料</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1><a href="index.html" style="color:inherit">每日盤後資料</a><small>分類明細 · 當日與歷史</small></h1>
+  <nav class="main" id="nav"></nav>
+</div></header>
+
+<div class="wrap">
+  <div class="crumbs"><a href="index.html">← 當日整合總覽</a></div>
+  <h2 class="sec" id="title">載入中…</h2>
+  <p class="lead" id="src"></p>
+
+  <div class="toolbar">
+    <label class="muted">查詢日期</label>
+    <select id="dateSel"></select>
+    <span class="muted" id="hint"></span>
+  </div>
+  <div id="detail"></div>
+
+  <h2 class="sec">歷史趨勢 <span class="tag">依日期</span></h2>
+  <div id="history"></div>
+
+  <footer>資料來源:臺灣期貨交易所、臺灣證券交易所。歷史資料逐日累積保存 (至少一年)。</footer>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(async function(){
+  const cat=new URLSearchParams(location.search).get("cat")||"options_foreign";
+  const nav=$("#nav");
+  CATS.forEach(c=>{const a=el("a",null,c.title);a.href=c.id==="stocks"?"index.html#stocks":`detail.html?cat=${c.id}`;a.dataset.k=c.id;nav.appendChild(a);});
+  navActive(cat);
+
+  if(cat==="stocks"){ location.href="index.html#stocks"; return; }
+  const meta=CATS.find(c=>c.id===cat);
+  const idx=await getJSON("index.json");
+  const doc=await getJSON(meta.file);
+  $("#title").textContent=meta.title;
+  $("#src").textContent="來源:"+((doc.meta&&doc.meta.source)||"");
+
+  const dates=Object.keys(doc.records).sort().reverse();
+  const sel=$("#dateSel");
+  dates.forEach(d=>{const o=el("option",null,d);o.value=d;sel.appendChild(o);});
+
+  const renderers={options_foreign:renderOptions,options_dealer:renderOptions,
+    foreign_fut_spot:renderFutSpot,large_opt:renderLargeOpt,large_fut_txf:renderLargeFut};
+  function showDate(d){
+    const box=$("#detail"); box.innerHTML="";
+    const rec=doc.records[d];
+    if(!rec){box.appendChild(el("div","warn","該日無資料"));return;}
+    box.appendChild(renderers[cat](rec));
+  }
+  sel.onchange=()=>showDate(sel.value);
+  showDate(dates[0]);
+
+  // 歷史趨勢摘要
+  function summaryRows(){
+    const H={
+      options_foreign:[{label:"日期",sort:true},{label:"CALL買賣差額",num:true},{label:"PUT買賣差額",num:true},{label:"CALL買方未平倉",num:true},{label:"PUT買方未平倉",num:true}],
+      options_dealer:[{label:"日期",sort:true},{label:"CALL買賣差額",num:true},{label:"PUT買賣差額",num:true},{label:"CALL買方未平倉",num:true},{label:"PUT買方未平倉",num:true}],
+      foreign_fut_spot:[{label:"日期",sort:true},{label:"期貨多空淨額(口)",num:true},{label:"現貨買賣差額(元)",num:true}],
+      large_opt:[{label:"日期",sort:true},{label:"CALL全市場未沖銷",num:true},{label:"PUT全市場未沖銷",num:true}],
+      large_fut_txf:[{label:"日期",sort:true},{label:"所有契約前五大買",num:true},{label:"所有契約前五大賣",num:true},{label:"全市場未沖銷",num:true}],
+    }[cat];
+    const rows=dates.map(d=>{const r=doc.records[d]; const o={"日期":d};
+      if(cat.startsWith("options")){o["CALL買賣差額"]=cell(r.call?.diff_oi_lots,true);o["PUT買賣差額"]=cell(r.put?.diff_oi_lots,true);o["CALL買方未平倉"]=cell(r.call?.buy_oi_lots);o["PUT買方未平倉"]=cell(r.put?.buy_oi_lots);}
+      else if(cat==="foreign_fut_spot"){o["期貨多空淨額(口)"]=cell(r.fut?.net_oi_lots,true);o["現貨買賣差額(元)"]=cell(r.spot?.net_amt,true);}
+      else if(cat==="large_opt"){const c=(r.call||[]).find(x=>x.month==="999999"&&x.type==="0") ||{};const p=(r.put||[]).find(x=>x.month==="999999"&&x.type==="0")||{};o["CALL全市場未沖銷"]=cell(c.market_oi);o["PUT全市場未沖銷"]=cell(p.market_oi);}
+      else if(cat==="large_fut_txf"){const a=(r.rows||[]).find(x=>x.month==="999999"&&x.type==="0")||{};o["所有契約前五大買"]=cell(a.top5_buy);o["所有契約前五大賣"]=cell(a.top5_sell);o["全市場未沖銷"]=cell(a.market_oi);}
+      return o;});
+    return {H,rows};
+  }
+  const {H,rows}=summaryRows();
+  $("#history").appendChild(sortableTable(H,rows));
+})();
+</script>
+</body>
+</html>

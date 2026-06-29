@@ -1,0 +1,49 @@
+{
+ "code": "CE",
+ "name": "富邦金",
+ "sid": "2881",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 927,
+    "top5_sell": 1179,
+    "top10_buy": 1143,
+    "top10_sell": 1391,
+    "market_oi": 1570,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 538,
+    "top5_sell": 1179,
+    "top10_buy": 688,
+    "top10_sell": 1352,
+    "market_oi": 1570,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 927,
+    "top5_sell": 1182,
+    "top10_buy": 1174,
+    "top10_sell": 1399,
+    "market_oi": 1604,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 538,
+    "top5_sell": 1182,
+    "top10_buy": 719,
+    "top10_sell": 1360,
+    "market_oi": 1604,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

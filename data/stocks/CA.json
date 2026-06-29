@@ -1,0 +1,49 @@
+{
+ "code": "CA",
+ "name": "南亞",
+ "sid": "1303",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 3271,
+    "top5_sell": 6572,
+    "top10_buy": 4491,
+    "top10_sell": 8568,
+    "market_oi": 9793,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 1871,
+    "top5_sell": 6572,
+    "top10_buy": 2261,
+    "top10_sell": 8568,
+    "market_oi": 9793,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 3455,
+    "top5_sell": 6771,
+    "top10_buy": 4710,
+    "top10_sell": 8887,
+    "market_oi": 10369,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 2005,
+    "top5_sell": 6771,
+    "top10_buy": 2395,
+    "top10_sell": 8887,
+    "market_oi": 10369,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,2 @@
+# scrape.py 僅使用 Python 標準函式庫 (urllib / json), 無第三方相依套件。
+# 此檔保留以利日後擴充 (例如改用 requests / pandas)。

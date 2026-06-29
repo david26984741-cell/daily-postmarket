@@ -1,0 +1,28 @@
+{
+ "meta": {
+  "title": "外資選擇權",
+  "source": "臺指選擇權-買賣權分計-未平倉"
+ },
+ "records": {
+  "2026/06/23": {
+   "call": {
+    "buy_oi_lots": 7512,
+    "buy_oi_amt": 573963,
+    "sell_oi_lots": 6437,
+    "sell_oi_amt": 857163,
+    "diff_oi_lots": 1075,
+    "diff_oi_amt": -283200,
+    "identity": "外資及陸資"
+   },
+   "put": {
+    "buy_oi_lots": 16415,
+    "buy_oi_amt": 407976,
+    "sell_oi_lots": 9643,
+    "sell_oi_amt": 332442,
+    "diff_oi_lots": 6772,
+    "diff_oi_amt": 75534,
+    "identity": "外資及陸資"
+   }
+  }
+ }
+}

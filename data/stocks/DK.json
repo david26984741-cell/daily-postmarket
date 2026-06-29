@@ -1,0 +1,49 @@
+{
+ "code": "DK",
+ "name": "廣達",
+ "sid": "2382",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 3239,
+    "top5_sell": 4852,
+    "top10_buy": 3841,
+    "top10_sell": 5274,
+    "market_oi": 5472,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 3239,
+    "top5_sell": 4852,
+    "top10_buy": 3741,
+    "top10_sell": 5274,
+    "market_oi": 5472,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 3245,
+    "top5_sell": 4856,
+    "top10_buy": 3847,
+    "top10_sell": 5283,
+    "market_oi": 5504,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 3245,
+    "top5_sell": 4856,
+    "top10_buy": 3747,
+    "top10_sell": 5283,
+    "market_oi": 5504,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

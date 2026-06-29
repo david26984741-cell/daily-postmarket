@@ -1,0 +1,49 @@
+{
+ "code": "CB",
+ "name": "中鋼",
+ "sid": "2002",
+ "records": {
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 1759,
+    "top5_sell": 3701,
+    "top10_buy": 2237,
+    "top10_sell": 3824,
+    "market_oi": 3900,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 952,
+    "top5_sell": 3701,
+    "top10_buy": 1235,
+    "top10_sell": 3806,
+    "market_oi": 3900,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1759,
+    "top5_sell": 3716,
+    "top10_buy": 2237,
+    "top10_sell": 3840,
+    "market_oi": 3918,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 952,
+    "top5_sell": 3716,
+    "top10_buy": 1235,
+    "top10_sell": 3821,
+    "market_oi": 3918,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>個股期貨 — 每日盤後資料</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1><a href="index.html" style="color:inherit">每日盤後資料</a><small>大額交易人 · 個股期貨</small></h1>
+  <nav class="main" id="nav"></nav>
+</div></header>
+
+<div class="wrap">
+  <div class="crumbs"><a href="index.html">← 當日整合總覽</a> · <a href="index.html#stocks">個股清單</a></div>
+  <h2 class="sec" id="title">載入中…</h2>
+  <p class="lead" id="meta"></p>
+
+  <div class="toolbar">
+    <label class="muted">查詢日期</label><select id="dateSel"></select>
+    <label class="muted">切換個股</label><select id="stkSel"></select>
+  </div>
+  <div id="detail"></div>
+
+  <h2 class="sec">歷史趨勢 <span class="tag">依日期</span></h2>
+  <div id="history"></div>
+
+  <footer>資料來源:臺灣期貨交易所。個股期貨歷史以「契約名稱」對齊,新增/下架自動處理。</footer>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(async function(){
+  const code=new URLSearchParams(location.search).get("code");
+  const nav=$("#nav");
+  CATS.forEach(c=>{const a=el("a",null,c.title);a.href=c.id==="stocks"?"index.html#stocks":`detail.html?cat=${c.id}`;a.dataset.k=c.id;nav.appendChild(a);});
+  navActive("stocks");
+  const idx=await getJSON("index.json");
+
+  // 個股切換清單
+  const stkSel=$("#stkSel");
+  (idx.stocks||[]).forEach(s=>{const o=el("option",null,`${s.name} (${s.code})`);o.value=s.code;if(s.code===code)o.selected=true;stkSel.appendChild(o);});
+  stkSel.onchange=()=>location.href=`stock.html?code=${stkSel.value}`;
+
+  let doc;
+  try{ doc=await getJSON(`stocks/${code}.json`); }catch(e){ $("#title").textContent="找不到此個股期貨"; return; }
+  $("#title").textContent=`${doc.name} 期貨`;
+  $("#meta").textContent=`商品代碼 ${doc.code}　證券代號 ${doc.sid||"—"}`;
+
+  const dates=Object.keys(doc.records).sort().reverse();
+  const sel=$("#dateSel"); dates.forEach(d=>{const o=el("option",null,d);o.value=d;sel.appendChild(o);});
+  function show(d){const b=$("#detail");b.innerHTML="";const rows=doc.records[d];
+    if(!rows||!rows.length){b.appendChild(el("div","warn","該日無資料"));return;}
+    b.appendChild(largeRows(rows));}
+  sel.onchange=()=>show(sel.value); show(dates[0]);
+
+  // 歷史: 所有契約 全部交易人 的 前五大/前十大/全市場
+  const H=[{label:"日期",sort:true},{label:"前五大買方",num:true},{label:"前五大賣方",num:true},{label:"前十大買方",num:true},{label:"前十大賣方",num:true},{label:"全市場未沖銷",num:true}];
+  const rows=dates.map(d=>{const a=(doc.records[d]||[]).find(x=>x.month==="999999"&&x.type==="0")||{};
+    return {"日期":d,"前五大買方":cell(a.top5_buy),"前五大賣方":cell(a.top5_sell),"前十大買方":cell(a.top10_buy),"前十大賣方":cell(a.top10_sell),"全市場未沖銷":cell(a.market_oi)};});
+  $("#history").appendChild(sortableTable(H,rows));
+})();
+</script>
+</body>
+</html>

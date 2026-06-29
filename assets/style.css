@@ -1,0 +1,64 @@
+:root{
+  --bg:#0f1620; --card:#16202c; --card2:#1c2836; --line:#27384a;
+  --txt:#e8eef5; --mut:#90a2b5; --accent:#4ea1ff; --accenth:#2b7fe0;
+  --up:#ff5b5b; --down:#22c55e; --head:#1a2735;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.5;font-size:15px}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accenth)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px 60px}
+
+header.top{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,#0f1620 70%,rgba(15,22,32,.85));border-bottom:1px solid var(--line);backdrop-filter:blur(6px)}
+header.top .wrap{padding-top:14px;padding-bottom:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+header.top h1{font-size:18px;margin:0;font-weight:700;letter-spacing:.5px}
+header.top h1 small{display:block;font-size:11px;color:var(--mut);font-weight:400;letter-spacing:0}
+nav.main{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.main a{padding:6px 11px;border-radius:8px;font-size:13px;color:var(--mut);border:1px solid transparent}
+nav.main a:hover,nav.main a.active{background:var(--card2);color:var(--txt);border-color:var(--line)}
+.datechip{font-size:13px;color:var(--mut)}
+.datechip b{color:var(--accent)}
+
+h2.sec{font-size:16px;margin:30px 0 12px;display:flex;align-items:center;gap:10px}
+h2.sec .tag{font-size:11px;background:var(--card2);border:1px solid var(--line);color:var(--mut);padding:2px 8px;border-radius:20px}
+.lead{color:var(--mut);font-size:13px;margin:4px 0 0}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;margin-top:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;overflow:hidden}
+.card h3{margin:0 0 4px;font-size:15px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.card h3 a{font-size:12px;font-weight:400}
+.card .src{color:var(--mut);font-size:11px;margin-bottom:10px}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+table.dense{font-size:13px}
+th,td{padding:7px 9px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{background:var(--head);color:var(--mut);font-weight:600;position:sticky;top:0;cursor:pointer;user-select:none}
+thead th.noSort{cursor:default}
+thead th .ar{opacity:.4;font-size:10px;margin-left:3px}
+tbody tr:hover{background:var(--card2)}
+td.num{font-variant-numeric:tabular-nums}
+.up{color:var(--up)} .down{color:var(--down)}
+.pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:20px;border:1px solid var(--line);color:var(--mut)}
+.pill.call{color:#ffb454;border-color:#5a4326}
+.pill.put{color:#7aa2ff;border-color:#2c3a63}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.tablewrap table{font-size:13.5px}
+.tablewrap thead th{background:var(--head)}
+
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:6px 0 12px}
+select,input{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:14px}
+.muted{color:var(--mut)}
+.warn{background:#3a2a12;border:1px solid #6b4a1d;color:#ffcf8f;padding:10px 14px;border-radius:10px;font-size:13px;margin:10px 0}
+.kpis{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 4px}
+.kpi{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-width:120px}
+.kpi .l{font-size:11px;color:var(--mut)} .kpi .v{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+footer{color:var(--mut);font-size:12px;border-top:1px solid var(--line);margin-top:40px;padding-top:16px}
+.crumbs{font-size:13px;color:var(--mut);margin:14px 0 0}
+.stocklist{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-top:10px}
+.stocklist a{background:var(--card2);border:1px solid var(--line);border-radius:9px;padding:8px 10px;display:flex;justify-content:space-between;font-size:13px}
+.stocklist a:hover{border-color:var(--accent)}
+.stocklist a .c{color:var(--mut);font-size:11px}
+@media(max-width:600px){header.top h1{font-size:16px}.grid{grid-template-columns:1fr}}
