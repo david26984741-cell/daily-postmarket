@@ -58,11 +58,14 @@ def num(s):
         except ValueError:
             return 0
 
-def http_get(url, params=None, big5=False, timeout=40):
+def http_get(url, params=None, big5=False, timeout=40, headers=None):
     if params:
         from urllib.parse import urlencode
         url = url + "?" + urlencode(params)
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    h = {"User-Agent": UA}
+    if headers:
+        h.update(headers)
+    req = urllib.request.Request(url, headers=h)
     with urllib.request.urlopen(req, timeout=timeout) as r:
         raw = r.read()
     return raw.decode("big5", errors="replace") if big5 else raw.decode("utf-8", errors="replace")
@@ -129,11 +132,23 @@ def parse_foreign_fut(rows):
 
 
 def parse_twse_spot(date_yyyymmdd):
-    """TWSE BFI82U: 外資及陸資(不含外資自營商) 買賣差額 (現貨)。"""
-    txt = http_get(TWSE_BFI, {"response": "json", "date": date_yyyymmdd, "type": "day"})
-    obj = json.loads(txt)
-    if obj.get("stat") != "OK":
-        return None, obj.get("date", "")
+    """TWSE BFI82U: 外資及陸資(不含外資自營商) 買賣差額 (現貨)。
+       TWSE 的 rwd 端點對非台灣 IP / 無 Referer 的請求可能拒絕, 故加上 Referer 並重試。"""
+    hdr = {"Referer": "https://www.twse.com.tw/zh/trading/foreign/bfi82u.html",
+           "Accept": "application/json, text/javascript, */*; q=0.01",
+           "X-Requested-With": "XMLHttpRequest"}
+    obj = None
+    for i in range(3):
+        try:
+            txt = http_get(TWSE_BFI, {"response": "json", "date": date_yyyymmdd, "type": "day"}, headers=hdr)
+            obj = json.loads(txt)
+            if obj.get("stat") == "OK":
+                break
+        except Exception as e:
+            log(f"  TWSE 第 {i+1}/3 次失敗: {e}")
+        time.sleep(5)
+    if not obj or obj.get("stat") != "OK":
+        return None, (obj or {}).get("date", "")
     # 確認回傳日期
     ret_date = obj.get("date", "")
     if ret_date and ret_date != date_yyyymmdd:
@@ -335,8 +350,8 @@ def run(date_slash, no_retry=False):
     # --- 來源 4: largeTraderFut (cat5 + cat6) ---
     lf_rows = fetch_with_retry("largeFut", date_slash, no_retry)
     if lf_rows:
-        # cat5: 臺股期貨
-        txf = parse_large_fut(lf_rows, want_name="臺股期貨")
+        # cat5: 臺股期貨 (大額交易人期貨檔以「商品代碼 TXF」為鍵, 與選擇權 TXO 對應; 名稱備援)
+        txf = parse_large_fut(lf_rows, want_codes={"TXF", "TX"}) or parse_large_fut(lf_rows, want_name="臺股期貨")
         if txf:
             g = list(txf.values())[0]
             append_record("large_fut_txf.json", {"title": "大額交易人期貨", "source": "臺股期貨 當月+所有契約"},
