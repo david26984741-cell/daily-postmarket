@@ -5,11 +5,50 @@
  },
  "records": {
   "2026/06/23": {
-   "code": "TXF",
-   "name": "臺股期貨",
-   "rows": [],
-   "pending": true,
-   "note": "臺股期貨大額部位將於首次正式排程 (GitHub Actions) 執行時自動填入完整資料。"
+   "code": "TX",
+   "name": "臺股期貨(TX+MTX/4+TMF/20)",
+   "rows": [
+    {
+     "month": "202607",
+     "type": "0",
+     "top5_buy": 61431,
+     "top5_sell": 63182,
+     "top10_buy": 72181,
+     "top10_sell": 82124,
+     "market_oi": 109142,
+     "scope": "當月"
+    },
+    {
+     "month": "202607",
+     "type": "1",
+     "top5_buy": 61431,
+     "top5_sell": 63182,
+     "top10_buy": 67149,
+     "top10_sell": 82124,
+     "market_oi": 109142,
+     "scope": "當月"
+    },
+    {
+     "month": "999999",
+     "type": "0",
+     "top5_buy": 61431,
+     "top5_sell": 63672,
+     "top10_buy": 72700,
+     "top10_sell": 83206,
+     "market_oi": 113736,
+     "scope": "所有契約"
+    },
+    {
+     "month": "999999",
+     "type": "1",
+     "top5_buy": 61431,
+     "top5_sell": 63672,
+     "top10_buy": 67149,
+     "top10_sell": 83206,
+     "market_oi": 113736,
+     "scope": "所有契約"
+    }
+   ]
   }
  }
 }
