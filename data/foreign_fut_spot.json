@@ -15,6 +15,23 @@
     "identity": "外資及陸資"
    },
    "spot": null
+  },
+  "2026/06/29": {
+   "fut": {
+    "long_oi_lots": 7494,
+    "long_oi_amt": 68293119,
+    "short_oi_lots": 84121,
+    "short_oi_amt": 766601512,
+    "net_oi_lots": -76627,
+    "net_oi_amt": -698308393,
+    "identity": "外資及陸資"
+   },
+   "spot": {
+    "buy_amt": 426325616379,
+    "sell_amt": 432336573936,
+    "net_amt": -6010957557,
+    "unit": "外資及陸資(不含外資自營商)"
+   }
   }
  }
 }
