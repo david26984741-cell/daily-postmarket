@@ -128,6 +128,48 @@
     "market_oi": 93,
     "scope": "所有契約"
    }
+  ],
+  "2026/07/02": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 109,
+    "top5_sell": 110,
+    "top10_buy": 110,
+    "top10_sell": 110,
+    "market_oi": 110,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 29,
+    "top5_sell": 107,
+    "top10_buy": 29,
+    "top10_sell": 107,
+    "market_oi": 110,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 111,
+    "top5_sell": 113,
+    "top10_buy": 113,
+    "top10_sell": 113,
+    "market_oi": 113,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 29,
+    "top5_sell": 108,
+    "top10_buy": 29,
+    "top10_sell": 108,
+    "market_oi": 113,
+    "scope": "所有契約"
+   }
   ]
  }
 }

@@ -1,11 +1,12 @@
 {
  "dates": [
+  "2026/07/02",
   "2026/06/30",
   "2026/06/29",
   "2026/06/23"
  ],
- "latest_date": "2026/06/30",
- "updated_at": "2026-06-30T21:30:29",
+ "latest_date": "2026/07/02",
+ "updated_at": "2026-07-02T21:21:30",
  "stocks": [
   {
    "code": "CA",
@@ -1498,6 +1499,14 @@
    "stocks": "ok (288 檔)"
   },
   "2026/06/30": {
+   "options_foreign": "ok",
+   "options_dealer": "ok",
+   "foreign_fut_spot": "ok",
+   "large_opt": "ok",
+   "large_fut_txf": "ok",
+   "stocks": "ok (288 檔)"
+  },
+  "2026/07/02": {
    "options_foreign": "ok",
    "options_dealer": "ok",
    "foreign_fut_spot": "ok",
