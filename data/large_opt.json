@@ -459,6 +459,120 @@
      "market_oi": 87173
     }
    ]
+  },
+  "2026/07/03": {
+   "call": [
+    {
+     "month": "666666",
+     "type": "0",
+     "top5_buy": 7330,
+     "top5_sell": 9070,
+     "top10_buy": 8096,
+     "top10_sell": 10286,
+     "market_oi": 15092
+    },
+    {
+     "month": "666666",
+     "type": "1",
+     "top5_buy": 270,
+     "top5_sell": 800,
+     "top10_buy": 524,
+     "top10_sell": 800,
+     "market_oi": 15092
+    },
+    {
+     "month": "202607",
+     "type": "0",
+     "top5_buy": 9243,
+     "top5_sell": 11393,
+     "top10_buy": 12193,
+     "top10_sell": 14751,
+     "market_oi": 27045
+    },
+    {
+     "month": "202607",
+     "type": "1",
+     "top5_buy": 804,
+     "top5_sell": 1040,
+     "top10_buy": 2816,
+     "top10_sell": 3617,
+     "market_oi": 27045
+    },
+    {
+     "month": "999999",
+     "type": "0",
+     "top5_buy": 17785,
+     "top5_sell": 19887,
+     "top10_buy": 21540,
+     "top10_sell": 24642,
+     "market_oi": 47210
+    },
+    {
+     "month": "999999",
+     "type": "1",
+     "top5_buy": 948,
+     "top5_sell": 2212,
+     "top10_buy": 3168,
+     "top10_sell": 3843,
+     "market_oi": 47210
+    }
+   ],
+   "put": [
+    {
+     "month": "666666",
+     "type": "0",
+     "top5_buy": 8814,
+     "top5_sell": 7957,
+     "top10_buy": 9897,
+     "top10_sell": 8949,
+     "market_oi": 16849
+    },
+    {
+     "month": "666666",
+     "type": "1",
+     "top5_buy": 0,
+     "top5_sell": 1088,
+     "top10_buy": 0,
+     "top10_sell": 1469,
+     "market_oi": 16849
+    },
+    {
+     "month": "202607",
+     "type": "0",
+     "top5_buy": 18177,
+     "top5_sell": 17630,
+     "top10_buy": 21635,
+     "top10_sell": 22380,
+     "market_oi": 37517
+    },
+    {
+     "month": "202607",
+     "type": "1",
+     "top5_buy": 5999,
+     "top5_sell": 7689,
+     "top10_buy": 6703,
+     "top10_sell": 10849,
+     "market_oi": 37517
+    },
+    {
+     "month": "999999",
+     "type": "0",
+     "top5_buy": 25557,
+     "top5_sell": 28430,
+     "top10_buy": 34314,
+     "top10_sell": 36738,
+     "market_oi": 64347
+    },
+    {
+     "month": "999999",
+     "type": "1",
+     "top5_buy": 6799,
+     "top5_sell": 8150,
+     "top10_buy": 10067,
+     "top10_sell": 15421,
+     "market_oi": 64347
+    }
+   ]
   }
  }
 }
