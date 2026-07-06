@@ -2,8 +2,10 @@ name: 每日盤後資料抓取與部署
 
 on:
   schedule:
-    # UTC 07:05 = 台北 15:05 (週一至週五)。腳本內含休市判斷與 30 分鐘重試,非交易日自動略過。
-    - cron: "5 7 * * 1-5"
+    # UTC 07:35 = 台北 15:35 (週一至週五)。此時期交所/證交所盤後資料已公布完畢,
+    # 一抓即到、不需長時間重試。腳本內含休市判斷與 30 分鐘重試作為保險,非交易日自動略過。
+    # 註:GitHub 免費排程為「盡力而為」,實際觸發常延後到傍晚, 屬正常現象。
+    - cron: "35 7 * * 1-5"
   workflow_dispatch:
     inputs:
       date:
@@ -14,8 +16,11 @@ on:
         required: false
         default: "false"
 
+# Pages 官方部署所需權限 (較「分支自動部署」穩定)
 permissions:
   contents: write   # 允許 commit 回 main
+  pages: write      # 允許部署 GitHub Pages
+  id-token: write   # 部署身分驗證
 
 concurrency:
   group: daily-postmarket
@@ -25,6 +30,9 @@ jobs:
   scrape-and-deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 330
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     env:
       TZ: Asia/Taipei
       RETRY_WAIT: "1800"   # 30 分鐘
@@ -55,6 +63,24 @@ jobs:
             git push
           fi
 
-# 部署:於 GitHub 倉庫 Settings → Pages,將 Source 設為 "Deploy from a branch",
-# 分支選 main、資料夾選 / (root)。每次 push 後 GitHub Pages 會自動重新部署,
-# 客戶連到的固定網址 (https://<帳號>.github.io/<倉庫名>/) 即為當日最新內容。
+      # ---- 由工作流程直接部署網站 (取代不穩定的分支自動部署) ----
+      - name: 準備網站檔案
+        run: |
+          rm -rf _site && mkdir -p _site
+          cp -r index.html detail.html stock.html assets data .nojekyll _site/ 2>/dev/null || true
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+# 部署方式:GitHub 官方 Actions 部署 (Settings → Pages → Source 設為 "GitHub Actions")。
+# 每次工作流程執行都會直接把最新網站內容部署上去, 不再依賴不穩定的分支自動部署;
+# 即使某次失敗, 下一次執行也會自動補上。固定網址: https://<帳號>.github.io/<倉庫名>/
