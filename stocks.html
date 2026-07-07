@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>股票期貨 — 大額交易人 主力/自然人/特定法人</title>
 <link rel="stylesheet" href="assets/style.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -123,7 +123,8 @@
         `<span class="tagm">【前十】${k}</span> 淨部位 <b class="${lv>0?'up':(lv<0?'down':'')}">${lv==null?'—':Number(lv).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(ch)}</span>`));
       const cw=el("div","stk-canvas"); const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
       body.appendChild(panel);
-      makeChart(cv.getContext("2d"), ser.dates, ser[k].lv, ser[k].ch, color);
+      try{ makeChart(cv.getContext("2d"), ser.dates, ser[k].lv, ser[k].ch, color); }
+      catch(e){ cw.appendChild(el("div","warn","圖表載入失敗:"+e.message)); }
     });
   }
 
