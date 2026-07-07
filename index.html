@@ -33,7 +33,7 @@
 (async function(){
   // nav
   const nav=$("#nav");
-  CATS.forEach(c=>{ const href = c.id==="stocks" ? "#stocks" : `detail.html?cat=${c.id}`;
+  CATS.forEach(c=>{ const href = c.id==="stocks" ? "stocks.html" : `detail.html?cat=${c.id}`;
     const a=el("a",null,c.title); a.href=href; a.dataset.k=c.id; nav.appendChild(a); });
   let idx;
   try{ idx=await getJSON("index.json"); }catch(e){ $("#dchip").textContent="無法載入 index.json"; return; }
@@ -72,7 +72,7 @@
   $("#stkcount").textContent=(idx.stocks||[]).length+" 檔";
   const sc=$("#stocks");
   (idx.stocks||[]).forEach(s=>{ const a=el("a",null,`<span>${s.name}</span><span class="c">${s.code}·${s.sid||""}</span>`);
-    a.href=`stock.html?code=${s.code}`; sc.appendChild(a); });
+    a.href=`stocks.html?code=${s.code}`; sc.appendChild(a); });
 })();
 </script>
 </body>

@@ -216,7 +216,7 @@ function renderLargeFut(rec, prev){
         "未平倉淨部位":netCell(o.net, p?o.net-p.net:undefined)};
     });
     holder.appendChild(sortableTable(headers,rows,{dense:true}));
-    holder.appendChild(el("div","muted2",`全市場未沖銷部位:${fmt(g.market)} 口`));
+    holder.appendChild(el("div","muted2","全市場未沖銷部位:"+fmt(g.market)+" 口"));
     const inner=el("div"); inner.appendChild(largeRows((rec.rows||[]).filter(x=>x.month===cur)));
     holder.appendChild(rawDetails(inner));
   }

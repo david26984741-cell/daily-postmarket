@@ -81,3 +81,26 @@ details.rawdet>summary::-webkit-details-marker{display:none}
 details.rawdet>summary::before{content:"▸  ";color:var(--mut)}
 details.rawdet[open]>summary::before{content:"▾  "}
 details.rawdet>div{padding:2px 12px 12px}
+
+/* 股票期貨專頁 */
+.stk-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:14px 0 8px}
+.stk-toolbar #q{flex:1 1 320px;min-width:240px;font-size:14px}
+.stk-toolbar button{background:var(--accent);color:#08131f;border:none;border-radius:8px;padding:8px 14px;font-size:14px;font-weight:600;cursor:pointer}
+.stk-toolbar button:hover{background:var(--accenth);color:#fff}
+.stk-toolbar button.ghost{background:transparent;color:var(--mut);border:1px solid var(--line);font-weight:400}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 8px}
+.chip{background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:4px 10px 4px 12px;font-size:13px;display:inline-flex;align-items:center;gap:6px}
+.chip .c{color:var(--mut);font-size:11px}
+.chip b{cursor:pointer;color:var(--mut);font-weight:700;padding:0 2px}
+.chip b:hover{color:var(--up)}
+.stk-blocks{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;align-items:flex-start}
+.stk-block{flex:1 1 440px;min-width:320px;max-width:640px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.stk-title{font-size:16px;font-weight:700;margin-bottom:8px}
+.stk-title .c{font-size:12px;color:var(--mut);font-weight:400;margin-left:6px}
+.stk-panel{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
+.stk-panel:first-of-type{border-top:none;margin-top:0}
+.stk-panelhd{font-size:12.5px;color:var(--mut);margin-bottom:2px}
+.stk-panelhd b{font-variant-numeric:tabular-nums}
+.tagm{display:inline-block;background:var(--head);border:1px solid var(--line);color:var(--txt);border-radius:6px;padding:1px 7px;font-size:11.5px;margin-right:4px}
+.stk-canvas{position:relative;height:150px;width:100%}
+.stk-canvas canvas{width:100%!important;height:100%!important}
