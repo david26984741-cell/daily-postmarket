@@ -64,3 +64,20 @@ footer{color:var(--mut);font-size:12px;border-top:1px solid var(--line);margin-t
 .stocklist a:hover{border-color:var(--accent)}
 .stocklist a .c{color:var(--mut);font-size:11px}
 @media(max-width:600px){header.top h1{font-size:16px}.grid{grid-template-columns:1fr}}
+
+/* 新版:符號、增減、圖例、明細 */
+.mut{color:var(--mut)}
+.dlt{font-size:11.5px;margin-left:5px;white-space:nowrap}
+.arw{font-variant-numeric:tabular-nums}
+.bias{font-size:16px;font-weight:700}
+.legend{font-size:12px;color:var(--mut);margin:8px 0 8px;line-height:1.6}
+.legend b{color:var(--txt)}
+.optbar{display:flex;align-items:center;gap:6px;margin:2px 0 8px}
+.optbar select{padding:5px 9px;font-size:13px}
+.muted2{font-size:12px;color:var(--mut);margin:8px 0 2px}
+details.rawdet{margin-top:12px;border:1px solid var(--line);border-radius:10px;background:var(--card2)}
+details.rawdet>summary{cursor:pointer;padding:8px 12px;font-size:13px;color:var(--accent);user-select:none;list-style:none}
+details.rawdet>summary::-webkit-details-marker{display:none}
+details.rawdet>summary::before{content:"▸  ";color:var(--mut)}
+details.rawdet[open]>summary::before{content:"▾  "}
+details.rawdet>div{padding:2px 12px 12px}

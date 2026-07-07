@@ -47,6 +47,8 @@
   if(bad.length){ const w=el("div","warn","部分來源狀態:"+bad.map(([k,v])=>`${k}=${v}`).join("、")); $("#status").appendChild(w); }
 
   const grid=$("#grid");
+  const dates=(idx.dates||[]).slice();     // 已由新到舊排序
+  const prevD=dates[1];                    // 前一個交易日
   async function card(c, renderer){
     const div=el("div","card");
     div.appendChild(el("h3",null,`${c.title}<a href="detail.html?cat=${c.id}">歷史 →</a>`));
@@ -54,8 +56,9 @@
     try{
       const doc=await getJSON(c.file);
       const rec=doc.records[D];
+      const prev=prevD?doc.records[prevD]:null;
       if(!rec){ div.appendChild(el("div","warn","當日無資料")); }
-      else div.appendChild(renderer(rec));
+      else div.appendChild(renderer(rec, prev));
     }catch(e){ div.appendChild(el("div","warn","無法載入")); }
     grid.appendChild(div);
   }
