@@ -309,7 +309,6 @@ def run(date_slash, no_retry=False):
 
     log(f"=== 開始抓取 {date_slash} ===")
     stock_map = load_json(os.path.join(DATA, "stock_map.json"), {})
-    stock_codes = set(stock_map.keys())
 
     # --- 來源 1: callsAndPuts (cat1, cat2) ---
     cp_rows = fetch_with_retry("callsAndPuts", date_slash, no_retry)
@@ -330,6 +329,12 @@ def run(date_slash, no_retry=False):
         spot, _ = parse_twse_spot(yyyymmdd)
     except Exception as e:
         log(f"  TWSE 抓取錯誤: {e}"); spot = None
+    if spot is None:
+        # 回補/重抓舊日期時 TWSE 常無歷史資料 — 保留該日既有的現貨值, 不以 null 覆蓋
+        _old = load_json(os.path.join(DATA, "foreign_fut_spot.json"), {}).get("records", {}).get(date_slash)
+        if _old and _old.get("spot"):
+            spot = _old["spot"]
+            log("  TWSE 無資料, 保留該日既有現貨值")
     if fut or spot:
         append_record("foreign_fut_spot.json",
                       {"title": "外資期貨、現貨", "source": "臺股期貨外資未平倉 + TWSE外資現貨買賣差額"},
@@ -359,13 +364,36 @@ def run(date_slash, no_retry=False):
             status["large_fut_txf"] = "ok"
         else:
             status["large_fut_txf"] = "no-data"
-        # cat6: 個股期貨 (依代碼/契約名稱對齊, 每檔獨立)
-        stocks = parse_large_fut(lf_rows, want_codes=stock_codes)
+        # cat6: 個股期貨 — 自動辨識, 新掛牌契約 (含小型) 免維護即納入。
+        # 規則: 商品代碼恰為 2 碼者即個股/ETF期貨;
+        #   例外排除 (1) 指數期貨 TX/TE/TF (其名稱亦帶括號合計公式, 雙重保險)
+        #            (2) 3 碼代碼 = 指數/匯率/商品期貨 (TXF,GDF,BRF,XIF ...)
+        NON_STOCK_2CHAR = {"TX", "TE", "TF"}
+        stocks = parse_large_fut(lf_rows)
         n = 0
+        new_codes = []
         for code, g in stocks.items():
-            info = stock_map.get(code, {})
-            append_stock(code, g["name"] or info.get("short", code), info.get("sid", ""), date_slash, g["rows"])
+            name = g["name"] or ""
+            if len(code) != 2 or code in NON_STOCK_2CHAR or "(" in name or "(" in name:
+                continue
+            info = stock_map.get(code)
+            if info is None:
+                # 新掛牌: 自動補進對照表; 小型契約嘗試繼承本尊的證券代號
+                short = name[:-2] if name.endswith("期貨") else (name or code)
+                sid = ""
+                if short.startswith("小型"):
+                    base = short[2:]
+                    for v in stock_map.values():
+                        if v.get("short") == base and v.get("sid"):
+                            sid = v["sid"]; break
+                info = {"short": short, "sid": sid, "full": ""}
+                stock_map[code] = info
+                new_codes.append(f"{code} {name}")
+            append_stock(code, name or info.get("short", code), info.get("sid", ""), date_slash, g["rows"])
             n += 1
+        if new_codes:
+            save_json(os.path.join(DATA, "stock_map.json"), stock_map)
+            log("  新增個股期貨對照: " + "、".join(new_codes))
         status["stocks"] = f"ok ({n} 檔)"
         log(f"  個股期貨: 寫入 {n} 檔")
     else:
