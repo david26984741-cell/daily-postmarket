@@ -46,7 +46,7 @@
     <button class="ghost rng" data-m="3">近3月</button>
     <button class="ghost rng" data-m="6">近6月</button>
     <button class="ghost rng" data-m="0">全部</button>
-    <span class="tlabel" style="opacity:.75">在圖表上滾動滾輪可縮放期間</span>
+    <span class="tlabel" style="opacity:.75">在圖表上滾動滾輪可縮放期間、按住拖曳可左右平移</span>
   </div>
 
   <div class="stk-toolbar">
@@ -170,6 +170,35 @@
     range.from=D[na]; range.to=D[na+ns-1];
     applyRange();
   }
+  function attachPan(reg,cv){                              // 按住拖曳 → 左右平移時間窗
+    let drag=null;
+    cv.style.cursor="grab";
+    cv.style.touchAction="pan-y";                          // 觸控裝置仍可垂直捲頁
+    cv.addEventListener("pointerdown",ev=>{
+      if(ev.button!==0) return;
+      const D=reg.dates; if(D.length<2) return;
+      const [a,b]=visWin(D);
+      if(b-a+1>=D.length) return;                          // 顯示全區間時無可平移
+      const area=reg.chart.chartArea, rect=cv.getBoundingClientRect();
+      const w=(area&&area.width>0)?area.width:rect.width;
+      drag={x0:ev.clientX, a, b, ppd:w/(b-a+1)};           // ppd = 每個交易日佔的像素
+      try{ cv.setPointerCapture(ev.pointerId); }catch(e){}
+      cv.style.cursor="grabbing";
+      ev.preventDefault();
+    });
+    cv.addEventListener("pointermove",ev=>{
+      if(!drag) return;
+      const D=reg.dates, span=drag.b-drag.a+1;
+      const shift=Math.round((ev.clientX-drag.x0)/drag.ppd); // 往右拖 = 看更早
+      let na=Math.max(0, Math.min(drag.a-shift, D.length-span));
+      if(D[na]===range.from) return;
+      range.from=D[na]; range.to=D[na+span-1];
+      applyRange();
+    });
+    const endDrag=()=>{ if(drag){ drag=null; cv.style.cursor="grab"; } };
+    cv.addEventListener("pointerup",endDrag);
+    cv.addEventListener("pointercancel",endDrag);
+  }
 
   function makeChart(ctx,dates,lv,ch){
     const v=viewSlice(dates,lv,ch);
@@ -231,6 +260,7 @@
           const reg={chart:makeChart(cv.getContext("2d"), ser.dates, ser[k].lv, ser[k].ch), dates:ser.dates, lv:ser[k].lv, ch:ser[k].ch};
           charts.push(reg);
           cv.addEventListener("wheel",e=>wheelZoom(reg,e),{passive:false});
+          attachPan(reg,cv);
         }
         catch(e){ cw.appendChild(el("div","warn","圖表載入失敗:"+e.message)); }
       });
