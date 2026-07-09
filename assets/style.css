@@ -68,8 +68,12 @@ footer{color:var(--mut);font-size:12px;border-top:1px solid var(--line);margin-t
 /* 新版:符號、增減、圖例、明細 */
 .mut{color:var(--mut)}
 .dlt{font-size:11.5px;margin-left:5px;white-space:nowrap}
-.arw{font-variant-numeric:tabular-nums}
-.bias{font-size:16px;font-weight:700}
+.arw{font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:3px;
+  border:1px solid currentColor;border-radius:6px;padding:1px 6px;line-height:1.5;
+  background:rgba(255,255,255,.03);white-space:nowrap}
+.arw.mut{opacity:.6}
+.bias{font-size:15px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid currentColor;border-radius:6px;padding:0 6px;line-height:1.6;background:rgba(255,255,255,.03)}
 .legend{font-size:12px;color:var(--mut);margin:8px 0 8px;line-height:1.6}
 .legend b{color:var(--txt)}
 .optbar{display:flex;align-items:center;gap:6px;margin:2px 0 8px}
@@ -114,3 +118,6 @@ details.rawdet>div{padding:2px 12px 12px}
 .pick{display:flex;align-items:center;gap:7px;padding:4px 6px;border-radius:6px;font-size:13px;cursor:pointer}
 .pick:hover{background:var(--card2)}
 .pick in
+/* 歷史趨勢柱狀圖 */
+.hist-canvas{position:relative;height:240px;width:100%;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:6px 0 14px}
+.hist-canvas canvas{width:100%!important;height:100%!important}

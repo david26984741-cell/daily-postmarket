@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>分類明細 — 每日盤後資料</title>
 <link rel="stylesheet" href="assets/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -67,18 +68,51 @@
       options_foreign:[{label:"日期",sort:true},{label:"CALL差額金額(千元)",num:true},{label:"PUT差額金額(千元)",num:true},{label:"CALL買方未平倉",num:true},{label:"PUT買方未平倉",num:true}],
       options_dealer:[{label:"日期",sort:true},{label:"CALL差額金額(千元)",num:true},{label:"PUT差額金額(千元)",num:true},{label:"CALL買方未平倉",num:true},{label:"PUT買方未平倉",num:true}],
       foreign_fut_spot:[{label:"日期",sort:true},{label:"期貨多空淨額(口)",num:true},{label:"現貨買賣差額(元)",num:true}],
-      large_opt:[{label:"日期",sort:true},{label:"前十法人買權淨部位",num:true},{label:"前十法人賣權淨部位",num:true},{label:"CALL全市場未沖銷",num:true}],
-      large_fut_txf:[{label:"日期",sort:true},{label:"前十自然人淨部位",num:true},{label:"前十法人淨部位",num:true},{label:"全市場未沖銷",num:true}],
+      large_opt:[{label:"日期",sort:true},{label:"前十特定法人 CALL淨部位",num:true},{label:"前十特定法人 PUT淨部位",num:true},{label:"CALL全市場未沖銷",num:true}],
+      large_fut_txf:[{label:"日期",sort:true},{label:"前十特定法人淨部位",num:true},{label:"前十特定法人多單",num:true},{label:"前十特定法人空單",num:true},{label:"全市場未沖銷",num:true}],
     }[cat];
     const rows=dates.map(d=>{const r=doc.records[d]; const o={"日期":d};
       if(cat.startsWith("options")){o["CALL差額金額(千元)"]=cell(r.call?.diff_oi_amt,true);o["PUT差額金額(千元)"]=cell(r.put?.diff_oi_amt,true);o["CALL買方未平倉"]=cell(r.call?.buy_oi_lots);o["PUT買方未平倉"]=cell(r.put?.buy_oi_lots);}
       else if(cat==="foreign_fut_spot"){o["期貨多空淨額(口)"]=cell(r.fut?.net_oi_lots,true);o["現貨買賣差額(元)"]=cell(r.spot?.net_amt,true);}
-      else if(cat==="large_opt"){const g=optGroups(r,"999999");o["前十法人買權淨部位"]=cell(g.call.rows.inst10.net,true);o["前十法人賣權淨部位"]=cell(g.put.rows.inst10.net,true);o["CALL全市場未沖銷"]=cell(g.call.market);}
-      else if(cat==="large_fut_txf"){const g=futSide(r.rows||[],"999999");o["前十自然人淨部位"]=cell(g.rows.nat10.net,true);o["前十法人淨部位"]=cell(g.rows.inst10.net,true);o["全市場未沖銷"]=cell(g.market);}
+      else if(cat==="large_opt"){const g=optGroups(r,"999999");o["前十特定法人 CALL淨部位"]=cell(g.call.rows.inst10.net,true);o["前十特定法人 PUT淨部位"]=cell(g.put.rows.inst10.net,true);o["CALL全市場未沖銷"]=cell(g.call.market);}
+      else if(cat==="large_fut_txf"){const g=futSide(r.rows||[],"999999");o["前十特定法人淨部位"]=cell(g.rows.inst10.net,true);o["前十特定法人多單"]=cell(g.rows.inst10.long);o["前十特定法人空單"]=cell(g.rows.inst10.short);o["全市場未沖銷"]=cell(g.market);}
       return o;});
     return {H,rows};
   }
   const {H,rows}=summaryRows();
+
+  /* ---- 歷史趨勢柱狀圖 (表格上方) ---- */
+  const numCols=H.filter(h=>h.num).map(h=>h.label);
+  let hchart=null;
+  if(numCols.length && typeof Chart!=="undefined"){
+    const bar=el("div","optbar");
+    bar.appendChild(el("span","muted","圖表欄位 "));
+    const csel=el("select");
+    numCols.forEach(c=>{const o=el("option",null,c);o.value=c;csel.appendChild(o);});
+    bar.appendChild(csel);
+    $("#history").appendChild(bar);
+    const cbox=el("div","hist-canvas"); const cv=document.createElement("canvas");
+    cbox.appendChild(cv); $("#history").appendChild(cbox);
+
+    function drawHist(col){
+      const asc=rows.slice().sort((a,b)=>String(a["日期"]).localeCompare(String(b["日期"])));
+      const labels=asc.map(r=>r["日期"]);
+      const vals=asc.map(r=>{const v=r[col]; return (v&&v.raw!==undefined&&v.raw!==null)?Number(v.raw):null;});
+      if(hchart){ try{hchart.destroy();}catch(e){} }
+      hchart=new Chart(cv.getContext("2d"),{ type:"bar",
+        data:{labels,datasets:[{label:col,data:vals,borderWidth:0,
+          backgroundColor:vals.map(v=>v==null?"rgba(0,0,0,0)":(v>=0?"rgba(255,91,91,.85)":"rgba(34,197,94,.85)"))}]},
+        options:{ responsive:true, maintainAspectRatio:false, animation:false,
+          interaction:{mode:"index",intersect:false},
+          plugins:{ legend:{display:false},
+            tooltip:{callbacks:{label:c=>`${col}: ${Number(c.raw).toLocaleString("en-US")}`}} },
+          scales:{ x:{ticks:{color:"#7d8ea0",maxTicksLimit:12,font:{size:9}},grid:{color:"rgba(255,255,255,.04)"}},
+                   y:{ticks:{color:"#8aa0b4",font:{size:10}},grid:{color:"rgba(255,255,255,.06)"}} } } });
+    }
+    csel.onchange=()=>drawHist(csel.value);
+    try{ drawHist(numCols[0]); }catch(e){ cbox.appendChild(el("div","warn","圖表載入失敗:"+e.message)); }
+  }
+
   $("#history").appendChild(sortableTable(H,rows));
 })();
 </script>

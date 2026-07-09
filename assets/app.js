@@ -178,7 +178,7 @@ function renderLargeOpt(rec, prev){
     holder.innerHTML="";
     const g=optGroups(rec,cur), gp=prev?optGroups(prev,cur):null;
     const headers=[{label:"交易人別",sort:false},{label:"買權 CALL 淨部位",sort:false,num:true},{label:"賣權 PUT 淨部位",sort:false,num:true},{label:"傾向",sort:false}];
-    const order=[["前五特定法人","inst5"],["前十特定法人","inst10"],["超大戶自然人 (前五)","nat5"],["大戶自然人 (前十)","nat10"]];
+    const order=[["前十特定法人","inst10"]];
     const rows=order.map(([name,k])=>{
       const cN=g.call.rows[k].net, pN=g.put.rows[k].net;
       const dC=gp?cN-gp.call.rows[k].net:undefined, dP=gp?pN-gp.put.rows[k].net:undefined;
@@ -207,7 +207,7 @@ function renderLargeFut(rec, prev){
     holder.innerHTML="";
     const g=futSide(rec.rows,cur), gp=(prev&&prev.rows&&prev.rows.length)?futSide(prev.rows,cur):null;
     const headers=[{label:"交易人別",sort:false},{label:"多單",sort:false,num:true},{label:"空單",sort:false,num:true},{label:"未平倉淨部位",sort:false,num:true}];
-    const order=[["前五自然人大戶","nat5"],["前十自然人大戶","nat10"],["前五特定法人","inst5"],["前十特定法人","inst10"]];
+    const order=[["前十特定法人","inst10"]];
     const rows=order.map(([name,k])=>{
       const o=g.rows[k], p=gp?gp.rows[k]:null;
       return {"交易人別":name,
