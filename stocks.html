@@ -159,10 +159,11 @@
     ev.preventDefault();
     const D=reg.dates; if(D.length<2) return;
     const [a,b]=visWin(D), span=b-a+1;
-    const area=reg.chart.chartArea, rect=ev.currentTarget.getBoundingClientRect();
-    const x=ev.clientX-rect.left;
+    const cvEl=ev.currentTarget, area=reg.chart.chartArea, rect=cvEl.getBoundingClientRect();
+    const sc=(rect.width>0&&cvEl.offsetWidth>0)?rect.width/cvEl.offsetWidth:1;   // 頁面 zoom 校正
+    const x=(ev.clientX-rect.left)/sc;
     const ratio=area&&area.width>0 ? Math.min(1,Math.max(0,(x-area.left)/area.width))
-                                   : Math.min(1,Math.max(0,x/rect.width));
+                                   : Math.min(1,Math.max(0,x/(cvEl.offsetWidth||rect.width)));
     const anchor=a+Math.round(ratio*(span-1));             // 以游標位置為錨點
     const f=ev.deltaY<0?0.8:1.25;                          // 上滾=放大, 下滾=縮小
     let ns=Math.min(D.length, Math.max(10, Math.round(span*f)));
@@ -180,8 +181,9 @@
       const [a,b]=visWin(D);
       if(b-a+1>=D.length) return;                          // 顯示全區間時無可平移
       const area=reg.chart.chartArea, rect=cv.getBoundingClientRect();
-      const w=(area&&area.width>0)?area.width:rect.width;
-      drag={x0:ev.clientX, a, b, ppd:w/(b-a+1)};           // ppd = 每個交易日佔的像素
+      const sc=(rect.width>0&&cv.offsetWidth>0)?rect.width/cv.offsetWidth:1;    // 頁面 zoom 校正
+      const w=((area&&area.width>0)?area.width:(cv.offsetWidth||rect.width))*sc; // 以螢幕像素計
+      drag={x0:ev.clientX, a, b, ppd:w/(b-a+1)};           // ppd = 每個交易日佔的螢幕像素
       try{ cv.setPointerCapture(ev.pointerId); }catch(e){}
       cv.style.cursor="grabbing";
       ev.preventDefault();
