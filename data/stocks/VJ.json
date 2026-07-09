@@ -1,0 +1,2023 @@
+{
+ "code": "VJ",
+ "name": "小型順達期貨",
+ "sid": "3211",
+ "records": {
+  "2026/05/04": [
+   {
+    "month": "202605",
+    "type": "0",
+    "top5_buy": 48,
+    "top5_sell": 73,
+    "top10_buy": 61,
+    "top10_sell": 73,
+    "market_oi": 73,
+    "scope": "當月"
+   },
+   {
+    "month": "202605",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 30,
+    "top10_buy": 0,
+    "top10_sell": 30,
+    "market_oi": 73,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 50,
+    "top5_sell": 75,
+    "top10_buy": 63,
+    "top10_sell": 76,
+    "market_oi": 76,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 30,
+    "top10_buy": 0,
+    "top10_sell": 31,
+    "market_oi": 76,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/05": [
+   {
+    "month": "202605",
+    "type": "0",
+    "top5_buy": 47,
+    "top5_sell": 103,
+    "top10_buy": 69,
+    "top10_sell": 103,
+    "market_oi": 103,
+    "scope": "當月"
+   },
+   {
+    "month": "202605",
+    "type": "1",
+    "top5_buy": 20,
+    "top5_sell": 37,
+    "top10_buy": 20,
+    "top10_sell": 37,
+    "market_oi": 103,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 47,
+    "top5_sell": 107,
+    "top10_buy": 71,
+    "top10_sell": 107,
+    "market_oi": 107,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 20,
+    "top5_sell": 41,
+    "top10_buy": 20,
+    "top10_sell": 41,
+    "market_oi": 107,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/06": [
+   {
+    "month": "202605",
+    "type": "0",
+    "top5_buy": 80,
+    "top5_sell": 256,
+    "top10_buy": 123,
+    "top10_sell": 256,
+    "market_oi": 256,
+    "scope": "當月"
+   },
+   {
+    "month": "202605",
+    "type": "1",
+    "top5_buy": 32,
+    "top5_sell": 93,
+    "top10_buy": 32,
+    "top10_sell": 93,
+    "market_oi": 256,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 102,
+    "top5_sell": 293,
+    "top10_buy": 147,
+    "top10_sell": 305,
+    "market_oi": 305,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 32,
+    "top5_sell": 133,
+    "top10_buy": 32,
+    "top10_sell": 142,
+    "market_oi": 305,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/07": [
+   {
+    "month": "202605",
+    "type": "0",
+    "top5_buy": 340,
+    "top5_sell": 707,
+    "top10_buy": 396,
+    "top10_sell": 707,
+    "market_oi": 707,
+    "scope": "當月"
+   },
+   {
+    "month": "202605",
+    "type": "1",
+    "top5_buy": 110,
+    "top5_sell": 707,
+    "top10_buy": 110,
+    "top10_sell": 707,
+    "market_oi": 707,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 340,
+    "top5_sell": 738,
+    "top10_buy": 396,
+    "top10_sell": 742,
+    "market_oi": 742,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 110,
+    "top5_sell": 738,
+    "top10_buy": 110,
+    "top10_sell": 741,
+    "market_oi": 742,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/08": [
+   {
+    "month": "202605",
+    "type": "0",
+    "top5_buy": 268,
+    "top5_sell": 735,
+    "top10_buy": 341,
+    "top10_sell": 735,
+    "market_oi": 735,
+    "scope": "當月"
+   },
+   {
+    "month": "202605",
+    "type": "1",
+    "top5_buy": 166,
+    "top5_sell": 735,
+    "top10_buy": 166,
+    "top10_sell": 735,
+    "market_oi": 735,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 268,
+    "top5_sell": 778,
+    "top10_buy": 341,
+    "top10_sell": 780,
+    "market_oi": 780,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 166,
+    "top5_sell": 778,
+    "top10_buy": 166,
+    "top10_sell": 780,
+    "market_oi": 780,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/11": [
+   {
+    "month": "202605",
+    "type": "0",
+    "top5_buy": 302,
+    "top5_sell": 939,
+    "top10_buy": 379,
+    "top10_sell": 940,
+    "market_oi": 940,
+    "scope": "當月"
+   },
+   {
+    "month": "202605",
+    "type": "1",
+    "top5_buy": 225,
+    "top5_sell": 751,
+    "top10_buy": 238,
+    "top10_sell": 751,
+    "market_oi": 940,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 302,
+    "top5_sell": 980,
+    "top10_buy": 379,
+    "top10_sell": 998,
+    "market_oi": 998,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 225,
+    "top5_sell": 792,
+    "top10_buy": 238,
+    "top10_sell": 809,
+    "market_oi": 998,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/12": [
+   {
+    "month": "202605",
+    "type": "0",
+    "top5_buy": 307,
+    "top5_sell": 909,
+    "top10_buy": 406,
+    "top10_sell": 919,
+    "market_oi": 919,
+    "scope": "當月"
+   },
+   {
+    "month": "202605",
+    "type": "1",
+    "top5_buy": 176,
+    "top5_sell": 729,
+    "top10_buy": 176,
+    "top10_sell": 734,
+    "market_oi": 919,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 307,
+    "top5_sell": 951,
+    "top10_buy": 407,
+    "top10_sell": 979,
+    "market_oi": 981,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 176,
+    "top5_sell": 771,
+    "top10_buy": 176,
+    "top10_sell": 796,
+    "market_oi": 981,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/13": [
+   {
+    "month": "202605",
+    "type": "0",
+    "top5_buy": 263,
+    "top5_sell": 753,
+    "top10_buy": 331,
+    "top10_sell": 757,
+    "market_oi": 757,
+    "scope": "當月"
+   },
+   {
+    "month": "202605",
+    "type": "1",
+    "top5_buy": 152,
+    "top5_sell": 573,
+    "top10_buy": 152,
+    "top10_sell": 573,
+    "market_oi": 757,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 263,
+    "top5_sell": 824,
+    "top10_buy": 337,
+    "top10_sell": 843,
+    "market_oi": 843,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 152,
+    "top5_sell": 644,
+    "top10_buy": 165,
+    "top10_sell": 659,
+    "market_oi": 843,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/14": [
+   {
+    "month": "202605",
+    "type": "0",
+    "top5_buy": 341,
+    "top5_sell": 797,
+    "top10_buy": 418,
+    "top10_sell": 803,
+    "market_oi": 804,
+    "scope": "當月"
+   },
+   {
+    "month": "202605",
+    "type": "1",
+    "top5_buy": 147,
+    "top5_sell": 357,
+    "top10_buy": 147,
+    "top10_sell": 357,
+    "market_oi": 804,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 341,
+    "top5_sell": 910,
+    "top10_buy": 431,
+    "top10_sell": 938,
+    "market_oi": 942,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 147,
+    "top5_sell": 450,
+    "top10_buy": 163,
+    "top10_sell": 475,
+    "market_oi": 942,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/15": [
+   {
+    "month": "202605",
+    "type": "0",
+    "top5_buy": 322,
+    "top5_sell": 766,
+    "top10_buy": 410,
+    "top10_sell": 774,
+    "market_oi": 774,
+    "scope": "當月"
+   },
+   {
+    "month": "202605",
+    "type": "1",
+    "top5_buy": 178,
+    "top5_sell": 326,
+    "top10_buy": 178,
+    "top10_sell": 326,
+    "market_oi": 774,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 324,
+    "top5_sell": 920,
+    "top10_buy": 426,
+    "top10_sell": 938,
+    "market_oi": 944,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 178,
+    "top5_sell": 460,
+    "top10_buy": 178,
+    "top10_sell": 471,
+    "market_oi": 944,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/18": [
+   {
+    "month": "202605",
+    "type": "0",
+    "top5_buy": 319,
+    "top5_sell": 669,
+    "top10_buy": 394,
+    "top10_sell": 672,
+    "market_oi": 672,
+    "scope": "當月"
+   },
+   {
+    "month": "202605",
+    "type": "1",
+    "top5_buy": 180,
+    "top5_sell": 169,
+    "top10_buy": 180,
+    "top10_sell": 169,
+    "market_oi": 672,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 326,
+    "top5_sell": 920,
+    "top10_buy": 418,
+    "top10_sell": 943,
+    "market_oi": 943,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 180,
+    "top5_sell": 400,
+    "top10_buy": 196,
+    "top10_sell": 416,
+    "market_oi": 943,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/19": [
+   {
+    "month": "202605",
+    "type": "0",
+    "top5_buy": 286,
+    "top5_sell": 496,
+    "top10_buy": 346,
+    "top10_sell": 496,
+    "market_oi": 496,
+    "scope": "當月"
+   },
+   {
+    "month": "202605",
+    "type": "1",
+    "top5_buy": 197,
+    "top5_sell": 74,
+    "top10_buy": 207,
+    "top10_sell": 74,
+    "market_oi": 496,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 299,
+    "top5_sell": 837,
+    "top10_buy": 396,
+    "top10_sell": 862,
+    "market_oi": 863,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 203,
+    "top5_sell": 378,
+    "top10_buy": 220,
+    "top10_sell": 397,
+    "market_oi": 863,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/20": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 96,
+    "top5_sell": 425,
+    "top10_buy": 148,
+    "top10_sell": 431,
+    "market_oi": 431,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 36,
+    "top5_sell": 302,
+    "top10_buy": 36,
+    "top10_sell": 302,
+    "market_oi": 431,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 96,
+    "top5_sell": 425,
+    "top10_buy": 148,
+    "top10_sell": 431,
+    "market_oi": 431,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 36,
+    "top5_sell": 302,
+    "top10_buy": 36,
+    "top10_sell": 302,
+    "market_oi": 431,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/21": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 104,
+    "top5_sell": 518,
+    "top10_buy": 161,
+    "top10_sell": 532,
+    "market_oi": 532,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 36,
+    "top5_sell": 397,
+    "top10_buy": 36,
+    "top10_sell": 406,
+    "market_oi": 532,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 104,
+    "top5_sell": 518,
+    "top10_buy": 161,
+    "top10_sell": 532,
+    "market_oi": 532,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 36,
+    "top5_sell": 397,
+    "top10_buy": 36,
+    "top10_sell": 406,
+    "market_oi": 532,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/22": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 129,
+    "top5_sell": 575,
+    "top10_buy": 189,
+    "top10_sell": 589,
+    "market_oi": 589,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 19,
+    "top5_sell": 395,
+    "top10_buy": 19,
+    "top10_sell": 404,
+    "market_oi": 589,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 129,
+    "top5_sell": 585,
+    "top10_buy": 189,
+    "top10_sell": 599,
+    "market_oi": 599,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 19,
+    "top5_sell": 405,
+    "top10_buy": 29,
+    "top10_sell": 414,
+    "market_oi": 599,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/25": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 323,
+    "top5_sell": 683,
+    "top10_buy": 396,
+    "top10_sell": 745,
+    "market_oi": 751,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 22,
+    "top5_sell": 543,
+    "top10_buy": 22,
+    "top10_sell": 597,
+    "market_oi": 751,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 323,
+    "top5_sell": 693,
+    "top10_buy": 396,
+    "top10_sell": 755,
+    "market_oi": 761,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 22,
+    "top5_sell": 553,
+    "top10_buy": 32,
+    "top10_sell": 607,
+    "market_oi": 761,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/26": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 1549,
+    "top5_sell": 1861,
+    "top10_buy": 1617,
+    "top10_sell": 1991,
+    "market_oi": 2008,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1721,
+    "top10_buy": 0,
+    "top10_sell": 1835,
+    "market_oi": 2008,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1549,
+    "top5_sell": 1861,
+    "top10_buy": 1617,
+    "top10_sell": 2001,
+    "market_oi": 2018,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1721,
+    "top10_buy": 0,
+    "top10_sell": 1845,
+    "market_oi": 2018,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/27": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 1969,
+    "top5_sell": 2228,
+    "top10_buy": 2020,
+    "top10_sell": 2354,
+    "market_oi": 2365,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 2119,
+    "top10_buy": 0,
+    "top10_sell": 2233,
+    "market_oi": 2365,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1969,
+    "top5_sell": 2228,
+    "top10_buy": 2020,
+    "top10_sell": 2364,
+    "market_oi": 2375,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 2119,
+    "top10_buy": 0,
+    "top10_sell": 2243,
+    "market_oi": 2375,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/28": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 1803,
+    "top5_sell": 2098,
+    "top10_buy": 1857,
+    "top10_sell": 2218,
+    "market_oi": 2231,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1998,
+    "top10_buy": 0,
+    "top10_sell": 2106,
+    "market_oi": 2231,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1803,
+    "top5_sell": 2098,
+    "top10_buy": 1857,
+    "top10_sell": 2228,
+    "market_oi": 2241,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1998,
+    "top10_buy": 0,
+    "top10_sell": 2116,
+    "market_oi": 2241,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/05/29": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 1616,
+    "top5_sell": 1980,
+    "top10_buy": 1683,
+    "top10_sell": 2139,
+    "market_oi": 2151,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1880,
+    "top10_buy": 0,
+    "top10_sell": 2027,
+    "market_oi": 2151,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1616,
+    "top5_sell": 1980,
+    "top10_buy": 1683,
+    "top10_sell": 2149,
+    "market_oi": 2161,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1880,
+    "top10_buy": 0,
+    "top10_sell": 2037,
+    "market_oi": 2161,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/01": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 1576,
+    "top5_sell": 2015,
+    "top10_buy": 1637,
+    "top10_sell": 2188,
+    "market_oi": 2199,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1856,
+    "top10_buy": 0,
+    "top10_sell": 2017,
+    "market_oi": 2199,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1576,
+    "top5_sell": 2017,
+    "top10_buy": 1637,
+    "top10_sell": 2200,
+    "market_oi": 2211,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1858,
+    "top10_buy": 0,
+    "top10_sell": 2029,
+    "market_oi": 2211,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/02": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 1380,
+    "top5_sell": 1907,
+    "top10_buy": 1456,
+    "top10_sell": 2070,
+    "market_oi": 2074,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 46,
+    "top5_sell": 1708,
+    "top10_buy": 46,
+    "top10_sell": 1869,
+    "market_oi": 2074,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1380,
+    "top5_sell": 1912,
+    "top10_buy": 1456,
+    "top10_sell": 2085,
+    "market_oi": 2089,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 46,
+    "top5_sell": 1713,
+    "top10_buy": 46,
+    "top10_sell": 1884,
+    "market_oi": 2089,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/03": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 1135,
+    "top5_sell": 2030,
+    "top10_buy": 1227,
+    "top10_sell": 2228,
+    "market_oi": 2239,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1850,
+    "top10_buy": 0,
+    "top10_sell": 2024,
+    "market_oi": 2239,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1135,
+    "top5_sell": 2032,
+    "top10_buy": 1227,
+    "top10_sell": 2240,
+    "market_oi": 2261,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1852,
+    "top10_buy": 0,
+    "top10_sell": 2036,
+    "market_oi": 2261,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/04": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 1043,
+    "top5_sell": 1917,
+    "top10_buy": 1144,
+    "top10_sell": 2107,
+    "market_oi": 2133,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1657,
+    "top10_buy": 0,
+    "top10_sell": 1837,
+    "market_oi": 2133,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1043,
+    "top5_sell": 1925,
+    "top10_buy": 1144,
+    "top10_sell": 2125,
+    "market_oi": 2161,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1665,
+    "top10_buy": 0,
+    "top10_sell": 1855,
+    "market_oi": 2161,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/05": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 326,
+    "top5_sell": 1091,
+    "top10_buy": 417,
+    "top10_sell": 1185,
+    "market_oi": 1190,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 791,
+    "top10_buy": 17,
+    "top10_sell": 875,
+    "market_oi": 1190,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 326,
+    "top5_sell": 1121,
+    "top10_buy": 417,
+    "top10_sell": 1226,
+    "market_oi": 1244,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 821,
+    "top10_buy": 17,
+    "top10_sell": 916,
+    "market_oi": 1244,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/08": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 272,
+    "top5_sell": 884,
+    "top10_buy": 347,
+    "top10_sell": 930,
+    "market_oi": 935,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 584,
+    "top10_buy": 14,
+    "top10_sell": 613,
+    "market_oi": 935,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 272,
+    "top5_sell": 920,
+    "top10_buy": 347,
+    "top10_sell": 978,
+    "market_oi": 989,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 620,
+    "top10_buy": 14,
+    "top10_sell": 663,
+    "market_oi": 989,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/09": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 256,
+    "top5_sell": 825,
+    "top10_buy": 336,
+    "top10_sell": 873,
+    "market_oi": 883,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 44,
+    "top5_sell": 465,
+    "top10_buy": 44,
+    "top10_sell": 492,
+    "market_oi": 883,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 256,
+    "top5_sell": 854,
+    "top10_buy": 336,
+    "top10_sell": 915,
+    "market_oi": 932,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 44,
+    "top5_sell": 494,
+    "top10_buy": 44,
+    "top10_sell": 539,
+    "market_oi": 932,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/10": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 328,
+    "top5_sell": 859,
+    "top10_buy": 425,
+    "top10_sell": 892,
+    "market_oi": 901,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 108,
+    "top5_sell": 499,
+    "top10_buy": 129,
+    "top10_sell": 511,
+    "market_oi": 901,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 328,
+    "top5_sell": 890,
+    "top10_buy": 425,
+    "top10_sell": 936,
+    "market_oi": 957,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 108,
+    "top5_sell": 530,
+    "top10_buy": 129,
+    "top10_sell": 555,
+    "market_oi": 957,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/11": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 337,
+    "top5_sell": 868,
+    "top10_buy": 419,
+    "top10_sell": 880,
+    "market_oi": 888,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 77,
+    "top5_sell": 488,
+    "top10_buy": 107,
+    "top10_sell": 491,
+    "market_oi": 888,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 337,
+    "top5_sell": 911,
+    "top10_buy": 421,
+    "top10_sell": 935,
+    "market_oi": 948,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 77,
+    "top5_sell": 531,
+    "top10_buy": 107,
+    "top10_sell": 550,
+    "market_oi": 948,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/12": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 311,
+    "top5_sell": 824,
+    "top10_buy": 410,
+    "top10_sell": 844,
+    "market_oi": 852,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 71,
+    "top5_sell": 464,
+    "top10_buy": 71,
+    "top10_sell": 467,
+    "market_oi": 852,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 311,
+    "top5_sell": 900,
+    "top10_buy": 410,
+    "top10_sell": 931,
+    "market_oi": 945,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 71,
+    "top5_sell": 540,
+    "top10_buy": 71,
+    "top10_sell": 559,
+    "market_oi": 945,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/15": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 305,
+    "top5_sell": 756,
+    "top10_buy": 403,
+    "top10_sell": 782,
+    "market_oi": 783,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 23,
+    "top5_sell": 396,
+    "top10_buy": 23,
+    "top10_sell": 409,
+    "market_oi": 783,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 305,
+    "top5_sell": 926,
+    "top10_buy": 403,
+    "top10_sell": 975,
+    "market_oi": 985,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 23,
+    "top5_sell": 566,
+    "top10_buy": 23,
+    "top10_sell": 605,
+    "market_oi": 985,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/16": [
+   {
+    "month": "202606",
+    "type": "0",
+    "top5_buy": 390,
+    "top5_sell": 698,
+    "top10_buy": 470,
+    "top10_sell": 707,
+    "market_oi": 707,
+    "scope": "當月"
+   },
+   {
+    "month": "202606",
+    "type": "1",
+    "top5_buy": 20,
+    "top5_sell": 348,
+    "top10_buy": 20,
+    "top10_sell": 353,
+    "market_oi": 707,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 402,
+    "top5_sell": 988,
+    "top10_buy": 498,
+    "top10_sell": 1064,
+    "market_oi": 1073,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 568,
+    "top10_buy": 20,
+    "top10_sell": 614,
+    "market_oi": 1073,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/17": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 82,
+    "top5_sell": 407,
+    "top10_buy": 124,
+    "top10_sell": 498,
+    "market_oi": 511,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 227,
+    "top10_buy": 0,
+    "top10_sell": 283,
+    "market_oi": 511,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 82,
+    "top5_sell": 407,
+    "top10_buy": 124,
+    "top10_sell": 498,
+    "market_oi": 511,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 227,
+    "top10_buy": 0,
+    "top10_sell": 283,
+    "market_oi": 511,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/18": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 99,
+    "top5_sell": 475,
+    "top10_buy": 147,
+    "top10_sell": 574,
+    "market_oi": 612,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 252,
+    "top10_buy": 0,
+    "top10_sell": 316,
+    "market_oi": 612,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 99,
+    "top5_sell": 475,
+    "top10_buy": 147,
+    "top10_sell": 574,
+    "market_oi": 612,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 252,
+    "top10_buy": 0,
+    "top10_sell": 316,
+    "market_oi": 612,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/22": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 160,
+    "top5_sell": 795,
+    "top10_buy": 228,
+    "top10_sell": 917,
+    "market_oi": 964,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 515,
+    "top10_buy": 0,
+    "top10_sell": 583,
+    "market_oi": 964,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 160,
+    "top5_sell": 795,
+    "top10_buy": 228,
+    "top10_sell": 917,
+    "market_oi": 964,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 515,
+    "top10_buy": 0,
+    "top10_sell": 583,
+    "market_oi": 964,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/23": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 141,
+    "top5_sell": 814,
+    "top10_buy": 194,
+    "top10_sell": 946,
+    "market_oi": 1015,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 534,
+    "top10_buy": 0,
+    "top10_sell": 601,
+    "market_oi": 1015,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 141,
+    "top5_sell": 815,
+    "top10_buy": 194,
+    "top10_sell": 950,
+    "market_oi": 1019,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 535,
+    "top10_buy": 0,
+    "top10_sell": 605,
+    "market_oi": 1019,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/24": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 120,
+    "top5_sell": 671,
+    "top10_buy": 172,
+    "top10_sell": 810,
+    "market_oi": 876,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 451,
+    "top10_buy": 0,
+    "top10_sell": 525,
+    "market_oi": 876,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 120,
+    "top5_sell": 672,
+    "top10_buy": 172,
+    "top10_sell": 812,
+    "market_oi": 880,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 452,
+    "top10_buy": 0,
+    "top10_sell": 527,
+    "market_oi": 880,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/25": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 127,
+    "top5_sell": 626,
+    "top10_buy": 183,
+    "top10_sell": 755,
+    "market_oi": 824,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 385,
+    "top10_buy": 0,
+    "top10_sell": 494,
+    "market_oi": 824,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 127,
+    "top5_sell": 627,
+    "top10_buy": 183,
+    "top10_sell": 759,
+    "market_oi": 828,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 386,
+    "top10_buy": 0,
+    "top10_sell": 498,
+    "market_oi": 828,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/26": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 128,
+    "top5_sell": 610,
+    "top10_buy": 184,
+    "top10_sell": 697,
+    "market_oi": 743,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 390,
+    "top10_buy": 0,
+    "top10_sell": 444,
+    "market_oi": 743,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 128,
+    "top5_sell": 610,
+    "top10_buy": 184,
+    "top10_sell": 697,
+    "market_oi": 749,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 390,
+    "top10_buy": 0,
+    "top10_sell": 444,
+    "market_oi": 749,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/29": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 107,
+    "top5_sell": 602,
+    "top10_buy": 163,
+    "top10_sell": 682,
+    "market_oi": 716,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 382,
+    "top10_buy": 0,
+    "top10_sell": 416,
+    "market_oi": 716,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 107,
+    "top5_sell": 602,
+    "top10_buy": 163,
+    "top10_sell": 682,
+    "market_oi": 722,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 382,
+    "top10_buy": 0,
+    "top10_sell": 416,
+    "market_oi": 722,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/06/30": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 123,
+    "top5_sell": 598,
+    "top10_buy": 179,
+    "top10_sell": 678,
+    "market_oi": 713,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 36,
+    "top5_sell": 384,
+    "top10_buy": 36,
+    "top10_sell": 418,
+    "market_oi": 713,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 123,
+    "top5_sell": 598,
+    "top10_buy": 179,
+    "top10_sell": 678,
+    "market_oi": 719,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 36,
+    "top5_sell": 384,
+    "top10_buy": 36,
+    "top10_sell": 418,
+    "market_oi": 719,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/07/01": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 102,
+    "top5_sell": 577,
+    "top10_buy": 157,
+    "top10_sell": 655,
+    "market_oi": 716,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 387,
+    "top10_buy": 0,
+    "top10_sell": 422,
+    "market_oi": 716,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 102,
+    "top5_sell": 577,
+    "top10_buy": 157,
+    "top10_sell": 655,
+    "market_oi": 722,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 387,
+    "top10_buy": 0,
+    "top10_sell": 422,
+    "market_oi": 722,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/07/02": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 109,
+    "top5_sell": 592,
+    "top10_buy": 169,
+    "top10_sell": 687,
+    "market_oi": 752,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 402,
+    "top10_buy": 0,
+    "top10_sell": 467,
+    "market_oi": 752,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 109,
+    "top5_sell": 596,
+    "top10_buy": 169,
+    "top10_sell": 691,
+    "market_oi": 758,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 406,
+    "top10_buy": 0,
+    "top10_sell": 471,
+    "market_oi": 758,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/07/03": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 136,
+    "top5_sell": 649,
+    "top10_buy": 207,
+    "top10_sell": 745,
+    "market_oi": 807,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 439,
+    "top10_buy": 0,
+    "top10_sell": 505,
+    "market_oi": 807,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 136,
+    "top5_sell": 654,
+    "top10_buy": 207,
+    "top10_sell": 750,
+    "market_oi": 814,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 444,
+    "top10_buy": 0,
+    "top10_sell": 510,
+    "market_oi": 814,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/07/06": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 443,
+    "top5_sell": 1039,
+    "top10_buy": 537,
+    "top10_sell": 1171,
+    "market_oi": 1244,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 859,
+    "top10_buy": 0,
+    "top10_sell": 944,
+    "market_oi": 1244,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 443,
+    "top5_sell": 1046,
+    "top10_buy": 537,
+    "top10_sell": 1178,
+    "market_oi": 1256,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 866,
+    "top10_buy": 0,
+    "top10_sell": 951,
+    "market_oi": 1256,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/07/07": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 400,
+    "top5_sell": 960,
+    "top10_buy": 495,
+    "top10_sell": 1093,
+    "market_oi": 1163,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 22,
+    "top5_sell": 640,
+    "top10_buy": 22,
+    "top10_sell": 736,
+    "market_oi": 1163,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 468,
+    "top5_sell": 1034,
+    "top10_buy": 568,
+    "top10_sell": 1209,
+    "market_oi": 1299,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 694,
+    "top10_buy": 22,
+    "top10_sell": 819,
+    "market_oi": 1299,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/07/08": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 457,
+    "top5_sell": 960,
+    "top10_buy": 552,
+    "top10_sell": 1074,
+    "market_oi": 1147,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 640,
+    "top10_buy": 0,
+    "top10_sell": 724,
+    "market_oi": 1147,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 493,
+    "top5_sell": 1034,
+    "top10_buy": 595,
+    "top10_sell": 1175,
+    "market_oi": 1269,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 694,
+    "top10_buy": 0,
+    "top10_sell": 805,
+    "market_oi": 1269,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/07/09": [
+   {
+    "month": "202607",
+    "type": "0",
+    "top5_buy": 848,
+    "top5_sell": 1736,
+    "top10_buy": 1085,
+    "top10_sell": 1898,
+    "market_oi": 1981,
+    "scope": "當月"
+   },
+   {
+    "month": "202607",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1556,
+    "top10_buy": 0,
+    "top10_sell": 1701,
+    "market_oi": 1981,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 850,
+    "top5_sell": 1907,
+    "top10_buy": 1110,
+    "top10_sell": 2099,
+    "market_oi": 2196,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1707,
+    "top10_buy": 0,
+    "top10_sell": 1869,
+    "market_oi": 2196,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "code": "DD",
+ "name": "新光金期貨",
+ "sid": "",
+ "records": {
+  "2025/07/09": [
+   {
+    "month": "202507",
+    "type": "0",
+    "top5_buy": 14107,
+    "top5_sell": 13089,
+    "top10_buy": 15058,
+    "top10_sell": 14958,
+    "market_oi": 15459,
+    "scope": "當月"
+   },
+   {
+    "month": "202507",
+    "type": "1",
+    "top5_buy": 4606,
+    "top5_sell": 13089,
+    "top10_buy": 4775,
+    "top10_sell": 14671,
+    "market_oi": 15459,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 34457,
+    "top5_sell": 35139,
+    "top10_buy": 40469,
+    "top10_sell": 41234,
+    "market_oi": 42936,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 13460,
+    "top5_sell": 35139,
+    "top10_buy": 16484,
+    "top10_sell": 41234,
+    "market_oi": 42936,
+    "scope": "所有契約"
+   }
+  ],
+  "2025/07/10": [
+   {
+    "month": "202507",
+    "type": "0",
+    "top5_buy": 12613,
+    "top5_sell": 11528,
+    "top10_buy": 13227,
+    "top10_sell": 13527,
+    "market_oi": 13684,
+    "scope": "當月"
+   },
+   {
+    "month": "202507",
+    "type": "1",
+    "top5_buy": 4606,
+    "top5_sell": 11528,
+    "top10_buy": 4888,
+    "top10_sell": 13048,
+    "market_oi": 13684,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 33873,
+    "top5_sell": 33782,
+    "top10_buy": 38525,
+    "top10_sell": 39876,
+    "market_oi": 41474,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 15399,
+    "top5_sell": 33782,
+    "top10_buy": 16687,
+    "top10_sell": 39876,
+    "market_oi": 41474,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}
