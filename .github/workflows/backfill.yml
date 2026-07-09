@@ -1,0 +1,83 @@
+name: 回補歷史資料
+
+# 手動觸發:填入起訖日期, 按一次即可把整段期間的缺漏資料補齊, 補完自動部署網站。
+#  - 自動略過 週末 / 休市日 / 已經有資料的日期
+#  - 期交所可依日期回查, 因此選擇權、大額交易人、個股期貨都能完整回補
+#  - 證交所「外資現貨」僅提供當日最新資料, 回補舊日期時該欄位會是空的 (屬正常)
+
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "起始日期 YYYY/MM/DD (例 2026/06/24)"
+        required: true
+      end:
+        description: "結束日期 YYYY/MM/DD (例 2026/07/07)"
+        required: true
+      force:
+        description: "已有資料的日期也重抓覆蓋 (true/false)"
+        required: false
+        default: "false"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# 與每日排程共用同一個佇列, 避免同時 commit / 部署互相衝突
+concurrency:
+  group: daily-postmarket
+  cancel-in-progress: false
+
+jobs:
+  backfill-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      TZ: Asia/Taipei
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 回補指定期間
+        run: |
+          ARGS="--start ${{ github.event.inputs.start }} --end ${{ github.event.inputs.end }}"
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then ARGS="$ARGS --force"; fi
+          python tools/backfill.py $ARGS
+
+      - name: Commit 資料更新
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "無資料變更 (該期間可能已全部補齊)";
+          else
+            git commit -m "回補歷史 ${{ github.event.inputs.start }} ~ ${{ github.event.inputs.end }}"
+            git pull --rebase --autostash || true
+            git push
+          fi
+
+      # ---- 部署網站 (與每日排程相同) ----
+      - name: 準備網站檔案
+        run: |
+          rm -rf _site && mkdir -p _site
+          cp -r index.html stocks.html detail.html stock.html assets data .nojekyll _site/ 2>/dev/null || true
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -380,18 +380,18 @@ def run(date_slash, no_retry=False):
 def update_index(date_slash, status):
     idx_path = os.path.join(DATA, "index.json")
     idx = load_json(idx_path, {"dates": [], "status_log": {}})
-    # 蒐集所有個股
+    dates = set(idx.get("dates", []))
+    dates.add(date_slash)
+    idx["dates"] = sorted(dates, reverse=True)
+    idx["latest_date"] = latest = idx["dates"][0]
+    # 蒐集所有個股 (一律以「最新交易日」為準;回補舊日期時不會把最新的個股清單洗掉)
     stocks = []
     if os.path.isdir(STOCKS):
         for fn in sorted(os.listdir(STOCKS)):
             if fn.endswith(".json"):
                 d = load_json(os.path.join(STOCKS, fn), {})
-                if date_slash in d.get("records", {}):
+                if latest in d.get("records", {}):
                     stocks.append({"code": d.get("code"), "name": d.get("name"), "sid": d.get("sid", "")})
-    dates = set(idx.get("dates", []))
-    dates.add(date_slash)
-    idx["dates"] = sorted(dates, reverse=True)
-    idx["latest_date"] = idx["dates"][0]
     idx["updated_at"] = datetime.datetime.now().isoformat(timespec="seconds")
     idx["stocks"] = stocks
     idx["categories"] = [
