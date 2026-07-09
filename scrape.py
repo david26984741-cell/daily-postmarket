@@ -439,5 +439,17 @@ if __name__ == "__main__":
     ap.add_argument("--date", help="YYYY/MM/DD, 預設今天")
     ap.add_argument("--no-retry", action="store_true", help="不等 30 分鐘重試 (測試用)")
     a = ap.parse_args()
-    date_slash = a.date or datetime.date.today().strftime("%Y/%m/%d")
+    if a.date:
+        date_slash = a.date
+    else:
+        # 排程若被 GitHub 延遲跨過午夜才觸發, 「今天」盤後資料根本尚未公布 —
+        # 凌晨~中午執行且未指定日期時, 改抓前一個平日 (2026/07/10 00:xx 即發生過)。
+        now = datetime.datetime.now()
+        d = now.date()
+        if now.hour < 14:
+            d -= datetime.timedelta(days=1)
+            while d.weekday() >= 5:
+                d -= datetime.timedelta(days=1)
+            log(f"排程於 {now:%H:%M} 觸發 (盤後資料未公布), 改抓前一平日 {d:%Y/%m/%d}")
+        date_slash = d.strftime("%Y/%m/%d")
     sys.exit(run(date_slash, no_retry=a.no_retry))
