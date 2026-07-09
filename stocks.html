@@ -16,13 +16,19 @@
 <div class="wrap">
   <div class="crumbs"><a href="index.html">← 當日整合總覽</a></div>
   <h2 class="sec">大額交易人股票期貨 <span class="tag" id="dchip"></span></h2>
-  <p class="lead">前十大交易人未平倉(所有契約)。特定法人=前十大特定法人淨部位;自然人=前十大合計−特定法人;主力=自然人−特定法人。區域圖=淨部位,柱=每日增減。</p>
+  <p class="lead">區域圖=淨部位。<br>柱狀圖=每日增減。</p>
 
   <div class="stk-toolbar">
     <span class="tlabel">顯示</span>
     <label class="ck"><input type="checkbox" id="ck0" checked><span>主力</span></label>
     <label class="ck"><input type="checkbox" id="ck1" checked><span>自然人</span></label>
     <label class="ck"><input type="checkbox" id="ck2" checked><span>法人</span></label>
+  </div>
+
+  <div class="stk-toolbar">
+    <span class="tlabel">圖表</span>
+    <label class="ck"><input type="checkbox" id="gArea" checked><span>區域圖(淨部位)</span></label>
+    <label class="ck"><input type="checkbox" id="gBar" checked><span>柱狀圖(每日增減)</span></label>
   </div>
 
   <div class="stk-toolbar">
@@ -89,24 +95,30 @@
     return o;
   }
 
-  const PANELS=[["主力","#ffb454"],["自然人","#4ea1ff"],["特定法人","#c084fc"]];
+  const LINE="#4ea1ff";                       // 三個項目的淨部位線統一顏色
+  const PANELS=["主力","自然人","特定法人"];
   const CKS=[$("#ck0"),$("#ck1"),$("#ck2")];
   const visiblePanels=()=>PANELS.filter((_,i)=>CKS[i].checked);
+  const showArea=()=>$("#gArea").checked, showBar=()=>$("#gBar").checked;
   function last(a){ for(let i=a.length-1;i>=0;i--) if(a[i]!=null) return a[i]; return null; }
 
-  function makeChart(ctx,dates,lv,ch,color){
-    return new Chart(ctx,{ data:{ labels:dates, datasets:[
-      {type:"line",label:"淨部位",data:lv,yAxisID:"y",borderColor:color,backgroundColor:color+"22",fill:"origin",pointRadius:0,borderWidth:1.6,tension:.15,order:2},
-      {type:"bar",label:"每日增減",data:ch,yAxisID:"y1",order:1,borderWidth:0,
-        backgroundColor:ch.map(v=>v==null?"rgba(0,0,0,0)":(v>=0?"rgba(255,91,91,.85)":"rgba(34,197,94,.85)"))}
-    ]}, options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
+  function makeChart(ctx,dates,lv,ch){
+    const ds=[], sc={ x:{ ticks:{color:"#7d8ea0",maxTicksLimit:8,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} } };
+    if(showArea()){
+      ds.push({type:"line",label:"淨部位",data:lv,yAxisID:"y",borderColor:LINE,backgroundColor:LINE+"22",fill:"origin",pointRadius:0,borderWidth:1.6,tension:.15,order:2});
+      sc.y={ position:"left", ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
+    }
+    if(showBar()){
+      ds.push({type:"bar",label:"每日增減",data:ch,yAxisID:showArea()?"y1":"y",order:1,borderWidth:0,
+        backgroundColor:ch.map(v=>v==null?"rgba(0,0,0,0)":(v>=0?"rgba(255,91,91,.85)":"rgba(34,197,94,.85)"))});
+      if(showArea()) sc.y1={ position:"right", ticks:{color:"#6f8296",font:{size:9}}, grid:{drawOnChartArea:false} };
+      else sc.y={ position:"left", ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
+    }
+    return new Chart(ctx,{ data:{labels:dates,datasets:ds},
+      options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
       plugins:{ legend:{display:false},
         tooltip:{ callbacks:{ label:(c)=>`${c.dataset.label}: ${Number(c.raw).toLocaleString("en-US")}` } } },
-      scales:{
-        x:{ ticks:{color:"#7d8ea0",maxTicksLimit:8,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} },
-        y:{ position:"left", ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} },
-        y1:{ position:"right", ticks:{color:"#6f8296",font:{size:9}}, grid:{drawOnChartArea:false} }
-      } } });
+      scales:sc } });
   }
 
   // ---- 狀態 -----------------------------------------------------------------
@@ -123,6 +135,9 @@
     if(selected.length && !vis.length){
       blocks.appendChild(el("div","warn","請至少勾選一項:主力 / 自然人 / 法人")); return;
     }
+    if(selected.length && !showArea() && !showBar()){
+      blocks.appendChild(el("div","warn","請至少勾選一種圖表:區域圖 或 柱狀圖")); return;
+    }
     selected.forEach(code=>{
       const doc=docs[code]; const s=byCode[code]||{code,name:code};
       const blk=el("div","stk-block"); blk.id="blk-"+code;
@@ -131,14 +146,14 @@
 
       const body=el("div","stk-body");   // 每檔一列, 內部項目由上而下各佔一列
       const ser=series(doc);
-      vis.forEach(([k,color])=>{
+      vis.forEach(k=>{
         const lv=last(ser[k].lv), ch=last(ser[k].ch);
         const panel=el("div","stk-panel");
         panel.appendChild(el("div","stk-panelhd",
           `<span class="tagm">【前十】${k}</span> 淨部位 <b class="${lv>0?'up':(lv<0?'down':'')}">${lv==null?'—':Number(lv).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(ch)}</span>`));
         const cw=el("div","stk-canvas"); const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
         body.appendChild(panel);
-        try{ charts.push(makeChart(cv.getContext("2d"), ser.dates, ser[k].lv, ser[k].ch, color)); }
+        try{ charts.push(makeChart(cv.getContext("2d"), ser.dates, ser[k].lv, ser[k].ch)); }
         catch(e){ cw.appendChild(el("div","warn","圖表載入失敗:"+e.message)); }
       });
       blk.appendChild(body); blocks.appendChild(blk);
@@ -206,7 +221,7 @@
   });
 
   // ---- 面板勾選 --------------------------------------------------------------
-  CKS.forEach(cb=>cb.addEventListener("change",render));
+  CKS.concat([$("#gArea"),$("#gBar")]).forEach(cb=>cb.addEventListener("change",render));
 
   // ---- 網址預選 ?code=CD,DH --------------------------------------------------
   const pre=new URLSearchParams(location.search).get("code");
