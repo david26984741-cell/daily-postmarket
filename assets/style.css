@@ -97,11 +97,11 @@ details.rawdet>div{padding:2px 12px 12px}
 .stk-block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:16px}
 .stk-title{font-size:16px;font-weight:700;margin-bottom:10px}
 .stk-title .c{font-size:12px;color:var(--mut);font-weight:400;margin-left:6px}
-.stk-body{display:grid;gap:14px}
+.stk-body{display:grid;grid-template-columns:1fr;gap:12px}
 .stk-panel{min-width:0;border:1px solid var(--line);border-radius:10px;padding:8px 10px 6px;background:var(--card2)}
 .stk-panelhd{font-size:12.5px;color:var(--mut);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .stk-panelhd b{font-variant-numeric:tabular-nums}
-.stk-canvas{position:relative;height:170px;width:100%}
+.stk-canvas{position:relative;height:200px;width:100%}
 .stk-canvas canvas{width:100%!important;height:100%!important}
 .tlabel{color:var(--mut);font-size:13px;margin-right:2px}
 .ck{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:13.5px;cursor:pointer;user-select:none}
@@ -112,5 +112,4 @@ details.rawdet>div{padding:2px 12px 12px}
 .picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px 10px;max-height:280px;overflow:auto}
 .pick{display:flex;align-items:center;gap:7px;padding:4px 6px;border-radius:6px;font-size:13px;cursor:pointer}
 .pick:hover{background:var(--card2)}
-.pick input{accent-color:var(--accent);cursor:pointer;margin:0}
-.pick .c{color:var(--mut);font-size:11px;margin-left:4px}
+.pick in

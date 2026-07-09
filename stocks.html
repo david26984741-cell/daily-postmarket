@@ -129,8 +129,7 @@
       blk.appendChild(el("div","stk-title",`${s.name} <span class="c">${code} · ${s.sid||""}</span>`));
       if(!doc){ blk.appendChild(el("div","warn","找不到此個股資料")); blocks.appendChild(blk); return; }
 
-      const body=el("div","stk-body");
-      body.style.gridTemplateColumns=`repeat(${vis.length},minmax(0,1fr))`;
+      const body=el("div","stk-body");   // 每檔一列, 內部項目由上而下各佔一列
       const ser=series(doc);
       vis.forEach(([k,color])=>{
         const lv=last(ser[k].lv), ch=last(ser[k].ch);
