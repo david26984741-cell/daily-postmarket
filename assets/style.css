@@ -93,8 +93,8 @@ details.rawdet>div{padding:2px 12px 12px}
 .chip .c{color:var(--mut);font-size:11px}
 .chip b{cursor:pointer;color:var(--mut);font-weight:700;padding:0 2px}
 .chip b:hover{color:var(--up)}
-.stk-blocks{display:block;margin-top:12px}
-.stk-block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:16px}
+.stk-blocks{display:grid;grid-template-columns:1fr;gap:16px;margin-top:12px;align-items:start}
+.stk-block{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
 .stk-title{font-size:16px;font-weight:700;margin-bottom:10px}
 .stk-title .c{font-size:12px;color:var(--mut);font-weight:400;margin-left:6px}
 .stk-body{display:grid;grid-template-columns:1fr;gap:12px}
@@ -107,6 +107,7 @@ details.rawdet>div{padding:2px 12px 12px}
 .ck{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:13.5px;cursor:pointer;user-select:none}
 .ck input{accent-color:var(--accent);cursor:pointer;margin:0}
 .ck:hover{border-color:var(--accent)}
+#cols{background:var(--card2);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13.5px;cursor:pointer}
 .picker{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin:4px 0 10px}
 .picker #pf{width:100%;margin-bottom:10px;font-size:14px}
 .picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px 10px;max-height:280px;overflow:auto}

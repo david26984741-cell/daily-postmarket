@@ -29,6 +29,12 @@
     <span class="tlabel">圖表</span>
     <label class="ck"><input type="checkbox" id="gArea" checked><span>區域圖(淨部位)</span></label>
     <label class="ck"><input type="checkbox" id="gBar" checked><span>柱狀圖(每日增減)</span></label>
+    <span class="tlabel" style="margin-left:10px">每列</span>
+    <select id="cols">
+      <option value="1">1 檔</option>
+      <option value="2">2 檔</option>
+      <option value="3">3 檔</option>
+    </select>
   </div>
 
   <div class="stk-toolbar">
@@ -130,6 +136,9 @@
   function render(){
     charts.forEach(c=>{ try{c.destroy();}catch(e){} }); charts=[];
     blocks.innerHTML="";
+    const cols=parseInt($("#cols").value,10)||1;
+    blocks.style.gridTemplateColumns=`repeat(${cols},minmax(0,1fr))`;
+    const chartH = cols===1? 200 : (cols===2? 160 : 130);
     const vis=visiblePanels();
     emptyEl.style.display = selected.length? "none":"block";
     if(selected.length && !vis.length){
@@ -151,7 +160,8 @@
         const panel=el("div","stk-panel");
         panel.appendChild(el("div","stk-panelhd",
           `<span class="tagm">【前十】${k}</span> 淨部位 <b class="${lv>0?'up':(lv<0?'down':'')}">${lv==null?'—':Number(lv).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(ch)}</span>`));
-        const cw=el("div","stk-canvas"); const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
+        const cw=el("div","stk-canvas"); cw.style.height=chartH+"px";
+        const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
         body.appendChild(panel);
         try{ charts.push(makeChart(cv.getContext("2d"), ser.dates, ser[k].lv, ser[k].ch)); }
         catch(e){ cw.appendChild(el("div","warn","圖表載入失敗:"+e.message)); }
@@ -221,7 +231,7 @@
   });
 
   // ---- 面板勾選 --------------------------------------------------------------
-  CKS.concat([$("#gArea"),$("#gBar")]).forEach(cb=>cb.addEventListener("change",render));
+  CKS.concat([$("#gArea"),$("#gBar"),$("#cols")]).forEach(cb=>cb.addEventListener("change",render));
 
   // ---- 網址預選 ?code=CD,DH --------------------------------------------------
   const pre=new URLSearchParams(location.search).get("code");
