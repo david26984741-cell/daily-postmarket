@@ -163,6 +163,86 @@
     "diff_oi_amt": -37571,
     "identity": "自營商"
    }
+  },
+  "2026/06/24": {
+   "call": {
+    "buy_oi_lots": 14529,
+    "buy_oi_amt": 1106696,
+    "sell_oi_lots": 15302,
+    "sell_oi_amt": 1400944,
+    "diff_oi_lots": -773,
+    "diff_oi_amt": -294248,
+    "identity": "自營商"
+   },
+   "put": {
+    "buy_oi_lots": 22855,
+    "buy_oi_amt": 651130,
+    "sell_oi_lots": 17005,
+    "sell_oi_amt": 620002,
+    "diff_oi_lots": 5850,
+    "diff_oi_amt": 31128,
+    "identity": "自營商"
+   }
+  },
+  "2026/06/25": {
+   "call": {
+    "buy_oi_lots": 26998,
+    "buy_oi_amt": 1155054,
+    "sell_oi_lots": 20135,
+    "sell_oi_amt": 1456582,
+    "diff_oi_lots": 6863,
+    "diff_oi_amt": -301528,
+    "identity": "自營商"
+   },
+   "put": {
+    "buy_oi_lots": 31299,
+    "buy_oi_amt": 645033,
+    "sell_oi_lots": 25596,
+    "sell_oi_amt": 615314,
+    "diff_oi_lots": 5703,
+    "diff_oi_amt": 29719,
+    "identity": "自營商"
+   }
+  },
+  "2026/06/26": {
+   "call": {
+    "buy_oi_lots": 13857,
+    "buy_oi_amt": 858093,
+    "sell_oi_lots": 15854,
+    "sell_oi_amt": 989570,
+    "diff_oi_lots": -1997,
+    "diff_oi_amt": -131477,
+    "identity": "自營商"
+   },
+   "put": {
+    "buy_oi_lots": 21078,
+    "buy_oi_amt": 1090858,
+    "sell_oi_lots": 18882,
+    "sell_oi_amt": 1080767,
+    "diff_oi_lots": 2196,
+    "diff_oi_amt": 10091,
+    "identity": "自營商"
+   }
+  },
+  "2026/07/01": {
+   "call": {
+    "buy_oi_lots": 15639,
+    "buy_oi_amt": 1304855,
+    "sell_oi_lots": 15078,
+    "sell_oi_amt": 1548933,
+    "diff_oi_lots": 561,
+    "diff_oi_amt": -244078,
+    "identity": "自營商"
+   },
+   "put": {
+    "buy_oi_lots": 22109,
+    "buy_oi_amt": 437916,
+    "sell_oi_lots": 19915,
+    "sell_oi_amt": 417665,
+    "diff_oi_lots": 2194,
+    "diff_oi_amt": 20251,
+    "identity": "自營商"
+   }
   }
  }
 }

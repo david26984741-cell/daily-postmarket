@@ -371,6 +371,190 @@
      "scope": "所有契約"
     }
    ]
+  },
+  "2026/06/24": {
+   "code": "TX",
+   "name": "臺股期貨(TX+MTX/4+TMF/20)",
+   "rows": [
+    {
+     "month": "202607",
+     "type": "0",
+     "top5_buy": 61023,
+     "top5_sell": 62599,
+     "top10_buy": 72013,
+     "top10_sell": 85237,
+     "market_oi": 110954,
+     "scope": "當月"
+    },
+    {
+     "month": "202607",
+     "type": "1",
+     "top5_buy": 58022,
+     "top5_sell": 62599,
+     "top10_buy": 66050,
+     "top10_sell": 85237,
+     "market_oi": 110954,
+     "scope": "當月"
+    },
+    {
+     "month": "999999",
+     "type": "0",
+     "top5_buy": 61682,
+     "top5_sell": 63478,
+     "top10_buy": 72673,
+     "top10_sell": 86489,
+     "market_oi": 116132,
+     "scope": "所有契約"
+    },
+    {
+     "month": "999999",
+     "type": "1",
+     "top5_buy": 58022,
+     "top5_sell": 63478,
+     "top10_buy": 66050,
+     "top10_sell": 86489,
+     "market_oi": 116132,
+     "scope": "所有契約"
+    }
+   ]
+  },
+  "2026/06/25": {
+   "code": "TX",
+   "name": "臺股期貨(TX+MTX/4+TMF/20)",
+   "rows": [
+    {
+     "month": "202607",
+     "type": "0",
+     "top5_buy": 61765,
+     "top5_sell": 60308,
+     "top10_buy": 71520,
+     "top10_sell": 81940,
+     "market_oi": 108019,
+     "scope": "當月"
+    },
+    {
+     "month": "202607",
+     "type": "1",
+     "top5_buy": 58876,
+     "top5_sell": 60308,
+     "top10_buy": 64309,
+     "top10_sell": 81940,
+     "market_oi": 108019,
+     "scope": "當月"
+    },
+    {
+     "month": "999999",
+     "type": "0",
+     "top5_buy": 62496,
+     "top5_sell": 61182,
+     "top10_buy": 72297,
+     "top10_sell": 83187,
+     "market_oi": 113450,
+     "scope": "所有契約"
+    },
+    {
+     "month": "999999",
+     "type": "1",
+     "top5_buy": 58876,
+     "top5_sell": 61182,
+     "top10_buy": 64309,
+     "top10_sell": 83187,
+     "market_oi": 113450,
+     "scope": "所有契約"
+    }
+   ]
+  },
+  "2026/06/26": {
+   "code": "TX",
+   "name": "臺股期貨(TX+MTX/4+TMF/20)",
+   "rows": [
+    {
+     "month": "202607",
+     "type": "0",
+     "top5_buy": 62330,
+     "top5_sell": 57053,
+     "top10_buy": 73280,
+     "top10_sell": 77946,
+     "market_oi": 108735,
+     "scope": "當月"
+    },
+    {
+     "month": "202607",
+     "type": "1",
+     "top5_buy": 59374,
+     "top5_sell": 57053,
+     "top10_buy": 67581,
+     "top10_sell": 77946,
+     "market_oi": 108735,
+     "scope": "當月"
+    },
+    {
+     "month": "999999",
+     "type": "0",
+     "top5_buy": 62970,
+     "top5_sell": 58330,
+     "top10_buy": 74260,
+     "top10_sell": 79629,
+     "market_oi": 114761,
+     "scope": "所有契約"
+    },
+    {
+     "month": "999999",
+     "type": "1",
+     "top5_buy": 59374,
+     "top5_sell": 58330,
+     "top10_buy": 67662,
+     "top10_sell": 79629,
+     "market_oi": 114761,
+     "scope": "所有契約"
+    }
+   ]
+  },
+  "2026/07/01": {
+   "code": "TX",
+   "name": "臺股期貨(TX+MTX/4+TMF/20)",
+   "rows": [
+    {
+     "month": "202607",
+     "type": "0",
+     "top5_buy": 68246,
+     "top5_sell": 60749,
+     "top10_buy": 77280,
+     "top10_sell": 82820,
+     "market_oi": 112828,
+     "scope": "當月"
+    },
+    {
+     "month": "202607",
+     "type": "1",
+     "top5_buy": 63022,
+     "top5_sell": 60749,
+     "top10_buy": 70143,
+     "top10_sell": 82820,
+     "market_oi": 112828,
+     "scope": "當月"
+    },
+    {
+     "month": "999999",
+     "type": "0",
+     "top5_buy": 68292,
+     "top5_sell": 61785,
+     "top10_buy": 78239,
+     "top10_sell": 84598,
+     "market_oi": 119074,
+     "scope": "所有契約"
+    },
+    {
+     "month": "999999",
+     "type": "1",
+     "top5_buy": 63022,
+     "top5_sell": 61785,
+     "top10_buy": 70143,
+     "top10_sell": 84598,
+     "market_oi": 119074,
+     "scope": "所有契約"
+    }
+   ]
   }
  }
 }
