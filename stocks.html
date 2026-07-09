@@ -19,15 +19,29 @@
   <p class="lead">前十大交易人未平倉(所有契約)。特定法人=前十大特定法人淨部位;自然人=前十大合計−特定法人;主力=自然人−特定法人。區域圖=淨部位,柱=每日增減。</p>
 
   <div class="stk-toolbar">
-    <input id="q" list="stocklist" placeholder="輸入代號或名稱,如 2330 / 台積電 / CD" autocomplete="off">
-    <datalist id="stocklist"></datalist>
-    <button id="addBtn">加入比較</button>
-    <button id="clearBtn" class="ghost">清除</button>
+    <span class="tlabel">顯示</span>
+    <label class="ck"><input type="checkbox" id="ck0" checked><span>主力</span></label>
+    <label class="ck"><input type="checkbox" id="ck1" checked><span>自然人</span></label>
+    <label class="ck"><input type="checkbox" id="ck2" checked><span>法人</span></label>
   </div>
+
+  <div class="stk-toolbar">
+    <input id="q" list="stocklist" placeholder="可一次輸入多檔,以空白或逗號分隔:2330 2317 鴻海 CD" autocomplete="off">
+    <datalist id="stocklist"></datalist>
+    <button id="addBtn">加入</button>
+    <button id="pickBtn" class="ghost">從清單勾選 ▾</button>
+    <button id="clearBtn" class="ghost">清除全部</button>
+  </div>
+
+  <div class="picker" id="picker" hidden>
+    <input id="pf" placeholder="篩選代號或名稱…" autocomplete="off">
+    <div class="picker-grid" id="pg"></div>
+  </div>
+
   <div class="chips" id="chips"></div>
 
   <div id="blocks" class="stk-blocks"></div>
-  <div id="empty" class="lead" style="margin-top:20px">上方搜尋並加入一檔或多檔個股,即可比較。</div>
+  <div id="empty" class="lead" style="margin-top:20px">上方搜尋、或從清單勾選一檔以上個股,即可比較。</div>
 
   <footer>資料來源:臺灣期貨交易所。淨部位=買方−賣方(口)。本網站僅供參考,不構成投資建議。</footer>
 </div>
@@ -35,7 +49,6 @@
 <script src="assets/app.js"></script>
 <script>
 (async function(){
-  // nav
   const nav=$("#nav");
   CATS.forEach(c=>{ const href = c.id==="stocks" ? "stocks.html" : `detail.html?cat=${c.id}`;
     const a=el("a",null,c.title); a.href=href; a.dataset.k=c.id; nav.appendChild(a); });
@@ -46,32 +59,21 @@
   const stocks=idx.stocks||[];
   const byCode={}; stocks.forEach(s=>byCode[s.code]=s);
 
-  // datalist (代號 名稱 證券代號 皆可搜尋)
   const dl=$("#stocklist");
   stocks.forEach(s=>{ const o=el("option"); o.value=`${s.code}  ${s.name}  ${s.sid||""}`; dl.appendChild(o); });
 
   function findStock(q){
     q=(q||"").trim(); if(!q) return null;
     const first=q.split(/\s+/)[0];
-    if(byCode[first]) return byCode[first];                 // datalist 選取 "CD  台積電 2330"
-    if(byCode[q]) return byCode[q];                          // 直接打代號
+    if(byCode[first]) return byCode[first];
+    if(byCode[q]) return byCode[q];
     let s=stocks.find(x=>x.name===q || x.sid===q); if(s) return s;
     const ql=q.toLowerCase();
     return stocks.find(x=> x.code.toLowerCase()===ql) ||
            stocks.find(x=> x.name.includes(q) || (x.sid&&x.sid.includes(q)) || x.code.toLowerCase().includes(ql));
   }
 
-  const selected=[]; // codes
-  const blocks=$("#blocks"), chipsEl=$("#chips"), emptyEl=$("#empty");
-  function syncChips(){
-    chipsEl.innerHTML="";
-    selected.forEach(code=>{ const s=byCode[code]||{code,name:code};
-      const c=el("span","chip",`${s.name} <span class="c">${code}</span> <b>×</b>`);
-      c.querySelector("b").onclick=()=>{ const i=selected.indexOf(code); if(i>=0){selected.splice(i,1); document.getElementById("blk-"+code)?.remove(); syncChips();} };
-      chipsEl.appendChild(c); });
-    emptyEl.style.display = selected.length? "none":"block";
-  }
-
+  // ---- 資料轉換 -------------------------------------------------------------
   const NET=(rows,t)=>{ const r=(rows||[]).find(x=>x.month==="999999"&&x.type===t); return r?(r.top10_buy-r.top10_sell):null; };
   function series(doc){
     const dates=Object.keys(doc.records).sort();
@@ -88,55 +90,131 @@
   }
 
   const PANELS=[["主力","#ffb454"],["自然人","#4ea1ff"],["特定法人","#c084fc"]];
+  const CKS=[$("#ck0"),$("#ck1"),$("#ck2")];
+  const visiblePanels=()=>PANELS.filter((_,i)=>CKS[i].checked);
   function last(a){ for(let i=a.length-1;i>=0;i--) if(a[i]!=null) return a[i]; return null; }
-  function fmtSigned(n){ if(n==null) return "—"; const s=n>0?"+":""; return s+Number(n).toLocaleString("en-US"); }
 
   function makeChart(ctx,dates,lv,ch,color){
     return new Chart(ctx,{ data:{ labels:dates, datasets:[
       {type:"line",label:"淨部位",data:lv,yAxisID:"y",borderColor:color,backgroundColor:color+"22",fill:"origin",pointRadius:0,borderWidth:1.6,tension:.15,order:2},
       {type:"bar",label:"每日增減",data:ch,yAxisID:"y1",order:1,borderWidth:0,
         backgroundColor:ch.map(v=>v==null?"rgba(0,0,0,0)":(v>=0?"rgba(255,91,91,.85)":"rgba(34,197,94,.85)"))}
-    ]}, options:{ responsive:true, maintainAspectRatio:false, interaction:{mode:"index",intersect:false},
+    ]}, options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
       plugins:{ legend:{display:false},
         tooltip:{ callbacks:{ label:(c)=>`${c.dataset.label}: ${Number(c.raw).toLocaleString("en-US")}` } } },
       scales:{
-        x:{ ticks:{color:"#7d8ea0",maxTicksLimit:7,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} },
+        x:{ ticks:{color:"#7d8ea0",maxTicksLimit:8,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} },
         y:{ position:"left", ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} },
         y1:{ position:"right", ticks:{color:"#6f8296",font:{size:9}}, grid:{drawOnChartArea:false} }
       } } });
   }
 
-  async function addStock(code){
-    if(selected.includes(code)) return;
-    selected.push(code); syncChips();
-    const blk=el("div","stk-block"); blk.id="blk-"+code;
-    const s=byCode[code]||{code,name:code};
-    blk.appendChild(el("div","stk-title",`${s.name} <span class="c">${code} · ${s.sid||""}</span>`));
-    const body=el("div"); blk.appendChild(body); blocks.appendChild(blk);
-    let doc;
-    try{ doc=await getJSON(`stocks/${code}.json`); }catch(e){ body.appendChild(el("div","warn","找不到此個股資料")); return; }
-    const ser=series(doc);
-    PANELS.forEach(([k,color])=>{
-      const lv=last(ser[k].lv), ch=last(ser[k].ch);
-      const panel=el("div","stk-panel");
-      panel.appendChild(el("div","stk-panelhd",
-        `<span class="tagm">【前十】${k}</span> 淨部位 <b class="${lv>0?'up':(lv<0?'down':'')}">${lv==null?'—':Number(lv).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(ch)}</span>`));
-      const cw=el("div","stk-canvas"); const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
-      body.appendChild(panel);
-      try{ makeChart(cv.getContext("2d"), ser.dates, ser[k].lv, ser[k].ch, color); }
-      catch(e){ cw.appendChild(el("div","warn","圖表載入失敗:"+e.message)); }
+  // ---- 狀態 -----------------------------------------------------------------
+  const selected=[];   // 已選代號 (依加入順序)
+  const docs={};       // code -> json (快取, 不重複下載)
+  let charts=[];
+  const blocks=$("#blocks"), chipsEl=$("#chips"), emptyEl=$("#empty");
+
+  function render(){
+    charts.forEach(c=>{ try{c.destroy();}catch(e){} }); charts=[];
+    blocks.innerHTML="";
+    const vis=visiblePanels();
+    emptyEl.style.display = selected.length? "none":"block";
+    if(selected.length && !vis.length){
+      blocks.appendChild(el("div","warn","請至少勾選一項:主力 / 自然人 / 法人")); return;
+    }
+    selected.forEach(code=>{
+      const doc=docs[code]; const s=byCode[code]||{code,name:code};
+      const blk=el("div","stk-block"); blk.id="blk-"+code;
+      blk.appendChild(el("div","stk-title",`${s.name} <span class="c">${code} · ${s.sid||""}</span>`));
+      if(!doc){ blk.appendChild(el("div","warn","找不到此個股資料")); blocks.appendChild(blk); return; }
+
+      const body=el("div","stk-body");
+      body.style.gridTemplateColumns=`repeat(${vis.length},minmax(0,1fr))`;
+      const ser=series(doc);
+      vis.forEach(([k,color])=>{
+        const lv=last(ser[k].lv), ch=last(ser[k].ch);
+        const panel=el("div","stk-panel");
+        panel.appendChild(el("div","stk-panelhd",
+          `<span class="tagm">【前十】${k}</span> 淨部位 <b class="${lv>0?'up':(lv<0?'down':'')}">${lv==null?'—':Number(lv).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(ch)}</span>`));
+        const cw=el("div","stk-canvas"); const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
+        body.appendChild(panel);
+        try{ charts.push(makeChart(cv.getContext("2d"), ser.dates, ser[k].lv, ser[k].ch, color)); }
+        catch(e){ cw.appendChild(el("div","warn","圖表載入失敗:"+e.message)); }
+      });
+      blk.appendChild(body); blocks.appendChild(blk);
     });
   }
 
-  function doAdd(){ const s=findStock($("#q").value); if(s){ addStock(s.code); $("#q").value=""; } else if($("#q").value.trim()){ alert("找不到:"+$("#q").value); } }
+  function syncChips(){
+    chipsEl.innerHTML="";
+    selected.forEach(code=>{ const s=byCode[code]||{code,name:code};
+      const c=el("span","chip",`${s.name} <span class="c">${code}</span> <b>×</b>`);
+      c.querySelector("b").onclick=()=>removeStock(code);
+      chipsEl.appendChild(c); });
+    document.querySelectorAll("#pg input[type=checkbox]").forEach(i=>{ i.checked=selected.includes(i.value); });
+  }
+
+  async function addStock(code){
+    if(selected.includes(code)) return;
+    selected.push(code);
+    if(!(code in docs)){
+      try{ docs[code]=await getJSON(`stocks/${code}.json`); }catch(e){ docs[code]=null; }
+    }
+  }
+  function removeStock(code){
+    const i=selected.indexOf(code); if(i>=0) selected.splice(i,1);
+    syncChips(); render();
+  }
+  async function addMany(codes){
+    for(const c of codes) await addStock(c);
+    syncChips(); render();
+  }
+
+  // ---- 一次輸入多檔 ----------------------------------------------------------
+  function doAdd(){
+    const raw=$("#q").value.trim(); if(!raw) return;
+    // 若是從 datalist 選的單一項目 (格式「CD  台積電  2330」), 直接命中
+    const parts=raw.split(/[,，、;；\s]+/).filter(Boolean);
+    if(parts.length>1 && byCode[parts[0]] && byCode[parts[0]].name===parts[1]){
+      addMany([parts[0]]); $("#q").value=""; return;
+    }
+    const found=[], miss=[];
+    parts.forEach(p=>{ const s=findStock(p); if(s){ if(!found.includes(s.code)) found.push(s.code); } else miss.push(p); });
+    if(found.length) addMany(found);
+    $("#q").value="";
+    if(miss.length) alert("找不到:"+miss.join("、"));
+  }
   $("#addBtn").onclick=doAdd;
   $("#q").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); doAdd(); } });
-  $("#clearBtn").onclick=()=>{ selected.slice().forEach(c=>{document.getElementById("blk-"+c)?.remove();}); selected.length=0; syncChips(); };
+  $("#clearBtn").onclick=()=>{ selected.length=0; syncChips(); render(); };
 
-  // 支援網址預選 ?code=CD 或 ?code=CD,DH
+  // ---- 從清單勾選 ------------------------------------------------------------
+  const pg=$("#pg");
+  stocks.forEach(s=>{
+    const lab=el("label","pick");
+    const cb=document.createElement("input"); cb.type="checkbox"; cb.value=s.code;
+    cb.onchange=async()=>{ if(cb.checked){ await addStock(s.code); syncChips(); render(); } else removeStock(s.code); };
+    lab.appendChild(cb);
+    lab.appendChild(el("span","pk",`${s.name} <span class="c">${s.code}·${s.sid||""}</span>`));
+    lab.dataset.key=`${s.code} ${s.name} ${s.sid||""}`.toLowerCase();
+    pg.appendChild(lab);
+  });
+  $("#pickBtn").onclick=()=>{ const p=$("#picker"); p.hidden=!p.hidden; if(!p.hidden) $("#pf").focus(); };
+  $("#pf").addEventListener("input",e=>{
+    const q=e.target.value.trim().toLowerCase();
+    pg.querySelectorAll(".pick").forEach(l=>{ l.style.display=(!q||l.dataset.key.includes(q))?"flex":"none"; });
+  });
+
+  // ---- 面板勾選 --------------------------------------------------------------
+  CKS.forEach(cb=>cb.addEventListener("change",render));
+
+  // ---- 網址預選 ?code=CD,DH --------------------------------------------------
   const pre=new URLSearchParams(location.search).get("code");
-  if(pre){ for(const c of pre.split(",")){ const s=byCode[c.trim()]||findStock(c.trim()); if(s) await addStock(s.code); } }
-  syncChips();
+  if(pre){
+    const list=[]; pre.split(",").forEach(c=>{ const s=byCode[c.trim()]||findStock(c.trim()); if(s&&!list.includes(s.code)) list.push(s.code); });
+    await addMany(list);
+  } else { syncChips(); render(); }
 })();
 </script>
 </body>
