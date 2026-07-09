@@ -254,7 +254,7 @@
         const lv=last(ser[k].lv), ch=last(ser[k].ch);
         const panel=el("div","stk-panel");
         panel.appendChild(el("div","stk-panelhd",
-          `<span class="tagm">【前十】${k}</span> 淨部位 <b class="${lv>0?'up':(lv<0?'down':'')}">${lv==null?'—':Number(lv).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(ch)}</span>`));
+          `<span class="tagm">${k==="特定法人"?"法人":k}</span> 淨部位 <b class="${lv>0?'up':(lv<0?'down':'')}">${lv==null?'—':Number(lv).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(ch)}</span>`));
         const cw=el("div","stk-canvas"); cw.style.height=chartH+"px";
         const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
         body.appendChild(panel);
