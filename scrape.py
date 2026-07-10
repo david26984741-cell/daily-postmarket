@@ -491,6 +491,13 @@ def run(date_slash, no_retry=False):
     else:
         status["kline"] = "資料未更新"
 
+    # --- 臨時休市保護 (颱風假等「平日但全市場無資料」的情況) ---
+    # 所有來源皆無當日資料時, 不把該日寫進索引, 避免個股清單/最新日期被清空。
+    wrote_any = any(str(v).startswith("ok") or v == "partial" for v in status.values())
+    if not wrote_any:
+        log(f"=== {date_slash} 全部來源皆無當日資料 (可能臨時休市, 如颱風假), 不更新索引 ===")
+        return 0
+
     # --- 更新 index.json (供前端讀取) ---
     update_index(date_slash, status, stock_map)
     log(f"=== 完成 {date_slash} ===  {status}")
@@ -547,7 +554,8 @@ def update_index(date_slash, status, stock_map=None):
                     if date_slash == latest:
                         rank_rows.append(_rank_row(d, latest, stock_map or {}))
     idx["updated_at"] = datetime.datetime.now().isoformat(timespec="seconds")
-    idx["stocks"] = stocks
+    if stocks or not idx.get("stocks"):
+        idx["stocks"] = stocks   # 保險: 重建結果為空時保留既有清單, 避免臨時休市把個股列表清空
     idx["categories"] = [
         {"id": "options_foreign", "title": "外資選擇權",       "file": "options_foreign.json"},
         {"id": "options_dealer",  "title": "自營選擇權",       "file": "options_dealer.json"},
