@@ -148,49 +148,57 @@ def fetch_kline_maps(date_yyyymmdd):
     """個股現貨日K: 上市 (TWSE MI_INDEX) + 上櫃 (TPEx dailyQuotes) 合併。
        回傳 {證券代號: [開, 高, 低, 收, 成交股數]}; 非交易日/來源無資料時回傳空 dict。"""
     out = {}
-    # 上市
-    try:
-        txt = http_get(TWSE_MI, {"response": "json", "date": date_yyyymmdd, "type": "ALLBUT0999"},
-                       headers={"Referer": "https://www.twse.com.tw/zh/trading/historical/mi-index.html",
-                                "Accept": "application/json, text/javascript, */*; q=0.01",
-                                "X-Requested-With": "XMLHttpRequest"})
-        obj = json.loads(txt)
-        if obj.get("stat") == "OK" and str(obj.get("date", "")) == date_yyyymmdd:
-            for tb in obj.get("tables", []):
-                title = tb.get("title") or ""
-                f = tb.get("fields") or []
-                if "每日收盤行情" in title and "證券代號" in f:
-                    idx = {k: f.index(k) for k in ("證券代號", "開盤價", "最高價", "最低價", "收盤價", "成交股數")}
-                    for row in tb.get("data", []):
-                        sid = str(row[idx["證券代號"]]).strip()
-                        o, h, l, c = (_num_price(row[idx["開盤價"]]), _num_price(row[idx["最高價"]]),
-                                      _num_price(row[idx["最低價"]]), _num_price(row[idx["收盤價"]]))
-                        if c is not None:
-                            out[sid] = [o, h, l, c, num(row[idx["成交股數"]])]
-                    break
-    except Exception as e:
-        log(f"  TWSE 行情錯誤: {e}")
+    # 上市 (瞬斷/被拒時重試, 避免歷史 K 留破洞)
+    for attempt in range(3):
+        try:
+            txt = http_get(TWSE_MI, {"response": "json", "date": date_yyyymmdd, "type": "ALLBUT0999"},
+                           headers={"Referer": "https://www.twse.com.tw/zh/trading/historical/mi-index.html",
+                                    "Accept": "application/json, text/javascript, */*; q=0.01",
+                                    "X-Requested-With": "XMLHttpRequest"})
+            obj = json.loads(txt)
+            if obj.get("stat") == "OK" and str(obj.get("date", "")) == date_yyyymmdd:
+                for tb in obj.get("tables", []):
+                    title = tb.get("title") or ""
+                    f = tb.get("fields") or []
+                    if "每日收盤行情" in title and "證券代號" in f:
+                        idx = {k: f.index(k) for k in ("證券代號", "開盤價", "最高價", "最低價", "收盤價", "成交股數")}
+                        for row in tb.get("data", []):
+                            sid = str(row[idx["證券代號"]]).strip()
+                            o, h, l, c = (_num_price(row[idx["開盤價"]]), _num_price(row[idx["最高價"]]),
+                                          _num_price(row[idx["最低價"]]), _num_price(row[idx["收盤價"]]))
+                            if c is not None:
+                                out[sid] = [o, h, l, c, num(row[idx["成交股數"]])]
+                        break
+            break   # 有回應 (含非交易日 stat!=OK) 即結束, 不需重試
+        except Exception as e:
+            log(f"  TWSE 行情錯誤(第{attempt+1}/3次): {e}")
+            if attempt < 2:
+                time.sleep(5)
     # 上櫃 (民國年日期)
-    try:
-        roc = f"{int(date_yyyymmdd[:4])-1911}/{date_yyyymmdd[4:6]}/{date_yyyymmdd[6:]}"
-        txt = http_get(TPEX_DQ, {"date": roc, "response": "json"},
-                       headers={"Referer": "https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing.html",
-                                "Accept": "application/json"})
-        obj = json.loads(txt)
-        for tb in (obj.get("tables") or [])[:1]:
-            f = tb.get("fields") or []
-            need = ("代號", "開盤", "最高", "最低", "收盤", "成交股數")
-            if not all(k in f for k in need):
-                continue
-            idx = {k: f.index(k) for k in need}
-            for row in tb.get("data", []):
-                sid = str(row[idx["代號"]]).strip()
-                o, h, l, c = (_num_price(row[idx["開盤"]]), _num_price(row[idx["最高"]]),
-                              _num_price(row[idx["最低"]]), _num_price(row[idx["收盤"]]))
-                if c is not None and sid not in out:
-                    out[sid] = [o, h, l, c, num(row[idx["成交股數"]])]
-    except Exception as e:
-        log(f"  TPEx 行情錯誤: {e}")
+    for attempt in range(3):
+        try:
+            roc = f"{int(date_yyyymmdd[:4])-1911}/{date_yyyymmdd[4:6]}/{date_yyyymmdd[6:]}"
+            txt = http_get(TPEX_DQ, {"date": roc, "response": "json"},
+                           headers={"Referer": "https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing.html",
+                                    "Accept": "application/json"})
+            obj = json.loads(txt)
+            for tb in (obj.get("tables") or [])[:1]:
+                f = tb.get("fields") or []
+                need = ("代號", "開盤", "最高", "最低", "收盤", "成交股數")
+                if not all(k in f for k in need):
+                    continue
+                idx = {k: f.index(k) for k in need}
+                for row in tb.get("data", []):
+                    sid = str(row[idx["代號"]]).strip()
+                    o, h, l, c = (_num_price(row[idx["開盤"]]), _num_price(row[idx["最高"]]),
+                                  _num_price(row[idx["最低"]]), _num_price(row[idx["收盤"]]))
+                    if c is not None and sid not in out:
+                        out[sid] = [o, h, l, c, num(row[idx["成交股數"]])]
+            break
+        except Exception as e:
+            log(f"  TPEx 行情錯誤(第{attempt+1}/3次): {e}")
+            if attempt < 2:
+                time.sleep(5)
     return out
 
 
