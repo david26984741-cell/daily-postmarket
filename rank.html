@@ -64,7 +64,8 @@ td.amt{text-align:right;color:var(--mut);font-size:12.5px;white-space:nowrap}
   let rk;
   try{ rk=await getJSON("rank.json"); }
   catch(e){ $("#dchip").textContent="排行資料尚未產生(首次於下一次每日更新後出現)"; return; }
-  $("#dchip").innerHTML=`資料日期 <b>${rk.date}</b> · 對照前一交易日`;
+  $("#dchip").innerHTML=`資料日期 <b>${rk.date}</b> · 對照前一交易日${UPDATE_NOTE}`;
+  try{ const m=localStorage.getItem("dpm.rank.metric"); if(m&&$("#metric").querySelector(`option[value=${m}]`)) $("#metric").value=m; }catch(e){}
 
   function delta(r,m){
     let cur=null, prev=null;
@@ -112,7 +113,7 @@ td.amt{text-align:right;color:var(--mut);font-size:12.5px;white-space:nowrap}
     put("upAmt", amt.filter(r=>r._amt>0).sort((a,b)=>b._amt-a._amt).slice(0,10), true);
     put("dnAmt", amt.filter(r=>r._amt<0).sort((a,b)=>a._amt-b._amt).slice(0,10), true);
   }
-  $("#metric").onchange=render;
+  $("#metric").onchange=()=>{ try{ localStorage.setItem("dpm.rank.metric", $("#metric").value); }catch(e){} render(); };
   render();
 })();
 </script>

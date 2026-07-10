@@ -37,7 +37,7 @@
   let idx;
   try{ idx=await getJSON("index.json"); }catch(e){ $("#dchip").textContent="無法載入 index.json"; return; }
   const D=idx.latest_date;
-  $("#dchip").innerHTML=`資料日期 <b>${D}</b>`;
+  $("#dchip").innerHTML=`資料日期 <b>${D}</b>${UPDATE_NOTE}`;
   $("#upd").textContent = idx.updated_at? ` · 更新時間 ${idx.updated_at.replace("T"," ")}`:"";
 
   // status warnings

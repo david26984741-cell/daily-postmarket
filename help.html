@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>使用說明 — 每日盤後資料</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.help-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-top:14px}
+.help-card h3{margin:0 0 10px;font-size:16px;color:var(--accent)}
+dl.terms{margin:0}
+dl.terms dt{font-weight:700;margin-top:12px}
+dl.terms dt:first-child{margin-top:0}
+dl.terms dd{margin:4px 0 0;color:var(--mut);line-height:1.7}
+.kbd{display:inline-block;background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:1px 8px;font-size:12.5px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1><a href="index.html" style="color:inherit">每日盤後資料</a><small>使用說明</small></h1>
+  <nav class="main" id="nav"></nav>
+</div></header>
+
+<div class="wrap">
+  <div class="crumbs"><a href="index.html">← 當日整合總覽</a></div>
+  <h2 class="sec">怎麼看這個網站</h2>
+  <p class="lead">本站每個<b>交易日 15:35 後</b>自動抓取期交所/證交所盤後資料,約 <b>16:00 前</b>更新完成。遇國定假日、颱風假等休市日不更新,畫面會顯示最近一個交易日的資料,屬正常現象。</p>
+
+  <div class="help-card">
+    <h3>名詞解釋</h3>
+    <dl class="terms">
+      <dt>未平倉淨部位</dt>
+      <dd>買方未平倉口數 − 賣方未平倉口數。正數(紅)代表偏多、負數(綠)代表偏空;比單看買賣量更能反映大戶的實際立場。</dd>
+      <dt>主力(前十大交易人)</dt>
+      <dd>期交所公布的「前十大交易人」合計淨部位,包含法人與自然人大戶,是本站各圖表的預設口徑。</dd>
+      <dt>法人(前十大特定法人)</dt>
+      <dd>前十大交易人中屬於「特定法人」(銀行、券商、外資機構等)的部分。</dd>
+      <dt>自然人</dt>
+      <dd>主力 − 法人,即前十大交易人中非法人的自然人大戶。</dd>
+      <dt>全市場未沖銷</dt>
+      <dd>該契約全市場尚未平倉的總口數,反映整體市場參與度。</dd>
+      <dt>K棒(股價)</dt>
+      <dd>該股期對應「現股」的日K(開高低收),紅漲綠跌。滑鼠移到K棒上可看四個價位。</dd>
+      <dt>每日增減(柱狀圖)</dt>
+      <dd>淨部位與前一交易日的差,紅柱=增加、綠柱=減少。</dd>
+      <dt>排行榜的「金額」</dt>
+      <dd>增減口數 × 現股收盤價 × 每口股數(小型契約 100 股、一般契約 2,000 股),把口數換算成實際規模,方便跨個股比較。</dd>
+    </dl>
+  </div>
+
+  <div class="help-card">
+    <h3>圖表操作</h3>
+    <dl class="terms">
+      <dt>縮放期間</dt>
+      <dd>滑鼠在圖表上<b>滾動滾輪</b>:向上放大(區間變短)、向下縮小,以游標位置為中心。</dd>
+      <dt>左右平移</dt>
+      <dd>在圖表上<b>按住拖曳</b>:往右看更早、往左看更新的資料。</dd>
+      <dt>指定期間</dt>
+      <dd>用圖表上方的起訖日期,或「近1月 / 近3月 / 近6月 / 全部」快速按鈕。所有圖表會同步。</dd>
+      <dt>比較多檔</dt>
+      <dd>股票期貨頁可一次輸入多檔(空白或逗號分隔),或從清單勾選;「每列」可調整並排數量。</dd>
+      <dt>自動記憶</dt>
+      <dd>你選的股票組合、期間與顯示設定會自動記住,下次開啟直接恢復。</dd>
+    </dl>
+  </div>
+
+  <div class="help-card">
+    <h3>資料範圍</h3>
+    <dl class="terms">
+      <dt>股票期貨、大額交易人</dt><dd>自 2017 年 7 月起,每檔自其掛牌日開始;新掛牌契約自動納入。</dd>
+      <dt>外資/自營選擇權、外資期貨</dt><dd>期交所僅提供近三年。</dd>
+      <dt>外資現貨買賣差額</dt><dd>證交所僅提供近期資料,自 2026 年 6 月底起逐日累積。</dd>
+    </dl>
+  </div>
+
+  <footer>資料來源:臺灣期貨交易所、臺灣證券交易所、證券櫃檯買賣中心。本網站僅供參考,不構成投資建議。</footer>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(function(){
+  const nav=$("#nav");
+  CATS.forEach(c=>{const a=el("a",null,c.title);a.href=catHref(c);a.dataset.k=c.id;nav.appendChild(a);});
+  navActive("help");
+})();
+</script>
+</body>
+</html>
