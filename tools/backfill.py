@@ -58,8 +58,10 @@ def main():
             skipped.append((d, "已存在")); print(f"[略過] {d}  已有資料"); continue
 
         # 抓取前先確認期交所該日確實有資料 (避免把休市日寫成「未更新」)
+        # 注意: 預檢必須用保留期最長的 largeFut (約可回溯至 2017);
+        #       callsAndPuts 僅保留近三年, 用它預檢會把更早的日期整天誤判為休市。
         try:
-            rows = scrape.fetch_taifex_csv("callsAndPuts", d)
+            rows = scrape.fetch_taifex_csv("largeFut", d)
             if not scrape.csv_date_ok(rows, d):
                 skipped.append((d, "來源無該日資料(可能休市)"))
                 print(f"[略過] {d}  來源無該日資料(可能休市)")

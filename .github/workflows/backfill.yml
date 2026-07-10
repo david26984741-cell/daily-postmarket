@@ -18,6 +18,10 @@ on:
         description: "已有資料的日期也重抓覆蓋 (true/false)"
         required: false
         default: "false"
+      sleep:
+        description: "每日之間間隔秒數"
+        required: false
+        default: "2.0"
 
 permissions:
   contents: write
@@ -32,7 +36,7 @@ concurrency:
 jobs:
   backfill-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 330
+    timeout-minutes: 355
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -49,9 +53,11 @@ jobs:
         run: |
           ARGS="--start ${{ github.event.inputs.start }} --end ${{ github.event.inputs.end }}"
           if [ "${{ github.event.inputs.force }}" = "true" ]; then ARGS="$ARGS --force"; fi
+          if [ -n "${{ github.event.inputs.sleep }}" ]; then ARGS="$ARGS --sleep ${{ github.event.inputs.sleep }}"; fi
           python tools/backfill.py $ARGS
 
       - name: Commit 資料更新
+        if: always()   # 即使逾時被中止, 也把已抓到的部分 commit 起來, 重跑只需補剩餘區間
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
