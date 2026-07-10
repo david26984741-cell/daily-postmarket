@@ -152,7 +152,8 @@ def fetch_kline_maps(date_yyyymmdd):
     try:
         txt = http_get(TWSE_MI, {"response": "json", "date": date_yyyymmdd, "type": "ALLBUT0999"},
                        headers={"Referer": "https://www.twse.com.tw/zh/trading/historical/mi-index.html",
-                                "Accept": "application/json"})
+                                "Accept": "application/json, text/javascript, */*; q=0.01",
+                                "X-Requested-With": "XMLHttpRequest"})
         obj = json.loads(txt)
         if obj.get("stat") == "OK" and str(obj.get("date", "")) == date_yyyymmdd:
             for tb in obj.get("tables", []):
