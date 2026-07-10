@@ -28,7 +28,7 @@ concurrency:
 jobs:
   backfill-kline:
     runs-on: ubuntu-latest
-    timeout-minutes: 300
+    timeout-minutes: 355
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

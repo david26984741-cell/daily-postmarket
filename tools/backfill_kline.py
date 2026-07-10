@@ -42,6 +42,16 @@ def main():
     os.makedirs(scrape.KLINE, exist_ok=True)
 
     acc = {}          # sid -> {date: ohlcv}
+    def flush():
+        if not acc:
+            return
+        for sid, recs in acc.items():
+            path = os.path.join(scrape.KLINE, f"{sid}.json")
+            doc = scrape.load_json(path, {"sid": sid, "records": {}})
+            doc["records"].update(recs)
+            scrape.save_json(path, doc)
+        acc.clear()
+
     days, empty = 0, 0
     for d in daterange(a.start, a.end):
         wd = datetime.datetime.strptime(d, "%Y/%m/%d").date().weekday()
@@ -58,15 +68,13 @@ def main():
                 acc.setdefault(sid, {})[d] = kmap[sid]; n += 1
         days += 1
         print(f"{d} 日K {n} 檔", flush=True)
+        if days % 40 == 0:      # 定期落盤: 逾時/中斷最多只損失最後一批
+            flush()
+            print(f"[寫檔] 已處理 {days} 個交易日, 落盤完成", flush=True)
         time.sleep(a.sleep)
 
-    # 一次合併寫檔
-    for sid, recs in acc.items():
-        path = os.path.join(scrape.KLINE, f"{sid}.json")
-        doc = scrape.load_json(path, {"sid": sid, "records": {}})
-        doc["records"].update(recs)
-        scrape.save_json(path, doc)
-    print(f"完成: {days} 個交易日, {len(acc)} 檔寫入, 略過 {empty} 天")
+    flush()
+    print(f"完成: {days} 個交易日, 略過 {empty} 天")
     return 0
 
 
