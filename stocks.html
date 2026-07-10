@@ -207,13 +207,13 @@
     const ds=[], sc={ x:{ ticks:{color:"#7d8ea0",maxTicksLimit:8,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} } };
     if(showArea()){
       ds.push({type:"line",label:"淨部位",data:v.lv,yAxisID:"y",borderColor:LINE,backgroundColor:LINE+"22",fill:"origin",pointRadius:0,borderWidth:1.6,tension:.15,order:2});
-      sc.y={ position:"left", ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
+      sc.y={ position:"left", beginAtZero:true, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
     }
     if(showBar()){
       ds.push({type:"bar",label:"每日增減",data:v.ch,yAxisID:showArea()?"y1":"y",order:1,borderWidth:0,
         backgroundColor:v.ch.map(barColor)});
-      if(showArea()) sc.y1={ position:"right", ticks:{color:"#6f8296",font:{size:9}}, grid:{drawOnChartArea:false} };
-      else sc.y={ position:"left", ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
+      if(showArea()) sc.y1={ position:"right", beginAtZero:true, ticks:{color:"#6f8296",font:{size:9}}, grid:{drawOnChartArea:false} };
+      else sc.y={ position:"left", beginAtZero:true, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
     }
     return new Chart(ctx,{ data:{labels:v.labels,datasets:ds},
       options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
