@@ -492,12 +492,43 @@ def run(date_slash, no_retry=False):
         status["kline"] = "資料未更新"
 
     # --- 更新 index.json (供前端讀取) ---
-    update_index(date_slash, status)
+    update_index(date_slash, status, stock_map)
     log(f"=== 完成 {date_slash} ===  {status}")
     return 0
 
 
-def update_index(date_slash, status):
+def _rank_row(doc, latest, stock_map):
+    """單一個股期貨的排行原始資料 (口數與前一日口數, 以及現股收盤價/每口股數)。"""
+    recs = doc.get("records", {})
+    rec = recs.get(latest) or []
+    pdates = [x for x in recs if x < latest]
+    prev = max(pdates) if pdates else None
+    prec = recs.get(prev) or []
+    def pick(rows, t):
+        for x in rows:
+            if x.get("month") == "999999" and x.get("type") == t:
+                return x
+        return None
+    net = lambda r: (r["top10_buy"] - r["top10_sell"]) if r else None
+    a0, a1, b0, b1 = pick(rec, "0"), pick(rec, "1"), pick(prec, "0"), pick(prec, "1")
+    code = doc.get("code")
+    info = stock_map.get(code, {})
+    name = doc.get("name") or info.get("short") or code
+    mini = str(name).startswith("小型")
+    sid = doc.get("sid") or info.get("sid", "")
+    price = None
+    if sid:
+        k = load_json(os.path.join(KLINE, f"{sid}.json"), {}).get("records", {}).get(latest)
+        if k and k[3] is not None:
+            price = k[3]
+    return {"code": code, "name": name, "sid": sid, "mini": mini,
+            "shares": 100 if mini else 2000, "price": price, "prev_date": prev,
+            "main": net(a0), "main_prev": net(b0),
+            "inst": net(a1), "inst_prev": net(b1),
+            "moi": (a0 or {}).get("market_oi"), "moi_prev": (b0 or {}).get("market_oi")}
+
+
+def update_index(date_slash, status, stock_map=None):
     idx_path = os.path.join(DATA, "index.json")
     idx = load_json(idx_path, {"dates": [], "status_log": {}})
     dates = set(idx.get("dates", []))
@@ -506,12 +537,15 @@ def update_index(date_slash, status):
     idx["latest_date"] = latest = idx["dates"][0]
     # 蒐集所有個股 (一律以「最新交易日」為準;回補舊日期時不會把最新的個股清單洗掉)
     stocks = []
+    rank_rows = []
     if os.path.isdir(STOCKS):
         for fn in sorted(os.listdir(STOCKS)):
             if fn.endswith(".json"):
                 d = load_json(os.path.join(STOCKS, fn), {})
                 if latest in d.get("records", {}):
                     stocks.append({"code": d.get("code"), "name": d.get("name"), "sid": d.get("sid", "")})
+                    if date_slash == latest:
+                        rank_rows.append(_rank_row(d, latest, stock_map or {}))
     idx["updated_at"] = datetime.datetime.now().isoformat(timespec="seconds")
     idx["stocks"] = stocks
     idx["categories"] = [
@@ -521,9 +555,14 @@ def update_index(date_slash, status):
         {"id": "large_opt",       "title": "大額交易人選擇權", "file": "large_opt.json"},
         {"id": "large_fut_txf",   "title": "大額交易人期貨",   "file": "large_fut_txf.json"},
         {"id": "stocks",          "title": "大額交易人股票期貨","file": None},
+        {"id": "rank",            "title": "股期增減排行",      "file": "rank.json"},
     ]
     idx.setdefault("status_log", {})[date_slash] = status
     save_json(idx_path, idx)
+    # 排行資料只在「寫入的正是最新交易日」時重建 (回補舊日期不會動到)
+    if date_slash == latest and rank_rows:
+        save_json(os.path.join(DATA, "rank.json"), {"date": latest, "rows": rank_rows})
+        log(f"  排行資料: {len(rank_rows)} 檔")
 
 
 if __name__ == "__main__":

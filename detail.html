@@ -36,7 +36,7 @@
 (async function(){
   const cat=new URLSearchParams(location.search).get("cat")||"options_foreign";
   const nav=$("#nav");
-  CATS.forEach(c=>{const a=el("a",null,c.title);a.href=c.id==="stocks"?"stocks.html":`detail.html?cat=${c.id}`;a.dataset.k=c.id;nav.appendChild(a);});
+  CATS.forEach(c=>{const a=el("a",null,c.title);a.href=catHref(c);a.dataset.k=c.id;nav.appendChild(a);});
   navActive(cat);
 
   if(cat==="stocks"){ location.href="index.html#stocks"; return; }

@@ -7,7 +7,9 @@ const CATS = [
   {id:"large_opt",       title:"大額交易人選擇權", file:"large_opt.json"},
   {id:"large_fut_txf",   title:"大額交易人期貨",   file:"large_fut_txf.json"},
   {id:"stocks",          title:"大額交易人股票期貨",file:null},
+  {id:"rank",            title:"股期增減排行",      file:null},
 ];
+const catHref = c => c.id==="stocks" ? "stocks.html" : (c.id==="rank" ? "rank.html" : `detail.html?cat=${c.id}`);
 const $ = (s,r=document)=>r.querySelector(s);
 const el = (t,c,h)=>{const e=document.createElement(t); if(c)e.className=c; if(h!=null)e.innerHTML=h; return e;};
 async function getJSON(f){const r=await fetch(DATA+f,{cache:"no-store"}); if(!r.ok)throw new Error(f); return r.json();}

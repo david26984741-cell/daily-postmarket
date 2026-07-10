@@ -75,8 +75,7 @@
 <script>
 (async function(){
   const nav=$("#nav");
-  CATS.forEach(c=>{ const href = c.id==="stocks" ? "stocks.html" : `detail.html?cat=${c.id}`;
-    const a=el("a",null,c.title); a.href=href; a.dataset.k=c.id; nav.appendChild(a); });
+  CATS.forEach(c=>{ const a=el("a",null,c.title); a.href=catHref(c); a.dataset.k=c.id; nav.appendChild(a); });
   navActive("stocks");
 
   const idx=await getJSON("index.json");

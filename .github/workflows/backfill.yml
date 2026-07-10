@@ -74,7 +74,7 @@ jobs:
       - name: 準備網站檔案
         run: |
           rm -rf _site && mkdir -p _site
-          cp -r index.html stocks.html detail.html stock.html assets data .nojekyll _site/ 2>/dev/null || true
+          cp -r index.html stocks.html detail.html stock.html rank.html assets data .nojekyll _site/ 2>/dev/null || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

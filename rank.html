@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>股期增減排行 — 每日盤後資料</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.rank-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+@media (max-width:900px){.rank-grid{grid-template-columns:1fr}}
+.rank-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.rank-card h3{margin:0 0 10px;font-size:15.5px}
+.rank-card h3 small{color:var(--mut);font-weight:400;margin-left:6px;font-size:12px}
+table.rank{width:100%;border-collapse:collapse;font-size:14px}
+table.rank td{padding:6px 6px;border-bottom:1px solid rgba(255,255,255,.05)}
+table.rank tr:last-child td{border-bottom:none}
+td.no{color:var(--mut);width:26px}
+td.nm a{color:var(--txt)}
+td.nm a:hover{color:var(--accent)}
+td.val{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.amt{text-align:right;color:var(--mut);font-size:12.5px;white-space:nowrap}
+.mini-tag{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--mut);font-size:11px;border-radius:5px;padding:0 5px;margin-left:6px;vertical-align:1px}
+.empty{color:var(--mut);font-size:13px;padding:8px 2px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1><a href="index.html" style="color:inherit">每日盤後資料</a><small>股票期貨 · 增減排行</small></h1>
+  <nav class="main" id="nav"></nav>
+</div></header>
+
+<div class="wrap">
+  <div class="crumbs"><a href="index.html">← 當日整合總覽</a></div>
+  <h2 class="sec">股票期貨增減排行 <span class="tag" id="dchip"></span></h2>
+  <p class="lead">與前一交易日相比的未平倉<b>淨部位</b>增減。金額 = 增減口數 × 現股收盤價 × 每口股數(小型 100 股、一般 2,000 股)。點股票名稱可查看該檔完整資料。</p>
+
+  <div class="toolbar">
+    <label class="muted">口徑</label>
+    <select id="metric">
+      <option value="main" selected>主力(前十大交易人)</option>
+      <option value="inst">法人(前十大特定法人)</option>
+      <option value="nat">自然人(前十大非法人)</option>
+      <option value="moi">全市場未沖銷</option>
+    </select>
+  </div>
+
+  <div class="rank-grid">
+    <div class="rank-card"><h3>增加口數 前十<small>口</small></h3><div id="upLots"></div></div>
+    <div class="rank-card"><h3>減少口數 前十<small>口</small></h3><div id="dnLots"></div></div>
+    <div class="rank-card"><h3>增加金額 前十<small>口數×股價×每口股數</small></h3><div id="upAmt"></div></div>
+    <div class="rank-card"><h3>減少金額 前十<small>口數×股價×每口股數</small></h3><div id="dnAmt"></div></div>
+  </div>
+
+  <footer>資料來源:臺灣期貨交易所、臺灣證券交易所、證券櫃檯買賣中心。本網站僅供參考,不構成投資建議。</footer>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(async function(){
+  const nav=$("#nav");
+  CATS.forEach(c=>{const a=el("a",null,c.title);a.href=catHref(c);a.dataset.k=c.id;nav.appendChild(a);});
+  navActive("rank");
+
+  let rk;
+  try{ rk=await getJSON("rank.json"); }
+  catch(e){ $("#dchip").textContent="排行資料尚未產生(首次於下一次每日更新後出現)"; return; }
+  $("#dchip").innerHTML=`資料日期 <b>${rk.date}</b> · 對照前一交易日`;
+
+  function delta(r,m){
+    let cur=null, prev=null;
+    if(m==="main"){ cur=r.main; prev=r.main_prev; }
+    else if(m==="inst"){ cur=r.inst; prev=r.inst_prev; }
+    else if(m==="nat"){
+      cur=(r.main!=null&&r.inst!=null)?r.main-r.inst:null;
+      prev=(r.main_prev!=null&&r.inst_prev!=null)?r.main_prev-r.inst_prev:null;
+    }else{ cur=r.moi; prev=r.moi_prev; }
+    return (cur!=null&&prev!=null)? cur-prev : null;
+  }
+  const amtStr=v=>{
+    const a=Math.abs(v);
+    if(a>=1e8) return (v/1e8).toFixed(2)+" 億";
+    return (v/1e4).toFixed(0)+" 萬";
+  };
+  function tableOf(rows, withAmt){
+    if(!rows.length) return el("div","empty","本日無符合項目");
+    const t=el("table","rank"); const tb=el("tbody"); t.appendChild(tb);
+    rows.forEach((r,i)=>{
+      const tr=el("tr");
+      tr.appendChild(el("td","no",String(i+1)));
+      const nm=el("td","nm");
+      const a=el("a",null,r.name); a.href=`stocks.html?code=${r.code}`;
+      nm.appendChild(a);
+      if(r.mini) nm.appendChild(el("span","mini-tag","小型"));
+      tr.appendChild(nm);
+      const d=r._d;
+      tr.appendChild(el("td","val",`<span class="${d>0?'up':'down'}">${d>0?"+":""}${Number(d).toLocaleString("en-US")} 口</span>`));
+      if(withAmt) tr.appendChild(el("td","amt", r._amt!=null ? amtStr(r._amt) : "—"));
+      tb.appendChild(tr);
+    });
+    return t;
+  }
+  function render(){
+    const m=$("#metric").value;
+    const rows=(rk.rows||[]).map(r=>{
+      const d=delta(r,m);
+      return d==null?null:{...r,_d:d,_amt:(r.price!=null? d*r.price*r.shares : null)};
+    }).filter(Boolean);
+    const put=(id,arr,withAmt)=>{const b=$("#"+id);b.innerHTML="";b.appendChild(tableOf(arr,withAmt));};
+    put("upLots", rows.filter(r=>r._d>0).sort((a,b)=>b._d-a._d).slice(0,10), false);
+    put("dnLots", rows.filter(r=>r._d<0).sort((a,b)=>a._d-b._d).slice(0,10), false);
+    const amt=rows.filter(r=>r._amt!=null);
+    put("upAmt", amt.filter(r=>r._amt>0).sort((a,b)=>b._amt-a._amt).slice(0,10), true);
+    put("dnAmt", amt.filter(r=>r._amt<0).sort((a,b)=>a._amt-b._amt).slice(0,10), true);
+  }
+  $("#metric").onchange=render;
+  render();
+})();
+</script>
+</body>
+</html>
