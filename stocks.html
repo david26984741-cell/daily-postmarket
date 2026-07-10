@@ -27,6 +27,7 @@
 
   <div class="stk-toolbar">
     <span class="tlabel">圖表</span>
+    <label class="ck"><input type="checkbox" id="gK" checked><span>K棒(股價)</span></label>
     <label class="ck"><input type="checkbox" id="gArea" checked><span>區域圖(淨部位)</span></label>
     <label class="ck"><input type="checkbox" id="gBar" checked><span>柱狀圖(每日增減)</span></label>
     <span class="tlabel" style="margin-left:10px">每列</span>
@@ -117,7 +118,7 @@
   const PANELS=["主力","自然人","特定法人"];
   const CKS=[$("#ck0"),$("#ck1"),$("#ck2")];
   const visiblePanels=()=>PANELS.filter((_,i)=>CKS[i].checked);
-  const showArea=()=>$("#gArea").checked, showBar=()=>$("#gBar").checked;
+  const showArea=()=>$("#gArea").checked, showBar=()=>$("#gBar").checked, showK=()=>$("#gK").checked;
   function last(a){ for(let i=a.length-1;i>=0;i--) if(a[i]!=null) return a[i]; return null; }
 
   // ---- 顯示期間 (全域, 所有圖表同步) ----------------------------------------
@@ -146,6 +147,7 @@
     if(range.from&&range.to&&range.from>range.to){const t=range.from;range.from=range.to;range.to=t;}
     syncRangeInputs();
     charts.forEach(r=>{
+      if(r.kind==="k"){ applyK(r); return; }
       const v=viewSlice(r.dates,r.lv,r.ch);
       r.chart.data.labels=v.labels;
       r.chart.data.datasets.forEach(ds=>{
@@ -202,6 +204,50 @@
     cv.addEventListener("pointercancel",endDrag);
   }
 
+  // ---- 日K (現貨股價) — 以浮動長條繪製蠟燭, 與 category 軸/縮放/拖曳完全相容 ----
+  const UPC="rgba(255,91,91,.95)", DNC="rgba(34,197,94,.95)", NOC="rgba(0,0,0,0)";
+  function kSlice(r){
+    const [a,b]=visWin(r.dates);
+    const labels=r.dates.slice(a,b+1), body=[], wick=[], cols=[], O=[],H=[],L=[],C=[];
+    for(let i=a;i<=b;i++){
+      const o=r.O[i],h=r.H[i],l=r.L[i],c=r.C[i];
+      O.push(o);H.push(h);L.push(l);C.push(c);
+      if(o==null||h==null||l==null||c==null){ body.push(null); wick.push(null); cols.push(NOC); continue; }
+      const lo=Math.min(o,c), hi=Math.max(o,c);
+      body.push(hi-lo<1e-9 ? [lo, lo+Math.max(hi*0.0008,0.01)] : [lo,hi]);
+      wick.push([l,h]);
+      cols.push(c>=o?UPC:DNC);
+    }
+    return {labels, body, wick, cols, O,H,L,C};
+  }
+  function applyK(r){
+    const v=kSlice(r);
+    r.chart.data.labels=v.labels;
+    r.chart.data.datasets[0].data=v.body;
+    r.chart.data.datasets[0].backgroundColor=v.cols;
+    r.chart.data.datasets[1].data=v.wick;
+    r.chart.data.datasets[1].backgroundColor=v.cols;
+    r.chart.$k=v;
+    r.chart.update("none");
+  }
+  function makeKChart(ctx,r){
+    const v=kSlice(r);
+    const chart=new Chart(ctx,{ data:{labels:v.labels, datasets:[
+      {type:"bar",label:"K",data:v.body,backgroundColor:v.cols,grouped:false,barPercentage:.72,categoryPercentage:1,order:1,borderWidth:0},
+      {type:"bar",label:"影線",data:v.wick,backgroundColor:v.cols,grouped:false,barPercentage:.12,categoryPercentage:1,order:2,borderWidth:0},
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
+      plugins:{ legend:{display:false},
+        tooltip:{ filter:(it)=>it.datasetIndex===0, callbacks:{
+          label:(cx)=>{ const k=cx.chart.$k||v, i=cx.dataIndex;
+            const f=(n)=>n==null?"—":Number(n).toLocaleString("en-US");
+            return `開 ${f(k.O[i])}  高 ${f(k.H[i])}  低 ${f(k.L[i])}  收 ${f(k.C[i])}`; } } } },
+      scales:{ x:{ ticks:{color:"#7d8ea0",maxTicksLimit:8,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} },
+               y:{ position:"left", ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} } } } });
+    chart.$k=v;
+    return chart;
+  }
+
   function makeChart(ctx,dates,lv,ch){
     const v=viewSlice(dates,lv,ch);
     const ds=[], sc={ x:{ ticks:{color:"#7d8ea0",maxTicksLimit:8,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} } };
@@ -225,6 +271,7 @@
   // ---- 狀態 -----------------------------------------------------------------
   const selected=[];   // 已選代號 (依加入順序)
   const docs={};       // code -> json (快取, 不重複下載)
+  const klines={};     // sid -> 日K json (快取; null=無資料)
   let charts=[];
   const blocks=$("#blocks"), chipsEl=$("#chips"), emptyEl=$("#empty");
 
@@ -236,12 +283,13 @@
     const chartH = cols===1? 200 : (cols===2? 160 : 130);
     const vis=visiblePanels();
     emptyEl.style.display = selected.length? "none":"block";
-    if(selected.length && !vis.length){
-      blocks.appendChild(el("div","warn","請至少勾選一項:主力 / 自然人 / 法人")); return;
+    if(selected.length && !vis.length && !showK()){
+      blocks.appendChild(el("div","warn","請至少勾選一項:主力 / 自然人 / 法人 (或 K棒)")); return;
     }
-    if(selected.length && !showArea() && !showBar()){
-      blocks.appendChild(el("div","warn","請至少勾選一種圖表:區域圖 或 柱狀圖")); return;
+    if(selected.length && !showArea() && !showBar() && !showK()){
+      blocks.appendChild(el("div","warn","請至少勾選一種圖表:K棒、區域圖 或 柱狀圖")); return;
     }
+    const showPos = vis.length && (showArea()||showBar());   // 是否繪製部位面板
     selected.forEach(code=>{
       const doc=docs[code]; const s=byCode[code]||{code,name:code};
       const blk=el("div","stk-block"); blk.id="blk-"+code;
@@ -250,7 +298,33 @@
 
       const body=el("div","stk-body");   // 每檔一列, 內部項目由上而下各佔一列
       const ser=series(doc);
-      vis.forEach(k=>{
+
+      // ---- 日K面板 (最上方) ----
+      const kd=(s.sid&&klines[s.sid]&&klines[s.sid].records)?klines[s.sid]:null;
+      if(showK()&&kd){
+        const kdates=Object.keys(kd.records).sort();
+        const O=[],H=[],L=[],C=[];
+        kdates.forEach(d=>{const rr=kd.records[d]||[];O.push(rr[0]);H.push(rr[1]);L.push(rr[2]);C.push(rr[3]);});
+        const lastC=last(C);
+        let prevC=null; for(let i=C.length-2;i>=0;i--){ if(C[i]!=null){ prevC=C[i]; break; } }
+        const chg=(lastC!=null&&prevC!=null)?Number((lastC-prevC).toFixed(2)):null;
+        const pct=(chg!=null&&prevC)?` <span class="dlt">(${chg>=0?"+":""}${(100*chg/prevC).toFixed(2)}%)</span>`:"";
+        const panel=el("div","stk-panel");
+        panel.appendChild(el("div","stk-panelhd",
+          `<span class="tagm">股價</span> 收盤 <b class="${chg>0?'up':(chg<0?'down':'')}">${lastC==null?'—':Number(lastC).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(chg==null?undefined:chg)}</span>${pct}`));
+        const cw=el("div","stk-canvas"); cw.style.height=chartH+"px";
+        const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
+        body.appendChild(panel);
+        try{
+          const reg={kind:"k", dates:kdates, O,H,L,C};
+          reg.chart=makeKChart(cv.getContext("2d"), reg);
+          charts.push(reg);
+          cv.addEventListener("wheel",e=>wheelZoom(reg,e),{passive:false});
+          attachPan(reg,cv);
+        }catch(e){ cw.appendChild(el("div","warn","K棒載入失敗:"+e.message)); }
+      }
+
+      if(showPos) vis.forEach(k=>{
         const lv=last(ser[k].lv), ch=last(ser[k].ch);
         const panel=el("div","stk-panel");
         panel.appendChild(el("div","stk-panelhd",
@@ -284,6 +358,10 @@
     selected.push(code);
     if(!(code in docs)){
       try{ docs[code]=await getJSON(`stocks/${code}.json`); }catch(e){ docs[code]=null; }
+    }
+    const sid=(byCode[code]||{}).sid;
+    if(sid && !(sid in klines)){
+      try{ klines[sid]=await getJSON(`kline/${sid}.json`); }catch(e){ klines[sid]=null; }
     }
   }
   function removeStock(code){
@@ -331,7 +409,7 @@
   });
 
   // ---- 面板勾選 --------------------------------------------------------------
-  CKS.concat([$("#gArea"),$("#gBar"),$("#cols")]).forEach(cb=>cb.addEventListener("change",render));
+  CKS.concat([$("#gK"),$("#gArea"),$("#gBar"),$("#cols")]).forEach(cb=>cb.addEventListener("change",render));
 
   // ---- 期間選擇 --------------------------------------------------------------
   if(allDates.length){

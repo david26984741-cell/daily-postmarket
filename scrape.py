@@ -28,6 +28,9 @@ STOCKS = os.path.join(DATA, "stocks")
 
 TAIFEX = "https://www.taifex.com.tw/cht/3/"
 TWSE_BFI = "https://www.twse.com.tw/rwd/zh/fund/BFI82U"
+TWSE_MI  = "https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX"
+TPEX_DQ  = "https://www.tpex.org.tw/www/zh-tw/afterTrading/dailyQuotes"
+KLINE = os.path.join(DATA, "kline")
 
 # 來源 (CSV 下載端點皆為 Big5/MS950 編碼)
 SRC = {
@@ -129,6 +132,72 @@ def parse_foreign_fut(rows):
             "identity": r[2],
         }
     return None
+
+
+def _num_price(s):
+    s = (str(s) if s is not None else "").strip().replace(",", "")
+    if s in ("", "--", "-", "—") or "除" in s:
+        return None
+    try:
+        return float(s)
+    except ValueError:
+        return None
+
+
+def fetch_kline_maps(date_yyyymmdd):
+    """個股現貨日K: 上市 (TWSE MI_INDEX) + 上櫃 (TPEx dailyQuotes) 合併。
+       回傳 {證券代號: [開, 高, 低, 收, 成交股數]}; 非交易日/來源無資料時回傳空 dict。"""
+    out = {}
+    # 上市
+    try:
+        txt = http_get(TWSE_MI, {"response": "json", "date": date_yyyymmdd, "type": "ALLBUT0999"},
+                       headers={"Referer": "https://www.twse.com.tw/zh/trading/historical/mi-index.html",
+                                "Accept": "application/json"})
+        obj = json.loads(txt)
+        if obj.get("stat") == "OK" and str(obj.get("date", "")) == date_yyyymmdd:
+            for tb in obj.get("tables", []):
+                title = tb.get("title") or ""
+                f = tb.get("fields") or []
+                if "每日收盤行情" in title and "證券代號" in f:
+                    idx = {k: f.index(k) for k in ("證券代號", "開盤價", "最高價", "最低價", "收盤價", "成交股數")}
+                    for row in tb.get("data", []):
+                        sid = str(row[idx["證券代號"]]).strip()
+                        o, h, l, c = (_num_price(row[idx["開盤價"]]), _num_price(row[idx["最高價"]]),
+                                      _num_price(row[idx["最低價"]]), _num_price(row[idx["收盤價"]]))
+                        if c is not None:
+                            out[sid] = [o, h, l, c, num(row[idx["成交股數"]])]
+                    break
+    except Exception as e:
+        log(f"  TWSE 行情錯誤: {e}")
+    # 上櫃 (民國年日期)
+    try:
+        roc = f"{int(date_yyyymmdd[:4])-1911}/{date_yyyymmdd[4:6]}/{date_yyyymmdd[6:]}"
+        txt = http_get(TPEX_DQ, {"date": roc, "response": "json"},
+                       headers={"Referer": "https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing.html",
+                                "Accept": "application/json"})
+        obj = json.loads(txt)
+        for tb in (obj.get("tables") or [])[:1]:
+            f = tb.get("fields") or []
+            need = ("代號", "開盤", "最高", "最低", "收盤", "成交股數")
+            if not all(k in f for k in need):
+                continue
+            idx = {k: f.index(k) for k in need}
+            for row in tb.get("data", []):
+                sid = str(row[idx["代號"]]).strip()
+                o, h, l, c = (_num_price(row[idx["開盤"]]), _num_price(row[idx["最高"]]),
+                              _num_price(row[idx["最低"]]), _num_price(row[idx["收盤"]]))
+                if c is not None and sid not in out:
+                    out[sid] = [o, h, l, c, num(row[idx["成交股數"]])]
+    except Exception as e:
+        log(f"  TPEx 行情錯誤: {e}")
+    return out
+
+
+def append_kline(sid, date_slash, ohlcv):
+    path = os.path.join(KLINE, f"{sid}.json")
+    doc = load_json(path, {"sid": sid, "records": {}})
+    doc["records"][date_slash] = ohlcv
+    save_json(path, doc)
 
 
 def parse_twse_spot(date_yyyymmdd):
@@ -299,6 +368,7 @@ def fetch_with_retry(key, date_slash, no_retry=False):
 
 def run(date_slash, no_retry=False):
     os.makedirs(STOCKS, exist_ok=True)
+    os.makedirs(KLINE, exist_ok=True)
     yyyymmdd = date_slash.replace("/", "")
     status = {}
 
@@ -398,6 +468,19 @@ def run(date_slash, no_retry=False):
         log(f"  個股期貨: 寫入 {n} 檔")
     else:
         status["large_fut_txf"] = status["stocks"] = "資料未更新"
+
+    # --- 來源 5: 個股現貨日K (上市 + 上櫃, 各一次呼叫涵蓋全市場) ---
+    kmap = fetch_kline_maps(yyyymmdd)
+    if kmap:
+        sids = sorted({v.get("sid") for v in stock_map.values() if v.get("sid")})
+        kn = 0
+        for sid in sids:
+            if sid in kmap:
+                append_kline(sid, date_slash, kmap[sid]); kn += 1
+        status["kline"] = f"ok ({kn} 檔)"
+        log(f"  日K: 寫入 {kn} 檔")
+    else:
+        status["kline"] = "資料未更新"
 
     # --- 更新 index.json (供前端讀取) ---
     update_index(date_slash, status)
