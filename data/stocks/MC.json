@@ -1,0 +1,91 @@
+{
+ "code": "MC",
+ "name": "隆達期貨",
+ "sid": "",
+ "records": {
+  "2021/01/04": [
+   {
+    "month": "202101",
+    "type": "0",
+    "top5_buy": 2653,
+    "top5_sell": 3053,
+    "top10_buy": 2835,
+    "top10_sell": 3091,
+    "market_oi": 3103,
+    "scope": "當月"
+   },
+   {
+    "month": "202101",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 3018,
+    "top10_buy": 0,
+    "top10_sell": 3044,
+    "market_oi": 3103,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 2653,
+    "top5_sell": 3059,
+    "top10_buy": 2835,
+    "top10_sell": 3122,
+    "market_oi": 3135,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 3024,
+    "top10_buy": 0,
+    "top10_sell": 3075,
+    "market_oi": 3135,
+    "scope": "所有契約"
+   }
+  ],
+  "2021/01/05": [
+   {
+    "month": "202101",
+    "type": "0",
+    "top5_buy": 2653,
+    "top5_sell": 3053,
+    "top10_buy": 2835,
+    "top10_sell": 3091,
+    "market_oi": 3103,
+    "scope": "當月"
+   },
+   {
+    "month": "202101",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 3018,
+    "top10_buy": 0,
+    "top10_sell": 3044,
+    "market_oi": 3103,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 2653,
+    "top5_sell": 3059,
+    "top10_buy": 2835,
+    "top10_sell": 3122,
+    "market_oi": 3135,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 3024,
+    "top10_buy": 0,
+    "top10_sell": 3075,
+    "market_oi": 3135,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}
