@@ -79,7 +79,8 @@ def http_get(url, params=None, big5=False, timeout=40, headers=None):
     req = urllib.request.Request(url, headers=h)
     with urllib.request.urlopen(req, timeout=timeout) as r:
         raw = r.read()
-    return raw.decode("big5", errors="replace") if big5 else raw.decode("utf-8", errors="replace")
+    # cp950 為 Big5 超集, 可正確解碼「碁」「堃」等罕字, 避免契約名稱出現亂碼
+    return raw.decode("cp950", errors="replace") if big5 else raw.decode("utf-8", errors="replace")
 
 def fetch_taifex_csv(key, date_slash):
     """抓 TAIFEX 下載 CSV (Big5), 回傳已解析的列 (list[list[str]])。"""
