@@ -67,17 +67,18 @@ jobs:
             echo "無資料變更 (該期間可能已全部補齊)"; exit 0
           fi
           git commit -m "$MSG"
-          git add -A data/                                   # 取消瞬間若仍有檔案在寫入, 補收一次
-          git diff --cached --quiet || git commit -m "$MSG (補收)"
-          git checkout -- . 2>/dev/null || true              # 丟棄殘餘未暫存變更, 確保可 rebase
-          for i in 1 2 3; do
+          for i in 1 2 3 4; do
+            # 每輪先補收「取消瞬間仍在寫入」的殘檔, 再清理工作樹, 確保 rebase 可執行
+            git add -A data/
+            git diff --cached --quiet || git commit -m "$MSG (補收$i)"
+            git checkout -- . 2>/dev/null || true
             git fetch origin main
             if git rebase origin/main; then
               git push origin main && exit 0
             else
               git rebase --abort || true
             fi
-            echo "push 失敗, 10 秒後重試 ($i/3)"; sleep 10
+            echo "push 失敗, 15 秒後重試 ($i/4)"; sleep 15
           done
           exit 1
 

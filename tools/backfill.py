@@ -72,7 +72,7 @@ def main():
 
         print(f"===== 回補 {d} =====")
         try:
-            scrape.run(d, no_retry=True)
+            scrape.run(d, no_retry=True, skip_kline=True)
             done.append(d)
         except Exception as e:
             failed.append((d, str(e))); print(f"[失敗] {d}  {e}")

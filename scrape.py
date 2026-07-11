@@ -392,7 +392,8 @@ def fetch_with_retry(key, date_slash, no_retry=False):
     return None
 
 
-def run(date_slash, no_retry=False):
+def run(date_slash, no_retry=False, skip_kline=False):
+    """skip_kline: 部位回補時略過日K (日K有專屬回補工具, 併跑徒增 6 倍 IO 與請求)。"""
     os.makedirs(STOCKS, exist_ok=True)
     os.makedirs(KLINE, exist_ok=True)
     yyyymmdd = date_slash.replace("/", "")
@@ -496,7 +497,7 @@ def run(date_slash, no_retry=False):
         status["large_fut_txf"] = status["stocks"] = "資料未更新"
 
     # --- 來源 5: 個股現貨日K (上市 + 上櫃, 各一次呼叫涵蓋全市場) ---
-    kmap = fetch_kline_maps(yyyymmdd)
+    kmap = {} if skip_kline else fetch_kline_maps(yyyymmdd)
     if kmap:
         sids = sorted({v.get("sid") for v in stock_map.values() if v.get("sid")})
         kn = 0
@@ -505,6 +506,8 @@ def run(date_slash, no_retry=False):
                 append_kline(sid, date_slash, kmap[sid]); kn += 1
         status["kline"] = f"ok ({kn} 檔)"
         log(f"  日K: 寫入 {kn} 檔")
+    elif skip_kline:
+        pass   # 部位回補模式: 不標註 kline 狀態
     else:
         status["kline"] = "資料未更新"
 

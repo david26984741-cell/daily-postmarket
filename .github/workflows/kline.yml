@@ -56,17 +56,17 @@ jobs:
             echo "無資料變更"; exit 0
           fi
           git commit -m "$MSG"
-          git add -A data/
-          git diff --cached --quiet || git commit -m "$MSG (補收)"
-          git checkout -- . 2>/dev/null || true
-          for i in 1 2 3; do
+          for i in 1 2 3 4; do
+            git add -A data/
+            git diff --cached --quiet || git commit -m "$MSG (補收$i)"
+            git checkout -- . 2>/dev/null || true
             git fetch origin main
             if git rebase origin/main; then
               git push origin main && exit 0
             else
               git rebase --abort || true
             fi
-            echo "push 失敗, 10 秒後重試 ($i/3)"; sleep 10
+            echo "push 失敗, 15 秒後重試 ($i/4)"; sleep 15
           done
           exit 1
 
