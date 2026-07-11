@@ -1,0 +1,91 @@
+{
+ "code": "DU",
+ "name": "晶電期貨",
+ "sid": "",
+ "records": {
+  "2021/01/04": [
+   {
+    "month": "202101",
+    "type": "0",
+    "top5_buy": 829,
+    "top5_sell": 1634,
+    "top10_buy": 1071,
+    "top10_sell": 2052,
+    "market_oi": 2224,
+    "scope": "當月"
+   },
+   {
+    "month": "202101",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 451,
+    "top10_buy": 0,
+    "top10_sell": 597,
+    "market_oi": 2224,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 829,
+    "top5_sell": 1654,
+    "top10_buy": 1071,
+    "top10_sell": 2072,
+    "market_oi": 2248,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 471,
+    "top10_buy": 0,
+    "top10_sell": 617,
+    "market_oi": 2248,
+    "scope": "所有契約"
+   }
+  ],
+  "2021/01/05": [
+   {
+    "month": "202101",
+    "type": "0",
+    "top5_buy": 829,
+    "top5_sell": 1634,
+    "top10_buy": 1071,
+    "top10_sell": 2052,
+    "market_oi": 2224,
+    "scope": "當月"
+   },
+   {
+    "month": "202101",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 451,
+    "top10_buy": 0,
+    "top10_sell": 597,
+    "market_oi": 2224,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 829,
+    "top5_sell": 1654,
+    "top10_buy": 1071,
+    "top10_sell": 2072,
+    "market_oi": 2248,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 471,
+    "top10_buy": 0,
+    "top10_sell": 617,
+    "market_oi": 2248,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}
