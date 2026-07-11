@@ -344,7 +344,9 @@ def load_holidays():
         for ln in open(path, encoding="utf-8"):
             ln = ln.strip()
             if ln and not ln.startswith("#"):
-                hol.add(ln.replace("-", "/"))
+                parts = ln.replace("-", "/").split()   # 只取日期, 允許行尾備註 (如「颱風假」)
+                if parts:
+                    hol.add(parts[0])
     return hol
 
 def is_trading_day(date_slash):
