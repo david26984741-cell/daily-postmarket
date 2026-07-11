@@ -58,7 +58,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          MSG="資料更新 $(date '+%Y/%m/%d %H:%M')"
+          MSG="資料更新 $(date -u -d '+8 hour' '+%Y/%m/%d %H:%M') (台北)"
           git add -A data/
           if git diff --cached --quiet; then
             echo "無資料變更 (可能為非交易日或資料未更新)"; exit 0

@@ -43,11 +43,19 @@ SRC = {
 RETRY_WAIT = int(os.environ.get("RETRY_WAIT", "1800"))   # 30 分鐘
 MAX_RETRY  = int(os.environ.get("MAX_RETRY", "6"))       # 最多重試次數
 UA = "Mozilla/5.0 (compatible; daily-postmarket-bot/1.0)"
+# TWSE/TPEx 的 WAF 會間歇性阻擋非瀏覽器 UA (HTTP 307), 對這兩來源一律使用瀏覽器 UA。
+BROWSER_UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+              "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
 
 
 # ----------------------------------------------------------------------------- helpers
+def now_taipei():
+    """台北時間 (UTC+8, 台灣無夏令時間)。不依賴 TZ 環境變數 — GitHub runner 實測會忽略它。"""
+    return datetime.datetime.utcnow() + datetime.timedelta(hours=8)
+
+
 def log(msg):
-    print(f"[{datetime.datetime.now():%H:%M:%S}] {msg}", flush=True)
+    print(f"[{now_taipei():%H:%M:%S}] {msg}", flush=True)
 
 def num(s):
     s = (s or "").strip().replace(",", "")
@@ -151,9 +159,13 @@ def fetch_kline_maps(date_yyyymmdd):
     # 上市 (瞬斷/被拒時重試, 避免歷史 K 留破洞)
     for attempt in range(3):
         try:
-            txt = http_get(TWSE_MI, {"response": "json", "date": date_yyyymmdd, "type": "ALLBUT0999"},
-                           headers={"Referer": "https://www.twse.com.tw/zh/trading/historical/mi-index.html",
+            # 第 3 次改打舊版端點路徑作為備援
+            base = TWSE_MI if attempt < 2 else "https://www.twse.com.tw/exchangeReport/MI_INDEX"
+            txt = http_get(base, {"response": "json", "date": date_yyyymmdd, "type": "ALLBUT0999"},
+                           headers={"User-Agent": BROWSER_UA,
+                                    "Referer": "https://www.twse.com.tw/zh/trading/historical/mi-index.html",
                                     "Accept": "application/json, text/javascript, */*; q=0.01",
+                                    "Accept-Language": "zh-TW,zh;q=0.9",
                                     "X-Requested-With": "XMLHttpRequest"})
             obj = json.loads(txt)
             if obj.get("stat") == "OK" and str(obj.get("date", "")) == date_yyyymmdd:
@@ -179,7 +191,8 @@ def fetch_kline_maps(date_yyyymmdd):
         try:
             roc = f"{int(date_yyyymmdd[:4])-1911}/{date_yyyymmdd[4:6]}/{date_yyyymmdd[6:]}"
             txt = http_get(TPEX_DQ, {"date": roc, "response": "json"},
-                           headers={"Referer": "https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing.html",
+                           headers={"User-Agent": BROWSER_UA,
+                                    "Referer": "https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing.html",
                                     "Accept": "application/json"})
             obj = json.loads(txt)
             for tb in (obj.get("tables") or [])[:1]:
@@ -212,7 +225,8 @@ def append_kline(sid, date_slash, ohlcv):
 def parse_twse_spot(date_yyyymmdd):
     """TWSE BFI82U: 外資及陸資(不含外資自營商) 買賣差額 (現貨)。
        TWSE 的 rwd 端點對非台灣 IP / 無 Referer 的請求可能拒絕, 故加上 Referer 並重試。"""
-    hdr = {"Referer": "https://www.twse.com.tw/zh/trading/foreign/bfi82u.html",
+    hdr = {"User-Agent": BROWSER_UA,
+           "Referer": "https://www.twse.com.tw/zh/trading/foreign/bfi82u.html",
            "Accept": "application/json, text/javascript, */*; q=0.01",
            "X-Requested-With": "XMLHttpRequest"}
     obj = None
@@ -555,7 +569,7 @@ def update_index(date_slash, status, stock_map=None):
                     stocks.append({"code": d.get("code"), "name": d.get("name"), "sid": d.get("sid", "")})
                     if date_slash == latest:
                         rank_rows.append(_rank_row(d, latest, stock_map or {}))
-    idx["updated_at"] = datetime.datetime.now().isoformat(timespec="seconds")
+    idx["updated_at"] = now_taipei().isoformat(timespec="seconds") + "+08:00"
     if stocks or not idx.get("stocks"):
         idx["stocks"] = stocks   # 保險: 重建結果為空時保留既有清單, 避免臨時休市把個股列表清空
     idx["categories"] = [
@@ -584,13 +598,14 @@ if __name__ == "__main__":
         date_slash = a.date
     else:
         # 排程若被 GitHub 延遲跨過午夜才觸發, 「今天」盤後資料根本尚未公布 —
-        # 凌晨~中午執行且未指定日期時, 改抓前一個平日 (2026/07/10 00:xx 即發生過)。
-        now = datetime.datetime.now()
+        # 台北時間凌晨~14:00 執行且未指定日期時, 改抓前一個平日。
+        # 注意: 一律以 UTC+8 明確計算, runner 的 TZ 環境變數不可信。
+        now = now_taipei()
         d = now.date()
         if now.hour < 14:
             d -= datetime.timedelta(days=1)
             while d.weekday() >= 5:
                 d -= datetime.timedelta(days=1)
-            log(f"排程於 {now:%H:%M} 觸發 (盤後資料未公布), 改抓前一平日 {d:%Y/%m/%d}")
+            log(f"排程於台北 {now:%H:%M} 觸發 (盤後資料未公布), 改抓前一平日 {d:%Y/%m/%d}")
         date_slash = d.strftime("%Y/%m/%d")
     sys.exit(run(date_slash, no_retry=a.no_retry))
