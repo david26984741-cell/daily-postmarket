@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>籌碼研究 — 每日盤後資料</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.an-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-top:14px}
+.an-card h3{margin:0 0 8px;font-size:16px;color:var(--accent)}
+.an-card p{color:var(--mut);line-height:1.75;margin:6px 0}
+table.an{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+table.an th,table.an td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.06);text-align:right;white-space:nowrap}
+table.an th{color:var(--mut);font-weight:600;background:var(--head)}
+table.an td:first-child,table.an th:first-child{text-align:left}
+.pos{color:var(--up)} .neg{color:var(--down)} .weak{color:var(--mut)}
+.sigrow a{color:var(--txt)} .sigrow a:hover{color:var(--accent)}
+.warnbox{background:rgba(255,180,0,.08);border:1px solid rgba(255,180,0,.35);border-radius:10px;padding:10px 14px;color:#e8d9a0;font-size:13.5px;margin-top:14px;line-height:1.7}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1><a href="index.html" style="color:inherit">每日盤後資料</a><small>籌碼研究</small></h1>
+  <nav class="main" id="nav"></nav>
+</div></header>
+
+<div class="wrap">
+  <div class="crumbs"><a href="index.html">← 當日整合總覽</a></div>
+  <h2 class="sec">籌碼變化與未來報酬研究 <span class="tag" id="dchip">載入中…</span></h2>
+
+  <div class="an-card">
+    <h3>研究方法(說明過程)</h3>
+    <p><b>資料</b>:2017 年中以來全部股票期貨的大額交易人淨部位(主力=前十大、法人=前十大特定法人、自然人=兩者之差),小型契約按每口 100 股(=0.05 個標準口)併入本尊;對應現股收盤價。僅納入本尊未沖銷 ≥ 1,000 口的流動性樣本。</p>
+    <p><b>特徵</b>:各口徑單日增減(以自身 60 日波動標準化為 z 分數)、5 日累積增減、連續同向天數、部位佔全市場比、量能 z、5 日價格動能(對照用)。</p>
+    <p><b>目標</b>:現股 T+1/2/3/4/5/10/15/20 日的前瞻報酬。</p>
+    <p><b>檢驗三層</b>:① 每日橫斷面 IC(特徵排名與未來報酬排名的相關性,附 t 統計,|t|>2 約為統計顯著);② 每日按特徵分五組,第五組減第一組的報酬差;③ 梯度提升樹逐年 walk-forward(僅用當年以前訓練、預測當年,無未來資訊)。</p>
+    <p><b>規則驗證</b>:六條<b>預先固定</b>的直覺規則(不做參數挖掘),回報全樣本與 2024 年後的平均報酬與勝率,並與全樣本基準比較。</p>
+  </div>
+
+  <div id="out"></div>
+
+  <div class="warnbox">
+    ⚠️ 本頁為統計研究,非投資建議。籌碼訊號的預測力通常微弱且會隨時間衰減;表格中 |t|&lt;2 的結果應視為「無法區別於雜訊」。實際交易需考慮交易成本、滑價與流動性。
+  </div>
+
+  <footer>資料來源:臺灣期貨交易所、臺灣證券交易所、證券櫃檯買賣中心。</footer>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(async function(){
+  const nav=$("#nav");
+  CATS.forEach(c=>{const a=el("a",null,c.title);a.href=catHref(c);a.dataset.k=c.id;nav.appendChild(a);});
+  navActive("analysis");
+
+  let A;
+  try{ A=await getJSON("analysis.json"); }
+  catch(e){ $("#dchip").textContent="分析尚未產生(每週日上午自動重算)"; return; }
+  $("#dchip").innerHTML=`資料至 <b>${A.universe.to}</b> · ${A.universe.stocks} 檔 · ${A.universe.dates} 個交易日 · 產生於 ${A.generated_at.slice(0,16).replace("T"," ")}`;
+
+  const FN={d_main_z:"主力增減(z)",d_inst_z:"法人增減(z)",d_nat_z:"自然人增減(z)",d_main5_z:"主力5日累積(z)",streak:"連續同向天數",main_oi:"主力/全市場比",vol_z:"量能(z)",ret5:"5日動能(對照)"};
+  const HS=["T+1","T+2","T+3","T+4","T+5","T+10","T+15","T+20"];
+  const out=$("#out");
+  const cls=t=>Math.abs(t)>=2?(t>0?"pos":"neg"):"weak";
+
+  // IC 表
+  {
+    const c=el("div","an-card"); c.appendChild(el("h3",null,"① 每日橫斷面 IC(排名相關性,×100)"));
+    c.appendChild(el("p",null,"正值=特徵越大、未來報酬越高。括號內為 t 統計;|t|≥2 以顏色標示。"));
+    let h="<table class='an'><tr><th>特徵</th>"+HS.map(x=>`<th>${x}</th>`).join("")+"</tr>";
+    for(const f in A.ic){
+      h+=`<tr><td>${FN[f]||f}</td>`+HS.map(k=>{
+        const v=A.ic[f][k]; if(!v) return "<td>—</td>";
+        return `<td class="${cls(v.t)}">${(v.ic*100).toFixed(2)} <small>(${v.t})</small></td>`;
+      }).join("")+"</tr>";
+    }
+    c.insertAdjacentHTML("beforeend",h+"</table>"); out.appendChild(c);
+  }
+  // 五分位
+  function quintCard(title,Q){
+    const c=el("div","an-card"); c.appendChild(el("h3",null,title));
+    c.appendChild(el("p",null,"每日按特徵分五組後的平均前瞻報酬(基點, 1bp=0.01%)。「差」=第五組−第一組。"));
+    let h="<table class='an'><tr><th>期間</th><th>Q1(最低)</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5(最高)</th><th>差(bp)</th><th>t</th></tr>";
+    for(const k of HS){
+      const v=Q[k]; if(!v) continue;
+      h+=`<tr><td>${k}</td>`+v.q_avg_bp.map(x=>`<td>${x}</td>`).join("")+
+         `<td class="${cls(v.t)}"><b>${v.spread_bp}</b></td><td class="${cls(v.t)}">${v.t}</td></tr>`;
+    }
+    c.insertAdjacentHTML("beforeend",h+"</table>"); out.appendChild(c);
+  }
+  quintCard("② 五分位分組 — 主力單日增減(z)", A.quintile_main);
+  quintCard("② 五分位分組 — 法人單日增減(z)", A.quintile_inst);
+
+  // walk-forward
+  {
+    const c=el("div","an-card"); c.appendChild(el("h3",null,`③ 逐年 walk-forward 模型(${A.walk_forward.lib})`));
+    c.appendChild(el("p",null,"以當年以前資料訓練、預測當年(2021 起逐年),回報預測值的每日 rank IC。"));
+    let h="<table class='an'><tr>"+HS.map(x=>`<th>${x}</th>`).join("")+"</tr><tr>";
+    h+=HS.map(k=>{const v=A.walk_forward.horizons[k]; if(!v) return "<td>—</td>";
+      return `<td class="${cls(v.t)}">${(v.ic*100).toFixed(2)} <small>(${v.t})</small></td>`;}).join("")+"</tr></table>";
+    c.insertAdjacentHTML("beforeend",h);
+    const imp=A.walk_forward.importance||{};
+    c.appendChild(el("p",null,"特徵重要度:"+Object.entries(imp).map(([f,v])=>`${FN[f]||f} ${(v*100).toFixed(0)}%`).join(" · ")));
+    out.appendChild(c);
+  }
+  // 規則
+  {
+    const c=el("div","an-card"); c.appendChild(el("h3",null,"④ 預先固定規則的歷史表現"));
+    c.appendChild(el("p",null,`全樣本基準平均(bp):${HS.map(k=>`${k} ${A.rules.baseline_bp[k]}`).join(" / ")}`));
+    for(const r of A.rules.rules){
+      c.appendChild(el("p",null,`<b>${r.name}</b>(觸發 ${r.n} 次)`));
+      let h="<table class='an'><tr><th>視窗</th>"+HS.map(x=>`<th>${x}</th>`).join("")+"</tr>";
+      for(const w in r.windows){
+        h+=`<tr><td>${w}</td>`+HS.map(k=>{
+          const v=r.windows[w][k]; if(!v) return "<td>—</td>";
+          const base=A.rules.baseline_bp[k];
+          const better=(r.name.includes("減倉")? v.avg_bp<base : v.avg_bp>base);
+          return `<td class="${better?"pos":"weak"}">${v.avg_bp} <small>${v.hit}% n=${v.n}</small></td>`;
+        }).join("")+"</tr>";
+      }
+      c.insertAdjacentHTML("beforeend",h+"</table>");
+    }
+    out.appendChild(c);
+  }
+  // 今日訊號
+  {
+    const c=el("div","an-card"); c.appendChild(el("h3",null,`⑤ 最新訊號(${A.signals.date})`));
+    if(!A.signals.list.length) c.appendChild(el("p",null,"本日無符合規則的個股。"));
+    else{
+      let h="<table class='an'><tr><th>規則</th><th>個股</th><th>主力增減z</th><th>連續天數</th></tr>";
+      for(const s of A.signals.list){
+        h+=`<tr class="sigrow"><td>${s.rule}</td><td><a href="stocks.html?code=${s.code}">${s.name}</a></td><td>${s.d_main_z??"—"}</td><td>${s.streak??"—"}</td></tr>`;
+      }
+      c.insertAdjacentHTML("beforeend",h+"</table>");
+    }
+    out.appendChild(c);
+  }
+})();
+</script>
+</body>
+</html>
