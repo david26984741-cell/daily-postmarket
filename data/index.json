@@ -246,7 +246,7 @@
   "2025/07/09"
  ],
  "latest_date": "2026/07/09",
- "updated_at": "2026-07-10T21:14:17",
+ "updated_at": "2026-07-11T12:18:52",
  "stocks": [
   {
    "code": "CA",
@@ -1746,12 +1746,12 @@
   {
    "code": "UV",
    "name": "旺矽期貨",
-   "sid": ""
+   "sid": "6223"
   },
   {
    "code": "UW",
    "name": "小型旺矽期貨",
-   "sid": ""
+   "sid": "6223"
   },
   {
    "code": "UX",
@@ -1854,6 +1854,11 @@
    "id": "stocks",
    "title": "大額交易人股票期貨",
    "file": null
+  },
+  {
+   "id": "rank",
+   "title": "股期增減排行",
+   "file": "rank.json"
   }
  ],
  "status_log": {
@@ -3807,7 +3812,8 @@
    "foreign_fut_spot": "ok",
    "large_opt": "ok",
    "large_fut_txf": "ok",
-   "stocks": "ok (315 檔)"
+   "stocks": "ok (315 檔)",
+   "kline": "ok (253 檔)"
   }
  }
 }
