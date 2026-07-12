@@ -225,6 +225,17 @@
     }
     return {labels, body, wick, cols, O,H,L,C};
   }
+  // K棒Y軸貼合可視區間價格 (仿XQ): 不從0開始, 短天期K棒不會被壓扁
+  function kYRange(v){
+    let lo=Infinity, hi=-Infinity;
+    for(let i=0;i<v.L.length;i++){
+      if(v.L[i]!=null&&v.L[i]<lo) lo=v.L[i];
+      if(v.H[i]!=null&&v.H[i]>hi) hi=v.H[i];
+    }
+    if(!(hi>=lo)) return [undefined,undefined];
+    const pad=Math.max((hi-lo)*0.06, hi*0.004);
+    return [Math.max(0,lo-pad), hi+pad];
+  }
   function applyK(r){
     const v=kSlice(r);
     r.chart.data.labels=v.labels;
@@ -232,11 +243,14 @@
     r.chart.data.datasets[0].backgroundColor=v.cols;
     r.chart.data.datasets[1].data=v.wick;
     r.chart.data.datasets[1].backgroundColor=v.cols;
+    const [ylo,yhi]=kYRange(v);
+    r.chart.options.scales.y.min=ylo; r.chart.options.scales.y.max=yhi;
     r.chart.$k=v;
     r.chart.update("none");
   }
   function makeKChart(ctx,r){
     const v=kSlice(r);
+    const [ylo,yhi]=kYRange(v);
     const chart=new Chart(ctx,{ data:{labels:v.labels, datasets:[
       {type:"bar",label:"K",data:v.body,backgroundColor:v.cols,grouped:false,barPercentage:.72,categoryPercentage:1,order:1,borderWidth:0},
       {type:"bar",label:"影線",data:v.wick,backgroundColor:v.cols,grouped:false,barPercentage:.12,categoryPercentage:1,order:2,borderWidth:0},
@@ -246,7 +260,7 @@
       // 內建 tooltip 不支援整頁 zoom 縮放, 座標會偏移且蓋住K棒 → 停用, 一律以查價視窗為準
       plugins:{ legend:{display:false}, tooltip:{enabled:false} },
       scales:{ x:{ ticks:{color:TKC,maxTicksLimit:8,font:TKF}, grid:{color:"rgba(255,255,255,.04)"} },
-               y:{ position:"right", afterFit:fitW, ticks:{color:TKC,font:TKF}, grid:{color:"rgba(255,255,255,.06)"} } } } });
+               y:{ position:"right", afterFit:fitW, min:ylo, max:yhi, ticks:{color:TKC,font:TKF}, grid:{color:"rgba(255,255,255,.06)"} } } } });
     chart.$k=v;
     return chart;
   }
