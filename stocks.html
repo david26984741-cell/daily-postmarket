@@ -207,7 +207,9 @@
 
   // ---- 日K (現貨股價) — 以浮動長條繪製蠟燭, 與 category 軸/縮放/拖曳完全相容 ----
   const UPC="rgba(255,91,91,.95)", DNC="rgba(34,197,94,.95)", NOC="rgba(0,0,0,0)";
-  const AXW=58;   // 固定座標軸寬度: 所有面板繪圖區等寬, 十字線與K棒/籌碼逐日筆直對齊
+  const AXW=64;   // 固定座標軸寬度: 所有面板繪圖區等寬, 十字線與K棒/籌碼逐日筆直對齊
+  const TKC="#c3d2e0";   // 軸刻度文字 (時間/數值) — 加大加亮
+  const TKF={size:11};
   const fitW=s=>{ s.width=AXW; };
   function kSlice(r){
     const [a,b]=visWin(r.dates);
@@ -243,25 +245,26 @@
       layout:{ padding:{ left:AXW } },
       // 內建 tooltip 不支援整頁 zoom 縮放, 座標會偏移且蓋住K棒 → 停用, 一律以查價視窗為準
       plugins:{ legend:{display:false}, tooltip:{enabled:false} },
-      scales:{ x:{ ticks:{color:"#7d8ea0",maxTicksLimit:8,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} },
-               y:{ position:"right", afterFit:fitW, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} } } } });
+      scales:{ x:{ ticks:{color:TKC,maxTicksLimit:8,font:TKF}, grid:{color:"rgba(255,255,255,.04)"} },
+               y:{ position:"right", afterFit:fitW, ticks:{color:TKC,font:TKF}, grid:{color:"rgba(255,255,255,.06)"} } } } });
     chart.$k=v;
     return chart;
   }
 
-  function makeChart(ctx,dates,lv,ch){
+  function makeChart(ctx,dates,lv,ch,hideX){
     const v=viewSlice(dates,lv,ch);
-    const ds=[], sc={ x:{ ticks:{color:"#7d8ea0",maxTicksLimit:8,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} } };
+    // hideX=true: 籌碼面板不重複顯示日期軸 (K棒面板已有時間), 版面更緊湊
+    const ds=[], sc={ x:{ ticks:{color:TKC,maxTicksLimit:8,font:TKF,display:!hideX}, grid:{color:"rgba(255,255,255,.04)"} } };
     if(showArea()){
       ds.push({type:"line",label:"淨部位",data:v.lv,yAxisID:"y",borderColor:LINE,backgroundColor:LINE+"22",fill:"origin",pointRadius:0,borderWidth:1.6,tension:.15,order:2,spanGaps:true});
-      sc.y={ position:"right", afterFit:fitW, beginAtZero:true, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
+      sc.y={ position:"right", afterFit:fitW, beginAtZero:true, ticks:{color:TKC,font:TKF}, grid:{color:"rgba(255,255,255,.06)"} };
     }
     const both=showArea()&&showBar();
     if(showBar()){
       ds.push({type:"bar",label:"每日增減",data:v.ch,yAxisID:both?"y1":"y",order:1,borderWidth:0,
         backgroundColor:v.ch.map(barColor)});
-      if(both) sc.y1={ position:"left", afterFit:fitW, beginAtZero:true, ticks:{color:"#6f8296",font:{size:9}}, grid:{drawOnChartArea:false} };
-      else sc.y={ position:"right", afterFit:fitW, beginAtZero:true, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
+      if(both) sc.y1={ position:"left", afterFit:fitW, beginAtZero:true, ticks:{color:"#9db1c4",font:TKF}, grid:{drawOnChartArea:false} };
+      else sc.y={ position:"right", afterFit:fitW, beginAtZero:true, ticks:{color:TKC,font:TKF}, grid:{color:"rgba(255,255,255,.06)"} };
     }
     return new Chart(ctx,{ data:{labels:v.labels,datasets:ds},
       options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
@@ -349,12 +352,16 @@
             h+=`<tr><td>漲跌</td><td class="${cCls(chg)}">${(chg>=0?"+":"")+chg.toFixed(2)}</td></tr>`;
             h+=`<tr><td>漲跌幅</td><td class="${cCls(chg)}">${((chg/pc)*100).toFixed(2)}%</td></tr>`; }
         }
-        PANELS.forEach((k,pi)=>{
+        h+="</table>";
+        // 主力/自然人/法人 各自一個小外框, 判讀更直覺
+        PANELS.forEach(k=>{
           const nm=k==="特定法人"?"法人":k, lv=PS[k].lv[i], ch=PS[k].ch[i];
-          h+=`<tr${pi===0?' class="qb-sep"':''}><td>${nm}淨部位</td><td class="${cCls(lv)}">${fq(lv,0)}</td></tr>`;
-          h+=`<tr><td>${nm}增減</td><td class="${cCls(ch)}">${ch==null?"—":(ch>0?"+":"")+fq(ch,0)}</td></tr>`;
+          h+=`<div class="qb-grp"><table>`+
+             `<tr><td>${nm}淨部位</td><td class="${cCls(lv)}">${fq(lv,0)}</td></tr>`+
+             `<tr><td>${nm}增減</td><td class="${cCls(ch)}">${ch==null?"—":(ch>0?"+":"")+fq(ch,0)}</td></tr>`+
+             `</table></div>`;
         });
-        qbox.innerHTML=h+"</table>"; qbox.style.display="block";
+        qbox.innerHTML=h; qbox.style.display="block";
         const [a,b]=visWin(M);
         // 查價視窗自動換邊: 游標在左半邊 → 視窗靠右, 反之靠左, 永不遮住查看中的K棒
         if(bRegs.length){
@@ -421,7 +428,7 @@
         const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
         body.appendChild(panel);
         try{
-          const reg={chart:makeChart(cv.getContext("2d"), M, PS[k].lv, PS[k].ch), dates:M, lv:PS[k].lv, ch:PS[k].ch};
+          const reg={chart:makeChart(cv.getContext("2d"), M, PS[k].lv, PS[k].ch, showK()&&!!kd), dates:M, lv:PS[k].lv, ch:PS[k].ch};
           charts.push(reg);
           cv.addEventListener("wheel",e=>wheelZoom(reg,e),{passive:false});
           attachPan(reg,cv);
