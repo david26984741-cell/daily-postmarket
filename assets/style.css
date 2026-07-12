@@ -115,6 +115,8 @@ details.rawdet>div{padding:2px 12px 12px}
 .quote-box table{border-collapse:collapse;width:100%}
 .quote-box td{padding:1.5px 5px;white-space:nowrap;color:#b9c9d9}
 .quote-box td:last-child{text-align:right;font-variant-numeric:tabular-nums;color:var(--txt);font-weight:600}
+.quote-box td:last-child.up{color:var(--up)}
+.quote-box td:last-child.down{color:var(--down)}
 .quote-box tr.qb-t td{color:var(--accent);font-weight:700;font-size:15px}
 .quote-box .qb-grp{border:1px solid #3a5069;border-radius:8px;padding:2px 5px;margin-top:6px;background:rgba(255,255,255,.02)}
 .tlabel{color:var(--mut);font-size:13px;margin-right:2px}
