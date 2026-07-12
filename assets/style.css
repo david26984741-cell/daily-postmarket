@@ -111,7 +111,7 @@ details.rawdet>div{padding:2px 12px 12px}
 /* 查價十字線與查價視窗 */
 .xhair-v{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.5);pointer-events:none;display:none}
 .xhair-h{position:absolute;left:0;right:0;height:1px;background:rgba(255,255,255,.35);pointer-events:none;display:none}
-.quote-box{position:absolute;top:10px;left:14px;z-index:6;background:rgba(8,14,22,.96);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:12.5px;min-width:172px;display:none;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.quote-box{position:absolute;top:10px;left:14px;z-index:6;pointer-events:none;background:rgba(8,14,22,.96);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:12.5px;min-width:172px;display:none;box-shadow:0 6px 18px rgba(0,0,0,.4)}
 .quote-box table{border-collapse:collapse;width:100%}
 .quote-box td{padding:1px 4px;white-space:nowrap;color:var(--mut)}
 .quote-box td:last-child{text-align:right;font-variant-numeric:tabular-nums;color:var(--txt)}
