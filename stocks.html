@@ -207,6 +207,8 @@
 
   // ---- 日K (現貨股價) — 以浮動長條繪製蠟燭, 與 category 軸/縮放/拖曳完全相容 ----
   const UPC="rgba(255,91,91,.95)", DNC="rgba(34,197,94,.95)", NOC="rgba(0,0,0,0)";
+  const AXW=58;   // 固定座標軸寬度: 所有面板繪圖區等寬, 十字線與K棒/籌碼逐日筆直對齊
+  const fitW=s=>{ s.width=AXW; };
   function kSlice(r){
     const [a,b]=visWin(r.dates);
     const labels=r.dates.slice(a,b+1), body=[], wick=[], cols=[], O=[],H=[],L=[],C=[];
@@ -238,13 +240,14 @@
       {type:"bar",label:"影線",data:v.wick,backgroundColor:v.cols,grouped:false,barPercentage:.12,categoryPercentage:1,order:2,borderWidth:0},
     ]},
     options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
+      layout:{ padding:{ left:AXW } },
       plugins:{ legend:{display:false},
         tooltip:{ filter:(it)=>it.datasetIndex===0, callbacks:{
           label:(cx)=>{ const k=cx.chart.$k||v, i=cx.dataIndex;
             const f=(n)=>n==null?"—":Number(n).toLocaleString("en-US");
             return `開 ${f(k.O[i])}  高 ${f(k.H[i])}  低 ${f(k.L[i])}  收 ${f(k.C[i])}`; } } } },
       scales:{ x:{ ticks:{color:"#7d8ea0",maxTicksLimit:8,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} },
-               y:{ position:"right", ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} } } } });
+               y:{ position:"right", afterFit:fitW, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} } } } });
     chart.$k=v;
     return chart;
   }
@@ -254,16 +257,18 @@
     const ds=[], sc={ x:{ ticks:{color:"#7d8ea0",maxTicksLimit:8,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} } };
     if(showArea()){
       ds.push({type:"line",label:"淨部位",data:v.lv,yAxisID:"y",borderColor:LINE,backgroundColor:LINE+"22",fill:"origin",pointRadius:0,borderWidth:1.6,tension:.15,order:2,spanGaps:true});
-      sc.y={ position:"right", beginAtZero:true, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
+      sc.y={ position:"right", afterFit:fitW, beginAtZero:true, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
     }
+    const both=showArea()&&showBar();
     if(showBar()){
-      ds.push({type:"bar",label:"每日增減",data:v.ch,yAxisID:showArea()?"y1":"y",order:1,borderWidth:0,
+      ds.push({type:"bar",label:"每日增減",data:v.ch,yAxisID:both?"y1":"y",order:1,borderWidth:0,
         backgroundColor:v.ch.map(barColor)});
-      if(showArea()) sc.y1={ position:"left", beginAtZero:true, ticks:{color:"#6f8296",font:{size:9}}, grid:{drawOnChartArea:false} };
-      else sc.y={ position:"right", beginAtZero:true, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
+      if(both) sc.y1={ position:"left", afterFit:fitW, beginAtZero:true, ticks:{color:"#6f8296",font:{size:9}}, grid:{drawOnChartArea:false} };
+      else sc.y={ position:"right", afterFit:fitW, beginAtZero:true, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
     }
     return new Chart(ctx,{ data:{labels:v.labels,datasets:ds},
       options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
+      layout: both? undefined : { padding:{ left:AXW } },
       plugins:{ legend:{display:false},
         tooltip:{ callbacks:{ label:(c)=>`${c.dataset.label}: ${Number(c.raw).toLocaleString("en-US")}` } } },
       scales:sc } });
