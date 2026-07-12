@@ -24,7 +24,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # ref: main — 取職務開跑當下的最新版, 避免佇列等待期間基底過期導致 rebase 衝突
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:

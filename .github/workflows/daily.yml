@@ -41,7 +41,10 @@ jobs:
       RETRY_WAIT: "1800"   # 30 分鐘
       MAX_RETRY: "6"       # 最多重試 6 次 (約 3 小時)
     steps:
+      # ref: main — 取職務開跑當下的最新版, 避免佇列等待期間基底過期導致 rebase 衝突
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:

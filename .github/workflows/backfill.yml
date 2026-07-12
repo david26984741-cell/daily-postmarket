@@ -43,7 +43,11 @@ jobs:
     env:
       TZ: Asia/Taipei
     steps:
+      # ref: main — 取「職務開跑當下」的最新版, 而非「觸發當下」凍結的舊版。
+      # 否則佇列等待期間若有其他回補先完成, 兩者改同批檔案, rebase 必衝突而丟失整批資料。
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:
