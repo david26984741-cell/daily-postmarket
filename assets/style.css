@@ -99,15 +99,24 @@ details.rawdet>div{padding:2px 12px 12px}
 .chip b{cursor:pointer;color:var(--mut);font-weight:700;padding:0 2px}
 .chip b:hover{color:var(--up)}
 .stk-blocks{display:grid;grid-template-columns:1fr;gap:16px;margin-top:12px;align-items:start}
-.stk-block{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.stk-block{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;position:relative}
 .stk-title{font-size:16px;font-weight:700;margin-bottom:10px}
 .stk-title .c{font-size:12px;color:var(--mut);font-weight:400;margin-left:6px}
-.stk-body{display:grid;grid-template-columns:1fr;gap:12px}
-.stk-panel{min-width:0;border:1px solid var(--line);border-radius:10px;padding:8px 10px 6px;background:var(--card2)}
-.stk-panelhd{font-size:12.5px;color:var(--mut);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stk-body{display:grid;grid-template-columns:1fr;gap:3px}
+.stk-panel{min-width:0;border:1px solid var(--line);border-radius:8px;padding:3px 8px 2px;background:var(--card2)}
+.stk-panelhd{font-size:12px;color:var(--mut);margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .stk-panelhd b{font-variant-numeric:tabular-nums}
 .stk-canvas{position:relative;height:200px;width:100%}
 .stk-canvas canvas{width:100%!important;height:100%!important}
+/* 查價十字線與查價視窗 */
+.xhair-v{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.5);pointer-events:none;display:none}
+.xhair-h{position:absolute;left:0;right:0;height:1px;background:rgba(255,255,255,.35);pointer-events:none;display:none}
+.quote-box{position:absolute;top:10px;right:12px;z-index:6;background:rgba(8,14,22,.96);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:12.5px;min-width:172px;display:none;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.quote-box table{border-collapse:collapse;width:100%}
+.quote-box td{padding:1px 4px;white-space:nowrap;color:var(--mut)}
+.quote-box td:last-child{text-align:right;font-variant-numeric:tabular-nums;color:var(--txt)}
+.quote-box tr.qb-t td{color:var(--accent);font-weight:700}
+.quote-box tr.qb-sep td{border-top:1px solid var(--line);padding-top:3px}
 .tlabel{color:var(--mut);font-size:13px;margin-right:2px}
 .ck{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:13.5px;cursor:pointer;user-select:none}
 .ck input{accent-color:var(--accent);cursor:pointer;margin:0}

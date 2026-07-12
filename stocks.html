@@ -48,7 +48,7 @@
     <button class="ghost rng" data-m="3">近3月</button>
     <button class="ghost rng" data-m="6">近6月</button>
     <button class="ghost rng" data-m="0">全部</button>
-    <span class="tlabel" style="opacity:.75">在圖表上滾動滾輪可縮放期間、按住拖曳可左右平移</span>
+    <span class="tlabel" style="opacity:.75">滾輪縮放期間 · 按住拖曳平移 · 雙擊開啟查價十字線</span>
   </div>
 
   <div class="stk-toolbar">
@@ -244,7 +244,7 @@
             const f=(n)=>n==null?"—":Number(n).toLocaleString("en-US");
             return `開 ${f(k.O[i])}  高 ${f(k.H[i])}  低 ${f(k.L[i])}  收 ${f(k.C[i])}`; } } } },
       scales:{ x:{ ticks:{color:"#7d8ea0",maxTicksLimit:8,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} },
-               y:{ position:"left", ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} } } } });
+               y:{ position:"right", ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} } } } });
     chart.$k=v;
     return chart;
   }
@@ -253,14 +253,14 @@
     const v=viewSlice(dates,lv,ch);
     const ds=[], sc={ x:{ ticks:{color:"#7d8ea0",maxTicksLimit:8,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} } };
     if(showArea()){
-      ds.push({type:"line",label:"淨部位",data:v.lv,yAxisID:"y",borderColor:LINE,backgroundColor:LINE+"22",fill:"origin",pointRadius:0,borderWidth:1.6,tension:.15,order:2});
-      sc.y={ position:"left", beginAtZero:true, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
+      ds.push({type:"line",label:"淨部位",data:v.lv,yAxisID:"y",borderColor:LINE,backgroundColor:LINE+"22",fill:"origin",pointRadius:0,borderWidth:1.6,tension:.15,order:2,spanGaps:true});
+      sc.y={ position:"right", beginAtZero:true, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
     }
     if(showBar()){
       ds.push({type:"bar",label:"每日增減",data:v.ch,yAxisID:showArea()?"y1":"y",order:1,borderWidth:0,
         backgroundColor:v.ch.map(barColor)});
-      if(showArea()) sc.y1={ position:"right", beginAtZero:true, ticks:{color:"#6f8296",font:{size:9}}, grid:{drawOnChartArea:false} };
-      else sc.y={ position:"left", beginAtZero:true, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
+      if(showArea()) sc.y1={ position:"left", beginAtZero:true, ticks:{color:"#6f8296",font:{size:9}}, grid:{drawOnChartArea:false} };
+      else sc.y={ position:"right", beginAtZero:true, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} };
     }
     return new Chart(ctx,{ data:{labels:v.labels,datasets:ds},
       options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
@@ -315,15 +315,75 @@
 
       const body=el("div","stk-body");   // 每檔一列, 內部項目由上而下各佔一列
       const ser=series(doc);
+      const kd=(s.sid&&klines[s.sid]&&klines[s.sid].records)?klines[s.sid]:null;
+
+      // ---- 共同日期軸: K棒與各籌碼面板逐日對齊 ----
+      const dset=new Set(ser.dates);
+      if(kd) for(const d in kd.records){ const r=kd.records[d]; if(r&&r[3]!=null) dset.add(d); }
+      const M=[...dset].sort();
+      const mI={}; M.forEach((d,i)=>{ mI[d]=i; });
+      const mapArr=(dates,arr)=>{ const o=new Array(M.length).fill(null); dates.forEach((d,i)=>{ o[mI[d]]=arr[i]; }); return o; };
+      let KO=null,KH=null,KL=null,KC=null;
+      if(kd){
+        KO=new Array(M.length).fill(null); KH=new Array(M.length).fill(null);
+        KL=new Array(M.length).fill(null); KC=new Array(M.length).fill(null);
+        M.forEach((d,i)=>{ const r=kd.records[d]; if(r){ KO[i]=r[0]; KH[i]=r[1]; KL[i]=r[2]; KC[i]=r[3]; } });
+      }
+      const PS={}; PANELS.forEach(k=>{ PS[k]={lv:mapArr(ser.dates,ser[k].lv), ch:mapArr(ser.dates,ser[k].ch)}; });
+
+      // ---- 查價視窗 + 十字線 (雙擊任一圖開啟/關閉, 滑鼠移動對準日期) ----
+      const qbox=el("div","quote-box"); blk.appendChild(qbox);
+      const bRegs=[];
+      let qOn=false;
+      const fq=(v,dec)=>v==null?"—":Number(v).toLocaleString("en-US",{maximumFractionDigits:dec===undefined?2:dec});
+      const cCls=v=>v>0?"up":(v<0?"down":"");
+      function quoteHide(){ qbox.style.display="none"; bRegs.forEach(o=>{ o.xv.style.display="none"; o.xh.style.display="none"; }); }
+      function quoteShow(i, activeCv, yPx){
+        const d=M[i]; if(!d){ quoteHide(); return; }
+        let h=`<table><tr class="qb-t"><td>時間</td><td>${d}</td></tr>`;
+        if(KC){
+          let pc=null; for(let j=i-1;j>=0;j--){ if(KC[j]!=null){ pc=KC[j]; break; } }
+          h+=`<tr><td>開</td><td>${fq(KO[i])}</td></tr><tr><td>高</td><td>${fq(KH[i])}</td></tr><tr><td>低</td><td>${fq(KL[i])}</td></tr><tr><td>收</td><td>${fq(KC[i])}</td></tr>`;
+          if(KC[i]!=null&&pc!=null){ const chg=KC[i]-pc;
+            h+=`<tr><td>漲跌</td><td class="${cCls(chg)}">${(chg>=0?"+":"")+chg.toFixed(2)}</td></tr>`;
+            h+=`<tr><td>漲跌幅</td><td class="${cCls(chg)}">${((chg/pc)*100).toFixed(2)}%</td></tr>`; }
+        }
+        PANELS.forEach((k,pi)=>{
+          const nm=k==="特定法人"?"法人":k, lv=PS[k].lv[i], ch=PS[k].ch[i];
+          h+=`<tr${pi===0?' class="qb-sep"':''}><td>${nm}淨部位</td><td class="${cCls(lv)}">${fq(lv,0)}</td></tr>`;
+          h+=`<tr><td>${nm}增減</td><td class="${cCls(ch)}">${ch==null?"—":(ch>0?"+":"")+fq(ch,0)}</td></tr>`;
+        });
+        qbox.innerHTML=h+"</table>"; qbox.style.display="block";
+        const [a,b]=visWin(M);
+        bRegs.forEach(o=>{
+          if(i<a||i>b){ o.xv.style.display="none"; o.xh.style.display="none"; return; }
+          const x=o.reg.chart.scales.x.getPixelForValue(i-a);
+          o.xv.style.left=x+"px"; o.xv.style.display="block";
+          if(o.cv===activeCv&&yPx!=null){ o.xh.style.top=yPx+"px"; o.xh.style.display="block"; }
+          else o.xh.style.display="none";
+        });
+      }
+      function quoteMove(reg,cv,ev){
+        const rect=cv.getBoundingClientRect();
+        const sc=(rect.width>0&&cv.offsetWidth>0)?rect.width/cv.offsetWidth:1;
+        const x=(ev.clientX-rect.left)/sc, y=(ev.clientY-rect.top)/sc;
+        const [a,b]=visWin(M);
+        let wi=Math.round(reg.chart.scales.x.getValueForPixel(x));
+        wi=Math.max(0,Math.min(wi,b-a));
+        quoteShow(a+wi, cv, y);
+      }
+      function attachQuote(reg,cv,cw){
+        const xv=el("div","xhair-v"), xh=el("div","xhair-h");
+        cw.appendChild(xv); cw.appendChild(xh);
+        bRegs.push({reg,cv,xv,xh});
+        cv.addEventListener("dblclick",ev=>{ qOn=!qOn; if(qOn) quoteMove(reg,cv,ev); else quoteHide(); });
+        cv.addEventListener("mousemove",ev=>{ if(qOn) quoteMove(reg,cv,ev); });
+      }
 
       // ---- 日K面板 (最上方) ----
-      const kd=(s.sid&&klines[s.sid]&&klines[s.sid].records)?klines[s.sid]:null;
       if(showK()&&kd){
-        const kdates=Object.keys(kd.records).sort();
-        const O=[],H=[],L=[],C=[];
-        kdates.forEach(d=>{const rr=kd.records[d]||[];O.push(rr[0]);H.push(rr[1]);L.push(rr[2]);C.push(rr[3]);});
-        const lastC=last(C);
-        let prevC=null; for(let i=C.length-2;i>=0;i--){ if(C[i]!=null){ prevC=C[i]; break; } }
+        const lastC=last(KC);
+        let prevC=null; for(let i=KC.length-2;i>=0;i--){ if(KC[i]!=null){ prevC=KC[i]; break; } }
         const chg=(lastC!=null&&prevC!=null)?Number((lastC-prevC).toFixed(2)):null;
         const pct=(chg!=null&&prevC)?` <span class="dlt">(${chg>=0?"+":""}${(100*chg/prevC).toFixed(2)}%)</span>`:"";
         const panel=el("div","stk-panel");
@@ -333,11 +393,12 @@
         const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
         body.appendChild(panel);
         try{
-          const reg={kind:"k", dates:kdates, O,H,L,C};
+          const reg={kind:"k", dates:M, O:KO, H:KH, L:KL, C:KC};
           reg.chart=makeKChart(cv.getContext("2d"), reg);
           charts.push(reg);
           cv.addEventListener("wheel",e=>wheelZoom(reg,e),{passive:false});
           attachPan(reg,cv);
+          attachQuote(reg,cv,cw);
         }catch(e){ cw.appendChild(el("div","warn","K棒載入失敗:"+e.message)); }
       }
 
@@ -346,14 +407,15 @@
         const panel=el("div","stk-panel");
         panel.appendChild(el("div","stk-panelhd",
           `<span class="tagm">${k==="特定法人"?"法人":k}</span> 淨部位 <b class="${lv>0?'up':(lv<0?'down':'')}">${lv==null?'—':Number(lv).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(ch)}</span>`));
-        const cw=el("div","stk-canvas"); cw.style.height=chartH+"px";
+        const cw=el("div","stk-canvas"); cw.style.height=Math.round(chartH*0.62)+"px";   // 籌碼副圖較矮 (仿看盤軟體比例)
         const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
         body.appendChild(panel);
         try{
-          const reg={chart:makeChart(cv.getContext("2d"), ser.dates, ser[k].lv, ser[k].ch), dates:ser.dates, lv:ser[k].lv, ch:ser[k].ch};
+          const reg={chart:makeChart(cv.getContext("2d"), M, PS[k].lv, PS[k].ch), dates:M, lv:PS[k].lv, ch:PS[k].ch};
           charts.push(reg);
           cv.addEventListener("wheel",e=>wheelZoom(reg,e),{passive:false});
           attachPan(reg,cv);
+          attachQuote(reg,cv,cw);
         }
         catch(e){ cw.appendChild(el("div","warn","圖表載入失敗:"+e.message)); }
       });
