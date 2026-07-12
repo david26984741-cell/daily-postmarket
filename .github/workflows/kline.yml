@@ -48,6 +48,8 @@ jobs:
       - name: Commit 資料更新
         if: always()
         run: |
+          pkill -9 -f backfill_kline.py 2>/dev/null || true
+          sleep 3
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           MSG="回補日K ${{ github.event.inputs.start }} ~ ${{ github.event.inputs.end }}"

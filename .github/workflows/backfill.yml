@@ -59,6 +59,10 @@ jobs:
       - name: Commit 資料更新
         if: always()   # 即使逾時被中止, 也把已抓到的部分 commit 起來, 重跑只需補剩餘區間
         run: |
+          # 逾時取消後 python 可能仍在寫檔, 先強制終結, 否則工作樹永遠不乾淨、rebase 必敗
+          pkill -9 -f backfill.py 2>/dev/null || true
+          pkill -9 -f scrape.py 2>/dev/null || true
+          sleep 3
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           MSG="回補歷史 ${{ github.event.inputs.start }} ~ ${{ github.event.inputs.end }}"
