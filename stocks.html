@@ -241,11 +241,8 @@
     ]},
     options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
       layout:{ padding:{ left:AXW } },
-      plugins:{ legend:{display:false},
-        tooltip:{ filter:(it)=>it.datasetIndex===0, callbacks:{
-          label:(cx)=>{ const k=cx.chart.$k||v, i=cx.dataIndex;
-            const f=(n)=>n==null?"—":Number(n).toLocaleString("en-US");
-            return `開 ${f(k.O[i])}  高 ${f(k.H[i])}  低 ${f(k.L[i])}  收 ${f(k.C[i])}`; } } } },
+      // 內建 tooltip 不支援整頁 zoom 縮放, 座標會偏移且蓋住K棒 → 停用, 一律以查價視窗為準
+      plugins:{ legend:{display:false}, tooltip:{enabled:false} },
       scales:{ x:{ ticks:{color:"#7d8ea0",maxTicksLimit:8,font:{size:9}}, grid:{color:"rgba(255,255,255,.04)"} },
                y:{ position:"right", afterFit:fitW, ticks:{color:"#8aa0b4",font:{size:9}}, grid:{color:"rgba(255,255,255,.06)"} } } } });
     chart.$k=v;
@@ -269,8 +266,7 @@
     return new Chart(ctx,{ data:{labels:v.labels,datasets:ds},
       options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
       layout: both? undefined : { padding:{ left:AXW } },
-      plugins:{ legend:{display:false},
-        tooltip:{ callbacks:{ label:(c)=>`${c.dataset.label}: ${Number(c.raw).toLocaleString("en-US")}` } } },
+      plugins:{ legend:{display:false}, tooltip:{enabled:false} },
       scales:sc } });
   }
 
@@ -360,6 +356,15 @@
         });
         qbox.innerHTML=h+"</table>"; qbox.style.display="block";
         const [a,b]=visWin(M);
+        // 查價視窗自動換邊: 游標在左半邊 → 視窗靠右, 反之靠左, 永不遮住查看中的K棒
+        if(bRegs.length){
+          const r0=bRegs[0], rr=r0.cv.getBoundingClientRect(), br=blk.getBoundingClientRect();
+          const scq=(rr.width>0&&r0.cv.offsetWidth>0)?rr.width/r0.cv.offsetWidth:1;
+          const ci=Math.max(a,Math.min(i,b));
+          const xAbs=rr.left + r0.reg.chart.scales.x.getPixelForValue(ci-a)*scq;
+          if(xAbs < br.left + br.width/2){ qbox.style.left="auto"; qbox.style.right="14px"; }
+          else{ qbox.style.right="auto"; qbox.style.left="14px"; }
+        }
         bRegs.forEach(o=>{
           if(i<a||i>b){ o.xv.style.display="none"; o.xh.style.display="none"; return; }
           const x=o.reg.chart.scales.x.getPixelForValue(i-a);
