@@ -31,6 +31,7 @@
     <label class="ck" title="該股期對應現股的日K(開高低收),紅漲綠跌"><input type="checkbox" id="gK" checked><span>K棒(股價)</span></label>
     <label class="ck" title="未平倉淨部位 = 買方 − 賣方(口),紅=淨多、綠=淨空"><input type="checkbox" id="gArea" checked><span>區域圖(淨部位)</span></label>
     <label class="ck" title="淨部位與前一交易日的差,紅柱=增加、綠柱=減少"><input type="checkbox" id="gBar" checked><span>柱狀圖(每日增減)</span></label>
+    <label class="ck" title="以現股收盤價換算:金額=淨部位×股價×每口股數(小型100股、一般2,000股),顯示於各面板標題"><input type="checkbox" id="gAmt" checked><span>金額</span></label>
     <span class="tlabel" style="margin-left:10px">每列</span>
     <select id="cols">
       <option value="1">1 檔</option>
@@ -300,7 +301,7 @@
       localStorage.setItem(PREFS, JSON.stringify({
         codes:selected.slice(), from:range.from, to:range.to,
         ck:[CKS[0].checked,CKS[1].checked,CKS[2].checked],
-        gK:$("#gK").checked, gArea:$("#gArea").checked, gBar:$("#gBar").checked,
+        gK:$("#gK").checked, gArea:$("#gArea").checked, gBar:$("#gBar").checked, gAmt:$("#gAmt").checked,
         cols:$("#cols").value
       }));
     }catch(e){}
@@ -434,11 +435,24 @@
         }catch(e){ cw.appendChild(el("div","warn","K棒載入失敗:"+e.message)); }
       }
 
+      // ---- 金額換算 (淨部位×現股收盤×每口股數; 小型100股、一般2,000股) ----
+      const shares=(s.name||"").startsWith("小型")?100:2000;
+      let priceLast=null; if(KC){ for(let i=KC.length-1;i>=0;i--){ if(KC[i]!=null){ priceLast=KC[i]; break; } } }
+      const showAmt=$("#gAmt").checked && priceLast!=null;
+      const fAmt=v=>{ const a=Math.abs(v); const sign=v<0?"-":"+";
+        return sign+(a>=1e8 ? (a/1e8).toFixed(2)+" 億" : (a/1e4).toFixed(0)+" 萬"); };
+      const amtHtml=(lv,ch)=>{
+        if(!showAmt) return "";
+        const la=lv==null?"—":fAmt(lv*priceLast*shares).replace(/^\+/,"");
+        const ca=ch==null?"—":fAmt(ch*priceLast*shares);
+        return ` · 金額 <b class="${lv>0?'up':(lv<0?'down':'')}">${la}</b> · 增減金額 <span class="dlt ${ch>0?'up':(ch<0?'down':'')}">${ca}</span>`;
+      };
+
       if(showPos) vis.forEach(k=>{
         const lv=last(ser[k].lv), ch=last(ser[k].ch);
         const panel=el("div","stk-panel");
         panel.appendChild(el("div","stk-panelhd",
-          `<span class="tagm">${k==="特定法人"?"法人":k}</span> 淨部位 <b class="${lv>0?'up':(lv<0?'down':'')}">${lv==null?'—':Number(lv).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(ch)}</span>`));
+          `<span class="tagm">${k==="特定法人"?"法人":k}</span> 淨部位 <b class="${lv>0?'up':(lv<0?'down':'')}">${lv==null?'—':Number(lv).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(ch)}</span>${amtHtml(lv,ch)}`));
         const cw=el("div","stk-canvas"); cw.style.height=Math.round(chartH*0.62)+"px";   // 籌碼副圖較矮 (仿看盤軟體比例)
         const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
         body.appendChild(panel);
@@ -521,7 +535,7 @@
   });
 
   // ---- 面板勾選 --------------------------------------------------------------
-  CKS.concat([$("#gK"),$("#gArea"),$("#gBar"),$("#cols")]).forEach(cb=>cb.addEventListener("change",render));
+  CKS.concat([$("#gK"),$("#gArea"),$("#gBar"),$("#gAmt"),$("#cols")]).forEach(cb=>cb.addEventListener("change",render));
 
   // ---- 期間選擇 --------------------------------------------------------------
   if(allDates.length){
@@ -546,7 +560,7 @@
   const saved=loadPrefs();
   if(saved){
     if(Array.isArray(saved.ck)) CKS.forEach((c,i)=>{ if(typeof saved.ck[i]==="boolean") c.checked=saved.ck[i]; });
-    ["gK","gArea","gBar"].forEach(id=>{ if(typeof saved[id]==="boolean") $("#"+id).checked=saved[id]; });
+    ["gK","gArea","gBar","gAmt"].forEach(id=>{ if(typeof saved[id]==="boolean") $("#"+id).checked=saved[id]; });
     if(saved.cols) $("#cols").value=saved.cols;
     if(saved.from!==undefined||saved.to!==undefined){ range.from=saved.from||null; range.to=saved.to||null; syncRangeInputs(); }
   }
