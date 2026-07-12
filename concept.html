@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>概念股總覽 — 每日盤後資料</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.cpt-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 12px}
+.cpt-big{display:inline-block;border:1px solid #3a5069;background:rgba(78,161,255,.10);color:#9fc3e8;font-size:15px;font-weight:700;border-radius:8px;padding:3px 12px}
+.cpt-count{color:var(--mut);font-size:13px}
+table.cpt{width:100%;border-collapse:collapse;font-size:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+table.cpt th{background:var(--head);color:var(--mut);font-weight:600;padding:8px 10px;cursor:pointer;user-select:none;white-space:nowrap;text-align:right}
+table.cpt th:first-child{text-align:left}
+table.cpt th .ar{opacity:.5;font-size:10px;margin-left:3px}
+table.cpt td{padding:7px 10px;border-top:1px solid rgba(255,255,255,.05);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.cpt td:first-child{text-align:left}
+table.cpt tbody tr:hover{background:var(--card2)}
+td.nm a{color:var(--txt)} td.nm a:hover{color:var(--accent)}
+.mini-tag{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--mut);font-size:11px;border-radius:5px;padding:0 5px;margin-left:6px;vertical-align:1px}
+.empty{color:var(--mut);font-size:13px;padding:14px 2px}
+.tagbar{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 10px}
+.tagbar a{display:inline-block;border:1px solid var(--line);background:var(--card2);color:var(--mut);font-size:12px;border-radius:6px;padding:1px 8px}
+.tagbar a:hover{border-color:var(--accent);color:var(--accent)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1><a href="index.html" style="color:inherit">每日盤後資料</a><small>概念股總覽</small></h1>
+  <nav class="main" id="nav"></nav>
+</div></header>
+
+<div class="wrap">
+  <div class="crumbs"><a href="rank.html">← 股期增減排行</a></div>
+  <h2 class="sec">概念股總覽 <span class="tag" id="dchip"></span></h2>
+  <div class="cpt-head"><span class="cpt-big" id="tagName">—</span><span class="cpt-count" id="tagCount"></span></div>
+  <p class="lead">同概念股期的最新籌碼增減(對照前一交易日)。點欄位標題可排序;點股票名稱看完整圖表。主力 = 自然人 − 法人,與個股頁/XQ 口徑一致。</p>
+  <div id="tbl"></div>
+  <div class="tagbar" id="others"></div>
+  <footer>資料來源:臺灣期貨交易所、臺灣證券交易所、證券櫃檯買賣中心。本網站僅供參考,不構成投資建議。</footer>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(async function(){
+  const nav=$("#nav");
+  CATS.forEach(c=>{const a=el("a",null,c.title);a.href=catHref(c);a.dataset.k=c.id;nav.appendChild(a);});
+  navActive("rank");
+
+  const TAG=decodeURIComponent((new URLSearchParams(location.search)).get("tag")||"");
+  $("#tagName").textContent=TAG||"未指定";
+
+  let rk, CPT;
+  try{ rk=await getJSON("rank.json"); CPT=await getJSON("concepts.json"); }
+  catch(e){ $("#tbl").appendChild(el("div","empty","資料尚未產生")); return; }
+  $("#dchip").innerHTML=`資料日期 <b>${rk.date}</b> · 對照前一交易日${UPDATE_NOTE}`;
+
+  // 概念比對: 主標籤相同, 或完整分類(產業·子產業)中任一段等於此概念
+  const match=sid=>{
+    const c=sid?CPT[sid]:null; if(!c) return false;
+    if(c.m===TAG) return true;
+    return (c.t||[]).some(t=>{const p=t.split("·");return p[0]===TAG||p[1]===TAG;});
+  };
+  const ok=(a,b)=>a!=null&&b!=null;
+  const rows=(rk.rows||[]).filter(r=>match(r.sid)).map(r=>{
+    const main=ok(r.main,r.inst)&&ok(r.main_prev,r.inst_prev)?(r.main-2*r.inst)-(r.main_prev-2*r.inst_prev):null;
+    const nat =ok(r.main,r.inst)&&ok(r.main_prev,r.inst_prev)?(r.main-r.inst)-(r.main_prev-r.inst_prev):null;
+    const inst=ok(r.inst,r.inst_prev)?r.inst-r.inst_prev:null;
+    const moi =ok(r.moi,r.moi_prev)?r.moi-r.moi_prev:null;
+    const pct =(r.price!=null&&r.price_prev!=null&&r.price_prev!==0)?(r.price-r.price_prev)/r.price_prev*100:null;
+    return {code:r.code,name:r.name,mini:r.mini,price:r.price,pct,main,nat,inst,moi};
+  });
+  $("#tagCount").textContent=rows.length?`共 ${rows.length} 檔股期`:"";
+
+  const COLS=[
+    {k:"name", t:"股名", num:false},
+    {k:"price",t:"股價", num:true},
+    {k:"pct",  t:"漲跌幅", num:true},
+    {k:"main", t:"主力增減", num:true},
+    {k:"nat",  t:"自然人增減", num:true},
+    {k:"inst", t:"法人增減", num:true},
+    {k:"moi",  t:"未沖銷增減", num:true},
+  ];
+  let sortK="main", sortDir=-1;   // 預設: 主力增減 由大到小
+  const cls=v=>v>0?"up":(v<0?"down":"");
+  const fN=v=>v==null?"—":Number(v).toLocaleString("en-US");
+  const fS=v=>v==null?"—":(v>0?"+":"")+Number(v).toLocaleString("en-US");
+  const fP=v=>v==null?"—":(v>0?"+":"")+v.toFixed(2)+"%";
+
+  function render(){
+    const box=$("#tbl"); box.innerHTML="";
+    if(!rows.length){ box.appendChild(el("div","empty","找不到屬於此概念的股期(或分類資料未包含)")); return; }
+    const sorted=[...rows].sort((a,b)=>{
+      const x=a[sortK], y=b[sortK];
+      if(x==null&&y==null) return 0; if(x==null) return 1; if(y==null) return -1;
+      if(sortK==="name") return sortDir*String(x).localeCompare(String(y),"zh-Hant");
+      return sortDir*(x-y);
+    });
+    const t=el("table","cpt");
+    const thead=el("thead"); const trh=el("tr");
+    COLS.forEach(c=>{
+      const th=el("th",null,c.t+(sortK===c.k?` <span class="ar">${sortDir<0?"▼":"▲"}</span>`:` <span class="ar">↕</span>`));
+      th.onclick=()=>{ if(sortK===c.k) sortDir=-sortDir; else { sortK=c.k; sortDir=c.k==="name"?1:-1; } render(); };
+      trh.appendChild(th);
+    });
+    thead.appendChild(trh); t.appendChild(thead);
+    const tb=el("tbody");
+    sorted.forEach(r=>{
+      const tr=el("tr");
+      const nm=el("td","nm");
+      const a=el("a",null,r.name); a.href=`stocks.html?code=${r.code}`; nm.appendChild(a);
+      if(r.mini) nm.appendChild(el("span","mini-tag","小型"));
+      tr.appendChild(nm);
+      tr.appendChild(el("td",null,fN(r.price)));
+      tr.appendChild(el("td",cls(r.pct),fP(r.pct)));
+      tr.appendChild(el("td",cls(r.main),fS(r.main)));
+      tr.appendChild(el("td",cls(r.nat),fS(r.nat)));
+      tr.appendChild(el("td",cls(r.inst),fS(r.inst)));
+      tr.appendChild(el("td",cls(r.moi),fS(r.moi)));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb); box.appendChild(t);
+  }
+  render();
+
+  // 其他概念快速切換 (依成員數排序, 取前 30)
+  const cnt={};
+  Object.values(CPT).forEach(c=>{ if(c&&c.m) cnt[c.m]=(cnt[c.m]||0)+1; });
+  const others=Object.entries(cnt).filter(([k])=>k!==TAG).sort((a,b)=>b[1]-a[1]).slice(0,30);
+  if(others.length){
+    const bar=$("#others");
+    bar.appendChild(el("span","cpt-count","其他概念:"));
+    others.forEach(([k,n])=>{ const a=el("a",null,`${k} (${n})`); a.href=`concept.html?tag=${encodeURIComponent(k)}`; bar.appendChild(a); });
+  }
+})();
+</script>
+</body>
+</html>

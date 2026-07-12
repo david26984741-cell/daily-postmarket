@@ -543,13 +543,21 @@ def _rank_row(doc, latest, stock_map):
     name = doc.get("name") or info.get("short") or code
     mini = str(name).startswith("小型")
     sid = doc.get("sid") or info.get("sid", "")
-    price = None
+    price = price_prev = None
     if sid:
-        k = load_json(os.path.join(KLINE, f"{sid}.json"), {}).get("records", {}).get(latest)
+        krecs = load_json(os.path.join(KLINE, f"{sid}.json"), {}).get("records", {})
+        k = krecs.get(latest)
         if k and k[3] is not None:
             price = k[3]
+        # 前一交易日收盤 (供漲跌幅計算): 取 < latest 的最近一筆有效收盤
+        kdates = sorted(d for d in krecs if d < latest)
+        for d in reversed(kdates):
+            kk = krecs.get(d)
+            if kk and kk[3] is not None:
+                price_prev = kk[3]
+                break
     return {"code": code, "name": name, "sid": sid, "mini": mini,
-            "shares": 100 if mini else 2000, "price": price, "prev_date": prev,
+            "shares": 100 if mini else 2000, "price": price, "price_prev": price_prev, "prev_date": prev,
             "main": net(a0), "main_prev": net(b0),
             "inst": net(a1), "inst_prev": net(b1),
             "moi": (a0 or {}).get("market_oi"), "moi_prev": (b0 or {}).get("market_oi")}
