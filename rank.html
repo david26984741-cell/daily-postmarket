@@ -20,6 +20,8 @@ td.nm a:hover{color:var(--accent)}
 td.val{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 td.amt{text-align:right;color:var(--mut);font-size:12.5px;white-space:nowrap}
 .mini-tag{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--mut);font-size:11px;border-radius:5px;padding:0 5px;margin-left:6px;vertical-align:1px}
+td.cpt{width:1%;white-space:nowrap;padding-left:0}
+.cpt-tag{display:inline-block;border:1px solid #3a5069;background:rgba(78,161,255,.08);color:#9fc3e8;font-size:11px;border-radius:5px;padding:0 6px;max-width:96px;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;cursor:default}
 .empty{color:var(--mut);font-size:13px;padding:8px 2px}
 </style>
 </head>
@@ -64,6 +66,16 @@ td.amt{text-align:right;color:var(--mut);font-size:12.5px;white-space:nowrap}
   let rk;
   try{ rk=await getJSON("rank.json"); }
   catch(e){ $("#dchip").textContent="排行資料尚未產生(首次於下一次每日更新後出現)"; return; }
+
+  // 概念股/子產業分類 (整理自財報狗產業地圖, 依證券代號對照; 滑鼠移到框框上顯示全部分類)
+  let CPT={}; try{ CPT=await getJSON("concepts.json"); }catch(e){}
+  const SHORT={"金控業/銀行業/保險業":"金控/銀行","電腦及週邊設備":"電腦週邊","海陸空大眾運輸":"大眾運輸","整車組裝、修理及技術服務":"整車組裝","成衣及其它家居紡織類品":"成衣家紡","IP設計/IC設計代工服務":"IP/IC設計","硬板、軟板、IC載板製造":"PCB製造","散熱片、風扇馬達、散熱模組":"散熱模組","其他電腦及週邊設備之零組件":"電腦零組件","其他電腦及週邊設備":"電腦週邊","生產製程及檢測設備":"半導體設備","連接器設計、組裝及製造":"連接器","其他電子產品及電子服務產業":"其他電子","其他IC/二極體製造":"二極體","隱型眼鏡、光學鏡片":"光學鏡片","體溫計、血壓計":"醫療器材","紙漿、紙類原料":"紙漿原料","中、西藥製劑":"藥品製劑","濾波器、振盪器":"被動元件","光學鏡片、鏡頭":"光學鏡頭","五金元件及零配件":"五金零件","石化及塑橡膠":"塑化","電池 (能源元件)":"電池","主/被動元件":"通訊元件","電信服務業":"電信","LED 照明":"LED"};
+  const cptTag=r=>{
+    const c=r.sid?CPT[r.sid]:null; if(!c||!c.m) return null;
+    const s=el("span","cpt-tag", SHORT[c.m]||c.m);
+    s.title=(c.t||[]).join("、");
+    return s;
+  };
   $("#dchip").innerHTML=`資料日期 <b>${rk.date}</b> · 對照前一交易日${UPDATE_NOTE}`;
   try{ const m=localStorage.getItem("dpm.rank.metric"); if(m&&$("#metric").querySelector(`option[value=${m}]`)) $("#metric").value=m; }catch(e){}
 
@@ -88,6 +100,7 @@ td.amt{text-align:right;color:var(--mut);font-size:12.5px;white-space:nowrap}
     rows.forEach((r,i)=>{
       const tr=el("tr");
       tr.appendChild(el("td","no",String(i+1)));
+      const cp=el("td","cpt"); const tag=cptTag(r); if(tag) cp.appendChild(tag); tr.appendChild(cp);
       const nm=el("td","nm");
       const a=el("a",null,r.name); a.href=`stocks.html?code=${r.code}`;
       nm.appendChild(a);
