@@ -269,20 +269,21 @@
     const v=viewSlice(dates,lv,ch);
     // hideX=true: 籌碼面板不重複顯示日期軸 (K棒面板已有時間), 版面更緊湊
     const ds=[], sc={ x:{ ticks:{color:TKC,maxTicksLimit:8,font:TKF,display:!hideX}, grid:{color:"rgba(255,255,255,.04)"} } };
+    // 軸配置: 淨部位(線)→左軸、每日增減(柱)→右軸
     if(showArea()){
       ds.push({type:"line",label:"淨部位",data:v.lv,yAxisID:"y",borderColor:LINE,backgroundColor:LINE+"22",fill:"origin",pointRadius:0,borderWidth:1.6,tension:.15,order:2,spanGaps:true});
-      sc.y={ position:"right", afterFit:fitW, beginAtZero:true, ticks:{color:TKC,font:TKF}, grid:{color:"rgba(255,255,255,.06)"} };
+      sc.y={ position:"left", afterFit:fitW, beginAtZero:true, ticks:{color:TKC,font:TKF}, grid:{color:"rgba(255,255,255,.06)"} };
     }
     const both=showArea()&&showBar();
     if(showBar()){
       ds.push({type:"bar",label:"每日增減",data:v.ch,yAxisID:both?"y1":"y",order:1,borderWidth:0,
         backgroundColor:v.ch.map(barColor)});
-      if(both) sc.y1={ position:"left", afterFit:fitW, beginAtZero:true, ticks:{color:"#9db1c4",font:TKF}, grid:{drawOnChartArea:false} };
+      if(both) sc.y1={ position:"right", afterFit:fitW, beginAtZero:true, ticks:{color:TKC,font:TKF}, grid:{drawOnChartArea:false} };
       else sc.y={ position:"right", afterFit:fitW, beginAtZero:true, ticks:{color:TKC,font:TKF}, grid:{color:"rgba(255,255,255,.06)"} };
     }
     return new Chart(ctx,{ data:{labels:v.labels,datasets:ds},
       options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
-      layout: both? undefined : { padding:{ left:AXW } },
+      layout: both? undefined : (showArea()? { padding:{ right:AXW } } : { padding:{ left:AXW } }),
       plugins:{ legend:{display:false}, tooltip:{enabled:false} },
       scales:sc } });
   }
