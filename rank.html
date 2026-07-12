@@ -39,7 +39,7 @@ td.cpt{width:1%;white-space:nowrap;padding-left:0}
   <div class="toolbar">
     <label class="muted">口徑</label>
     <select id="metric">
-      <option value="main" selected>主力(前十大交易人)</option>
+      <option value="main" selected>主力(自然人−法人)</option>
       <option value="inst">法人(前十大特定法人)</option>
       <option value="nat">自然人(前十大非法人)</option>
       <option value="moi">全市場未沖銷</option>
@@ -79,13 +79,19 @@ td.cpt{width:1%;white-space:nowrap;padding-left:0}
   $("#dchip").innerHTML=`資料日期 <b>${rk.date}</b> · 對照前一交易日${UPDATE_NOTE}`;
   try{ const m=localStorage.getItem("dpm.rank.metric"); if(m&&$("#metric").querySelector(`option[value=${m}]`)) $("#metric").value=m; }catch(e){}
 
+  // rank.json 的 main=前十大交易人合計(t0)、inst=前十大特定法人(t1) — 原始值。
+  // 顯示口徑與個股頁/XQ一致: 自然人 = t0−t1, 主力 = 自然人−法人 = t0−2×t1。
   function delta(r,m){
     let cur=null, prev=null;
-    if(m==="main"){ cur=r.main; prev=r.main_prev; }
+    const ok=(a,b)=>a!=null&&b!=null;
+    if(m==="main"){
+      cur=ok(r.main,r.inst)? r.main-2*r.inst : null;
+      prev=ok(r.main_prev,r.inst_prev)? r.main_prev-2*r.inst_prev : null;
+    }
     else if(m==="inst"){ cur=r.inst; prev=r.inst_prev; }
     else if(m==="nat"){
-      cur=(r.main!=null&&r.inst!=null)?r.main-r.inst:null;
-      prev=(r.main_prev!=null&&r.inst_prev!=null)?r.main_prev-r.inst_prev:null;
+      cur=ok(r.main,r.inst)? r.main-r.inst : null;
+      prev=ok(r.main_prev,r.inst_prev)? r.main_prev-r.inst_prev : null;
     }else{ cur=r.moi; prev=r.moi_prev; }
     return (cur!=null&&prev!=null)? cur-prev : null;
   }
