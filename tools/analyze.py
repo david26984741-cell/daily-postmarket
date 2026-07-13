@@ -63,7 +63,10 @@ def build_panel():
                          0 if mini else (t0.get("market_oi") or 0)))
     df = pd.DataFrame(rows, columns=["sid", "date", "main", "inst", "moi_eff", "moi_reg"])
     df = df.groupby(["sid", "date"], as_index=False).sum()
+    # 口徑與網站/XQ一致: rows 的 main 欄其實是前十大合計(t0);
+    # 自然人 = t0 − 法人, 主力 = 自然人 − 法人
     df["nat"] = df["main"] - df["inst"]
+    df["main"] = df["nat"] - df["inst"]
     log(f"部位面板: {len(df)} 列, {df.sid.nunique()} 檔")
 
     kl = []
