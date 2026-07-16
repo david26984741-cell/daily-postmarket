@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 .DS_Store
+# 專案指南必須進版控 (蓋過全域 gitignore 的排除)
+!CLAUDE.md
