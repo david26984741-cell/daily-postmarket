@@ -36,6 +36,20 @@ function biasArrow(s){
 function netCell(v,d){ const c=v>0?'up':(v<0?'down':''); const s=v>0?'+':'';
   let h=`<span class="${c}">${s}${fmt(v)}</span>`; if(d!==undefined) h+=` <span class="dlt">${arrow(d)}</span>`; return {raw:v,html:h}; }
 function cntCell(v,d){ let h=`<span>${fmt(v)}</span>`; if(d!==undefined) h+=` <span class="dlt">${arrow(d)}</span>`; return {raw:v,html:h}; }
+/* 淨部位口數: 正=淨多單(紅) / 負=淨空單(綠), 以文字表達 */
+function netLotsCell(v){
+  if(v===null||v===undefined) return {raw:null,html:"–"};
+  if(v===0) return {raw:0,html:'<span class="mut">0 口</span>'};
+  const c=v>0?'up':'down', lab=v>0?'淨多單':'淨空單';
+  return {raw:v, html:`<span class="${c}">${lab} ${fmt(Math.abs(v))} 口</span>`};
+}
+/* 較前一日口數變化: 正=多單增加(紅) / 負=空單增加(綠) */
+function lotsDelta(d){
+  if(d===null||d===undefined) return '<span class="mut arw">—</span>';
+  if(d>0) return `<span class="up arw">多單增加 ${fmt(d)} 口</span>`;
+  if(d<0) return `<span class="down arw">空單增加 ${fmt(Math.abs(d))} 口</span>`;
+  return '<span class="mut arw">▬ 0</span>';
+}
 
 /* ---------- 排序表格 ---------- */
 function sortableTable(headers, rows, opts={}){
@@ -98,13 +112,13 @@ function monthSelector(box,months,cur,onChange){
 /* ---------- ① 選擇權 (外資/自營) 未平倉;差額金額為重點,附較前一日 ---------- */
 function renderOptions(rec, prev){
   const headers=[{label:"買賣權",sort:false},{label:"買方未平倉",num:true},{label:"賣方未平倉",num:true},
-    {label:"買賣差額(口)",num:true},{label:"買方契約金額(千元)",num:true},{label:"賣方契約金額(千元)",num:true},{label:"差額金額(千元)",num:true}];
+    {label:"買賣差額(口)",num:true},{label:"買方契約金額(千元)",num:true},{label:"賣方契約金額(千元)",num:true},{label:"未平倉金額(千元)",num:true}];
   const mk=(lab,o,po,cls)=>({
     "買賣權":{html:`<span class="pill ${cls}">${lab}</span>`},
     "買方未平倉":cell(o.buy_oi_lots),"賣方未平倉":cell(o.sell_oi_lots),
     "買賣差額(口)":cell(o.diff_oi_lots,true),
     "買方契約金額(千元)":cell(o.buy_oi_amt),"賣方契約金額(千元)":cell(o.sell_oi_amt),
-    "差額金額(千元)":netCell(o.diff_oi_amt, po?(o.diff_oi_amt-po.diff_oi_amt):undefined)
+    "未平倉金額(千元)":netCell(o.diff_oi_amt, po?(o.diff_oi_amt-po.diff_oi_amt):undefined)
   });
   const rows=[];
   if(rec.call)rows.push(mk("買權 CALL",rec.call,prev&&prev.call,"call"));
@@ -121,7 +135,7 @@ function renderFutSpot(rec, prev){
     const h=[{label:"項目",sort:false},{label:"多方",num:true},{label:"空方",num:true},{label:"多空淨額",num:true},{label:"較前一日",sort:false,num:true}];
     const rows=[
       {"項目":"未平倉口數","多方":cell(rec.fut.long_oi_lots),"空方":cell(rec.fut.short_oi_lots),
-       "多空淨額":netCell(rec.fut.net_oi_lots), "較前一日":{html:arrow(pf?rec.fut.net_oi_lots-pf.net_oi_lots:undefined)}},
+       "多空淨額":netLotsCell(rec.fut.net_oi_lots), "較前一日":{html:lotsDelta(pf?rec.fut.net_oi_lots-pf.net_oi_lots:undefined)}},
       {"項目":"未平倉契約金額(千元)","多方":cell(rec.fut.long_oi_amt),"空方":cell(rec.fut.short_oi_amt),
        "多空淨額":netCell(rec.fut.net_oi_amt), "較前一日":{html:arrow(pf?rec.fut.net_oi_amt-pf.net_oi_amt:undefined)}},
     ];
@@ -178,18 +192,17 @@ function renderLargeOpt(rec, prev){
   const box=el("div");
   const months=collectMonths(rec); let cur=months.includes("999999")?"999999":(months[0]||"999999");
   monthSelector(box,months,cur,v=>{cur=v;draw();});
-  box.appendChild(el("div","legend","未平倉<b>淨部位</b>(買−賣,口) · <span class='up'>紅=淨買方</span> · <span class='down'>綠=淨賣方</span> · ()=較前一日 · 傾向 <span class='up'>▲</span>/<span class='down'>▼</span>"));
+  box.appendChild(el("div","legend","未平倉<b>淨部位</b>(買−賣,口) · <span class='up'>紅=淨買方</span> · <span class='down'>綠=淨賣方</span> · ()=較前一日"));
   const holder=el("div"); box.appendChild(holder);
   function draw(){
     holder.innerHTML="";
     const g=optGroups(rec,cur), gp=prev?optGroups(prev,cur):null;
-    const headers=[{label:"交易人別",sort:false},{label:"買權 CALL 淨部位",sort:false,num:true},{label:"賣權 PUT 淨部位",sort:false,num:true},{label:"傾向",sort:false}];
+    const headers=[{label:"交易人別",sort:false},{label:"買權 CALL 淨部位",sort:false,num:true},{label:"賣權 PUT 淨部位",sort:false,num:true}];
     const order=[["前十特定法人","inst10"]];
     const rows=order.map(([name,k])=>{
       const cN=g.call.rows[k].net, pN=g.put.rows[k].net;
       const dC=gp?cN-gp.call.rows[k].net:undefined, dP=gp?pN-gp.put.rows[k].net:undefined;
-      return {"交易人別":name,"買權 CALL 淨部位":netCell(cN,dC),"賣權 PUT 淨部位":netCell(pN,dP),
-        "傾向":{html:biasArrow(cN-pN)}};
+      return {"交易人別":name,"買權 CALL 淨部位":netCell(cN,dC),"賣權 PUT 淨部位":netCell(pN,dP)};
     });
     holder.appendChild(sortableTable(headers,rows,{dense:true}));
     const inner=el("div");
@@ -212,14 +225,15 @@ function renderLargeFut(rec, prev){
   function draw(){
     holder.innerHTML="";
     const g=futSide(rec.rows,cur), gp=(prev&&prev.rows&&prev.rows.length)?futSide(prev.rows,cur):null;
-    const headers=[{label:"交易人別",sort:false},{label:"多單",sort:false,num:true},{label:"空單",sort:false,num:true},{label:"未平倉淨部位",sort:false,num:true}];
+    const headers=[{label:"交易人別",sort:false},{label:"多單",sort:false,num:true},{label:"空單",sort:false,num:true},{label:"未平倉淨部位",sort:false,num:true},{label:"較前一日",sort:false,num:true}];
     const order=[["前十特定法人","inst10"]];
     const rows=order.map(([name,k])=>{
       const o=g.rows[k], p=gp?gp.rows[k]:null;
       return {"交易人別":name,
         "多單":cntCell(o.long, p?o.long-p.long:undefined),
         "空單":cntCell(o.short, p?o.short-p.short:undefined),
-        "未平倉淨部位":netCell(o.net, p?o.net-p.net:undefined)};
+        "未平倉淨部位":netLotsCell(o.net),
+        "較前一日":{html:lotsDelta(p?o.net-p.net:undefined)}};
     });
     holder.appendChild(sortableTable(headers,rows,{dense:true}));
     holder.appendChild(el("div","muted2","全市場未沖銷部位:"+fmt(g.market)+" 口"));

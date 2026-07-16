@@ -92,6 +92,42 @@ def fetch_taifex_csv(key, date_slash):
         rows.append([c.strip() for c in line.split(",")])
     return rows  # rows[0] 為標題列
 
+def fetch_txf_range(start_slash, end_slash):
+    """台指期 TX 每日收盤 (近月月契約、一般交易時段)。回傳 {date_slash: close}。
+    TAIFEX futDataDown 保留約三年, 單次查詢範圍限一個月內。"""
+    txt = http_get(TAIFEX + "futDataDown",
+                   {"down_type": "1", "commodity_id": "TX",
+                    "queryStartDate": start_slash, "queryEndDate": end_slash}, big5=True)
+    best = {}          # date -> (month, close)
+    i_sess = None
+    header = None
+    for line in txt.splitlines():
+        if not line.strip():
+            continue
+        cols = [c.strip() for c in line.split(",")]
+        if header is None:
+            header = cols
+            for i, h in enumerate(header):
+                if "交易時段" in h:
+                    i_sess = i
+            continue
+        if len(cols) < 7 or cols[1] != "TX":
+            continue
+        m = cols[2]
+        if not (len(m) == 6 and m.isdigit()):
+            continue                                   # 排除週契約 (如 202607W2)
+        if i_sess is not None and len(cols) > i_sess and cols[i_sess] and cols[i_sess] != "一般":
+            continue                                   # 只取一般時段
+        close = num(cols[6])
+        if not close:
+            continue
+        d = cols[0]
+        cur = best.get(d)
+        if cur is None or m < cur[0]:                  # 近月 = 最小到期月份
+            best[d] = (m, close)
+    return {d: v[1] for d, v in best.items()}
+
+
 def csv_date_ok(rows, date_slash):
     """確認 CSV 內第一筆資料列的日期 == 目標日期。"""
     for r in rows[1:]:
@@ -510,6 +546,23 @@ def run(date_slash, no_retry=False, skip_kline=False):
         pass   # 部位回補模式: 不標註 kline 狀態
     else:
         status["kline"] = "資料未更新"
+
+    # --- 來源 6: 台指期近月收盤 (供外資/自營選擇權歷史趨勢疊圖) ---
+    if not skip_kline:
+        try:
+            tx = fetch_txf_range(date_slash, date_slash)
+            if tx.get(date_slash):
+                tpath = os.path.join(DATA, "txf.json")
+                tdoc = load_json(tpath, {"meta": {"source": "TAIFEX futDataDown · TX 近月月契約一般時段收盤"}, "records": {}})
+                tdoc["records"][date_slash] = tx[date_slash]
+                save_json(tpath, tdoc)
+                status["txf"] = "ok"
+                log(f"  台指期收盤: {tx[date_slash]}")
+            else:
+                status["txf"] = "no-data"
+        except Exception as e:
+            status["txf"] = f"error"
+            log(f"  台指期收盤失敗: {e}")
 
     # --- 臨時休市保護 (颱風假等「平日但全市場無資料」的情況) ---
     # 所有來源皆無當日資料時, 不把該日寫進索引, 避免個股清單/最新日期被清空。

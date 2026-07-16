@@ -65,14 +65,14 @@
   // 歷史趨勢摘要
   function summaryRows(){
     const H={
-      options_foreign:[{label:"日期",sort:true},{label:"CALL差額金額(千元)",num:true},{label:"PUT差額金額(千元)",num:true},{label:"CALL買方未平倉",num:true},{label:"PUT買方未平倉",num:true}],
-      options_dealer:[{label:"日期",sort:true},{label:"CALL差額金額(千元)",num:true},{label:"PUT差額金額(千元)",num:true},{label:"CALL買方未平倉",num:true},{label:"PUT買方未平倉",num:true}],
+      options_foreign:[{label:"日期",sort:true},{label:"CALL未平倉金額(千元)",num:true},{label:"PUT未平倉金額(千元)",num:true},{label:"CALL買方未平倉",num:true},{label:"PUT買方未平倉",num:true}],
+      options_dealer:[{label:"日期",sort:true},{label:"CALL未平倉金額(千元)",num:true},{label:"PUT未平倉金額(千元)",num:true},{label:"CALL買方未平倉",num:true},{label:"PUT買方未平倉",num:true}],
       foreign_fut_spot:[{label:"日期",sort:true},{label:"期貨多空淨額(口)",num:true},{label:"現貨買賣差額(元)",num:true}],
       large_opt:[{label:"日期",sort:true},{label:"前十特定法人 CALL淨部位",num:true},{label:"前十特定法人 PUT淨部位",num:true},{label:"CALL全市場未沖銷",num:true}],
       large_fut_txf:[{label:"日期",sort:true},{label:"前十特定法人淨部位",num:true},{label:"前十特定法人多單",num:true},{label:"前十特定法人空單",num:true},{label:"全市場未沖銷",num:true}],
     }[cat];
     const rows=dates.map(d=>{const r=doc.records[d]; const o={"日期":d};
-      if(cat.startsWith("options")){o["CALL差額金額(千元)"]=cell(r.call?.diff_oi_amt,true);o["PUT差額金額(千元)"]=cell(r.put?.diff_oi_amt,true);o["CALL買方未平倉"]=cell(r.call?.buy_oi_lots);o["PUT買方未平倉"]=cell(r.put?.buy_oi_lots);}
+      if(cat.startsWith("options")){o["CALL未平倉金額(千元)"]=cell(r.call?.diff_oi_amt,true);o["PUT未平倉金額(千元)"]=cell(r.put?.diff_oi_amt,true);o["CALL買方未平倉"]=cell(r.call?.buy_oi_lots);o["PUT買方未平倉"]=cell(r.put?.buy_oi_lots);}
       else if(cat==="foreign_fut_spot"){o["期貨多空淨額(口)"]=cell(r.fut?.net_oi_lots,true);o["現貨買賣差額(元)"]=cell(r.spot?.net_amt,true);}
       else if(cat==="large_opt"){const g=optGroups(r,"999999");o["前十特定法人 CALL淨部位"]=cell(g.call.rows.inst10.net,true);o["前十特定法人 PUT淨部位"]=cell(g.put.rows.inst10.net,true);o["CALL全市場未沖銷"]=cell(g.call.market);}
       else if(cat==="large_fut_txf"){const g=futSide(r.rows||[],"999999");o["前十特定法人淨部位"]=cell(g.rows.inst10.net,true);o["前十特定法人多單"]=cell(g.rows.inst10.long);o["前十特定法人空單"]=cell(g.rows.inst10.short);o["全市場未沖銷"]=cell(g.market);}
@@ -81,7 +81,7 @@
   }
   const {H,rows}=summaryRows();
 
-  /* ---- 歷史趨勢柱狀圖 (表格上方) ---- */
+  /* ---- 歷史趨勢柱狀圖 (表格上方): 滾輪縮放 · 按住拖曳平移 · 雙擊重置 ---- */
   const numCols=H.filter(h=>h.num).map(h=>h.label);
   let hchart=null;
   if(numCols.length && typeof Chart!=="undefined"){
@@ -90,27 +90,85 @@
     const csel=el("select");
     numCols.forEach(c=>{const o=el("option",null,c);o.value=c;csel.appendChild(o);});
     bar.appendChild(csel);
+    bar.appendChild(el("span","muted","  滾輪縮放期間 · 按住拖曳平移 · 雙擊重置"));
     $("#history").appendChild(bar);
     const cbox=el("div","hist-canvas"); const cv=document.createElement("canvas");
     cbox.appendChild(cv); $("#history").appendChild(cbox);
+    cv.style.cursor="grab";
 
-    function drawHist(col){
-      const asc=rows.slice().sort((a,b)=>String(a["日期"]).localeCompare(String(b["日期"])));
-      const labels=asc.map(r=>r["日期"]);
-      const vals=asc.map(r=>{const v=r[col]; return (v&&v.raw!==undefined&&v.raw!==null)?Number(v.raw):null;});
+    const asc=rows.slice().sort((a,b)=>String(a["日期"]).localeCompare(String(b["日期"])));
+    const allLabels=asc.map(r=>r["日期"]);
+    // 台指期近月收盤疊圖 (僅外資/自營選擇權)
+    let txf=null;
+    if(cat==="options_foreign"||cat==="options_dealer"){
+      try{ txf=(await getJSON("txf.json")).records||null; }catch(e){ txf=null; }
+    }
+    let vA=0, vB=Math.max(0,allLabels.length-1), curCol=numCols[0];
+    const SPANMIN=10;
+    function clampWin(){
+      const n=allLabels.length;
+      if(vA<0)vA=0; if(vB>n-1)vB=n-1;
+      if(vB-vA+1<SPANMIN){ vB=Math.min(n-1,vA+SPANMIN-1); vA=Math.max(0,vB-SPANMIN+1); }
+    }
+    function drawHist(){
+      const labels=allLabels.slice(vA,vB+1);
+      const vals=asc.slice(vA,vB+1).map(r=>{const v=r[curCol]; return (v&&v.raw!==undefined&&v.raw!==null)?Number(v.raw):null;});
+      const ds=[{label:curCol,data:vals,borderWidth:0,order:1,
+        backgroundColor:vals.map(v=>v==null?"rgba(0,0,0,0)":(v>=0?"rgba(255,91,91,.85)":"rgba(34,197,94,.85)"))}];
+      const sc={ x:{ticks:{color:"#c3d2e0",maxTicksLimit:12,font:{size:11}},grid:{color:"rgba(255,255,255,.04)"}},
+                 y:{ticks:{color:"#c3d2e0",font:{size:11}},grid:{color:"rgba(255,255,255,.06)"}} };
+      if(txf){
+        const tv=labels.map(d=>txf[d]!=null?txf[d]:null);
+        ds.push({type:"line",label:"台指期收盤(近月)",data:tv,yAxisID:"y1",borderColor:"#f0c85a",
+          backgroundColor:"rgba(0,0,0,0)",pointRadius:0,borderWidth:1.6,tension:.15,order:0,spanGaps:true});
+        const nums=tv.filter(v=>v!=null);
+        if(nums.length){
+          const lo=Math.min(...nums), hi=Math.max(...nums);
+          const pad=Math.max((hi-lo)*.06, hi*.004);
+          sc.y1={position:"right",min:lo-pad,max:hi+pad,ticks:{color:"#f0c85a",font:{size:11}},grid:{drawOnChartArea:false}};
+        }
+      }
       if(hchart){ try{hchart.destroy();}catch(e){} }
       hchart=new Chart(cv.getContext("2d"),{ type:"bar",
-        data:{labels,datasets:[{label:col,data:vals,borderWidth:0,
-          backgroundColor:vals.map(v=>v==null?"rgba(0,0,0,0)":(v>=0?"rgba(255,91,91,.85)":"rgba(34,197,94,.85)"))}]},
+        data:{labels,datasets:ds},
         options:{ responsive:true, maintainAspectRatio:false, animation:false,
           interaction:{mode:"index",intersect:false},
-          plugins:{ legend:{display:false},
-            tooltip:{callbacks:{label:c=>`${col}: ${Number(c.raw).toLocaleString("en-US")}`}} },
-          scales:{ x:{ticks:{color:"#7d8ea0",maxTicksLimit:12,font:{size:9}},grid:{color:"rgba(255,255,255,.04)"}},
-                   y:{ticks:{color:"#8aa0b4",font:{size:10}},grid:{color:"rgba(255,255,255,.06)"}} } } });
+          plugins:{ legend:{display:!!txf,labels:{color:"#c3d2e0",boxWidth:14}},
+            tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${Number(c.raw).toLocaleString("en-US")}`}} },
+          scales:sc } });
     }
-    csel.onchange=()=>drawHist(csel.value);
-    try{ drawHist(numCols[0]); }catch(e){ cbox.appendChild(el("div","warn","圖表載入失敗:"+e.message)); }
+    // 滾輪縮放 (以游標為中心; 座標需除以整頁 zoom 比例)
+    cv.addEventListener("wheel",e=>{
+      e.preventDefault();
+      const rect=cv.getBoundingClientRect();
+      const scx=(rect.width>0&&cv.offsetWidth>0)?rect.width/cv.offsetWidth:1;
+      const x=(e.clientX-rect.left)/scx;
+      const frac=Math.min(1,Math.max(0,x/Math.max(1,cv.offsetWidth)));
+      const span=vB-vA+1;
+      const ns=Math.max(SPANMIN,Math.min(allLabels.length,Math.round(e.deltaY<0? span*0.8 : span/0.8)));
+      const center=vA+frac*(span-1);
+      vA=Math.round(center-frac*(ns-1)); vB=vA+ns-1;
+      clampWin(); drawHist();
+    },{passive:false});
+    // 左鍵按住拖曳平移
+    let drag=null;
+    cv.addEventListener("pointerdown",e=>{ drag={x:e.clientX,a:vA,b:vB}; cv.style.cursor="grabbing"; cv.setPointerCapture(e.pointerId); });
+    cv.addEventListener("pointermove",e=>{
+      if(!drag)return;
+      const rect=cv.getBoundingClientRect();
+      const scx=(rect.width>0&&cv.offsetWidth>0)?rect.width/cv.offsetWidth:1;
+      const dx=(e.clientX-drag.x)/scx;
+      const span=drag.b-drag.a+1;
+      let shift=Math.round(-dx*(span/Math.max(1,cv.offsetWidth)));
+      const n=allLabels.length;
+      shift=Math.max(-drag.a, Math.min(shift, n-1-drag.b));
+      vA=drag.a+shift; vB=drag.b+shift; drawHist();
+    });
+    const endDrag=()=>{ if(drag){ drag=null; cv.style.cursor="grab"; } };
+    cv.addEventListener("pointerup",endDrag); cv.addEventListener("pointercancel",endDrag);
+    cv.addEventListener("dblclick",()=>{ vA=0; vB=allLabels.length-1; drawHist(); });
+    csel.onchange=()=>{ curCol=csel.value; drawHist(); };
+    try{ drawHist(); }catch(e){ cbox.appendChild(el("div","warn","圖表載入失敗:"+e.message)); }
   }
 
   $("#history").appendChild(sortableTable(H,rows));
