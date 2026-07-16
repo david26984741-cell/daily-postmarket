@@ -105,5 +105,7 @@ https://david26984741-cell.github.io/daily-postmarket/
 - 外資期貨「多空淨額」與大額期貨「未平倉淨部位」改文字顯示:淨多單/淨空單 X 口(紅多綠空);
   較前一日改「多單增加/空單增加 X 口」;大額期貨新增較前一日欄
 - 大額交易人選擇權移除「傾向」欄
+- 新增指數層級研究 tools/analyze_index.py → data/analysis_index.json(各分頁資料對台指期
+  前瞻報酬的預測力,約3年樣本),analysis.html 新增第⑥節,analysis.yml 一併執行
 
 (之後的修改請接著往下記)

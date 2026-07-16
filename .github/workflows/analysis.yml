@@ -37,7 +37,9 @@ jobs:
         run: pip install --quiet pandas numpy scikit-learn lightgbm
 
       - name: 執行分析
-        run: python tools/analyze.py
+        run: |
+          python tools/analyze.py
+          python tools/analyze_index.py
 
       - name: Commit 分析結果
         if: always()
@@ -45,7 +47,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           MSG="籌碼研究分析更新"
-          git add -A data/analysis.json
+          git add -A data/analysis.json data/analysis_index.json
           if git diff --cached --quiet; then
             echo "無變更"; exit 0
           fi

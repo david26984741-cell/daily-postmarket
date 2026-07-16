@@ -135,6 +135,35 @@ table.an td:first-child,table.an th:first-child{text-align:left}
     }
     out.appendChild(c);
   }
+  // ⑥ 其他分頁資料 → 台指期未來報酬 (指數層級, 約3年)
+  try{
+    const X=await getJSON("analysis_index.json");
+    const XH=["T+1","T+2","T+3","T+5","T+10","T+20"];
+    const c=el("div","an-card");
+    c.appendChild(el("h3",null,"⑥ 其他分頁資料對台指期的預測力(指數層級)"));
+    c.appendChild(el("p",null,`目標:台指期近月結算價的前瞻報酬。樣本 ${X.sample.days} 個交易日(${X.sample.from} ~ ${X.sample.to},受期交所資料保留約3年所限)。表列 Spearman 相關 ×100(括號 t 值);<b>單一時序且前瞻報酬重疊,t 值偏樂觀,|t|≥2 也僅代表「值得關注」</b>。`));
+    let h="<table class='an'><tr><th>特徵</th><th>型態</th>"+XH.map(x=>`<th>${x}</th>`).join("")+"</tr>";
+    for(const f in X.features){
+      for(const p of ["水準z","變化z"]){
+        const e=X.features[f][p]; if(!e) continue;
+        h+=`<tr><td>${f}</td><td>${p}</td>`+XH.map(k=>{
+          const v=e[k]; if(!v||v.rho==null) return "<td>—</td>";
+          return `<td class="${cls(v.t)}">${(v.rho*100).toFixed(1)} <small>(${v.t})</small></td>`;
+        }).join("")+"</tr>";
+      }
+    }
+    c.insertAdjacentHTML("beforeend",h+"</table>");
+    const R=X.rules_nextday;
+    c.appendChild(el("p",null,`<b>方向規則(隔日,bp)</b> — 全樣本基準 ${R["基準隔日bp"]} bp:`));
+    let h2="<table class='an'><tr><th>指標</th><th>為正時隔日</th><th>為負時隔日</th></tr>";
+    for(const k in R.rules){
+      const r=R.rules[k];
+      h2+=`<tr><td>${k}</td><td>${r["為正時隔日bp"]??"—"} <small>n=${r["n正"]}</small></td><td>${r["為負時隔日bp"]??"—"} <small>n=${r["n負"]}</small></td></tr>`;
+    }
+    c.insertAdjacentHTML("beforeend",h2+"</table>");
+    c.appendChild(el("p","muted2",X.notes));
+    out.appendChild(c);
+  }catch(e){ /* 尚未產生 */ }
 })();
 </script>
 </body>
