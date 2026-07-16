@@ -93,14 +93,15 @@ def fetch_taifex_csv(key, date_slash):
     return rows  # rows[0] 為標題列
 
 def fetch_txf_range(start_slash, end_slash):
-    """台指期 TX 每日收盤 (近月月契約、一般交易時段)。回傳 {date_slash: close}。
-    TAIFEX futDataDown 保留約三年, 單次查詢範圍限一個月內。"""
+    """台指期 TX 每日「結算價」— 近月連續: 取一般時段中「成交量最大」的月契約
+    (結算日會自動換到次月, 與 XQ 期貨近月日線一致); 結算價缺漏時退回收盤價。
+    回傳 {date_slash: settle}。TAIFEX futDataDown 保留約三年, 單次查詢限一個月內。"""
     txt = http_get(TAIFEX + "futDataDown",
                    {"down_type": "1", "commodity_id": "TX",
                     "queryStartDate": start_slash, "queryEndDate": end_slash}, big5=True)
-    best = {}          # date -> (month, close)
-    i_sess = None
+    best = {}          # date -> (vol, value)
     header = None
+    i_close = i_vol = i_settle = i_sess = None
     for line in txt.splitlines():
         if not line.strip():
             continue
@@ -108,23 +109,34 @@ def fetch_txf_range(start_slash, end_slash):
         if header is None:
             header = cols
             for i, h in enumerate(header):
-                if "交易時段" in h:
+                if h == "收盤價":
+                    i_close = i
+                elif h == "成交量":
+                    i_vol = i
+                elif h == "結算價":
+                    i_settle = i
+                elif "交易時段" in h:
                     i_sess = i
+            if i_close is None: i_close = 6
+            if i_vol is None:   i_vol = 9
+            if i_settle is None: i_settle = 10
             continue
         if len(cols) < 7 or cols[1] != "TX":
             continue
         m = cols[2]
         if not (len(m) == 6 and m.isdigit()):
-            continue                                   # 排除週契約 (如 202607W2)
+            continue                                   # 排除週契約 (如 202607W2) 與價差組合
         if i_sess is not None and len(cols) > i_sess and cols[i_sess] and cols[i_sess] != "一般":
-            continue                                   # 只取一般時段
-        close = num(cols[6])
-        if not close:
+            continue                                   # 只取一般時段 (日盤)
+        settle = num(cols[i_settle]) if len(cols) > i_settle else 0
+        value = settle or num(cols[i_close])           # 結算價優先, 缺漏退回收盤價
+        if not value:
             continue
+        vol = num(cols[i_vol]) if len(cols) > i_vol else 0
         d = cols[0]
         cur = best.get(d)
-        if cur is None or m < cur[0]:                  # 近月 = 最小到期月份
-            best[d] = (m, close)
+        if cur is None or vol > cur[0]:                # 成交量最大的月契約
+            best[d] = (vol, value)
     return {d: v[1] for d, v in best.items()}
 
 

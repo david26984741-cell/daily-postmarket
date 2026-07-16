@@ -96,8 +96,9 @@ https://david26984741-cell.github.io/daily-postmarket/
 
 ### 2026/07/16(家用電腦)
 - 新增 CLAUDE.md 專案指南與雙電腦同步規則
-- 新增台指期近月收盤資料源:scrape.py fetch_txf_range → data/txf.json、
+- 新增台指期近月資料源:scrape.py fetch_txf_range → data/txf.json、
   tools/backfill_txf.py(逐月回補,約3年)、workflow txf.yml
+  口徑=一般時段「成交量最大」月契約的「結算價」(與XQ期貨近月日線一致;結算日自動換月)
 - 外資/自營選擇權:「差額金額(千元)」改名「未平倉金額(千元)」(當日卡片+歷史表格)
 - 外資/自營選擇權歷史趨勢圖疊加台指期收盤線(黃線,右軸貼合價格區間)
 - 歷史趨勢圖(detail.html)新增:滾輪縮放、左鍵拖曳平移、雙擊重置、軸刻度加大加亮
