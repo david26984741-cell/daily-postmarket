@@ -21,8 +21,8 @@ https://david26984741-cell.github.io/daily-postmarket/
   deploy 步驟把檔案複製到 _site 再上傳 Pages)。
 - 要立即部署前端修改:手動觸發 `回補日K股價`(kline.yml),起訖日期都填最近交易日
   (例 2026/07/09),約 1 分鐘跑完並部署。
-- 新增 HTML 頁面時,必須把檔名加進**四個** workflow 的「準備網站檔案」cp 清單
-  (daily.yml / backfill.yml / kline.yml / analysis.yml),否則不會被部署。
+- 新增 HTML 頁面時,必須把檔名加進**六個** workflow 的「準備網站檔案」cp 清單
+  (daily.yml / backfill.yml / kline.yml / analysis.yml / txf.yml / fkline.yml),否則不會被部署。
 
 ## Workflows(.github/workflows/)
 
@@ -32,6 +32,8 @@ https://david26984741-cell.github.io/daily-postmarket/
 | backfill.yml | 回補歷史部位資料 | 手動(起訖日期) | daily-postmarket |
 | kline.yml | 回補現貨日K | 手動(起訖日期) | daily-postmarket-kline |
 | analysis.yml | 籌碼研究分析 | 週日 02:00 UTC + 手動 | daily-postmarket-analysis |
+| txf.yml | 回補台指期近月 | 手動(起訖日期) | daily-postmarket-txf |
+| fkline.yml | 回補股期近月日K | 手動(起訖日期,量大建議分段) | daily-postmarket-fkline |
 
 重要細節:
 - Runner 跑在 UTC 且**無視 TZ 環境變數**,所有時間邏輯用 scrape.py 的 `now_taipei()`(utcnow+8h)。
@@ -60,10 +62,12 @@ https://david26984741-cell.github.io/daily-postmarket/
 - `tools/analyze.py` — 研究管線(IC/五分位/walk-forward LightGBM/規則回測)→ data/analysis.json。
 - 頁面:`index.html`(總覽)、`stocks.html`(個股圖表:K棒+主力/自然人/法人面板、滾輪縮放、
   拖曳平移、雙擊查價十字線、金額開關、偏好記憶)、`rank.html`(增減排行+概念股框框)、
-  `concept.html`(同概念股總覽,可排序)、`detail.html`、`help.html`(名詞解釋)、`analysis.html`。
+  `concept.html`(同概念股總覽,可排序)、`screener.html`(股期篩選器)、`detail.html`、
+  `help.html`(名詞解釋)、`analysis.html`。
 - `assets/style.css`(html zoom:1.25 全站放大 — Chart.js 內建 tooltip 因此座標會偏移,已停用,
   一律用自製查價視窗)、`assets/app.js`(CATS 導覽/共用工具)。
-- `data/`:stocks/(部位,2017/07/10 起)、kline/(日K,2017 起)、rank.json、concepts.json
+- `data/`:stocks/(部位,2017/07/10 起)、kline/(現股日K,2017 起)、fkline/(股期近月日K,
+  期交所行情,前端優先使用)、txf.json(台指期近月)、rank.json、concepts.json
   (概念股對照,整理自財報狗產業地圖,格式 {sid:{m:主標籤,t:[產業·子產業,...]}})、
   index.json、analysis.json、stock_map.json、holidays.txt(2026 含颱風假)。
 
@@ -107,5 +111,23 @@ https://david26984741-cell.github.io/daily-postmarket/
 - 大額交易人選擇權移除「傾向」欄
 - 新增指數層級研究 tools/analyze_index.py → data/analysis_index.json(各分頁資料對台指期
   前瞻報酬的預測力,約3年樣本),analysis.html 新增第⑥節,analysis.yml 一併執行
+
+### 2026/07/17~18(公司+家用電腦)
+- (公司)stocks.html:前五/前十大切換(rk5/rk10)、NET(rows,t,rk) 口徑含排名、
+  gAmt 標籤改「持有規模」、效能優化(rAF/IntersectionObserver)
+- (家用)股期近月日K資料源:scrape.py fetch_fkline_day(每日 Daily zip)/fetch_fkline_range
+  (futDataDown 逐檔逐月)→ data/fkline/{code}.json、tools/backfill_fkline.py、workflow fkline.yml。
+  stocks.html K棒優先用股期報價(標籤顯示「股期」),缺漏退回現股(顯示「股價」)
+- stocks.html:面板順序改 交易人/主力/自然人/法人;籌碼面板「金額/增減金額」改
+  「持有規模/增減規模」;標題列新增「未平倉規模」(全市場未沖銷口數×1口契約價值)
+- scrape.py _rank_row:新增 main5/inst5(前五大)與 fprice(股期近月價)欄位
+- rank.html:前五/前十大切換、口徑新增「交易人合計(原始值)」、金額改用股期近月價
+  (缺漏退回現股價);舊 rank.json 無前五大欄位時顯示提示並退回前十大
+- screener.html(新):股票期貨篩選器 — ①前五/前十(必選)②股票期貨規模
+  ③當日【口徑】持有規模 ④當日【口徑】變化規模(②③④可任意組合,單位億元,可取絕對值);
+  結果表可排序,點股名進個股頁;條件存 localStorage,返回不清除
+- 六個 workflow 部署清單加入 screener.html
+- 砂箱 git 注意:Cowork 砂箱可直接跑 git(repo 掛載),但需 core.autocrlf=true
+  否則整庫誤判為已修改;push 仍須經 GitHub Desktop(砂箱無憑證)
 
 (之後的修改請接著往下記)
