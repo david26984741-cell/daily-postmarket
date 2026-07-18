@@ -19,11 +19,17 @@
   <p class="lead">區域圖=淨部位。<br>柱狀圖=每日增減。</p>
 
   <div class="stk-toolbar">
+    <span class="tlabel">口徑</span>
+    <label class="ck" title="以期交所「前五大交易人」為母體換算"><input type="radio" name="rank" id="rk5" value="5"><span>前五大</span></label>
+    <label class="ck" title="以期交所「前十大交易人」為母體換算"><input type="radio" name="rank" id="rk10" value="10" checked><span>前十大</span></label>
+  </div>
+
+  <div class="stk-toolbar">
     <span class="tlabel">顯示</span>
-    <label class="ck" title="前十大交易人合計淨部位(含法人與自然人大戶)"><input type="checkbox" id="ck0" checked><span>交易人</span></label>
+    <label class="ck" title="期交所原始值:前五/前十大交易人合計淨部位(未做任何推導)"><input type="checkbox" id="ck0" checked><span>交易人</span></label>
     <label class="ck" title="自然人 − 法人:大戶自然人與特定法人的淨差(同XQ主力口徑)"><input type="checkbox" id="ck1" checked><span>主力</span></label>
-    <label class="ck" title="前十大交易人合計 − 特定法人:前十大中的自然人大戶"><input type="checkbox" id="ck2" checked><span>自然人</span></label>
-    <label class="ck" title="前十大特定法人(銀行、券商、外資機構等)"><input type="checkbox" id="ck3" checked><span>法人</span></label>
+    <label class="ck" title="交易人合計 − 特定法人:大額交易人中的自然人大戶"><input type="checkbox" id="ck2" checked><span>自然人</span></label>
+    <label class="ck" title="特定法人(銀行、券商、外資機構等)淨部位"><input type="checkbox" id="ck3" checked><span>法人</span></label>
     <a class="tlabel" href="help.html" style="opacity:.8">名詞解釋?</a>
   </div>
 
@@ -101,15 +107,23 @@
   }
 
   // ---- 資料轉換 -------------------------------------------------------------
-  const NET=(rows,t)=>{ const r=(rows||[]).find(x=>x.month==="999999"&&x.type===t); return r?(r.top10_buy-r.top10_sell):null; };
-  function series(doc){
+  // 口徑 (前五大 / 前十大) — 擇一; 影響所有面板的換算母體
+  const RANK=()=>($("#rk5").checked?5:10);
+  const rankTag=()=>RANK()===5?"前五":"前十";
+  // t0 = 交易人合計淨部位 (期交所原始值), t1 = 其中特定法人淨部位
+  const NET=(rows,t,rk)=>{
+    const r=(rows||[]).find(x=>x.month==="999999"&&x.type===t);
+    if(!r) return null;
+    return rk===5 ? (r.top5_buy-r.top5_sell) : (r.top10_buy-r.top10_sell);
+  };
+  function series(doc,rk){
     const dates=Object.keys(doc.records).sort();
     const o={dates, 交易人:{lv:[],ch:[]}, 主力:{lv:[],ch:[]}, 自然人:{lv:[],ch:[]}, 特定法人:{lv:[],ch:[]}}; const prev={};
     dates.forEach(d=>{
-      const rows=doc.records[d]; const t0=NET(rows,"0"), t1=NET(rows,"1");
-      const inst=t1;
-      const nat=(t0!=null&&t1!=null)? t0-t1 : null;
-      const main=(nat!=null&&inst!=null)? nat-inst : null;
+      const rows=doc.records[d]; const t0=NET(rows,"0",rk), t1=NET(rows,"1",rk);
+      const inst=t1;                                        // 法人 = t1
+      const nat=(t0!=null&&t1!=null)? t0-t1 : null;         // 自然人 = t0 − t1
+      const main=(nat!=null&&inst!=null)? nat-inst : null;  // 主力 = 自然人 − 法人 = t0 − 2×t1
       [["交易人",t0],["主力",main],["自然人",nat],["特定法人",inst]].forEach(([k,v])=>{
         o[k].lv.push(v); o[k].ch.push((prev[k]!=null&&v!=null)? v-prev[k] : null); prev[k]=v; });
     });
@@ -145,20 +159,43 @@
     $("#dFrom").value=d2i(range.from||allDates[0]||"");
     $("#dTo").value=d2i(range.to||allDates[allDates.length-1]||"");
   }
+  // applyRange 會被滾輪/拖曳以極高頻率呼叫 (pointermove 每像素一次)。
+  // 若每次都重繪全部圖表 + 寫 localStorage, 多檔時會嚴重卡頓。
+  // 對策: 以 requestAnimationFrame 合併同一影格內的多次請求 (上限 ~60fps),
+  //       並把 savePrefs 延後到操作停止後才寫入。
+  let rafId=0, saveTimer=0;
+  function updateReg(r){
+    if(r.kind==="k"){ applyK(r); r.dirty=false; return; }
+    const v=viewSlice(r.dates,r.lv,r.ch);
+    r.chart.data.labels=v.labels;
+    r.chart.data.datasets.forEach(ds=>{
+      if(ds.type==="line") ds.data=v.lv;
+      else { ds.data=v.ch; ds.backgroundColor=v.ch.map(barColor); }
+    });
+    r.chart.update("none");
+    r.dirty=false;
+  }
+  // 只重繪「畫面上看得見」的圖表 — 捲軸外的先記 dirty, 等捲進畫面再補畫。
+  // 多檔比較時圖表可達數十張, 但可視的通常只有 2~3 張, 這是效能的關鍵。
+  const regByEl=new Map();
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      const r=regByEl.get(e.target); if(!r) return;
+      r.visible=e.isIntersecting;
+      if(e.isIntersecting && r.dirty) updateReg(r);
+    });
+  },{root:null, rootMargin:"300px"});   // 提前 300px 預先補畫, 捲動時不會看到空圖
+  function flushRange(){
+    rafId=0;
+    syncRangeInputs();
+    charts.forEach(r=>{ if(r.visible===false) r.dirty=true; else updateReg(r); });
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(savePrefs,400);   // 防抖: 停手後才存偏好
+  }
   function applyRange(){
     if(range.from&&range.to&&range.from>range.to){const t=range.from;range.from=range.to;range.to=t;}
-    syncRangeInputs();
-    charts.forEach(r=>{
-      if(r.kind==="k"){ applyK(r); return; }
-      const v=viewSlice(r.dates,r.lv,r.ch);
-      r.chart.data.labels=v.labels;
-      r.chart.data.datasets.forEach(ds=>{
-        if(ds.type==="line") ds.data=v.lv;
-        else { ds.data=v.ch; ds.backgroundColor=v.ch.map(barColor); }
-      });
-      r.chart.update("none");
-    });
-    savePrefs();
+    if(rafId) return;                      // 本影格已排程, 直接併入
+    rafId=requestAnimationFrame(flushRange);
   }
   function wheelZoom(reg,ev){
     ev.preventDefault();
@@ -257,7 +294,8 @@
       {type:"bar",label:"K",data:v.body,backgroundColor:v.cols,grouped:false,barPercentage:.72,categoryPercentage:1,order:1,borderWidth:0},
       {type:"bar",label:"影線",data:v.wick,backgroundColor:v.cols,grouped:false,barPercentage:.12,categoryPercentage:1,order:2,borderWidth:0},
     ]},
-    options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
+    options:{ responsive:true, maintainAspectRatio:false, animation:false, normalized:true,
+      interaction:{mode:"index",intersect:false},
       layout:{ padding:{ left:AXW } },
       // 內建 tooltip 不支援整頁 zoom 縮放, 座標會偏移且蓋住K棒 → 停用, 一律以查價視窗為準
       plugins:{ legend:{display:false}, tooltip:{enabled:false} },
@@ -284,7 +322,8 @@
       else sc.y={ position:"right", afterFit:fitW, beginAtZero:true, ticks:{color:TKC,font:TKF}, grid:{color:"rgba(255,255,255,.06)"} };
     }
     return new Chart(ctx,{ data:{labels:v.labels,datasets:ds},
-      options:{ responsive:true, maintainAspectRatio:false, animation:false, interaction:{mode:"index",intersect:false},
+      options:{ responsive:true, maintainAspectRatio:false, animation:false, normalized:true,
+      interaction:{mode:"index",intersect:false},
       layout: both? undefined : (showArea()? { padding:{ right:AXW } } : { padding:{ left:AXW } }),
       plugins:{ legend:{display:false}, tooltip:{enabled:false} },
       scales:sc } });
@@ -302,7 +341,7 @@
     try{
       localStorage.setItem(PREFS, JSON.stringify({
         codes:selected.slice(), from:range.from, to:range.to,
-        ck:[CKS[0].checked,CKS[1].checked,CKS[2].checked],
+        ck:CKS.map(c=>c.checked), rank:RANK(),
         gK:$("#gK").checked, gArea:$("#gArea").checked, gBar:$("#gBar").checked, gAmt:$("#gAmt").checked,
         cols:$("#cols").value
       }));
@@ -316,14 +355,16 @@
 
   function render(){
     charts.forEach(r=>{ try{r.chart.destroy();}catch(e){} }); charts=[];
+    io.disconnect(); regByEl.clear();
     blocks.innerHTML="";
     const cols=parseInt($("#cols").value,10)||1;
     blocks.style.gridTemplateColumns=`repeat(${cols},minmax(0,1fr))`;
     const chartH = cols===1? 200 : (cols===2? 160 : 130);
     const vis=visiblePanels();
+    const rk=RANK(), rkT=rankTag();
     emptyEl.style.display = selected.length? "none":"block";
     if(selected.length && !vis.length && !showK()){
-      blocks.appendChild(el("div","warn","請至少勾選一項:主力 / 自然人 / 法人 (或 K棒)")); return;
+      blocks.appendChild(el("div","warn","請至少勾選一項:主力 / 自然人 / 法人 / 交易人 (或 K棒)")); return;
     }
     if(selected.length && !showArea() && !showBar() && !showK()){
       blocks.appendChild(el("div","warn","請至少勾選一種圖表:K棒、區域圖 或 柱狀圖")); return;
@@ -337,7 +378,7 @@
       if(!doc){ blk.appendChild(el("div","warn","找不到此個股資料")); blocks.appendChild(blk); return; }
 
       const body=el("div","stk-body");   // 每檔一列, 內部項目由上而下各佔一列
-      const ser=series(doc);
+      const ser=series(doc,rk);
       const fkd=(fklines[code]&&fklines[code].records&&Object.keys(fklines[code].records).length)?fklines[code]:null;
       const kd=fkd||((s.sid&&klines[s.sid]&&klines[s.sid].records)?klines[s.sid]:null);
       const isF=!!fkd;   // true=股期報價(期交所), false=現股報價(備援)
@@ -426,14 +467,15 @@
         const pct=(chg!=null&&prevC)?` <span class="dlt">(${chg>=0?"+":""}${(100*chg/prevC).toFixed(2)}%)</span>`:"";
         const panel=el("div","stk-panel");
         panel.appendChild(el("div","stk-panelhd",
-          `<span class="tagm">股價</span> 收盤 <b class="${chg>0?'up':(chg<0?'down':'')}">${lastC==null?'—':Number(lastC).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(chg==null?undefined:chg)}</span>${pct}`));
+          `<span class="tagm">${isF?"股期":"股價"}</span> 收盤 <b class="${chg>0?'up':(chg<0?'down':'')}">${lastC==null?'—':Number(lastC).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(chg==null?undefined:chg)}</span>${pct}`));
         const cw=el("div","stk-canvas"); cw.style.height=chartH+"px";
         const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
         body.appendChild(panel);
         try{
-          const reg={kind:"k", dates:M, O:KO, H:KH, L:KL, C:KC};
+          const reg={kind:"k", dates:M, O:KO, H:KH, L:KL, C:KC, visible:true, dirty:false};
           reg.chart=makeKChart(cv.getContext("2d"), reg);
           charts.push(reg);
+          regByEl.set(cw,reg); io.observe(cw);
           cv.addEventListener("wheel",e=>wheelZoom(reg,e),{passive:false});
           attachPan(reg,cv);
           attachQuote(reg,cv,cw);
@@ -450,20 +492,38 @@
         if(!showAmt) return "";
         const la=lv==null?"—":fAmt(lv*priceLast*shares).replace(/^\+/,"");
         const ca=ch==null?"—":fAmt(ch*priceLast*shares);
-        return ` · 金額 <b class="${lv>0?'up':(lv<0?'down':'')}">${la}</b> · 增減金額 <span class="dlt ${ch>0?'up':(ch<0?'down':'')}">${ca}</span>`;
+        return ` · 持有規模 <b class="${lv>0?'up':(lv<0?'down':'')}">${la}</b> · 增減規模 <span class="dlt ${ch>0?'up':(ch<0?'down':'')}">${ca}</span>`;
       };
+
+      // ---- 股票期貨未平倉規模 = 全市場未沖銷口數 × 1口契約價值(近月價 × 每口股數) ----
+      (function(){
+        let moi=null, moiD=null;
+        for(let i=ser.dates.length-1;i>=0;i--){
+          const rows=doc.records[ser.dates[i]]||[];
+          const r0=rows.find(x=>x.month==="999999"&&x.type==="0")||rows.find(x=>x.type==="0");
+          if(r0&&r0.market_oi!=null){ moi=r0.market_oi; moiD=ser.dates[i]; break; }
+        }
+        if(moi==null) return;
+        let html=` · <span class="c">未平倉規模</span> <b>${Number(moi).toLocaleString('en-US')} 口</b>`;
+        if(priceLast!=null){
+          const sc=moi*priceLast*shares, a=Math.abs(sc);
+          html+=` <b>(${a>=1e8?(a/1e8).toFixed(2)+" 億":(a/1e4).toFixed(0)+" 萬"})</b>`;
+        }
+        titleEl.insertAdjacentHTML("beforeend", `<span class="c" title="全市場未沖銷口數 × 1口契約價值(${moiD||""})">${html}</span>`);
+      })();
 
       if(showPos) vis.forEach(k=>{
         const lv=last(ser[k].lv), ch=last(ser[k].ch);
         const panel=el("div","stk-panel");
         panel.appendChild(el("div","stk-panelhd",
-          `<span class="tagm">${k==="特定法人"?"法人":k}</span> 淨部位 <b class="${lv>0?'up':(lv<0?'down':'')}">${lv==null?'—':Number(lv).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(ch)}</span>${amtHtml(lv,ch)}`));
+          `<span class="tagm">【${rkT}】${k==="特定法人"?"法人":k}</span> 淨部位 <b class="${lv>0?'up':(lv<0?'down':'')}">${lv==null?'—':Number(lv).toLocaleString('en-US')}</b> · 較前一日 <span class="dlt">${arrow(ch)}</span>${amtHtml(lv,ch)}`));
         const cw=el("div","stk-canvas"); cw.style.height=Math.round(chartH*0.62)+"px";   // 籌碼副圖較矮 (仿看盤軟體比例)
         const cv=document.createElement("canvas"); cw.appendChild(cv); panel.appendChild(cw);
         body.appendChild(panel);
         try{
-          const reg={chart:makeChart(cv.getContext("2d"), M, PS[k].lv, PS[k].ch, showK()&&!!kd), dates:M, lv:PS[k].lv, ch:PS[k].ch};
+          const reg={chart:makeChart(cv.getContext("2d"), M, PS[k].lv, PS[k].ch, showK()&&!!kd), dates:M, lv:PS[k].lv, ch:PS[k].ch, visible:true, dirty:false};
           charts.push(reg);
+          regByEl.set(cw,reg); io.observe(cw);
           cv.addEventListener("wheel",e=>wheelZoom(reg,e),{passive:false});
           attachPan(reg,cv);
           attachQuote(reg,cv,cw);
@@ -543,7 +603,7 @@
   });
 
   // ---- 面板勾選 --------------------------------------------------------------
-  CKS.concat([$("#gK"),$("#gArea"),$("#gBar"),$("#gAmt"),$("#cols")]).forEach(cb=>cb.addEventListener("change",render));
+  CKS.concat([$("#rk5"),$("#rk10"),$("#gK"),$("#gArea"),$("#gBar"),$("#gAmt"),$("#cols")]).forEach(cb=>cb.addEventListener("change",render));
 
   // ---- 期間選擇 --------------------------------------------------------------
   if(allDates.length){
@@ -568,6 +628,7 @@
   const saved=loadPrefs();
   if(saved){
     if(Array.isArray(saved.ck)) CKS.forEach((c,i)=>{ if(typeof saved.ck[i]==="boolean") c.checked=saved.ck[i]; });
+    if(saved.rank===5||saved.rank===10){ $("#rk5").checked=(saved.rank===5); $("#rk10").checked=(saved.rank===10); }
     ["gK","gArea","gBar","gAmt"].forEach(id=>{ if(typeof saved[id]==="boolean") $("#"+id).checked=saved[id]; });
     if(saved.cols) $("#cols").value=saved.cols;
     if(saved.from!==undefined||saved.to!==undefined){ range.from=saved.from||null; range.to=saved.to||null; syncRangeInputs(); }
