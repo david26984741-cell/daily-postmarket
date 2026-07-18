@@ -10,7 +10,7 @@
 .frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px}
 .frow .lb{color:var(--mut);min-width:64px}
 .frow select,.frow input[type=number]{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:14px}
-.frow input[type=number]{width:110px}
+.frow input[type=number]{width:100px}
 .frow.off select,.frow.off input{opacity:.35;pointer-events:none}
 .fbtns{display:flex;gap:10px;margin-top:2px}
 .fbtns button{background:var(--accent);color:#08131f;border:none;border-radius:8px;padding:7px 18px;font-size:14px;font-weight:700;cursor:pointer}
@@ -25,6 +25,7 @@ table.scr td.l a{color:var(--txt)}
 table.scr td.l a:hover{color:var(--accent)}
 .mini-tag{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--mut);font-size:11px;border-radius:5px;padding:0 5px;margin-left:6px;vertical-align:1px}
 .cnt{color:var(--mut);font-size:13px;margin-top:12px}
+.hint{color:var(--mut);font-size:12px;margin-left:4px}
 </style>
 </head>
 <body>
@@ -36,7 +37,7 @@ table.scr td.l a:hover{color:var(--accent)}
 <div class="wrap">
   <div class="crumbs"><a href="index.html">← 當日整合總覽</a></div>
   <h2 class="sec">股票期貨篩選器 <span class="tag" id="dchip"></span></h2>
-  <p class="lead">依大額交易人資料篩選個股期貨。規模單位:億元。持有規模 = 淨部位 × 近月股期收盤價(缺漏以現股價替代)× 每口股數;股票期貨規模 = 全市場未沖銷口數 × 1口契約價值。</p>
+  <p class="lead">依大額交易人資料篩選個股期貨。規模單位:億元。持有/變化可切換「規模(億)」或「比率(%)」;比率 = 淨部位 ÷ 全市場未沖銷口數,與籌碼回測分析同口徑。股票期貨規模 = 全市場未沖銷口數 × 近月股期收盤價(缺漏以現股價替代)× 每口股數。</p>
 
   <div class="flt">
     <div class="frow">
@@ -47,8 +48,10 @@ table.scr td.l a:hover{color:var(--accent)}
     </div>
     <div class="frow" id="row2">
       <label class="ck"><input type="checkbox" id="c2"><span>② 股票期貨規模</span></label>
-      <select id="op2"><option value=">">大於</option><option value="<">小於</option></select>
-      <input type="number" id="v2" step="any" placeholder="例 10"> 億
+      <input type="number" id="v2" step="any" placeholder="下限"> 億
+      <span>~</span>
+      <input type="number" id="v2b" step="any" placeholder="上限"> 億
+      <span class="hint">(可只填一邊;例 大型填下限 2.5)</span>
     </div>
     <div class="frow" id="row3">
       <label class="ck"><input type="checkbox" id="c3"><span>③ 當日</span></label>
@@ -56,10 +59,11 @@ table.scr td.l a:hover{color:var(--accent)}
         <option value="t0">交易人合計</option><option value="main" selected>主力</option>
         <option value="nat">自然人</option><option value="inst">法人</option>
       </select>
-      <span>持有規模</span>
+      <span>持有</span>
+      <select id="u3"><option value="amt">規模(億)</option><option value="ratio">比率(%)</option></select>
       <select id="op3"><option value=">">大於</option><option value="<">小於</option></select>
-      <input type="number" id="v3" step="any" placeholder="例 5"> 億
-      <label class="ck" title="以絕對值比較:淨空單規模也算"><input type="checkbox" id="abs3" checked><span>取絕對值</span></label>
+      <input type="number" id="v3" step="any" placeholder="例 5"> <span id="u3lb">億</span>
+      <label class="ck" title="以絕對值比較:淨空單也算。做方向性篩選請取消"><input type="checkbox" id="abs3" checked><span>取絕對值</span></label>
     </div>
     <div class="frow" id="row4">
       <label class="ck"><input type="checkbox" id="c4"><span>④ 當日</span></label>
@@ -67,10 +71,11 @@ table.scr td.l a:hover{color:var(--accent)}
         <option value="t0">交易人合計</option><option value="main" selected>主力</option>
         <option value="nat">自然人</option><option value="inst">法人</option>
       </select>
-      <span>變化規模</span>
+      <span>變化</span>
+      <select id="u4"><option value="amt">規模(億)</option><option value="ratio">比率(%)</option></select>
       <select id="op4"><option value=">">大於</option><option value="<">小於</option></select>
-      <input type="number" id="v4" step="any" placeholder="例 1"> 億
-      <label class="ck" title="以絕對值比較:大減倉也算"><input type="checkbox" id="abs4" checked><span>取絕對值</span></label>
+      <input type="number" id="v4" step="any" placeholder="例 1"> <span id="u4lb">億</span>
+      <label class="ck" title="以絕對值比較:大減倉也算。做方向性篩選請取消"><input type="checkbox" id="abs4" checked><span>取絕對值</span></label>
     </div>
     <div class="fbtns">
       <button id="run">篩選</button>
@@ -104,7 +109,7 @@ table.scr td.l a:hover{color:var(--accent)}
 
   // ---- 條件保存/恢復 (localStorage): 返回本頁時不清除 ----
   const PREF="dpm.screener.prefs";
-  const IDS=["c2","c3","c4","abs3","abs4"], VALS=["op2","v2","m3","op3","v3","m4","op4","v4"];
+  const IDS=["c2","c3","c4","abs3","abs4"], VALS=["v2","v2b","m3","u3","op3","v3","m4","u4","op4","v4"];
   function save(){
     try{
       const o={rk:RK()};
@@ -118,15 +123,17 @@ table.scr td.l a:hover{color:var(--accent)}
     if(o){
       if(o.rk===5) $("#rk5").checked=true;
       IDS.forEach(i=>{ if(typeof o[i]==="boolean") $("#"+i).checked=o[i]; });
-      VALS.forEach(i=>{ if(o[i]!=null) $("#"+i).value=o[i]; });
+      VALS.forEach(i=>{ if(o[i]!=null && $("#"+i)) $("#"+i).value=o[i]; });
     }
   }catch(e){}
 
   function rowDim(){ ["2","3","4"].forEach(n=>{ $("#row"+n).classList.toggle("off",!$("#c"+n).checked); }); }
+  function unitLbl(){ $("#u3lb").textContent=$("#u3").value==="ratio"?"%":"億"; $("#u4lb").textContent=$("#u4").value==="ratio"?"%":"億"; }
   ["c2","c3","c4"].forEach(i=>$("#"+i).onchange=()=>{ rowDim(); save(); });
-  [...IDS.slice(3),...VALS].forEach(i=>$("#"+i).onchange=save);
+  ["u3","u4"].forEach(i=>$("#"+i).onchange=()=>{ unitLbl(); save(); });
+  [...IDS.slice(3),...VALS].forEach(i=>{ if($("#"+i)) $("#"+i).onchange=save; });
   [$("#rk5"),$("#rk10")].forEach(x=>x.onchange=()=>{ save(); });
-  rowDim();
+  rowDim(); unitLbl();
 
   // ---- 口徑值 (口數): 依前五/前十選擇原始欄位 ----
   function vals(r){
@@ -142,10 +149,12 @@ table.scr td.l a:hover{color:var(--accent)}
   const px=r=> r.fprice!=null? r.fprice : r.price;
   const pxp=r=> r.fprice!=null? (r.fprice_prev!=null?r.fprice_prev:r.price_prev) : r.price_prev;
   const fA=v=> v==null? "—" : ((v<0?"-":"")+(Math.abs(v)>=E? (Math.abs(v)/E).toFixed(2)+" 億" : (Math.abs(v)/1e4).toFixed(0)+" 萬"));
+  const fR=v=> v==null? "—" : ((v>0?"+":"")+v.toFixed(1)+"%");
+  const fmt=(v,u)=> u==="ratio"? fR(v) : fA(v);
 
   let sortKey="scale", sortDir=-1, lastRows=[];
   function compute(){
-    const m3=$("#m3").value, m4=$("#m4").value;
+    const m3=$("#m3").value, m4=$("#m4").value, u3=$("#u3").value, u4=$("#u4").value;
     const out=[];
     (rk.rows||[]).forEach(r=>{
       const p=px(r); if(p==null) return;
@@ -153,22 +162,32 @@ table.scr td.l a:hover{color:var(--accent)}
       const chgPct=(pp!=null&&pp!==0)? (p-pp)/pp*100 : null;
       const scale=(r.moi!=null)? r.moi*p*r.shares : null;
       const L3=lots(r,m3), L4=lots(r,m4);
-      const hold=(L3.cur!=null)? L3.cur*p*r.shares : null;                    // 持有規模 (③口徑)
-      const dchg=(L4.cur!=null&&L4.prev!=null)? (L4.cur-L4.prev)*p*r.shares : null;  // 變化規模 (④口徑)
+      // ③ 持有: 規模(億, =淨部位×價×股數) 或 比率(%, =淨部位/市場OI)
+      const holdAmt=(L3.cur!=null)? L3.cur*p*r.shares : null;
+      const holdRat=(L3.cur!=null&&r.moi)? L3.cur/r.moi*100 : null;
+      const hold=(u3==="ratio")? holdRat : holdAmt;
+      // ④ 變化: 規模(億) 或 比率變化(百分點, =今日比率−昨日比率)
+      const dAmt=(L4.cur!=null&&L4.prev!=null)? (L4.cur-L4.prev)*p*r.shares : null;
+      const dRat=(L4.cur!=null&&L4.prev!=null&&r.moi&&r.moi_prev)? (L4.cur/r.moi - L4.prev/r.moi_prev)*100 : null;
+      const dchg=(u4==="ratio")? dRat : dAmt;
       // ---- 套用條件 ----
       if($("#c2").checked){
-        const v=parseFloat($("#v2").value); if(!isNaN(v)){ if(scale==null) return;
-          if($("#op2").value===">"? scale<=v*E : scale>=v*E) return; }
+        if(scale==null) return;
+        const lo=parseFloat($("#v2").value), hi=parseFloat($("#v2b").value);
+        if(!isNaN(lo) && scale <  lo*E) return;
+        if(!isNaN(hi) && scale >  hi*E) return;
       }
       if($("#c3").checked){
         const v=parseFloat($("#v3").value); if(!isNaN(v)){ if(hold==null) return;
           const hv=$("#abs3").checked? Math.abs(hold):hold;
-          if($("#op3").value===">"? hv<=v*E : hv>=v*E) return; }
+          const fac=(u3==="ratio")?1:E;
+          if($("#op3").value===">"? hv<=v*fac : hv>=v*fac) return; }
       }
       if($("#c4").checked){
         const v=parseFloat($("#v4").value); if(!isNaN(v)){ if(dchg==null) return;
           const dv=$("#abs4").checked? Math.abs(dchg):dchg;
-          if($("#op4").value===">"? dv<=v*E : dv>=v*E) return; }
+          const fac=(u4==="ratio")?1:E;
+          if($("#op4").value===">"? dv<=v*fac : dv>=v*fac) return; }
       }
       out.push({...r,_p:p,_chg:chgPct,scale,hold,dchg});
     });
@@ -177,15 +196,15 @@ table.scr td.l a:hover{color:var(--accent)}
   function render(){
     $("#rk5warn").style.display=(RK()===5&&!has5)?"block":"none";
     lastRows=compute();
-    const m3=$("#m3").value, m4=$("#m4").value;
+    const m3=$("#m3").value, m4=$("#m4").value, u3=$("#u3").value, u4=$("#u4").value;
     const cols=[
       {k:"name", t:"股票名稱", l:true},
       {k:"_p",   t:"收盤價"},
       {k:"_chg", t:"漲跌%"},
       {k:"scale",t:"股票期貨規模"},
     ];
-    if($("#c3").checked) cols.push({k:"hold", t:MET[m3]+"持有規模"});
-    if($("#c4").checked) cols.push({k:"dchg", t:MET[m4]+"變化規模"});
+    if($("#c3").checked) cols.push({k:"hold", t:MET[m3]+(u3==="ratio"?"持有比率":"持有規模"), u:u3});
+    if($("#c4").checked) cols.push({k:"dchg", t:MET[m4]+(u4==="ratio"?"變化比率":"變化規模"), u:u4});
     if(!cols.some(c=>c.k===sortKey)) { sortKey="scale"; sortDir=-1; }
     const rows=lastRows.slice().sort((a,b)=>{
       if(sortKey==="name") return sortDir*String(a.name).localeCompare(String(b.name),"zh-Hant");
@@ -202,17 +221,20 @@ table.scr td.l a:hover{color:var(--accent)}
     });
     th.appendChild(trh); t.appendChild(th);
     const tb=el("tbody");
+    // 點股名 → 個股頁同步顯示設定: 前五/前十 + 篩選用到的口徑面板 (③④; 未用則交由個股頁預設)
+    const ps=[]; if($("#c3").checked) ps.push(m3); if($("#c4").checked&&!ps.includes(m4)) ps.push(m4);
+    const sfx=`&rk=${RK()}`+(ps.length?`&panels=${ps.join(",")}`:"");
     rows.forEach(r=>{
       const tr=el("tr");
       const nm=el("td","l");
-      const a=el("a",null,r.name); a.href=`stocks.html?code=${r.code}`; nm.appendChild(a);
+      const a=el("a",null,r.name); a.href=`stocks.html?code=${r.code}${sfx}`; nm.appendChild(a);
       if(r.mini) nm.appendChild(el("span","mini-tag","小型"));
       tr.appendChild(nm);
       tr.appendChild(el("td",null, r._p==null?"—":Number(r._p).toLocaleString("en-US")));
       tr.appendChild(el("td", r._chg>0?"up":(r._chg<0?"down":null), r._chg==null?"—":(r._chg>0?"+":"")+r._chg.toFixed(2)+"%"));
       tr.appendChild(el("td",null, fA(r.scale)));
-      if($("#c3").checked) tr.appendChild(el("td", r.hold>0?"up":(r.hold<0?"down":null), fA(r.hold)));
-      if($("#c4").checked) tr.appendChild(el("td", r.dchg>0?"up":(r.dchg<0?"down":null), fA(r.dchg)));
+      if($("#c3").checked) tr.appendChild(el("td", r.hold>0?"up":(r.hold<0?"down":null), fmt(r.hold,u3)));
+      if($("#c4").checked) tr.appendChild(el("td", r.dchg>0?"up":(r.dchg<0?"down":null), fmt(r.dchg,u4)));
       tb.appendChild(tr);
     });
     t.appendChild(tb);
@@ -222,8 +244,9 @@ table.scr td.l a:hover{color:var(--accent)}
   $("#run").onclick=()=>{ save(); render(); };
   $("#clear").onclick=()=>{
     ["c2","c3","c4"].forEach(i=>$("#"+i).checked=false);
-    ["v2","v3","v4"].forEach(i=>$("#"+i).value="");
-    $("#rk10").checked=true; rowDim(); save(); render();
+    ["v2","v2b","v3","v4"].forEach(i=>$("#"+i).value="");
+    $("#u3").value="amt"; $("#u4").value="amt";
+    $("#rk10").checked=true; rowDim(); unitLbl(); save(); render();
   };
   [$("#rk5"),$("#rk10")].forEach(x=>x.addEventListener("change",render));
   render();
