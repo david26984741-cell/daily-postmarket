@@ -554,7 +554,9 @@
       try{ fklines[code]=await getJSON(`fkline/${code}.json`); }catch(e){ fklines[code]=null; }
     }
     const sid=(byCode[code]||{}).sid;
-    if(!fklines[code] && sid && !(sid in klines)){
+    // 股期日K不足30天(回補中)也要備援現股日K, 與 render 的 fkd 門檻一致
+    const fkOk=fklines[code]&&fklines[code].records&&Object.keys(fklines[code].records).length>=30;
+    if(!fkOk && sid && !(sid in klines)){
       try{ klines[sid]=await getJSON(`kline/${sid}.json`); }catch(e){ klines[sid]=null; }
     }
   }
