@@ -35,17 +35,22 @@ a.cpt-tag:hover{border-color:var(--accent);color:var(--accent)}
 <div class="wrap">
   <div class="crumbs"><a href="index.html">← 當日整合總覽</a></div>
   <h2 class="sec">股票期貨增減排行 <span class="tag" id="dchip"></span></h2>
-  <p class="lead">與前一交易日相比的未平倉<b>淨部位</b>增減。金額 = 增減口數 × 現股收盤價 × 每口股數(小型 100 股、一般 2,000 股)。點股票名稱可查看該檔完整資料。</p>
+  <p class="lead">與前一交易日相比的未平倉<b>淨部位</b>增減。金額 = 增減口數 × 近月股期收盤價(缺漏以現股價替代)× 每口股數(小型 100 股、一般 2,000 股)。點股票名稱可查看該檔完整資料。</p>
 
   <div class="toolbar">
-    <label class="muted">口徑</label>
+    <label class="muted">大額交易人</label>
+    <label class="ck"><input type="radio" name="rk" id="rk10" checked><span>前十大</span></label>
+    <label class="ck"><input type="radio" name="rk" id="rk5"><span>前五大</span></label>
+    <label class="muted" style="margin-left:10px">口徑</label>
     <select id="metric">
       <option value="main" selected>主力(自然人−法人)</option>
-      <option value="inst">法人(前十大特定法人)</option>
-      <option value="nat">自然人(前十大非法人)</option>
+      <option value="t0">交易人合計(原始值)</option>
+      <option value="inst">法人(特定法人)</option>
+      <option value="nat">自然人(非法人)</option>
       <option value="moi">全市場未沖銷</option>
     </select>
   </div>
+  <div class="warn" id="rk5warn" style="display:none">前五大資料將於下一次每日更新後提供,暫以前十大顯示。</div>
 
   <div class="rank-grid">
     <div class="rank-card"><h3>增加口數 前十<small>口</small></h3><div id="upLots"></div></div>
@@ -80,21 +85,25 @@ a.cpt-tag:hover{border-color:var(--accent);color:var(--accent)}
   };
   $("#dchip").innerHTML=`資料日期 <b>${rk.date}</b> · 對照前一交易日${UPDATE_NOTE}`;
   try{ const m=localStorage.getItem("dpm.rank.metric"); if(m&&$("#metric").querySelector(`option[value=${m}]`)) $("#metric").value=m; }catch(e){}
+  try{ if(localStorage.getItem("dpm.rank.rk")==="5") $("#rk5").checked=true; }catch(e){}
 
-  // rank.json 的 main=前十大交易人合計(t0)、inst=前十大特定法人(t1) — 原始值。
+  // rank.json 原始值: main/inst=前十大(t0/t1), main5/inst5=前五大 — 由前端依選擇換算。
   // 顯示口徑與個股頁/XQ一致: 自然人 = t0−t1, 主力 = 自然人−法人 = t0−2×t1。
+  const RK=()=>$("#rk5").checked?5:10;
+  const has5=(rk.rows||[]).some(r=>r.main5!=null);
+  function vals(r){
+    if(RK()===5&&has5) return {t0:r.main5,t0p:r.main5_prev,t1:r.inst5,t1p:r.inst5_prev};
+    return {t0:r.main,t0p:r.main_prev,t1:r.inst,t1p:r.inst_prev};
+  }
   function delta(r,m){
     let cur=null, prev=null;
+    const {t0,t0p,t1,t1p}=vals(r);
     const ok=(a,b)=>a!=null&&b!=null;
-    if(m==="main"){
-      cur=ok(r.main,r.inst)? r.main-2*r.inst : null;
-      prev=ok(r.main_prev,r.inst_prev)? r.main_prev-2*r.inst_prev : null;
-    }
-    else if(m==="inst"){ cur=r.inst; prev=r.inst_prev; }
-    else if(m==="nat"){
-      cur=ok(r.main,r.inst)? r.main-r.inst : null;
-      prev=ok(r.main_prev,r.inst_prev)? r.main_prev-r.inst_prev : null;
-    }else{ cur=r.moi; prev=r.moi_prev; }
+    if(m==="main"){ cur=ok(t0,t1)? t0-2*t1:null; prev=ok(t0p,t1p)? t0p-2*t1p:null; }
+    else if(m==="t0"){ cur=t0; prev=t0p; }
+    else if(m==="inst"){ cur=t1; prev=t1p; }
+    else if(m==="nat"){ cur=ok(t0,t1)? t0-t1:null; prev=ok(t0p,t1p)? t0p-t1p:null; }
+    else{ cur=r.moi; prev=r.moi_prev; }
     return (cur!=null&&prev!=null)? cur-prev : null;
   }
   const amtStr=v=>{
@@ -123,9 +132,11 @@ a.cpt-tag:hover{border-color:var(--accent);color:var(--accent)}
   }
   function render(){
     const m=$("#metric").value;
+    $("#rk5warn").style.display=(RK()===5&&!has5)?"block":"none";
     const rows=(rk.rows||[]).map(r=>{
       const d=delta(r,m);
-      return d==null?null:{...r,_d:d,_amt:(r.price!=null? d*r.price*r.shares : null)};
+      const px=r.fprice!=null? r.fprice : r.price;   // 股期近月價優先, 缺漏退回現股價
+      return d==null?null:{...r,_d:d,_amt:(px!=null? d*px*r.shares : null)};
     }).filter(Boolean);
     const put=(id,arr,withAmt)=>{const b=$("#"+id);b.innerHTML="";b.appendChild(tableOf(arr,withAmt));};
     put("upLots", rows.filter(r=>r._d>0).sort((a,b)=>b._d-a._d).slice(0,10), false);
@@ -135,6 +146,7 @@ a.cpt-tag:hover{border-color:var(--accent);color:var(--accent)}
     put("dnAmt", amt.filter(r=>r._amt<0).sort((a,b)=>a._amt-b._amt).slice(0,10), true);
   }
   $("#metric").onchange=()=>{ try{ localStorage.setItem("dpm.rank.metric", $("#metric").value); }catch(e){} render(); };
+  [$("#rk5"),$("#rk10")].forEach(x=>x.onchange=()=>{ try{ localStorage.setItem("dpm.rank.rk", String(RK())); }catch(e){} render(); });
   render();
 })();
 </script>

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>股票期貨篩選器 — 每日盤後資料</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.flt{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px}
+.frow .lb{color:var(--mut);min-width:64px}
+.frow select,.frow input[type=number]{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:14px}
+.frow input[type=number]{width:110px}
+.frow.off select,.frow.off input{opacity:.35;pointer-events:none}
+.fbtns{display:flex;gap:10px;margin-top:2px}
+.fbtns button{background:var(--accent);color:#08131f;border:none;border-radius:8px;padding:7px 18px;font-size:14px;font-weight:700;cursor:pointer}
+.fbtns button.ghost{background:var(--card2);color:var(--mut);border:1px solid var(--line);font-weight:400}
+table.scr{width:100%;border-collapse:collapse;font-size:14px;margin-top:14px}
+table.scr th{color:var(--mut);font-weight:400;text-align:right;padding:7px 8px;border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap;user-select:none}
+table.scr th.l{text-align:left}
+table.scr th.on{color:var(--accent)}
+table.scr td{padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.05);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.scr td.l{text-align:left}
+table.scr td.l a{color:var(--txt)}
+table.scr td.l a:hover{color:var(--accent)}
+.mini-tag{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--mut);font-size:11px;border-radius:5px;padding:0 5px;margin-left:6px;vertical-align:1px}
+.cnt{color:var(--mut);font-size:13px;margin-top:12px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1><a href="index.html" style="color:inherit">每日盤後資料</a><small>股票期貨 · 篩選器</small></h1>
+  <nav class="main" id="nav"></nav>
+</div></header>
+
+<div class="wrap">
+  <div class="crumbs"><a href="index.html">← 當日整合總覽</a></div>
+  <h2 class="sec">股票期貨篩選器 <span class="tag" id="dchip"></span></h2>
+  <p class="lead">依大額交易人資料篩選個股期貨。規模單位:億元。持有規模 = 淨部位 × 近月股期收盤價(缺漏以現股價替代)× 每口股數;股票期貨規模 = 全市場未沖銷口數 × 1口契約價值。</p>
+
+  <div class="flt">
+    <div class="frow">
+      <span class="lb">① 大額交易人</span>
+      <label class="ck"><input type="radio" name="rk" id="rk10" checked><span>前十大</span></label>
+      <label class="ck"><input type="radio" name="rk" id="rk5"><span>前五大</span></label>
+      <span class="lb" style="min-width:0;margin-left:6px">(必選,②③④可任意組合)</span>
+    </div>
+    <div class="frow" id="row2">
+      <label class="ck"><input type="checkbox" id="c2"><span>② 股票期貨規模</span></label>
+      <select id="op2"><option value=">">大於</option><option value="<">小於</option></select>
+      <input type="number" id="v2" step="any" placeholder="例 10"> 億
+    </div>
+    <div class="frow" id="row3">
+      <label class="ck"><input type="checkbox" id="c3"><span>③ 當日</span></label>
+      <select id="m3">
+        <option value="t0">交易人合計</option><option value="main" selected>主力</option>
+        <option value="nat">自然人</option><option value="inst">法人</option>
+      </select>
+      <span>持有規模</span>
+      <select id="op3"><option value=">">大於</option><option value="<">小於</option></select>
+      <input type="number" id="v3" step="any" placeholder="例 5"> 億
+      <label class="ck" title="以絕對值比較:淨空單規模也算"><input type="checkbox" id="abs3" checked><span>取絕對值</span></label>
+    </div>
+    <div class="frow" id="row4">
+      <label class="ck"><input type="checkbox" id="c4"><span>④ 當日</span></label>
+      <select id="m4">
+        <option value="t0">交易人合計</option><option value="main" selected>主力</option>
+        <option value="nat">自然人</option><option value="inst">法人</option>
+      </select>
+      <span>變化規模</span>
+      <select id="op4"><option value=">">大於</option><option value="<">小於</option></select>
+      <input type="number" id="v4" step="any" placeholder="例 1"> 億
+      <label class="ck" title="以絕對值比較:大減倉也算"><input type="checkbox" id="abs4" checked><span>取絕對值</span></label>
+    </div>
+    <div class="fbtns">
+      <button id="run">篩選</button>
+      <button id="clear" class="ghost">清除條件</button>
+    </div>
+  </div>
+  <div class="warn" id="rk5warn" style="display:none">前五大資料將於下一次每日更新後提供,暫以前十大計算。</div>
+
+  <div id="out"></div>
+  <div class="cnt" id="cnt"></div>
+
+  <footer>資料來源:臺灣期貨交易所、臺灣證券交易所、證券櫃檯買賣中心。本網站僅供參考,不構成投資建議。</footer>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(async function(){
+  const nav=$("#nav");
+  CATS.forEach(c=>{const a=el("a",null,c.title);a.href=catHref(c);a.dataset.k=c.id;nav.appendChild(a);});
+  navActive("screener");
+
+  let rk;
+  try{ rk=await getJSON("rank.json"); }
+  catch(e){ $("#dchip").textContent="資料尚未產生(首次於下一次每日更新後出現)"; return; }
+  $("#dchip").innerHTML=`資料日期 <b>${rk.date}</b>${UPDATE_NOTE}`;
+
+  const MET={t0:"交易人合計", main:"主力", nat:"自然人", inst:"法人"};
+  const has5=(rk.rows||[]).some(r=>r.main5!=null);
+  const RK=()=>$("#rk5").checked?5:10;
+  const E=1e8;   // 億
+
+  // ---- 條件保存/恢復 (localStorage): 返回本頁時不清除 ----
+  const PREF="dpm.screener.prefs";
+  const IDS=["c2","c3","c4","abs3","abs4"], VALS=["op2","v2","m3","op3","v3","m4","op4","v4"];
+  function save(){
+    try{
+      const o={rk:RK()};
+      IDS.forEach(i=>o[i]=$("#"+i).checked);
+      VALS.forEach(i=>o[i]=$("#"+i).value);
+      localStorage.setItem(PREF, JSON.stringify(o));
+    }catch(e){}
+  }
+  try{
+    const o=JSON.parse(localStorage.getItem(PREF)||"null");
+    if(o){
+      if(o.rk===5) $("#rk5").checked=true;
+      IDS.forEach(i=>{ if(typeof o[i]==="boolean") $("#"+i).checked=o[i]; });
+      VALS.forEach(i=>{ if(o[i]!=null) $("#"+i).value=o[i]; });
+    }
+  }catch(e){}
+
+  function rowDim(){ ["2","3","4"].forEach(n=>{ $("#row"+n).classList.toggle("off",!$("#c"+n).checked); }); }
+  ["c2","c3","c4"].forEach(i=>$("#"+i).onchange=()=>{ rowDim(); save(); });
+  [...IDS.slice(3),...VALS].forEach(i=>$("#"+i).onchange=save);
+  [$("#rk5"),$("#rk10")].forEach(x=>x.onchange=()=>{ save(); });
+  rowDim();
+
+  // ---- 口徑值 (口數): 依前五/前十選擇原始欄位 ----
+  function vals(r){
+    if(RK()===5&&has5) return {t0:r.main5,t0p:r.main5_prev,t1:r.inst5,t1p:r.inst5_prev};
+    return {t0:r.main,t0p:r.main_prev,t1:r.inst,t1p:r.inst_prev};
+  }
+  function lots(r,m){
+    const {t0,t0p,t1,t1p}=vals(r);
+    const ok=(a,b)=>a!=null&&b!=null;
+    const cv=(a,b)=> m==="t0"? a : (m==="inst"? b : (ok(a,b)? (m==="nat"? a-b : a-2*b) : null));
+    return {cur:cv(t0,t1), prev:cv(t0p,t1p)};
+  }
+  const px=r=> r.fprice!=null? r.fprice : r.price;
+  const pxp=r=> r.fprice!=null? (r.fprice_prev!=null?r.fprice_prev:r.price_prev) : r.price_prev;
+  const fA=v=> v==null? "—" : ((v<0?"-":"")+(Math.abs(v)>=E? (Math.abs(v)/E).toFixed(2)+" 億" : (Math.abs(v)/1e4).toFixed(0)+" 萬"));
+
+  let sortKey="scale", sortDir=-1, lastRows=[];
+  function compute(){
+    const m3=$("#m3").value, m4=$("#m4").value;
+    const out=[];
+    (rk.rows||[]).forEach(r=>{
+      const p=px(r); if(p==null) return;
+      const pp=pxp(r);
+      const chgPct=(pp!=null&&pp!==0)? (p-pp)/pp*100 : null;
+      const scale=(r.moi!=null)? r.moi*p*r.shares : null;
+      const L3=lots(r,m3), L4=lots(r,m4);
+      const hold=(L3.cur!=null)? L3.cur*p*r.shares : null;                    // 持有規模 (③口徑)
+      const dchg=(L4.cur!=null&&L4.prev!=null)? (L4.cur-L4.prev)*p*r.shares : null;  // 變化規模 (④口徑)
+      // ---- 套用條件 ----
+      if($("#c2").checked){
+        const v=parseFloat($("#v2").value); if(!isNaN(v)){ if(scale==null) return;
+          if($("#op2").value===">"? scale<=v*E : scale>=v*E) return; }
+      }
+      if($("#c3").checked){
+        const v=parseFloat($("#v3").value); if(!isNaN(v)){ if(hold==null) return;
+          const hv=$("#abs3").checked? Math.abs(hold):hold;
+          if($("#op3").value===">"? hv<=v*E : hv>=v*E) return; }
+      }
+      if($("#c4").checked){
+        const v=parseFloat($("#v4").value); if(!isNaN(v)){ if(dchg==null) return;
+          const dv=$("#abs4").checked? Math.abs(dchg):dchg;
+          if($("#op4").value===">"? dv<=v*E : dv>=v*E) return; }
+      }
+      out.push({...r,_p:p,_chg:chgPct,scale,hold,dchg});
+    });
+    return out;
+  }
+  function render(){
+    $("#rk5warn").style.display=(RK()===5&&!has5)?"block":"none";
+    lastRows=compute();
+    const m3=$("#m3").value, m4=$("#m4").value;
+    const cols=[
+      {k:"name", t:"股票名稱", l:true},
+      {k:"_p",   t:"收盤價"},
+      {k:"_chg", t:"漲跌%"},
+      {k:"scale",t:"股票期貨規模"},
+    ];
+    if($("#c3").checked) cols.push({k:"hold", t:MET[m3]+"持有規模"});
+    if($("#c4").checked) cols.push({k:"dchg", t:MET[m4]+"變化規模"});
+    if(!cols.some(c=>c.k===sortKey)) { sortKey="scale"; sortDir=-1; }
+    const rows=lastRows.slice().sort((a,b)=>{
+      if(sortKey==="name") return sortDir*String(a.name).localeCompare(String(b.name),"zh-Hant");
+      const av=a[sortKey], bv=b[sortKey];
+      if(av==null&&bv==null) return 0; if(av==null) return 1; if(bv==null) return -1;
+      return sortDir*(av-bv);
+    });
+    const t=el("table","scr");
+    const th=el("thead"), trh=el("tr");
+    cols.forEach(c=>{
+      const h=el("th",(c.l?"l ":"")+(sortKey===c.k?"on":""), c.t+(sortKey===c.k?(sortDir<0?" ▼":" ▲"):""));
+      h.onclick=()=>{ if(sortKey===c.k) sortDir=-sortDir; else { sortKey=c.k; sortDir=-1; } render(); };
+      trh.appendChild(h);
+    });
+    th.appendChild(trh); t.appendChild(th);
+    const tb=el("tbody");
+    rows.forEach(r=>{
+      const tr=el("tr");
+      const nm=el("td","l");
+      const a=el("a",null,r.name); a.href=`stocks.html?code=${r.code}`; nm.appendChild(a);
+      if(r.mini) nm.appendChild(el("span","mini-tag","小型"));
+      tr.appendChild(nm);
+      tr.appendChild(el("td",null, r._p==null?"—":Number(r._p).toLocaleString("en-US")));
+      tr.appendChild(el("td", r._chg>0?"up":(r._chg<0?"down":null), r._chg==null?"—":(r._chg>0?"+":"")+r._chg.toFixed(2)+"%"));
+      tr.appendChild(el("td",null, fA(r.scale)));
+      if($("#c3").checked) tr.appendChild(el("td", r.hold>0?"up":(r.hold<0?"down":null), fA(r.hold)));
+      if($("#c4").checked) tr.appendChild(el("td", r.dchg>0?"up":(r.dchg<0?"down":null), fA(r.dchg)));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    const out=$("#out"); out.innerHTML=""; out.appendChild(t);
+    $("#cnt").textContent=`符合條件:${rows.length} 檔(共 ${(rk.rows||[]).length} 檔股票期貨)`;
+  }
+  $("#run").onclick=()=>{ save(); render(); };
+  $("#clear").onclick=()=>{
+    ["c2","c3","c4"].forEach(i=>$("#"+i).checked=false);
+    ["v2","v3","v4"].forEach(i=>$("#"+i).value="");
+    $("#rk10").checked=true; rowDim(); save(); render();
+  };
+  [$("#rk5"),$("#rk10")].forEach(x=>x.addEventListener("change",render));
+  render();
+})();
+</script>
+</body>
+</html>
