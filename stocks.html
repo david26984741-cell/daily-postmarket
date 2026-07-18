@@ -635,7 +635,17 @@
     if(saved.cols) $("#cols").value=saved.cols;
     if(saved.from!==undefined||saved.to!==undefined){ range.from=saved.from||null; range.to=saved.to||null; syncRangeInputs(); }
   }
-  const pre=new URLSearchParams(location.search).get("code");
+  // ---- 網址帶入顯示設定 (?rk=5&panels=t0,main — 由篩選器點入時同步前五/前十與口徑) ----
+  const qs=new URLSearchParams(location.search);
+  const qrk=qs.get("rk");
+  if(qrk==="5"||qrk==="10"){ $("#rk5").checked=(qrk==="5"); $("#rk10").checked=(qrk==="10"); }
+  const qp=qs.get("panels");
+  if(qp){
+    const MAPP={t0:0,main:1,nat:2,inst:3};   // ck0交易人/ck1主力/ck2自然人/ck3法人
+    const idx=[...new Set(qp.split(",").map(k=>MAPP[k]).filter(i=>i!=null))];
+    if(idx.length) CKS.forEach((c,i)=>{ c.checked=idx.includes(i); });
+  }
+  const pre=qs.get("code");
   if(pre){
     const list=[]; pre.split(",").forEach(c=>{ const s=byCode[c.trim()]||findStock(c.trim()); if(s&&!list.includes(s.code)) list.push(s.code); });
     await addMany(list);

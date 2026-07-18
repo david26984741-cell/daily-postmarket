@@ -77,6 +77,12 @@ table.scr td.l a:hover{color:var(--accent)}
       <input type="number" id="v4" step="any" placeholder="例 1"> <span id="u4lb">億</span>
       <label class="ck" title="以絕對值比較:大減倉也算。做方向性篩選請取消"><input type="checkbox" id="abs4" checked><span>取絕對值</span></label>
     </div>
+    <div class="frow" id="row5">
+      <label class="ck"><input type="checkbox" id="c5"><span>⑤ 近</span></label>
+      <input type="number" id="v5" step="1" min="1" placeholder="5"> 日收盤
+      <select id="dir5"><option value="up">上漲</option><option value="down">下跌</option></select>
+      <span class="hint">(收盤價與 X 個交易日前相比)</span>
+    </div>
     <div class="fbtns">
       <button id="run">篩選</button>
       <button id="clear" class="ghost">清除條件</button>
@@ -109,7 +115,7 @@ table.scr td.l a:hover{color:var(--accent)}
 
   // ---- 條件保存/恢復 (localStorage): 返回本頁時不清除 ----
   const PREF="dpm.screener.prefs";
-  const IDS=["c2","c3","c4","abs3","abs4"], VALS=["v2","v2b","m3","u3","op3","v3","m4","u4","op4","v4"];
+  const IDS=["c2","c3","c4","c5","abs3","abs4"], VALS=["v2","v2b","m3","u3","op3","v3","m4","u4","op4","v4","v5","dir5"];
   function save(){
     try{
       const o={rk:RK()};
@@ -127,11 +133,11 @@ table.scr td.l a:hover{color:var(--accent)}
     }
   }catch(e){}
 
-  function rowDim(){ ["2","3","4"].forEach(n=>{ $("#row"+n).classList.toggle("off",!$("#c"+n).checked); }); }
+  function rowDim(){ ["2","3","4","5"].forEach(n=>{ $("#row"+n).classList.toggle("off",!$("#c"+n).checked); }); }
   function unitLbl(){ $("#u3lb").textContent=$("#u3").value==="ratio"?"%":"億"; $("#u4lb").textContent=$("#u4").value==="ratio"?"%":"億"; }
-  ["c2","c3","c4"].forEach(i=>$("#"+i).onchange=()=>{ rowDim(); save(); });
+  ["c2","c3","c4","c5"].forEach(i=>$("#"+i).onchange=()=>{ rowDim(); save(); });
   ["u3","u4"].forEach(i=>$("#"+i).onchange=()=>{ unitLbl(); save(); });
-  [...IDS.slice(3),...VALS].forEach(i=>{ if($("#"+i)) $("#"+i).onchange=save; });
+  [...IDS.slice(4),...VALS].forEach(i=>{ if($("#"+i)) $("#"+i).onchange=save; });
   [$("#rk5"),$("#rk10")].forEach(x=>x.onchange=()=>{ save(); });
   rowDim(); unitLbl();
 
@@ -189,7 +195,19 @@ table.scr td.l a:hover{color:var(--accent)}
           const fac=(u4==="ratio")?1:E;
           if($("#op4").value===">"? dv<=v*fac : dv>=v*fac) return; }
       }
-      out.push({...r,_p:p,_chg:chgPct,scale,hold,dchg});
+      // ⑤ 近X日漲跌: 收盤價與 X 個交易日前相比 (phist 由舊到新)
+      let chgN=null;
+      const ph=r.phist;
+      if(ph&&ph.length>=2){
+        const X=Math.max(1,Math.round(parseFloat($("#v5").value)||5));
+        const j=ph.length-1-X;
+        if(j>=0 && ph[j]) chgN=(ph[ph.length-1]/ph[j]-1)*100;
+      }
+      if($("#c5").checked){
+        if(chgN==null) return;
+        if($("#dir5").value==="up"? chgN<=0 : chgN>=0) return;
+      }
+      out.push({...r,_p:p,_chg:chgPct,scale,hold,dchg,_chgN:chgN});
     });
     return out;
   }
@@ -205,6 +223,8 @@ table.scr td.l a:hover{color:var(--accent)}
     ];
     if($("#c3").checked) cols.push({k:"hold", t:MET[m3]+(u3==="ratio"?"持有比率":"持有規模"), u:u3});
     if($("#c4").checked) cols.push({k:"dchg", t:MET[m4]+(u4==="ratio"?"變化比率":"變化規模"), u:u4});
+    const X5=Math.max(1,Math.round(parseFloat($("#v5").value)||5));
+    if($("#c5").checked) cols.push({k:"_chgN", t:`近${X5}日漲跌`, u:"pct"});
     if(!cols.some(c=>c.k===sortKey)) { sortKey="scale"; sortDir=-1; }
     const rows=lastRows.slice().sort((a,b)=>{
       if(sortKey==="name") return sortDir*String(a.name).localeCompare(String(b.name),"zh-Hant");
@@ -235,6 +255,7 @@ table.scr td.l a:hover{color:var(--accent)}
       tr.appendChild(el("td",null, fA(r.scale)));
       if($("#c3").checked) tr.appendChild(el("td", r.hold>0?"up":(r.hold<0?"down":null), fmt(r.hold,u3)));
       if($("#c4").checked) tr.appendChild(el("td", r.dchg>0?"up":(r.dchg<0?"down":null), fmt(r.dchg,u4)));
+      if($("#c5").checked) tr.appendChild(el("td", r._chgN>0?"up":(r._chgN<0?"down":null), fR(r._chgN)));
       tb.appendChild(tr);
     });
     t.appendChild(tb);
@@ -243,9 +264,9 @@ table.scr td.l a:hover{color:var(--accent)}
   }
   $("#run").onclick=()=>{ save(); render(); };
   $("#clear").onclick=()=>{
-    ["c2","c3","c4"].forEach(i=>$("#"+i).checked=false);
-    ["v2","v2b","v3","v4"].forEach(i=>$("#"+i).value="");
-    $("#u3").value="amt"; $("#u4").value="amt";
+    ["c2","c3","c4","c5"].forEach(i=>$("#"+i).checked=false);
+    ["v2","v2b","v3","v4","v5"].forEach(i=>$("#"+i).value="");
+    $("#u3").value="amt"; $("#u4").value="amt"; $("#dir5").value="up";
     $("#rk10").checked=true; rowDim(); unitLbl(); save(); render();
   };
   [$("#rk5"),$("#rk10")].forEach(x=>x.addEventListener("change",render));

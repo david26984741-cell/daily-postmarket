@@ -710,14 +710,23 @@ def _rank_row(doc, latest, stock_map):
                 pp = kk[3]; break
         return p, pp
 
+    def last_closes(recs_map, n=30):
+        # 近 n 個交易日收盤 (由舊到新, 供篩選器「近X日漲跌」用)
+        ds = sorted(d for d in recs_map if d <= latest)
+        out = [recs_map[d][3] for d in ds[-n:] if recs_map[d] and recs_map[d][3] is not None]
+        return out
+
     price = price_prev = None
-    if sid:
-        price, price_prev = last_two(load_json(os.path.join(KLINE, f"{sid}.json"), {}).get("records", {}))
+    spot = load_json(os.path.join(KLINE, f"{sid}.json"), {}).get("records", {}) if sid else {}
+    if spot:
+        price, price_prev = last_two(spot)
     # 股期近月價 (期交所行情) — 優先供規模/金額/漲跌幅使用, 缺漏退回現股價
     fprice = fprice_prev = None
     fk = load_json(os.path.join(FKLINE, f"{code}.json"), {}).get("records", {})
     if fk:
         fprice, fprice_prev = last_two(fk)
+    # phist: 近日收盤序列 (現股, 全史完整; 缺漏退回股期) — 篩選器判斷近X日漲跌
+    phist = last_closes(spot) or last_closes(fk)
     return {"code": code, "name": name, "sid": sid, "mini": mini,
             "shares": 100 if mini else 2000, "price": price, "price_prev": price_prev,
             "fprice": fprice, "fprice_prev": fprice_prev, "prev_date": prev,
@@ -725,7 +734,8 @@ def _rank_row(doc, latest, stock_map):
             "inst": net(a1), "inst_prev": net(b1),
             "main5": net5(a0), "main5_prev": net5(b0),
             "inst5": net5(a1), "inst5_prev": net5(b1),
-            "moi": (a0 or {}).get("market_oi"), "moi_prev": (b0 or {}).get("market_oi")}
+            "moi": (a0 or {}).get("market_oi"), "moi_prev": (b0 or {}).get("market_oi"),
+            "phist": phist}
 
 
 def update_index(date_slash, status, stock_map=None):
