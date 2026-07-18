@@ -130,4 +130,15 @@ https://david26984741-cell.github.io/daily-postmarket/
 - 砂箱 git 注意:Cowork 砂箱可直接跑 git(repo 掛載),但需 core.autocrlf=true
   否則整庫誤判為已修改;push 仍須經 GitHub Desktop(砂箱無憑證)
 
+### 2026/07/19(家用電腦)
+- screener.html(公司+家用接力):②規模改「區間」(下限~上限,可只填一邊)、
+  ③④持有/變化新增「規模(億)/比率(%)」切換(比率=淨部位÷全市場OI)、可取絕對值;
+  新增⑤「近X日漲跌」(收盤價與 X 個交易日前相比,選上漲/下跌);結果表對應欄位、可排序
+- screener 點股名 → 個股頁同步顯示設定:連結帶 ?rk=5|10&panels=t0,main,...
+  (由③④選用的口徑組成);stocks.html 讀取 ?rk/?panels 只勾選對應面板(其餘不顯示)
+- scrape.py _rank_row 新增 phist(近30日現股收盤序列,全史完整;缺漏退回股期)供⑤判斷
+  近X日漲跌;rank.json 已重建(本地用既有 data 重算,未連期交所)
+- 註:rank.json 的口徑欄位(main/inst/main5/inst5)、phist 由 _rank_row 產生,
+  任何 rebuild(daily/kline/update_index)都會帶新欄位
+
 (之後的修改請接著往下記)
