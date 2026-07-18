@@ -8,10 +8,11 @@ const CATS = [
   {id:"large_fut_txf",   title:"大額交易人期貨",   file:"large_fut_txf.json"},
   {id:"stocks",          title:"大額交易人股票期貨",file:null},
   {id:"rank",            title:"股期增減排行",      file:null},
+  {id:"screener",        title:"股期篩選器",        file:null},
   {id:"analysis",        title:"籌碼研究",          file:null},
   {id:"help",            title:"使用說明",          file:null},
 ];
-const PAGE_MAP = {stocks:"stocks.html", rank:"rank.html", analysis:"analysis.html", help:"help.html"};
+const PAGE_MAP = {stocks:"stocks.html", rank:"rank.html", screener:"screener.html", analysis:"analysis.html", help:"help.html"};
 const catHref = c => PAGE_MAP[c.id] || `detail.html?cat=${c.id}`;
 const UPDATE_NOTE = " · 每交易日約 16:00 前更新";
 const $ = (s,r=document)=>r.querySelector(s);

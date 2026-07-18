@@ -20,9 +20,10 @@
 
   <div class="stk-toolbar">
     <span class="tlabel">顯示</span>
-    <label class="ck" title="自然人 − 法人:大戶自然人與特定法人的淨差(同XQ主力口徑)"><input type="checkbox" id="ck0" checked><span>主力</span></label>
-    <label class="ck" title="前十大交易人合計 − 特定法人:前十大中的自然人大戶"><input type="checkbox" id="ck1" checked><span>自然人</span></label>
-    <label class="ck" title="前十大特定法人(銀行、券商、外資機構等)"><input type="checkbox" id="ck2" checked><span>法人</span></label>
+    <label class="ck" title="前十大交易人合計淨部位(含法人與自然人大戶)"><input type="checkbox" id="ck0" checked><span>交易人</span></label>
+    <label class="ck" title="自然人 − 法人:大戶自然人與特定法人的淨差(同XQ主力口徑)"><input type="checkbox" id="ck1" checked><span>主力</span></label>
+    <label class="ck" title="前十大交易人合計 − 特定法人:前十大中的自然人大戶"><input type="checkbox" id="ck2" checked><span>自然人</span></label>
+    <label class="ck" title="前十大特定法人(銀行、券商、外資機構等)"><input type="checkbox" id="ck3" checked><span>法人</span></label>
     <a class="tlabel" href="help.html" style="opacity:.8">名詞解釋?</a>
   </div>
 
@@ -31,7 +32,7 @@
     <label class="ck" title="該股期對應現股的日K(開高低收),紅漲綠跌"><input type="checkbox" id="gK" checked><span>K棒(股價)</span></label>
     <label class="ck" title="未平倉淨部位 = 買方 − 賣方(口),紅=淨多、綠=淨空"><input type="checkbox" id="gArea" checked><span>區域圖(淨部位)</span></label>
     <label class="ck" title="淨部位與前一交易日的差,紅柱=增加、綠柱=減少"><input type="checkbox" id="gBar" checked><span>柱狀圖(每日增減)</span></label>
-    <label class="ck" title="以現股收盤價換算:金額=淨部位×股價×每口股數(小型100股、一般2,000股),顯示於各面板標題"><input type="checkbox" id="gAmt" checked><span>金額</span></label>
+    <label class="ck" title="以近月收盤價換算:持有規模=淨部位×價格×每口股數(小型100股、一般2,000股),顯示於各面板標題"><input type="checkbox" id="gAmt" checked><span>持有規模</span></label>
     <span class="tlabel" style="margin-left:10px">每列</span>
     <select id="cols">
       <option value="1">1 檔</option>
@@ -103,21 +104,21 @@
   const NET=(rows,t)=>{ const r=(rows||[]).find(x=>x.month==="999999"&&x.type===t); return r?(r.top10_buy-r.top10_sell):null; };
   function series(doc){
     const dates=Object.keys(doc.records).sort();
-    const o={dates, 主力:{lv:[],ch:[]}, 自然人:{lv:[],ch:[]}, 特定法人:{lv:[],ch:[]}}; const prev={};
+    const o={dates, 交易人:{lv:[],ch:[]}, 主力:{lv:[],ch:[]}, 自然人:{lv:[],ch:[]}, 特定法人:{lv:[],ch:[]}}; const prev={};
     dates.forEach(d=>{
       const rows=doc.records[d]; const t0=NET(rows,"0"), t1=NET(rows,"1");
       const inst=t1;
       const nat=(t0!=null&&t1!=null)? t0-t1 : null;
       const main=(nat!=null&&inst!=null)? nat-inst : null;
-      [["主力",main],["自然人",nat],["特定法人",inst]].forEach(([k,v])=>{
+      [["交易人",t0],["主力",main],["自然人",nat],["特定法人",inst]].forEach(([k,v])=>{
         o[k].lv.push(v); o[k].ch.push((prev[k]!=null&&v!=null)? v-prev[k] : null); prev[k]=v; });
     });
     return o;
   }
 
-  const LINE="#4ea1ff";                       // 三個項目的淨部位線統一顏色
-  const PANELS=["主力","自然人","特定法人"];
-  const CKS=[$("#ck0"),$("#ck1"),$("#ck2")];
+  const LINE="#4ea1ff";                       // 各項目的淨部位線統一顏色
+  const PANELS=["交易人","主力","自然人","特定法人"];
+  const CKS=[$("#ck0"),$("#ck1"),$("#ck2"),$("#ck3")];
   const visiblePanels=()=>PANELS.filter((_,i)=>CKS[i].checked);
   const showArea=()=>$("#gArea").checked, showBar=()=>$("#gBar").checked, showK=()=>$("#gK").checked;
   function last(a){ for(let i=a.length-1;i>=0;i--) if(a[i]!=null) return a[i]; return null; }
@@ -292,10 +293,11 @@
   // ---- 狀態 -----------------------------------------------------------------
   const selected=[];   // 已選代號 (依加入順序)
   const docs={};       // code -> json (快取, 不重複下載)
-  const klines={};     // sid -> 日K json (快取; null=無資料)
+  const klines={};     // sid -> 現股日K json (快取; null=無資料, 作為股期報價缺漏時的備援)
+  const fklines={};    // code -> 股期近月日K json (期交所行情, 優先使用)
 
   // ---- 偏好記憶 (localStorage): 選股組合/期間/口徑/圖表設定, 回訪自動恢復 ----
-  const PREFS="dpm.stocks.prefs";
+  const PREFS="dpm.stocks.prefs2";   // v2: 面板改四口徑(交易人/主力/自然人/法人)
   function savePrefs(){
     try{
       localStorage.setItem(PREFS, JSON.stringify({
@@ -330,12 +332,15 @@
     selected.forEach(code=>{
       const doc=docs[code]; const s=byCode[code]||{code,name:code};
       const blk=el("div","stk-block"); blk.id="blk-"+code;
-      blk.appendChild(el("div","stk-title",`${s.name} <span class="c">${code} · ${s.sid||""}</span>`));
+      const titleEl=el("div","stk-title",`${s.name} <span class="c">${code} · ${s.sid||""}</span>`);
+      blk.appendChild(titleEl);
       if(!doc){ blk.appendChild(el("div","warn","找不到此個股資料")); blocks.appendChild(blk); return; }
 
       const body=el("div","stk-body");   // 每檔一列, 內部項目由上而下各佔一列
       const ser=series(doc);
-      const kd=(s.sid&&klines[s.sid]&&klines[s.sid].records)?klines[s.sid]:null;
+      const fkd=(fklines[code]&&fklines[code].records&&Object.keys(fklines[code].records).length)?fklines[code]:null;
+      const kd=fkd||((s.sid&&klines[s.sid]&&klines[s.sid].records)?klines[s.sid]:null);
+      const isF=!!fkd;   // true=股期報價(期交所), false=現股報價(備援)
 
       // ---- 共同日期軸: K棒與各籌碼面板逐日對齊 ----
       const dset=new Set(ser.dates);
@@ -485,8 +490,11 @@
     if(!(code in docs)){
       try{ docs[code]=await getJSON(`stocks/${code}.json`); }catch(e){ docs[code]=null; }
     }
+    if(!(code in fklines)){
+      try{ fklines[code]=await getJSON(`fkline/${code}.json`); }catch(e){ fklines[code]=null; }
+    }
     const sid=(byCode[code]||{}).sid;
-    if(sid && !(sid in klines)){
+    if(!fklines[code] && sid && !(sid in klines)){
       try{ klines[sid]=await getJSON(`kline/${sid}.json`); }catch(e){ klines[sid]=null; }
     }
   }

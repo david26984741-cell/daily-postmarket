@@ -140,6 +140,83 @@ def fetch_txf_range(start_slash, end_slash):
     return {d: v[1] for d, v in best.items()}
 
 
+def _fut_rows_pick(lines, want_code=None):
+    """解析期貨每日行情 CSV 行 → {code(不含F): (vol, [o,h,l,c])}
+    規則: 月契約(6位數字)、一般時段、成交量最大。"""
+    header = None
+    i_close = 6; i_vol = 9; i_sess = None
+    best = {}
+    for line in lines:
+        if not line.strip():
+            continue
+        cols = [c.strip() for c in line.split(",")]
+        if header is None:
+            header = cols
+            for i, h in enumerate(header):
+                if h == "收盤價": i_close = i
+                elif h == "成交量": i_vol = i
+                elif "交易時段" in h: i_sess = i
+            continue
+        if len(cols) <= i_close:
+            continue
+        fq = cols[1]
+        if not fq.endswith("F") or len(fq) != 3:
+            continue                                    # 只要股票期貨 (XXF)
+        code = fq[:-1]
+        if want_code and code != want_code:
+            continue
+        m = cols[2]
+        if not (len(m) == 6 and m.isdigit()):
+            continue                                    # 排除週契約/價差
+        if i_sess is not None and len(cols) > i_sess and cols[i_sess] and cols[i_sess] != "一般":
+            continue
+        o, h_, l, c = (num(cols[3]), num(cols[4]), num(cols[5]), num(cols[i_close]))
+        if not c:
+            continue
+        vol = num(cols[i_vol]) if len(cols) > i_vol else 0
+        d = cols[0]
+        key = (code, d)
+        cur = best.get(key)
+        if cur is None or vol > cur[0]:
+            best[key] = (vol, [o, h_, l, c])
+    return best  # {(code,date): (vol, ohlc)}
+
+
+def fetch_fkline_day(date_slash):
+    """當日全市場股票期貨近月日K — 從期交所每日行情 zip (僅保留近期)。
+    回傳 {code: [o,h,l,c]}。"""
+    import io, zipfile
+    ymd = date_slash.replace("/", "_")
+    url = f"https://www.taifex.com.tw/file/taifex/Dailydownload/DailydownloadCSV/Daily_{ymd}.zip"
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        raw = r.read()
+    zf = zipfile.ZipFile(io.BytesIO(raw))
+    name = zf.namelist()[0]
+    txt = zf.read(name).decode("cp950", errors="replace")
+    best = _fut_rows_pick(txt.splitlines())
+    return {code: v[1] for (code, d), v in best.items() if d == date_slash}
+
+
+def fetch_fkline_range(code, start_slash, end_slash):
+    """單一股期(2碼代號)區間日K — futDataDown 逐月查詢用。回傳 {date: [o,h,l,c]}。"""
+    txt = http_get(TAIFEX + "futDataDown",
+                   {"down_type": "1", "commodity_id": code + "F",
+                    "queryStartDate": start_slash, "queryEndDate": end_slash}, big5=True)
+    best = _fut_rows_pick(txt.splitlines(), want_code=code)
+    return {d: v[1] for (c, d), v in best.items()}
+
+
+FKLINE = os.path.join(DATA, "fkline")
+
+def append_fkline(code, date_slash, ohlc):
+    os.makedirs(FKLINE, exist_ok=True)
+    path = os.path.join(FKLINE, f"{code}.json")
+    doc = load_json(path, {"code": code, "records": {}})
+    doc["records"][date_slash] = ohlc
+    save_json(path, doc)
+
+
 def csv_date_ok(rows, date_slash):
     """確認 CSV 內第一筆資料列的日期 == 目標日期。"""
     for r in rows[1:]:
@@ -559,6 +636,18 @@ def run(date_slash, no_retry=False, skip_kline=False):
     else:
         status["kline"] = "資料未更新"
 
+    # --- 來源 7: 股票期貨近月日K (每日行情 zip, 供個股頁K棒/規模計算) ---
+    if not skip_kline:
+        try:
+            fk = fetch_fkline_day(date_slash)
+            for code, ohlc in fk.items():
+                append_fkline(code, date_slash, ohlc)
+            status["fkline"] = f"ok ({len(fk)} 檔)" if fk else "no-data"
+            log(f"  股期日K: 寫入 {len(fk)} 檔")
+        except Exception as e:
+            status["fkline"] = "error"
+            log(f"  股期日K失敗: {e}")
+
     # --- 來源 6: 台指期近月收盤 (供外資/自營選擇權歷史趨勢疊圖) ---
     if not skip_kline:
         try:
@@ -602,29 +691,40 @@ def _rank_row(doc, latest, stock_map):
                 return x
         return None
     net = lambda r: (r["top10_buy"] - r["top10_sell"]) if r else None
+    net5 = lambda r: (r["top5_buy"] - r["top5_sell"]) if r else None
     a0, a1, b0, b1 = pick(rec, "0"), pick(rec, "1"), pick(prec, "0"), pick(prec, "1")
     code = doc.get("code")
     info = stock_map.get(code, {})
     name = doc.get("name") or info.get("short") or code
     mini = str(name).startswith("小型")
     sid = doc.get("sid") or info.get("sid", "")
+
+    def last_two(recs_map):
+        p = pp = None
+        k = recs_map.get(latest)
+        if k and k[3] is not None:
+            p = k[3]
+        for d in sorted((d for d in recs_map if d < latest), reverse=True):
+            kk = recs_map.get(d)
+            if kk and kk[3] is not None:
+                pp = kk[3]; break
+        return p, pp
+
     price = price_prev = None
     if sid:
-        krecs = load_json(os.path.join(KLINE, f"{sid}.json"), {}).get("records", {})
-        k = krecs.get(latest)
-        if k and k[3] is not None:
-            price = k[3]
-        # 前一交易日收盤 (供漲跌幅計算): 取 < latest 的最近一筆有效收盤
-        kdates = sorted(d for d in krecs if d < latest)
-        for d in reversed(kdates):
-            kk = krecs.get(d)
-            if kk and kk[3] is not None:
-                price_prev = kk[3]
-                break
+        price, price_prev = last_two(load_json(os.path.join(KLINE, f"{sid}.json"), {}).get("records", {}))
+    # 股期近月價 (期交所行情) — 優先供規模/金額/漲跌幅使用, 缺漏退回現股價
+    fprice = fprice_prev = None
+    fk = load_json(os.path.join(FKLINE, f"{code}.json"), {}).get("records", {})
+    if fk:
+        fprice, fprice_prev = last_two(fk)
     return {"code": code, "name": name, "sid": sid, "mini": mini,
-            "shares": 100 if mini else 2000, "price": price, "price_prev": price_prev, "prev_date": prev,
+            "shares": 100 if mini else 2000, "price": price, "price_prev": price_prev,
+            "fprice": fprice, "fprice_prev": fprice_prev, "prev_date": prev,
             "main": net(a0), "main_prev": net(b0),
             "inst": net(a1), "inst_prev": net(b1),
+            "main5": net5(a0), "main5_prev": net5(b0),
+            "inst5": net5(a1), "inst5_prev": net5(b1),
             "moi": (a0 or {}).get("market_oi"), "moi_prev": (b0 or {}).get("market_oi")}
 
 
