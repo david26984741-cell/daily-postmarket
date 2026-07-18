@@ -379,7 +379,7 @@
 
       const body=el("div","stk-body");   // 每檔一列, 內部項目由上而下各佔一列
       const ser=series(doc,rk);
-      const fkd=(fklines[code]&&fklines[code].records&&Object.keys(fklines[code].records).length)?fklines[code]:null;
+      const fkd=(fklines[code]&&fklines[code].records&&Object.keys(fklines[code].records).length>=30)?fklines[code]:null;   // 資料太少(回補中)先退回現股
       const kd=fkd||((s.sid&&klines[s.sid]&&klines[s.sid].records)?klines[s.sid]:null);
       const isF=!!fkd;   // true=股期報價(期交所), false=現股報價(備援)
 
