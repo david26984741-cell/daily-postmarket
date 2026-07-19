@@ -210,9 +210,10 @@ def build_html(rows, date):
         c = lambda v: UP if (v or 0) > 0 else (DN if (v or 0) < 0 else MUT)
         link = f'{SITE}/stocks.html?code={r["code"]}&rk={RK}&panels={HOLD_MET}'
         mini = ' <span style="color:%s;font-size:11px">小型</span>' % MUT if r.get("mini") else ""
+        sid = f'<span style="color:{MUT};font-size:12.5px;margin-right:5px">{r["sid"]}</span>' if r.get("sid") else ""
         body.append(
             f'<tr>'
-            f'<td {tdl}><a href="{link}" style="color:#7cc4ff;text-decoration:none">{r["name"]}</a>{mini}</td>'
+            f'<td {tdl}><a href="{link}" style="color:#7cc4ff;text-decoration:none">{sid}{r["name"]}</a>{mini}</td>'
             f'<td {td}>{r["_px"]:,.6g}</td>'
             f'<td {td}><span style="color:{c(r["_chg"])}">{f_pct(r["_chg"])}</span></td>'
             f'<td {td}>{f_amt(r["_scale"])}</td>'
@@ -245,7 +246,7 @@ def build_text(rows, date):
              f"條件:{cond_text()}", ""]
     for r in rows:
         hold = f_ratio(r["_hold"]) if HOLD_UNIT == "ratio" else f_amt(r["_hold"])
-        lines.append(f'{r["name"]}  收{r["_px"]:g}  {f_pct(r["_chg"])}  '
+        lines.append(f'{(r.get("sid") or ""):>4} {r["name"]}  收{r["_px"]:g}  {f_pct(r["_chg"])}  '
                      f'規模{f_amt(r["_scale"])}  {MET[HOLD_MET]}{hold}  近{DAYS_N}日{f_ratio(r["_chgN"])}')
     if not rows:
         lines.append("(本日無符合條件的個股)")

@@ -24,6 +24,7 @@ table.scr td.l{text-align:left}
 table.scr td.l a{color:var(--txt)}
 table.scr td.l a:hover{color:var(--accent)}
 .mini-tag{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--mut);font-size:11px;border-radius:5px;padding:0 5px;margin-left:6px;vertical-align:1px}
+table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabular-nums;margin-right:5px}
 .cnt{color:var(--mut);font-size:13px;margin-top:12px}
 .hint{color:var(--mut);font-size:12px;margin-left:4px}
 </style>
@@ -247,7 +248,8 @@ table.scr td.l a:hover{color:var(--accent)}
     rows.forEach(r=>{
       const tr=el("tr");
       const nm=el("td","l");
-      const a=el("a",null,r.name); a.href=`stocks.html?code=${r.code}${sfx}`; nm.appendChild(a);
+      const a=el("a",null,(r.sid?`<span class="sid">${r.sid}</span>`:"")+r.name);
+      a.href=`stocks.html?code=${r.code}${sfx}`; nm.appendChild(a);
       if(r.mini) nm.appendChild(el("span","mini-tag","小型"));
       tr.appendChild(nm);
       tr.appendChild(el("td",null, r._p==null?"—":Number(r._p).toLocaleString("en-US")));
