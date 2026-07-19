@@ -140,5 +140,11 @@ https://david26984741-cell.github.io/daily-postmarket/
   近X日漲跌;rank.json 已重建(本地用既有 data 重算,未連期交所)
 - 註:rank.json 的口徑欄位(main/inst/main5/inst5)、phist 由 _rank_row 產生,
   任何 rebuild(daily/kline/update_index)都會帶新欄位
+- 股期日K回補至 2017:用期交所 futDailyMarketView 年度CSV(使用者下載,2017~2022 各一檔)本地
+  建檔,經 scrape._fut_rows_pick(同 fkline 口徑:XXF月契約/一般時段/成交量最大)轉檔併入
+  data/fkline/{code}.json,285 檔含 2017/01~2022/12,與既有 2023+ 無縫銜接。
+  注意:2017 檔日期未補零(2017/1/3)須正規化為 YYYY/MM/DD;年度CSV 是最快的歷史回補法
+  (免逐檔逐月打 futDataDown)。fkline.yml 仍可用於增量,但大量歷史建議用年度CSV。
+- 股期日K完成:stocks.html K棒 2017 起顯示「股期」(322→更多檔),不足30日者仍退回現股
 
 (之後的修改請接著往下記)
