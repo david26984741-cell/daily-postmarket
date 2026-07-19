@@ -147,4 +147,23 @@ https://david26984741-cell.github.io/daily-postmarket/
   (免逐檔逐月打 futDataDown)。fkline.yml 仍可用於增量,但大量歷史建議用年度CSV。
 - 股期日K完成:stocks.html K棒 2017 起顯示「股期」(322→更多檔),不足30日者仍退回現股
 
+### 2026/07/19(家用電腦)— 每日股期報告(Email)
+- 新增 `tools/report.py` + workflow `report.yml`:每日盤後抓取**成功**跑完就自動寄出篩選報告。
+  觸發用 `workflow_run`(事件觸發, 非定時輪詢), 所以 15:35 主班次、21:35 備援、手動 Run workflow
+  都會在約 1 分鐘內寄出; 同一資料日期用 actions/cache 防重複(主班次+備援不會各寄一封)。
+  手動觸發可填 force=yes 強制重寄(測試用)。
+- 篩選公式與 screener.html 完全一致(同讀 data/rank.json), 條件寫在 report.py 頂端常數區
+  (RK / SCALE_* / HOLD_* / CHG_* / DAYS_* / SORT_*), 要改門檻或口徑只動這一區。
+  目前設定:前十大、股期規模 2.5~500 億、自然人持有比率 > 20%、近20日上漲、依自然人比率降序。
+- 信件為 HTML 表格(股名/收盤/漲跌%/股期規模/自然人持有比率/近X日漲跌), 股名是連結 →
+  stocks.html?code=XX&rk=10&panels=nat(自動切前十大、只顯示該口徑面板)。
+- **repo 為公開**, 報告一律不寫檔、不 commit、不部署, 只在記憶體處理後寄出。
+- 需要 3 個 GitHub Secrets:`MAIL_USER`(Gmail)、`MAIL_PASS`(Gmail 應用程式密碼)、
+  `MAIL_TO`(收件者, 逗號分隔可多筆)。程式端已支援多收件者。
+- 電腦操作註記:Cowork 要控制 GitHub Desktop 時,用程式名稱授權會綁到外層啟動器
+  (`AppData\Local\GitHubDesktop\GitHubDesktop.exe`), 但視窗其實由
+  `AppData\Local\GitHubDesktop\app-<版本>\GitHubDesktop.exe` 持有, 會被判定未授權而擋掉輸入。
+  解法:request_access 直接給**完整路徑**, 會自動解析到正確版本子資料夾。GitHub Desktop
+  每次自動更新後版本號改變, 需重新授權一次。
+
 (之後的修改請接著往下記)
