@@ -1,0 +1,65 @@
+name: 每日股期報告
+
+# 「每日盤後資料抓取與部署」一跑完就自動接著跑 (workflow_run 事件觸發, 非定時輪詢),
+# 所以不論是排程 15:35 主班次、21:35 備援, 還是手動 Run workflow, 報告都會緊接著寄出。
+# 只有抓取「成功」才寄; 同一個資料日期只寄一次 (用 cache 防重複, 避免主班次+備援各寄一封)。
+# 注意: 本 repo 為公開, 報告不寫檔、不 commit、不部署, 僅在記憶體處理後寄出。
+
+on:
+  workflow_run:
+    workflows: ["每日盤後資料抓取與部署"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "忽略防重複, 強制再寄一次 (測試用填 yes)"
+        required: false
+        default: "no"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-postmarket-report
+  cancel-in-progress: false
+
+jobs:
+  report:
+    # workflow_run: 只在來源 workflow 成功時才寄; 手動觸發則一律執行
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main            # 取開跑當下最新版 (資料已由來源 workflow commit)
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 讀取資料日期
+        id: d
+        run: |
+          echo "date=$(python -c "import json;print(json.load(open('data/rank.json'))['date'].replace('/','-'))")" >> $GITHUB_OUTPUT
+
+      - name: 防重複 (同一資料日期只寄一次)
+        id: sent
+        uses: actions/cache@v4
+        with:
+          path: .sent
+          key: report-sent-${{ steps.d.outputs.date }}
+
+      - name: 產生並寄出報告
+        if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
+        env:
+          MAIL_USER: ${{ secrets.MAIL_USER }}
+          MAIL_PASS: ${{ secrets.MAIL_PASS }}
+          MAIL_TO:   ${{ secrets.MAIL_TO }}
+        run: |
+          python tools/report.py
+          mkdir -p .sent && date > .sent/ok
+
+      - name: 已寄過就略過
+        if: steps.sent.outputs.cache-hit == 'true' && github.event.inputs.force != 'yes'
+        run: echo "資料日期 ${{ steps.d.outputs.date }} 今日已寄過報告, 略過。"
