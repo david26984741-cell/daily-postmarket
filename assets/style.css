@@ -48,8 +48,6 @@ td.num{font-variant-numeric:tabular-nums}
    只作用在當日明細/歷史表與總覽卡片, 不影響個股頁/排行/篩選器的既有版面。 */
 #detail .up, #detail .down, #history td .up, #history td .down,
 .grid .card .up, .grid .card .down{font-weight:700;font-size:1.12em}
-/* 欄位少的當日表格不要撐滿整個寬螢幕, 否則數字被拉得太開、難以左右對照 */
-#detail .tablewrap table{width:auto;min-width:min(100%,760px)}
 .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:20px;border:1px solid var(--line);color:var(--mut)}
 .pill.call{color:#ffb454;border-color:#5a4326}
 .pill.put{color:#7aa2ff;border-color:#2c3a63}
