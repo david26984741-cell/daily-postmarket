@@ -166,4 +166,23 @@ https://david26984741-cell.github.io/daily-postmarket/
   解法:request_access 直接給**完整路徑**, 會自動解析到正確版本子資料夾。GitHub Desktop
   每次自動更新後版本號改變, 需重新授權一次。
 
+### 2026/07/20(公司電腦)— 每日報告自動附圖
+- 新增 `tools/shots.py` + report.yml 三個步驟:資料更新完成後自動截 **5 張圖**,以 email 附件寄出。
+  1~4 = detail.html 的 外資選擇權 / 自營選擇權 / 外資期貨現貨 / 大額交易人期貨
+        (近5日歷史表格 + 近六個月趨勢圖);5 = rank.html 整頁(預設即 前十大+主力)。
+- 作法:在 runner 本機起 `http.server` 直接讀 repo 檔案 → headless Chromium 截圖。
+  **不走 GitHub Pages** — 不必等部署完成, 也不會截到舊版。
+- `detail.html` 新增 **`?days=N`**:初始只畫最近 N 個交易日(未指定=全部)。
+  重要:直接以 N 筆起繪, 遠比「先畫全歷史再滾輪縮放」輕 —
+  實測全歷史(2440點×多圖)縮放會把瀏覽器渲染卡死。
+- report.py:`collect_shots()` 讀 `SHOTS_DIR`(預設 .shots/)→ `msg.add_attachment(...)`。
+  無圖時仍正常寄純文字報告(截圖步驟設 continue-on-error, 圖掛了不影響報告)。
+- **踩雷紀錄(兩個都會安靜地壞掉)**:
+  1. runner 預設無 CJK 字型 → 中文全變豆腐方塊。必須 `apt-get install fonts-noto-cjk`。
+  2. `actions/upload-artifact@v4` 預設排除「.」開頭的隱藏目錄, `.shots/` 會得到
+     "No files were found"。需加 `include-hidden-files: true`。
+- `.gitignore` 加 `.shots/` — repo 公開, 圖片只當附件, 不進版控。
+- 沙箱限制:Cowork 沙箱無法下載 Chromium(網路受限), 故 shots.py 無法在本機實跑,
+  改以「推上去手動觸發 workflow + 讀 log」驗證。
+
 (之後的修改請接著往下記)

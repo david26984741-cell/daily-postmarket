@@ -85,6 +85,8 @@ jobs:
         with:
           name: shots-${{ steps.d.outputs.date }}
           path: .shots/
+          # 必要: v4 預設排除「.」開頭的隱藏目錄, 不加這行會 "No files were found"
+          include-hidden-files: true
           retention-days: 7
 
       - name: 已寄過就略過
