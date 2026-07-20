@@ -65,17 +65,24 @@
   // 歷史趨勢摘要
   function summaryRows(){
     const H={
-      options_foreign:[{label:"日期",sort:true},{label:"CALL未平倉金額(千元)",num:true},{label:"PUT未平倉金額(千元)",num:true},{label:"CALL買方未平倉",num:true},{label:"PUT買方未平倉",num:true}],
-      options_dealer:[{label:"日期",sort:true},{label:"CALL未平倉金額(千元)",num:true},{label:"PUT未平倉金額(千元)",num:true},{label:"CALL買方未平倉",num:true},{label:"PUT買方未平倉",num:true}],
-      foreign_fut_spot:[{label:"日期",sort:true},{label:"期貨多空淨額(口)",num:true},{label:"現貨買賣差額(元)",num:true}],
+      // nochart:true → 只出現在表格, 不列入上方圖表的欄位選單
+      options_foreign:[{label:"日期",sort:true},{label:"CALL未平倉差額(口)",num:true},{label:"PUT未平倉差額(口)",num:true},{label:"CALL未平倉金額(千元)",num:true},{label:"PUT未平倉金額(千元)",num:true}],
+      options_dealer:[{label:"日期",sort:true},{label:"CALL未平倉差額(口)",num:true},{label:"PUT未平倉差額(口)",num:true},{label:"CALL未平倉金額(千元)",num:true},{label:"PUT未平倉金額(千元)",num:true}],
+      foreign_fut_spot:[{label:"日期",sort:true},{label:"期貨多空淨額(口)",num:true},{label:"較前一日增減(口)",num:true,nochart:true},{label:"現貨買賣差額(元)",num:true,nochart:true}],
       large_opt:[{label:"日期",sort:true},{label:"前十特定法人 CALL淨部位",num:true},{label:"前十特定法人 PUT淨部位",num:true},{label:"CALL全市場未沖銷",num:true}],
-      large_fut_txf:[{label:"日期",sort:true},{label:"前十特定法人淨部位",num:true},{label:"前十特定法人多單",num:true},{label:"前十特定法人空單",num:true},{label:"全市場未沖銷",num:true}],
+      large_fut_txf:[{label:"日期",sort:true},{label:"前十特定法人淨部位",num:true},{label:"全市場未沖銷",num:true,nochart:true}],
     }[cat];
-    const rows=dates.map(d=>{const r=doc.records[d]; const o={"日期":d};
-      if(cat.startsWith("options")){o["CALL未平倉金額(千元)"]=cell(r.call?.diff_oi_amt,true);o["PUT未平倉金額(千元)"]=cell(r.put?.diff_oi_amt,true);o["CALL買方未平倉"]=cell(r.call?.buy_oi_lots);o["PUT買方未平倉"]=cell(r.put?.buy_oi_lots);}
-      else if(cat==="foreign_fut_spot"){o["期貨多空淨額(口)"]=cell(r.fut?.net_oi_lots,true);o["現貨買賣差額(元)"]=cell(r.spot?.net_amt,true);}
+    const rows=dates.map((d,i)=>{const r=doc.records[d]; const pr=doc.records[dates[i+1]]; const o={"日期":d};
+      // 選擇權: 未平倉差額 = 買方−賣方 (口), 非僅買方; 金額為未平倉差額金額
+      if(cat.startsWith("options")){o["CALL未平倉差額(口)"]=cell(r.call?.diff_oi_lots,true);o["PUT未平倉差額(口)"]=cell(r.put?.diff_oi_lots,true);o["CALL未平倉金額(千元)"]=cell(r.call?.diff_oi_amt,true);o["PUT未平倉金額(千元)"]=cell(r.put?.diff_oi_amt,true);}
+      else if(cat==="foreign_fut_spot"){
+        const n=r.fut?.net_oi_lots, pn=pr?.fut?.net_oi_lots;
+        o["期貨多空淨額(口)"]=cell(n,true);
+        o["較前一日增減(口)"]=cell((n!=null&&pn!=null)?n-pn:undefined,true);
+        o["現貨買賣差額(元)"]=cell(r.spot?.net_amt,true);
+      }
       else if(cat==="large_opt"){const g=optGroups(r,"999999");o["前十特定法人 CALL淨部位"]=cell(g.call.rows.inst10.net,true);o["前十特定法人 PUT淨部位"]=cell(g.put.rows.inst10.net,true);o["CALL全市場未沖銷"]=cell(g.call.market);}
-      else if(cat==="large_fut_txf"){const g=futSide(r.rows||[],"999999");o["前十特定法人淨部位"]=cell(g.rows.inst10.net,true);o["前十特定法人多單"]=cell(g.rows.inst10.long);o["前十特定法人空單"]=cell(g.rows.inst10.short);o["全市場未沖銷"]=cell(g.market);}
+      else if(cat==="large_fut_txf"){const g=futSide(r.rows||[],"999999");o["前十特定法人淨部位"]=cell(g.rows.inst10.net,true);o["全市場未沖銷"]=cell(g.market);}
       return o;});
     return {H,rows};
   }
@@ -84,7 +91,7 @@
   /* ---- 歷史趨勢柱狀圖 (表格上方): 滾輪縮放 · 按住拖曳平移 · 雙擊看全部 ---- */
   // 圖表與表格的共用預設期間 (交易日數)。近六個月 ≈ 120 個交易日。
   const DEF_DAYS=120;
-  const numCols=H.filter(h=>h.num).map(h=>h.label);
+  const numCols=H.filter(h=>h.num&&!h.nochart).map(h=>h.label);
   let hchart=null;
   if(numCols.length && typeof Chart!=="undefined"){
     const bar=el("div","optbar");

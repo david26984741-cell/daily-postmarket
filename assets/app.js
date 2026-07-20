@@ -4,7 +4,6 @@ const CATS = [
   {id:"options_foreign", title:"外資選擇權",       file:"options_foreign.json"},
   {id:"options_dealer",  title:"自營選擇權",       file:"options_dealer.json"},
   {id:"foreign_fut_spot",title:"外資期貨、現貨",   file:"foreign_fut_spot.json"},
-  {id:"large_opt",       title:"大額交易人選擇權", file:"large_opt.json"},
   {id:"large_fut_txf",   title:"大額交易人期貨",   file:"large_fut_txf.json"},
   {id:"stocks",          title:"大額交易人股票期貨",file:null},
   {id:"rank",            title:"股期增減排行",      file:null},
@@ -143,11 +142,10 @@ function renderFutSpot(rec, prev){
     box.appendChild(sortableTable(h,rows));
   }
   if(rec.spot){
-    const ps=prev&&prev.spot;
     const t=el("div","muted","外資及陸資(不含外資自營商) 現貨買賣 (單位:元)"); t.style.marginTop="12px"; box.appendChild(t);
-    const h=[{label:"買進金額",num:true},{label:"賣出金額",num:true},{label:"買賣差額",num:true},{label:"較前一日",sort:false,num:true}];
+    const h=[{label:"買進金額",num:true},{label:"賣出金額",num:true},{label:"買賣差額",num:true}];
     const rows=[{"買進金額":cell(rec.spot.buy_amt),"賣出金額":cell(rec.spot.sell_amt),
-      "買賣差額":netCell(rec.spot.net_amt),"較前一日":{html:arrow(ps?rec.spot.net_amt-ps.net_amt:undefined)}}];
+      "買賣差額":netCell(rec.spot.net_amt)}];
     const w=sortableTable(h,rows); w.style.marginTop="6px"; box.appendChild(w);
   }
   return box;
