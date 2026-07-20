@@ -103,7 +103,12 @@
     if(cat==="options_foreign"||cat==="options_dealer"){
       try{ txf=(await getJSON("txf.json")).records||null; }catch(e){ txf=null; }
     }
-    let vA=0, vB=Math.max(0,allLabels.length-1), curCol=numCols[0];
+    // ?days=N — 初始只顯示最近 N 個交易日 (供截圖/分享用; 未指定則顯示全部)。
+    // 注意: 直接以 N 起繪比「先畫全歷史再縮放」輕得多, 資料量大時差很多。
+    const qDays=parseInt(new URLSearchParams(location.search).get("days")||"",10);
+    let vB=Math.max(0,allLabels.length-1);
+    let vA=(qDays>0)?Math.max(0,vB-qDays+1):0;
+    let curCol=numCols[0];
     const SPANMIN=10;
     function clampWin(){
       const n=allLabels.length;

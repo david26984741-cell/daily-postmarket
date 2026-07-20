@@ -1,5 +1,7 @@
 __pycache__/
 *.pyc
 .DS_Store
+# 每日報告截圖 — 只當 email 附件, 本 repo 公開故不進版控
+.shots/
 # 專案指南必須進版控 (蓋過全域 gitignore 的排除)
 !CLAUDE.md

@@ -253,8 +253,30 @@ def build_text(rows, date):
     return "\n".join(lines)
 
 
+# ---------------------------------------------------------------- 附圖
+# tools/shots.py 產生的每日截圖; 目錄不進版控 (repo 公開), 僅作為 email 附件。
+SHOTS_DIR = os.environ.get("SHOTS_DIR", os.path.join(BASE, ".shots"))
+
+
+def collect_shots():
+    """回傳 [(檔名, bytes), ...],依檔名排序 (1_…5_ 前綴決定順序)。無圖則回空清單。"""
+    if not os.path.isdir(SHOTS_DIR):
+        return []
+    out = []
+    for fn in sorted(os.listdir(SHOTS_DIR)):
+        if not fn.lower().endswith(".png"):
+            continue
+        path = os.path.join(SHOTS_DIR, fn)
+        try:
+            with open(path, "rb") as f:
+                out.append((fn, f.read()))
+        except OSError as e:
+            print(f"  略過附圖 {fn}: {e}")
+    return out
+
+
 # ---------------------------------------------------------------- 寄信
-def send(subject, html, text):
+def send(subject, html, text, shots=None):
     user = os.environ.get("MAIL_USER", "").strip()
     pwd = os.environ.get("MAIL_PASS", "").replace(" ", "").strip()
     to = [x.strip() for x in os.environ.get("MAIL_TO", "").split(",") if x.strip()]
@@ -268,10 +290,12 @@ def send(subject, html, text):
     msg["To"] = ", ".join(to)
     msg.set_content(text)
     msg.add_alternative(html, subtype="html")
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=60) as s:
+    for fn, data in (shots or []):
+        msg.add_attachment(data, maintype="image", subtype="png", filename=fn)
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=120) as s:
         s.login(user, pwd)
         s.send_message(msg)
-    print(f"已寄出給 {len(to)} 位收件者")
+    print(f"已寄出給 {len(to)} 位收件者" + (f",附圖 {len(shots)} 張" if shots else ""))
     return True
 
 
@@ -281,10 +305,12 @@ def main():
     rows = compute(rank)
     html, text = build_html(rows, date), build_text(rows, date)
     print(text)
+    shots = collect_shots()
+    print(f"\n附圖 {len(shots)} 張: " + (", ".join(fn for fn, _ in shots) if shots else "(無)"))
     if os.environ.get("DRY_RUN") == "1":
         print("\n[DRY_RUN] 不寄信")
         return
-    send(f"[股期報告] {date} ・ 符合 {len(rows)} 檔", html, text)
+    send(f"[股期報告] {date} ・ 符合 {len(rows)} 檔", html, text, shots)
 
 
 if __name__ == "__main__":

@@ -50,15 +50,42 @@ jobs:
           path: .sent
           key: report-sent-${{ steps.d.outputs.date }}
 
+      # 中文字型: runner 預設沒有 CJK 字型, 不裝的話截圖全部變成豆腐方塊 (□□□)。
+      - name: 安裝中文字型與 Playwright
+        if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk >/dev/null
+          fc-cache -f >/dev/null
+          pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+
+      # 截圖失敗不應該讓報告寄不出去 → continue-on-error, 沒圖就只寄文字報告
+      - name: 產生截圖 (5 張)
+        id: shots
+        if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
+        continue-on-error: true
+        run: python tools/shots.py --out .shots
+
       - name: 產生並寄出報告
         if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
         env:
           MAIL_USER: ${{ secrets.MAIL_USER }}
           MAIL_PASS: ${{ secrets.MAIL_PASS }}
           MAIL_TO:   ${{ secrets.MAIL_TO }}
+          SHOTS_DIR: .shots
         run: |
           python tools/report.py
           mkdir -p .sent && date > .sent/ok
+
+      # 供除錯: 在 Actions 頁面可直接下載當次截圖, 不進 repo
+      - name: 保留截圖供檢視 (artifact)
+        if: always() && steps.shots.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: shots-${{ steps.d.outputs.date }}
+          path: .shots/
+          retention-days: 7
 
       - name: 已寄過就略過
         if: steps.sent.outputs.cache-hit == 'true' && github.event.inputs.force != 'yes'
