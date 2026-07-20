@@ -32,11 +32,11 @@ HOLD_UNIT = "ratio"   # ratio=比率(%) / amt=規模(億)
 HOLD_OP   = ">"       # > 或 <
 HOLD_VAL  = 20
 HOLD_ABS  = False     # 是否取絕對值
-CHG_ON    = False     # ④ 當日【口徑】變化 (目前不啟用)
-CHG_MET   = "main"
-CHG_UNIT  = "amt"
+CHG_ON    = True      # ④ 當日【口徑】變化
+CHG_MET   = "nat"
+CHG_UNIT  = "amt"     # ratio=比率(%) / amt=規模(億)
 CHG_OP    = ">"
-CHG_VAL   = 0.5
+CHG_VAL   = 0         # 搭配取絕對值 → 等同「當日有變動就列入」, 主要用途是把該欄顯示出來
 CHG_ABS   = True
 DAYS_ON   = True      # ⑤ 近X日漲跌
 DAYS_N    = 20
@@ -202,8 +202,11 @@ def build_html(rows, date):
     td = 'style="text-align:right;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.05);white-space:nowrap"'
     tdl = td.replace("text-align:right", "text-align:left")
 
+    chg_hd = MET[CHG_MET] + ("變化比率" if CHG_UNIT == "ratio" else "變化規模")
     head = (f'<tr><th {thl}>股票名稱</th><th {th}>收盤價</th><th {th}>漲跌%</th>'
-            f'<th {th}>股票期貨規模</th><th {th}>{hold_hd}</th><th {th}>近{DAYS_N}日漲跌</th></tr>')
+            f'<th {th}>股票期貨規模</th><th {th}>{hold_hd}</th>'
+            + (f'<th {th}>{chg_hd}</th>' if CHG_ON else "")
+            + f'<th {th}>近{DAYS_N}日漲跌</th></tr>')
 
     body = []
     for r in rows:
@@ -219,7 +222,9 @@ def build_html(rows, date):
             f'<td {td}>{f_amt(r["_scale"])}</td>'
             f'<td {td}><span style="color:{c(r["_hold"])}">'
             f'{f_ratio(r["_hold"]) if HOLD_UNIT=="ratio" else f_amt(r["_hold"])}</span></td>'
-            f'<td {td}><span style="color:{c(r["_chgN"])}">{f_ratio(r["_chgN"])}</span></td>'
+            + (f'<td {td}><span style="color:{c(r["_dchg"])}">'
+               f'{f_ratio(r["_dchg"]) if CHG_UNIT=="ratio" else f_amt(r["_dchg"])}</span></td>' if CHG_ON else "")
+            + f'<td {td}><span style="color:{c(r["_chgN"])}">{f_ratio(r["_chgN"])}</span></td>'
             f'</tr>')
 
     empty = (f'<tr><td colspan="6" style="padding:16px;color:{MUT}">本日無符合條件的個股。</td></tr>')
@@ -246,8 +251,11 @@ def build_text(rows, date):
              f"條件:{cond_text()}", ""]
     for r in rows:
         hold = f_ratio(r["_hold"]) if HOLD_UNIT == "ratio" else f_amt(r["_hold"])
+        ch = ""
+        if CHG_ON:
+            ch = "  " + MET[CHG_MET] + "變化" + (f_ratio(r["_dchg"]) if CHG_UNIT == "ratio" else f_amt(r["_dchg"]))
         lines.append(f'{(r.get("sid") or ""):>4} {r["name"]}  收{r["_px"]:g}  {f_pct(r["_chg"])}  '
-                     f'規模{f_amt(r["_scale"])}  {MET[HOLD_MET]}{hold}  近{DAYS_N}日{f_ratio(r["_chgN"])}')
+                     f'規模{f_amt(r["_scale"])}  {MET[HOLD_MET]}{hold}{ch}  近{DAYS_N}日{f_ratio(r["_chgN"])}')
     if not rows:
         lines.append("(本日無符合條件的個股)")
     return "\n".join(lines)
