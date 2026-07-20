@@ -50,18 +50,25 @@ jobs:
           path: .sent
           key: report-sent-${{ steps.d.outputs.date }}
 
-      # 中文字型: runner 預設沒有 CJK 字型, 不裝的話截圖全部變成豆腐方塊 (□□□)。
-      - name: 安裝中文字型與 Playwright
+      # 中文字型: runner 預設沒有 CJK 字型, 不裝的話 matplotlib 圖與截圖都變豆腐方塊 (□□□)。
+      - name: 安裝中文字型、matplotlib 與 Playwright
         if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-noto-cjk >/dev/null
           fc-cache -f >/dev/null
-          pip install --quiet playwright
+          pip install --quiet matplotlib playwright
           python -m playwright install --with-deps chromium
 
-      # 截圖失敗不應該讓報告寄不出去 → continue-on-error, 沒圖就只寄文字報告
-      - name: 產生截圖 (5 張)
+      # 圖 1~4: 直接讀 data/*.json 自己畫 (不截網頁 → 不受版面限制、不必等部署)
+      - name: 產生圖表 (4 張)
+        id: charts
+        if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
+        continue-on-error: true
+        run: python tools/charts.py --out .shots --days 60
+
+      # 圖 5: 增減排行四宮格 — 表格型, 仍以網頁截圖處理
+      - name: 產生排行截圖 (1 張)
         id: shots
         if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
         continue-on-error: true
@@ -79,8 +86,8 @@ jobs:
           mkdir -p .sent && date > .sent/ok
 
       # 供除錯: 在 Actions 頁面可直接下載當次截圖, 不進 repo
-      - name: 保留截圖供檢視 (artifact)
-        if: always() && steps.shots.outcome == 'success'
+      - name: 保留圖片供檢視 (artifact)
+        if: always() && (steps.charts.outcome == 'success' || steps.shots.outcome == 'success')
         uses: actions/upload-artifact@v4
         with:
           name: shots-${{ steps.d.outputs.date }}

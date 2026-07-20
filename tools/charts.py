@@ -2,17 +2,16 @@
 # -*- coding: utf-8 -*-
 """每日報告用圖表 — 直接讀 data/*.json 自己畫, 不截網頁。
 
-為什麼不截網頁: 不受頁面排版限制(可把 CALL/PUT 疊同一張)、不必裝 Chromium、
-不必等部署、網站改版也不會壞。
+版面 (每張圖):
+  ┌ 標題 / 副標(期間·資料日期)          當日重點數值(右上) ┐
+  │  主圖: 籌碼資料(左軸) + 台指期收盤(右軸, 統一放右邊)   │
+  └ 近五日歷史趨勢表(含今日, 欄位比照網站)                 ┘
 
-用法:
-  python tools/charts.py --out .shots [--days 60]
+圖型規則: 數列有跨越 0 → 柱狀(紅正/綠負, 柱間留空);
+          整段同號(例如外資期貨長期淨空) → 折線 + Y軸貼合資料範圍,
+          否則柱狀會從 0 拉成一整片色塊, 把疊圖蓋掉也看不出變化。
 
-輸出 (近三個月, 預設 60 個交易日):
-  1_外資選擇權.png     CALL/PUT 未平倉金額(千元) 雙線 + 台指期收盤(右軸)
-  2_自營選擇權.png     同上
-  3_外資期貨現貨.png   外資期貨多空淨額(口) 柱狀 + 台指期收盤(右軸)
-  4_大額交易人期貨.png 前十特定法人淨部位(口) + 台指期收盤(右軸)
+用法: python tools/charts.py --out .shots [--days 60]
 """
 import os, json, argparse
 import matplotlib
@@ -23,196 +22,286 @@ from matplotlib.ticker import FuncFormatter
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(BASE, "data")
 
-# ---- 配色 (對齊網站深色主題) ----
 BG, PANEL, GRID, TXT, MUT = "#0f1620", "#131a24", "#243040", "#e6edf3", "#9aa7b4"
-UP, DN, TXF = "#ff6b6b", "#4ade80", "#f0c85a"      # 紅漲/綠跌/台指期黃線
+UP, DN, TXFC = "#ff6b6b", "#4ade80", "#f0c85a"
+E = 1e8          # 億
+K2E = 1e5        # 千元 → 億元
 
-for f in ("Noto Sans CJK TC", "Noto Sans CJK JP", "Noto Sans CJK SC"):
+for _f in ("Noto Sans CJK TC", "Noto Sans CJK JP", "Noto Sans CJK SC"):
     try:
-        matplotlib.font_manager.findfont(f, fallback_to_default=False)
-        plt.rcParams["font.sans-serif"] = [f]
+        matplotlib.font_manager.findfont(_f, fallback_to_default=False)
+        plt.rcParams["font.sans-serif"] = [_f]
         break
     except Exception:
         continue
 plt.rcParams["axes.unicode_minus"] = False
 
 
-def load(name):
-    p = os.path.join(DATA, name)
+def load(n):
+    p = os.path.join(DATA, n)
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
 
 
-def tail_dates(records, n):
-    return sorted(records.keys())[-n:]
+def sgn(v):
+    return UP if (v or 0) > 0 else (DN if (v or 0) < 0 else TXT)
 
 
-def fmt_k(v, _=None):
-    """千分位 + 萬/億 縮寫, 避免軸標籤過長。"""
-    a = abs(v)
-    if a >= 1e8:
-        return f"{v/1e8:.1f}億"
-    if a >= 1e4:
-        return f"{v/1e4:.0f}萬"
-    return f"{v:,.0f}"
+def f_lot(v):
+    return "—" if v is None else f"{v:+,.0f} 口"
 
 
-def style(ax, title, sub=""):
+def f_e(v, unit="億"):
+    return "—" if v is None else f"{v:+,.2f} {unit}"
+
+
+# ------------------------------------------------------------------ 版面元件
+def header(fig, title, sub, stats, y0=.965):
+    """左上標題 / 右上當日重點(並排, 數值放大)。stats = [(標籤, 文字, 顏色), ...]"""
+    fig.text(.075, y0, title, color=TXT, fontsize=16, fontweight="bold", va="top")
+    fig.text(.075, y0 - .042, sub, color=MUT, fontsize=11, va="top")
+    n = len(stats)
+    W, RIGHT = .19, .90                        # 區塊寬度 / 最右錨點 (略往中間收, 不貼頁緣)
+    for i, (lab, val, col) in enumerate(stats):
+        xr = RIGHT - (n - 1 - i) * W
+        fig.text(xr, y0, lab, color=MUT, fontsize=11.5, ha="right", va="top")
+        fig.text(xr, y0 - .038, val, color=col, fontsize=20, fontweight="bold",
+                 ha="right", va="top")
+
+
+def style(ax, ylabel):
     ax.set_facecolor(PANEL)
     ax.grid(True, color=GRID, lw=.6, alpha=.7)
     ax.set_axisbelow(True)
     for s in ax.spines.values():
         s.set_color(GRID)
     ax.tick_params(colors=MUT, labelsize=9)
-    ax.set_title(title + ("\n" + sub if sub else ""), color=TXT, fontsize=13,
-                 fontweight="bold", loc="left", pad=12)
+    ax.set_ylabel(ylabel, color=MUT, fontsize=10)
+    # 千分位; 億元類的小數保留兩位
+    ax.yaxis.set_major_formatter(FuncFormatter(
+        lambda v, _: f"{v:,.2f}" if abs(v) < 100 else f"{v:,.0f}"))
 
 
 def xaxis(ax, dates):
-    """日期軸: 最多 8 個刻度, 只顯示 月/日。"""
     n = len(dates)
     step = max(1, n // 8)
     idx = list(range(0, n, step))
     ax.set_xticks(idx)
-    ax.set_xticklabels([dates[i][5:] for i in idx], rotation=0)
-    ax.set_xlim(-0.5, n - 0.5)
+    ax.set_xticklabels([dates[i][5:] for i in idx])
+    ax.set_xlim(-0.8, n - 0.2)
 
 
-def add_txf(ax, dates, txf):
-    """右軸疊台指期近月收盤 — 籌碼要對照指數才看得出意義。"""
-    if not txf:
-        return None
-    ys = [txf.get(d) for d in dates]
-    if not any(v is not None for v in ys):
-        return None
-    ax2 = ax.twinx()
-    ax2.plot(range(len(dates)), ys, color=TXF, lw=1.6, label="台指期收盤(右軸)")
-    ax2.tick_params(colors=TXF, labelsize=9)
-    for s in ax2.spines.values():
-        s.set_color(GRID)
-    lo = min(v for v in ys if v is not None); hi = max(v for v in ys if v is not None)
-    pad = (hi - lo) * .12 or 1
-    ax2.set_ylim(lo - pad, hi + pad)
-    ax2.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:,.0f}"))
-    return ax2
-
-
-def net_area(ax, ys, label, line="#9fc3e8"):
-    """淨部位折線 + 依正負填色 (紅=淨多 / 綠=淨空), 一眼看出多空方向。
-    不用柱狀: 淨部位是「存量」且常長期同號, 柱狀會變成一整片色塊蓋住疊圖。"""
+def plot_series(ax, ys, label, kind="auto", invert=False):
+    """kind=bar 強制柱狀 / line 強制折線 / auto: 跨 0 → 柱狀, 同號 → 折線(貼合範圍)。
+    同號還畫柱狀會從 0 拉成一整片色塊, 把疊圖蓋掉也看不出變化, 故 auto 改折線。"""
     x = list(range(len(ys)))
     v = [0 if y is None else y for y in ys]
-    ax.plot(x, v, color=line, lw=2, label=label)
-    # 只有「有跨越 0」才填色並標 0 線; 若整段同號(例如外資長期淨空),
-    # 填到 0 會佔滿整張圖、把疊圖蓋掉, 此時改讓 Y 軸貼合資料範圍以看出變化。
-    if min(v) < 0 < max(v):
-        ax.fill_between(x, v, 0, where=[y >= 0 for y in v], color=UP, alpha=.20, interpolate=True)
-        ax.fill_between(x, v, 0, where=[y <= 0 for y in v], color=DN, alpha=.20, interpolate=True)
+    if kind == "bar" or (kind == "auto" and min(v) < 0 < max(v)):
+        pos, neg = (DN, UP) if invert else (UP, DN)   # invert: PUT 正值代表看空 → 綠
+        ax.bar(x, v, width=.62, color=[pos if y >= 0 else neg for y in v], label=label)
         ax.axhline(0, color=MUT, lw=1, alpha=.6)
     else:
+        ax.plot(x, v, color="#9fc3e8", lw=2.8, label=label)
         lo, hi = min(v), max(v)
         pad = (hi - lo) * .12 or 1
         ax.set_ylim(lo - pad, hi + pad)
 
 
-def legend(ax, ax2):
+def add_txf(ax, dates, txf):
+    """台指期收盤一律放右軸。"""
+    ys = [txf.get(d) for d in dates]
+    if not any(v is not None for v in ys):
+        return None
+    a2 = ax.twinx()
+    a2.plot(range(len(dates)), ys, color=TXFC, lw=3.2, label="台指期收盤(右軸)", zorder=5)
+    a2.tick_params(colors=TXFC, labelsize=9)
+    for s in a2.spines.values():
+        s.set_color(GRID)
+    lo = min(v for v in ys if v is not None); hi = max(v for v in ys if v is not None)
+    pad = (hi - lo) * .12 or 1
+    a2.set_ylim(lo - pad, hi + pad)
+    a2.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:,.0f}"))
+    return a2
+
+
+def legend(ax, a2):
     h, l = ax.get_legend_handles_labels()
-    if ax2:
-        h2, l2 = ax2.get_legend_handles_labels()
+    if a2:
+        h2, l2 = a2.get_legend_handles_labels()
         h += h2; l += l2
     lg = ax.legend(h, l, loc="upper left", fontsize=9, framealpha=.85,
-                   facecolor=PANEL, edgecolor=GRID, ncol=3)
+                   facecolor=PANEL, edgecolor=GRID, ncol=2)
     for t in lg.get_texts():
         t.set_color(TXT)
 
 
-def save(fig, out, name):
+def draw_table(ax, headers, rows):
+    """近五日表 (含今日, 最新在上), 加上格線與表頭底色 — 比照網站歷史趨勢表。"""
+    ax.axis("off"); ax.set_xlim(0, 1); ax.set_ylim(0, 1)
+    n, m = len(headers), len(rows)
+    rh = 1.0 / (m + 1)                          # 含表頭共 m+1 列, 等高
+    xr = lambda i: (i + 1) / n - .010           # 各欄右緣 (第一欄靠左)
+
+    ax.add_patch(plt.Rectangle((0, 1 - rh), 1, rh, color="#1a2330", zorder=0))  # 表頭底色
+    for k in range(m + 2):                      # 橫向格線
+        y = 1 - k * rh
+        if 0 <= y <= 1:
+            ax.plot([0, 1], [y, y], color=GRID, lw=1.1 if k <= 1 else .8, zorder=1)
+
+    yc = 1 - rh / 2
+    for i, h in enumerate(headers):
+        ax.text(0 if i == 0 else xr(i), yc, h, color=MUT, fontsize=10.5,
+                ha="left" if i == 0 else "right", va="center", zorder=2)
+    for r, row in enumerate(rows):
+        yc = 1 - rh * (r + 1) - rh / 2
+        for i, (txt, col) in enumerate(row):
+            ax.text(0 if i == 0 else xr(i), yc, txt, color=col,
+                    fontsize=11 if i else 10.5,
+                    ha="left" if i == 0 else "right", va="center",
+                    fontweight="normal" if i == 0 else "bold", zorder=2)
+
+
+def frame(title, sub, stats, dates, panels, txf, headers, rows, out, fname):
+    """panels = [(ys, ylabel, 圖例標籤, 小標題, kind, invert), ...] — 1 或 2 圖共用一張。"""
+    k = len(panels)
+    fig = plt.figure(figsize=(11.5, 7.0 if k == 1 else 9.8))
+    fig.patch.set_facecolor(BG)
+    hr = [2.9, 1.0] if k == 1 else [2.15, 2.15, 1.05]
+    top = .855 if k == 1 else .845
+    gs = fig.add_gridspec(k + 1, 1, height_ratios=hr,
+                          left=.075, right=.915, top=top, bottom=.05,
+                          hspace=.30 if k == 1 else .34)
+    for i, (ys, ylabel, lab, sub_t, kind, inv) in enumerate(panels):
+        ax = fig.add_subplot(gs[i])
+        style(ax, ylabel)
+        if sub_t:
+            ax.set_title(sub_t, color=TXT, fontsize=12, fontweight="bold", loc="left", pad=8)
+        plot_series(ax, ys, lab, kind, inv)
+        xaxis(ax, dates)
+        legend(ax, add_txf(ax, dates, txf))
+    header(fig, title, sub, stats, y0=.965)
+    draw_table(fig.add_subplot(gs[k]), headers, rows)
     os.makedirs(out, exist_ok=True)
-    p = os.path.join(out, name)
-    fig.savefig(p, dpi=150, facecolor=BG, bbox_inches="tight")
+    p = os.path.join(out, fname)
+    fig.savefig(p, dpi=150, facecolor=BG)
     plt.close(fig)
     print("  →", p)
     return p
 
 
-# ------------------------------------------------------------------ 各圖
-def chart_options(doc, txfr, days, out, fname, who):
-    """CALL/PUT 未平倉金額(千元) 疊同一張, 方便直接比對強弱。"""
-    ds = tail_dates(doc["records"], days)
-    # 原始單位為千元 → 換成億元 (1億元 = 10萬千元), 否則軸標會出現「80萬千元」難以換算
-    g = lambda d, k: (doc["records"][d].get(k, {}).get("diff_oi_amt"))
-    call = [None if g(d, "call") is None else g(d, "call") / 1e5 for d in ds]
-    put = [None if g(d, "put") is None else g(d, "put") / 1e5 for d in ds]
-    fig, ax = plt.subplots(figsize=(11, 5.2))
-    fig.patch.set_facecolor(BG)
-    x = range(len(ds))
-    ax.plot(x, call, color=UP, lw=2, label="CALL 未平倉金額")
-    ax.plot(x, put, color=DN, lw=2, label="PUT 未平倉金額")
-    ax.axhline(0, color=MUT, lw=1, alpha=.6)
-    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:,.1f}"))
-    ax.set_ylabel("未平倉金額(億元)", color=MUT, fontsize=10)
-    style(ax, f"{who}選擇權 — CALL / PUT 未平倉金額", f"近 {len(ds)} 個交易日 ・ 資料日期 {ds[-1]}")
-    xaxis(ax, ds)
-    legend(ax, add_txf(ax, ds, txfr))
-    return save(fig, out, fname)
+# ------------------------------------------------------------------ 各張圖
+def opt_charts(doc, txf, days, out, who, idx):
+    recs = doc["records"]
+    ds = sorted(recs)[-days:]
+    last5 = sorted(recs)[-5:][::-1]              # 近五日, 含今日, 最新在上
+    g = lambda d, k, f: (recs[d].get(k) or {}).get(f)
+    cur, prev = ds[-1], (ds[-2] if len(ds) > 1 else None)
+
+    def amt(d, k):
+        v = g(d, k, "diff_oi_amt")
+        return None if v is None else v / K2E
+
+    stats = [("CALL 未平倉金額", f_e(amt(cur, "call")), sgn(amt(cur, "call"))),
+             ("PUT 未平倉金額", f_e(amt(cur, "put")), sgn(amt(cur, "put")))]
+
+    # 近五日表 — 欄位比照網站 (金額改億元較好讀)
+    heads = ["日期", "CALL差額(口)", "PUT差額(口)", "CALL金額(億)", "PUT金額(億)"]
+    rows = []
+    for d in last5:
+        cl, pl = g(d, "call", "diff_oi_lots"), g(d, "put", "diff_oi_lots")
+        ca, pa = amt(d, "call"), amt(d, "put")
+        rows.append([(d, MUT), (f"{cl:+,.0f}" if cl is not None else "—", sgn(cl)),
+                     (f"{pl:+,.0f}" if pl is not None else "—", sgn(pl)),
+                     (f"{ca:+,.2f}" if ca is not None else "—", sgn(ca)),
+                     (f"{pa:+,.2f}" if pa is not None else "—", sgn(pa))])
+
+    # 一張圖 = CALL 圖 + PUT 圖 + 共用的近五日表
+    panels = [([amt(d, "call") for d in ds], "未平倉金額(億元)", "CALL 未平倉金額", "CALL 未平倉金額", "bar", False),
+              ([amt(d, "put") for d in ds], "未平倉金額(億元)", "PUT 未平倉金額", "PUT 未平倉金額", "bar", True)]
+    return frame(f"{who}選擇權 — CALL / PUT 未平倉金額",
+                 f"近 {len(ds)} 個交易日 ・ 資料日期 {cur}",
+                 stats, ds, panels, txf, heads, rows, out, f"{idx}_{who}選擇權.png")
 
 
-def chart_fut_spot(doc, txfr, days, out):
-    """外資期貨多空淨額(口) 柱狀 — 紅淨多/綠淨空。"""
-    ds = tail_dates(doc["records"], days)
-    net = [doc["records"][d].get("fut", {}).get("net_oi_lots") for d in ds]
-    fig, ax = plt.subplots(figsize=(11, 5.2))
-    fig.patch.set_facecolor(BG)
-    net_area(ax, net, "外資期貨多空淨額")
-    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:,.0f}"))
-    ax.set_ylabel("多空淨額(口)", color=MUT, fontsize=10)
-    style(ax, "外資期貨 — 多空淨額", f"近 {len(ds)} 個交易日 ・ 資料日期 {ds[-1]}")
-    xaxis(ax, ds)
-    legend(ax, add_txf(ax, ds, txfr))
-    return save(fig, out, "3_外資期貨現貨.png")
+def futspot_chart(doc, txf, days, out):
+    recs = doc["records"]
+    ds = sorted(recs)[-days:]
+    last5 = sorted(recs)[-5:][::-1]
+    net = lambda d: (recs[d].get("fut") or {}).get("net_oi_lots")
+    spot = lambda d: (recs[d].get("spot") or {}).get("net_amt")
+    cur, prev = ds[-1], (ds[-2] if len(ds) > 1 else None)
+    dn = (net(cur) - net(prev)) if prev and net(prev) is not None and net(cur) is not None else None
+    sp = spot(cur)
+    stats = [("期貨多空淨額", f_lot(net(cur)), sgn(net(cur))),
+             ("較前一日", f_lot(dn), sgn(dn)),
+             ("現貨買賣差額", f_e(None if sp is None else sp / E), sgn(sp))]
+
+    heads = ["日期", "期貨多空淨額(口)", "較前一日增減(口)", "現貨買賣差額(億)"]
+    rows = []
+    all_ds = sorted(recs)
+    for d in last5:
+        i = all_ds.index(d)
+        p = all_ds[i - 1] if i > 0 else None
+        n0, p0 = net(d), (net(p) if p else None)
+        dd = (n0 - p0) if (n0 is not None and p0 is not None) else None
+        s0 = spot(d)
+        rows.append([(d, MUT), (f"{n0:+,.0f}" if n0 is not None else "—", sgn(n0)),
+                     (f"{dd:+,.0f}" if dd is not None else "—", sgn(dd)),
+                     (f"{s0/E:+,.2f}" if s0 is not None else "—", sgn(s0))])
+
+    panels = [([net(d) for d in ds], "多空淨額(口)", "外資期貨多空淨額", None, "bar", False)]
+    return frame("外資期貨 — 多空淨額", f"近 {len(ds)} 個交易日 ・ 資料日期 {cur}",
+                 stats, ds, panels, txf, heads, rows, out, "3_外資期貨現貨.png")
 
 
-def chart_large_fut(doc, txfr, days, out):
-    """前十大特定法人 淨部位(口) — 面積+線。"""
-    ds = tail_dates(doc["records"], days)
+def largefut_chart(doc, txf, days, out):
+    recs = doc["records"]
+    ds = sorted(recs)[-days:]
+    last5 = sorted(recs)[-5:][::-1]
 
-    def net(rec):
-        rows = rec.get("rows") or []
-        f = lambda t: next((r for r in rows if r.get("month") == "999999" and r.get("type") == t), None)
-        t1 = f("1")
-        return (t1["top10_buy"] - t1["top10_sell"]) if t1 else None
+    def pick(d):
+        rows = recs[d].get("rows") or []
+        t1 = next((r for r in rows if r.get("month") == "999999" and r.get("type") == "1"), None)
+        t0 = next((r for r in rows if r.get("month") == "999999" and r.get("type") == "0"), None)
+        net = (t1["top10_buy"] - t1["top10_sell"]) if t1 else None
+        return net, (t0 or {}).get("market_oi")
 
-    ys = [net(doc["records"][d]) for d in ds]
-    fig, ax = plt.subplots(figsize=(11, 5.2))
-    fig.patch.set_facecolor(BG)
-    net_area(ax, ys, "前十大特定法人淨部位")
-    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:,.0f}"))
-    ax.set_ylabel("淨部位(口)", color=MUT, fontsize=10)
-    style(ax, "大額交易人期貨 — 前十大特定法人淨部位", f"近 {len(ds)} 個交易日 ・ 資料日期 {ds[-1]}")
-    xaxis(ax, ds)
-    legend(ax, add_txf(ax, ds, txfr))
-    return save(fig, out, "4_大額交易人期貨.png")
+    cur, prev = ds[-1], (ds[-2] if len(ds) > 1 else None)
+    n_cur = pick(cur)[0]
+    n_prev = pick(prev)[0] if prev else None
+    dn = (n_cur - n_prev) if (n_cur is not None and n_prev is not None) else None
+    stats = [("未平倉淨部位", f_lot(n_cur), sgn(n_cur)),
+             ("較前一日", f_lot(dn), sgn(dn))]
+
+    heads = ["日期", "前十特定法人淨部位(口)", "全市場未沖銷(口)"]
+    rows = []
+    for d in last5:
+        n0, mk = pick(d)
+        rows.append([(d, MUT), (f"{n0:+,.0f}" if n0 is not None else "—", sgn(n0)),
+                     (f"{mk:,.0f}" if mk is not None else "—", TXT)])
+
+    panels = [([pick(d)[0] for d in ds], "淨部位(口)", "前十特定法人淨部位", None, "auto", False)]
+    return frame("大額交易人期貨 — 前十大特定法人淨部位",
+                 f"近 {len(ds)} 個交易日 ・ 資料日期 {cur}",
+                 stats, ds, panels, txf, heads, rows, out, "4_大額交易人期貨.png")
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=".shots")
-    ap.add_argument("--days", type=int, default=60)   # 近三個月 ≈ 60 個交易日
+    ap.add_argument("--days", type=int, default=60)
     a = ap.parse_args()
-
-    txf = load("txf.json")
-    txfr = (txf or {}).get("records") or {}
+    txf = ((load("txf.json") or {}).get("records") or {})
     print("產生圖表:")
-    for f, who, name in (("options_foreign.json", "外資", "1_外資選擇權.png"),
-                         ("options_dealer.json", "自營", "2_自營選擇權.png")):
+    for f, who, i in (("options_foreign.json", "外資", 1), ("options_dealer.json", "自營", 2)):
         d = load(f)
         if d:
-            chart_options(d, txfr, a.days, a.out, name, who)
+            opt_charts(d, txf, a.days, a.out, who, i)
     d = load("foreign_fut_spot.json")
     if d:
-        chart_fut_spot(d, txfr, a.days, a.out)
+        futspot_chart(d, txf, a.days, a.out)
     d = load("large_fut_txf.json")
     if d:
-        chart_large_fut(d, txfr, a.days, a.out)
+        largefut_chart(d, txf, a.days, a.out)
     print("完成")
 
 
