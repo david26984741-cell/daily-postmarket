@@ -81,7 +81,9 @@
   }
   const {H,rows}=summaryRows();
 
-  /* ---- 歷史趨勢柱狀圖 (表格上方): 滾輪縮放 · 按住拖曳平移 · 雙擊重置 ---- */
+  /* ---- 歷史趨勢柱狀圖 (表格上方): 滾輪縮放 · 按住拖曳平移 · 雙擊看全部 ---- */
+  // 圖表與表格的共用預設期間 (交易日數)。近六個月 ≈ 120 個交易日。
+  const DEF_DAYS=120;
   const numCols=H.filter(h=>h.num).map(h=>h.label);
   let hchart=null;
   if(numCols.length && typeof Chart!=="undefined"){
@@ -90,7 +92,7 @@
     const csel=el("select");
     numCols.forEach(c=>{const o=el("option",null,c);o.value=c;csel.appendChild(o);});
     bar.appendChild(csel);
-    bar.appendChild(el("span","muted","  滾輪縮放期間 · 按住拖曳平移 · 雙擊重置"));
+    bar.appendChild(el("span","muted","  預設近六個月 · 滾輪縮放 · 按住拖曳平移 · 雙擊看全部歷史"));
     $("#history").appendChild(bar);
     const cbox=el("div","hist-canvas"); const cv=document.createElement("canvas");
     cbox.appendChild(cv); $("#history").appendChild(cbox);
@@ -103,11 +105,16 @@
     if(cat==="options_foreign"||cat==="options_dealer"){
       try{ txf=(await getJSON("txf.json")).records||null; }catch(e){ txf=null; }
     }
-    // ?days=N — 初始只顯示最近 N 個交易日 (供截圖/分享用; 未指定則顯示全部)。
-    // 注意: 直接以 N 起繪比「先畫全歷史再縮放」輕得多, 資料量大時差很多。
-    const qDays=parseInt(new URLSearchParams(location.search).get("days")||"",10);
+    // 顯示期間: 預設近六個月 (?days=N 自訂, ?days=0 看全部, 雙擊圖表亦可看全部)。
+    // 大額期貨等分頁全史逾 2,400 個交易日, 一次全畫會嚴重拖慢頁面;
+    // 直接以 N 筆起繪比「先畫全歷史再縮放」輕得多。
+    const _qd=new URLSearchParams(location.search).get("days");
+    const qDays=(_qd===null||_qd==="")?null:parseInt(_qd,10);
     let vB=Math.max(0,allLabels.length-1);
-    let vA=(qDays>0)?Math.max(0,vB-qDays+1):0;
+    let vA;
+    if(qDays===0) vA=0;                                   // ?days=0 → 全部
+    else if(qDays>0) vA=Math.max(0,vB-qDays+1);           // ?days=N → 近 N 日
+    else vA=Math.max(0,vB-DEF_DAYS+1);                    // 預設 → 近六個月
     let curCol=numCols[0];
     const SPANMIN=10;
     function clampWin(){
@@ -176,7 +183,24 @@
     try{ drawHist(); }catch(e){ cbox.appendChild(el("div","warn","圖表載入失敗:"+e.message)); }
   }
 
-  $("#history").appendChild(sortableTable(H,rows));
+  // 歷史表格: 與圖表一致, 預設只列近六個月。全史逾 2,400 列 (× 欄數) 會產生上萬個
+  // DOM 儲存格, 明顯拖慢頁面; 需要完整歷史時按一下展開即可。
+  const tblBox=el("div");
+  $("#history").appendChild(tblBox);
+  function drawTable(all){
+    tblBox.innerHTML="";
+    const data=all?rows:rows.slice(0,DEF_DAYS);          // rows 已是新→舊
+    if(!all && rows.length>DEF_DAYS){
+      const b=el("div","optbar");
+      const btn=el("button","ghost",`顯示全部 ${rows.length} 筆`);
+      btn.onclick=()=>drawTable(true);
+      b.appendChild(el("span","muted",`目前顯示最近 ${data.length} 筆　`));
+      b.appendChild(btn);
+      tblBox.appendChild(b);
+    }
+    tblBox.appendChild(sortableTable(H,data));
+  }
+  drawTable(false);
 })();
 </script>
 </body>

@@ -140,6 +140,11 @@
   // ---- 顯示期間 (全域, 所有圖表同步) ----------------------------------------
   const range={from:null,to:null};                         // "YYYY/MM/DD"; null=不限
   const allDates=(idx.dates||[]).slice().sort();           // 舊→新 主時間軸
+  // 預設只載近六個月。全史約 2,400 個交易日, 多檔×多面板時初繪與縮放會嚴重卡頓
+  // (實測 6 檔×4 面板 = 24 張圖 × 2,441 點 ≈ 5.9 萬點, 滾輪一下即凍結)。
+  // 要看完整歷史仍可按「全部」或自訂期間 — 那是明確選擇, 不是預設踩到的坑。
+  const DEF_DAYS = 120;
+  if (allDates.length > DEF_DAYS) range.from = allDates[allDates.length - DEF_DAYS];
   const d2i=s=>s?s.replaceAll("/","-"):"";                 // 資料日期 → <input type=date>
   const i2d=s=>s?s.replaceAll("-","/"):null;               // <input type=date> → 資料日期
   const inRange=d=>(!range.from||d>=range.from)&&(!range.to||d<=range.to);
@@ -336,7 +341,8 @@
   const fklines={};    // code -> 股期近月日K json (期交所行情, 優先使用)
 
   // ---- 偏好記憶 (localStorage): 選股組合/期間/口徑/圖表設定, 回訪自動恢復 ----
-  const PREFS="dpm.stocks.prefs2";   // v2: 面板改四口徑(交易人/主力/自然人/法人)
+  // v3: 預設期間改近六個月 — 升版讓舊存檔(可能存著「全部」)失效, 否則使用者會一直卡在全史
+  const PREFS="dpm.stocks.prefs3";
   function savePrefs(){
     try{
       localStorage.setItem(PREFS, JSON.stringify({
