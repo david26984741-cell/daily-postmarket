@@ -18,10 +18,64 @@ scrape = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(scrape)
 
 
+def probe_fkline_zip(date_slash):
+    """探測期交所「每日行情 zip」的實際欄位格式。
+    scrape.fetch_fkline_day 依賴此格式; 期交所若改版, 解析會靜靜地回 0 筆
+    (2026/07 就發生過 — 每日排程的股期日K 從上線起就沒成功過)。
+    印出:壓縮檔內檔名、標題列(含索引)、股期樣本列, 以及現行解析器實際命中幾筆。"""
+    import io, zipfile
+    ymd = date_slash.replace("/", "_")
+    url = f"https://www.taifex.com.tw/file/taifex/Dailydownload/DailydownloadCSV/Daily_{ymd}.zip"
+    print(f"\n[Z] 每日行情 zip 格式探測  {date_slash}\n    {url}")
+    try:
+        import urllib.request
+        req = urllib.request.Request(url, headers={"User-Agent": scrape.UA})
+        with urllib.request.urlopen(req, timeout=60) as r:
+            raw = r.read()
+    except Exception as e:
+        print(f"    下載失敗: {e}")
+        return
+    print(f"    下載 {len(raw)//1024} KB")
+    try:
+        zf = zipfile.ZipFile(io.BytesIO(raw))
+    except Exception as e:
+        print(f"    不是有效的 zip: {e}  (前 80 bytes: {raw[:80]!r})")
+        return
+    print(f"    內含檔案: {zf.namelist()}")
+    txt = zf.read(zf.namelist()[0]).decode("cp950", errors="replace")
+    lines = [l for l in txt.splitlines() if l.strip()]
+    print(f"    總行數: {len(lines)}")
+    if not lines:
+        return
+
+    hdr = [c.strip() for c in lines[0].split(",")]
+    print("    標題列:")
+    for i, h in enumerate(hdr):
+        print(f"       [{i:2}] {h}")
+
+    # 現行解析器命中數 (期望: 股票期貨應有數百列)
+    hit = scrape._fut_rows_pick(lines)
+    print(f"    現行 _fut_rows_pick 命中: {len(hit)} 筆" + ("  ← 0 筆代表格式不符!" if not hit else ""))
+
+    # 找出看起來像股票期貨的列 (任一欄位是 2~3 碼英數且像契約代號)
+    print("    前 3 筆資料列 (逐欄):")
+    for ln in lines[1:4]:
+        cols = [c.strip() for c in ln.split(",")]
+        print("       " + " | ".join(f"{i}:{c}" for i, c in enumerate(cols[:12])))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=None, help="用來檢查 CSV 的日期 YYYY/MM/DD (預設: index.json 最新日)")
+    ap.add_argument("--probe-zip", action="store_true",
+                    help="只探測每日行情 zip 的欄位格式 (診斷股期日K抓取用)")
     a = ap.parse_args()
+
+    if a.probe_zip:
+        idx = scrape.load_json(os.path.join(scrape.DATA, "index.json"), {})
+        ds = sorted(idx.get("dates", []))
+        probe_fkline_zip(a.date or (ds[-1] if ds else ""))
+        return 0
 
     idx = scrape.load_json(os.path.join(scrape.DATA, "index.json"), {})
     all_dates = sorted(idx.get("dates", []))

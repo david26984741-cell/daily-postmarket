@@ -11,6 +11,10 @@ on:
       date:
         description: "檢查用日期 YYYY/MM/DD (留空=資料庫最新日)"
         required: false
+      probe_zip:
+        description: "只探測每日行情 zip 欄位格式 (診斷股期日K用, 填 yes)"
+        required: false
+        default: "no"
 
 permissions:
   contents: read
@@ -30,4 +34,5 @@ jobs:
         run: |
           ARGS=""
           if [ -n "${{ github.event.inputs.date }}" ]; then ARGS="--date ${{ github.event.inputs.date }}"; fi
+          if [ "${{ github.event.inputs.probe_zip }}" = "yes" ]; then ARGS="$ARGS --probe-zip"; fi
           python tools/audit.py $ARGS
