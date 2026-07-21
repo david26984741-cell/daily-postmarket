@@ -64,6 +64,33 @@ def probe_fkline_zip(date_slash):
         print("       " + " | ".join(f"{i}:{c}" for i, c in enumerate(cols[:12])))
 
 
+def probe_futdatadown_all(date_slash):
+    """探測 futDataDown 在「不指定商品代號」時, 能否一次取回全市場當日日K。
+    若可行 → 每日抓股期日K 只需 1 次請求, 不必逐檔查 300+ 次 (現行退路約 5 分鐘)。"""
+    print(f"\n[D] futDataDown 全市場單次查詢探測  {date_slash}")
+    for label, params in [
+        ("commodity_id 留空", {"down_type": "1", "commodity_id": "",
+                               "queryStartDate": date_slash, "queryEndDate": date_slash}),
+        ("不帶 commodity_id", {"down_type": "1",
+                               "queryStartDate": date_slash, "queryEndDate": date_slash}),
+    ]:
+        try:
+            txt = scrape.http_get(scrape.TAIFEX + "futDataDown", params, big5=True)
+        except Exception as e:
+            print(f"    {label}: 請求失敗 {e}")
+            continue
+        lines = [l for l in txt.splitlines() if l.strip()]
+        hit = scrape._fut_rows_pick(lines)
+        stock_hits = {c for (c, d) in hit if d == date_slash}
+        print(f"    {label}: 回傳 {len(lines)} 行 | 解析命中 {len(hit)} 筆 | "
+              f"當日股期 {len(stock_hits)} 檔"
+              + ("  ← 可用!" if len(stock_hits) > 100 else ""))
+        if lines:
+            print(f"       標題: {lines[0][:120]}")
+            if len(lines) > 1:
+                print(f"       首列: {lines[1][:120]}")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=None, help="用來檢查 CSV 的日期 YYYY/MM/DD (預設: index.json 最新日)")
@@ -74,7 +101,9 @@ def main():
     if a.probe_zip:
         idx = scrape.load_json(os.path.join(scrape.DATA, "index.json"), {})
         ds = sorted(idx.get("dates", []))
-        probe_fkline_zip(a.date or (ds[-1] if ds else ""))
+        d = a.date or (ds[-1] if ds else "")
+        probe_fkline_zip(d)
+        probe_futdatadown_all(d)
         return 0
 
     idx = scrape.load_json(os.path.join(scrape.DATA, "index.json"), {})
