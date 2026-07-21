@@ -82,6 +82,20 @@ def http_get(url, params=None, big5=False, timeout=40, headers=None):
     # cp950 為 Big5 超集, 可正確解碼「碁」「堃」等罕字, 避免契約名稱出現亂碼
     return raw.decode("cp950", errors="replace") if big5 else raw.decode("utf-8", errors="replace")
 
+def http_post(url, data, big5=False, timeout=90, headers=None):
+    """POST 表單。TAIFEX 部分下載端點只吃 POST (例:每日行情『契約=全部』)。"""
+    from urllib.parse import urlencode
+    h = {"User-Agent": BROWSER_UA,
+         "Content-Type": "application/x-www-form-urlencoded",
+         "Referer": TAIFEX + "dlFutDailyMarketView"}
+    if headers:
+        h.update(headers)
+    req = urllib.request.Request(url, data=urlencode(data).encode("utf-8"), headers=h)
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        raw = r.read()
+    return raw.decode("cp950", errors="replace") if big5 else raw.decode("utf-8", errors="replace")
+
+
 def fetch_taifex_csv(key, date_slash):
     """抓 TAIFEX 下載 CSV (Big5), 回傳已解析的列 (list[list[str]])。"""
     txt = http_get(SRC[key], {"queryStartDate": date_slash, "queryEndDate": date_slash}, big5=True)
@@ -183,25 +197,26 @@ def _fut_rows_pick(lines, want_code=None):
 
 
 def fetch_fkline_day(date_slash, diag=False):
-    """當日全市場股票期貨近月日K — 從期交所每日行情 zip (一次請求涵蓋全市場, 最快)。
+    """當日全市場股票期貨近月日K — 期交所「期貨每日交易行情下載」契約=全部, 一次請求搞定。
+    端點 futDataDown 需 **POST**, 且「全部」是靠 commodity_id2t=all (不是 commodity_id 留空)。
     回傳 {code: [o,h,l,c]}; 拿不到當日資料則回空 dict (由呼叫端決定是否走退路)。
-    注意: 該 zip 需等「盤後交易時段」(至次日05:00) 結束才會有完整當日資料,
-          15:35 盤後排程時常抓不到 → 這是預期情形, 不是錯誤。"""
-    import io, zipfile
-    ymd = date_slash.replace("/", "_")
-    url = f"https://www.taifex.com.tw/file/taifex/Dailydownload/DailydownloadCSV/Daily_{ymd}.zip"
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        raw = r.read()
-    zf = zipfile.ZipFile(io.BytesIO(raw))
-    name = zf.namelist()[0]
-    txt = zf.read(name).decode("cp950", errors="replace")
-    best = _fut_rows_pick(txt.splitlines())
+
+    歷史備註: 舊版走 Dailydownload 的 Daily_*.zip, 但那是「逐筆成交明細」(單日 135 萬列,
+    只有成交價/量、沒有開高低收), 解析必然 0 筆 — 每日排程的股期日K 因此從上線起就沒成功過。"""
+    txt = http_post(TAIFEX + "futDataDown", {
+        "down_type": "1",
+        "commodity_id": "",
+        "commodity_id2": "",
+        "commodity_id2t": "all",          # ← 契約「全部」
+        "queryStartDate": date_slash,
+        "queryEndDate": date_slash,
+    }, big5=True)
+    lines = [l for l in txt.splitlines() if l.strip()]
+    best = _fut_rows_pick(lines)
     out = {code: v[1] for (code, d), v in best.items() if d == date_slash}
     if diag and not out:
-        # 空手而回時印出線索: 是「整包沒解析到股期列」還是「有資料但日期不是今天」
         seen = sorted({d for (_c, d) in best})
-        log(f"    診斷: zip 解析到 {len(best)} 筆股期列; 內含日期={seen[:3] or '無'}"
+        log(f"    診斷: 回傳 {len(lines)} 行, 解析 {len(best)} 筆; 內含日期={seen[:3] or '無'}"
             f"{'…' if len(seen) > 3 else ''} (要找 {date_slash})")
     return out
 
@@ -667,27 +682,34 @@ def run(date_slash, no_retry=False, skip_kline=False):
         status["kline"] = "資料未更新"
 
     # --- 來源 7: 股票期貨近月日K (供個股頁K棒/規模計算) ---
-    # 兩段式: 先試每日行情 zip (一次請求最快); 該 zip 要等盤後交易時段結束才會有當日資料,
-    # 15:35 排程常抓不到 → 自動退回 futDataDown 逐檔查詢 (慢但可靠, 與回補工具同路徑)。
-    # 少了這個退路, 每日排程會靜靜地留下 "no-data", 資料就永遠缺一天。
+    # 主路徑: 每日行情「契約=全部」單次 POST, 一次拿回全市場 (約 2,100 列)。
+    # 退路: 若主路徑空手, 改用 futDataDown 逐檔查詢 (慢, 但與回補工具同一條已驗證路徑)。
+    # 少了退路, 每日排程會靜靜地留下 "no-data", 資料就永遠缺一天 (2026/07 發生過)。
     if not skip_kline:
         fk, src = {}, ""
         try:
             fk = fetch_fkline_day(date_slash, diag=True)
             if fk:
-                src = "每日行情zip"
+                src = "每日行情(全部)"
         except Exception as e:
-            log(f"  股期日K: 每日行情zip 取得失敗 ({e})")
+            log(f"  股期日K: 每日行情(全部) 取得失敗 ({e})")
         if not fk:
             # 以當日大額交易人資料實際出現的股期代碼為準 (新掛牌也涵蓋)
             codes = sorted(fk_codes) if fk_codes else sorted(stock_map.keys())
-            log(f"  股期日K: zip 無當日資料 → 改用 futDataDown 逐檔查詢 ({len(codes)} 檔, 約需數分鐘)…")
+            log(f"  股期日K: 主路徑無當日資料 → 改用 futDataDown 逐檔查詢 ({len(codes)} 檔, 約需數分鐘)…")
             try:
                 fk = fetch_fkline_by_code(date_slash, codes)
                 if fk:
-                    src = "futDataDown"
+                    src = "futDataDown逐檔"
             except Exception as e:
                 log(f"  股期日K: 退路亦失敗 ({e})")
+        # 「全部」會一併含 BRF/GDF 等 3 碼商品期貨 → 只留當日確實有部位的股票期貨
+        if fk_codes:
+            drop = [c for c in fk if c not in fk_codes]
+            for c in drop:
+                fk.pop(c, None)
+            if drop:
+                log(f"  股期日K: 濾除非個股契約 {len(drop)} 檔 ({','.join(sorted(drop)[:6])}…)")
         for code, ohlc in fk.items():
             append_fkline(code, date_slash, ohlc)
         status["fkline"] = f"ok ({len(fk)} 檔 · {src})" if fk else "資料未更新"
