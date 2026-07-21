@@ -14683,6 +14683,26 @@
     "diff_oi_amt": 361526,
     "identity": "自營商"
    }
+  },
+  "2026/07/21": {
+   "call": {
+    "buy_oi_lots": 29607,
+    "buy_oi_amt": 946303,
+    "sell_oi_lots": 22472,
+    "sell_oi_amt": 908822,
+    "diff_oi_lots": 7135,
+    "diff_oi_amt": 37481,
+    "identity": "自營商"
+   },
+   "put": {
+    "buy_oi_lots": 25137,
+    "buy_oi_amt": 584067,
+    "sell_oi_lots": 20187,
+    "sell_oi_amt": 468341,
+    "diff_oi_lots": 4950,
+    "diff_oi_amt": 115726,
+    "identity": "自營商"
+   }
   }
  }
 }
