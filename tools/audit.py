@@ -91,6 +91,37 @@ def probe_futdatadown_all(date_slash):
                 print(f"       首列: {lines[1][:120]}")
 
 
+def probe_daily_all(date_slash):
+    """探測「單日 × 全部商品」的日K下載端點。
+    已知 futDailyMarketView 可產生含全部商品的年度CSV (2026/07 回補 2017~2022 用的就是它),
+    若有單日版本 → 每日只需 1 次請求即可取得全市場股期日K。"""
+    ymd = date_slash.replace("/", "/")
+    print(f"\n[V] 單日全商品日K 端點探測  {date_slash}")
+    cands = [
+        ("futDailyMarketReport",     {"queryDate": ymd, "down_type": "1"}),
+        ("futDailyMarketReportDown", {"queryDate": ymd, "down_type": "1"}),
+        ("futDailyMarketView",       {"queryDate": ymd, "down_type": "1"}),
+        ("futDailyMarketViewDown",   {"queryDate": ymd, "down_type": "1"}),
+        ("dlFutDailyMarketView",     {"queryDate": ymd, "down_type": "1"}),
+    ]
+    for name, params in cands:
+        try:
+            txt = scrape.http_get(scrape.TAIFEX + name, params, big5=True, timeout=90)
+        except Exception as e:
+            print(f"    {name:26} 失敗: {str(e)[:60]}")
+            continue
+        lines = [l for l in txt.splitlines() if l.strip()]
+        if lines and lines[0].lstrip().lower().startswith("<"):
+            print(f"    {name:26} 回傳 HTML (非 CSV), {len(lines)} 行")
+            continue
+        hit = scrape._fut_rows_pick(lines)
+        got = {c for (c, d) in hit if d == date_slash}
+        mark = "  ← 可用!" if len(got) > 100 else ""
+        print(f"    {name:26} {len(lines)} 行 | 命中 {len(hit)} | 當日股期 {len(got)} 檔{mark}")
+        if lines:
+            print(f"         標題: {lines[0][:110]}")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=None, help="用來檢查 CSV 的日期 YYYY/MM/DD (預設: index.json 最新日)")
@@ -104,6 +135,7 @@ def main():
         d = a.date or (ds[-1] if ds else "")
         probe_fkline_zip(d)
         probe_futdatadown_all(d)
+        probe_daily_all(d)
         return 0
 
     idx = scrape.load_json(os.path.join(scrape.DATA, "index.json"), {})
