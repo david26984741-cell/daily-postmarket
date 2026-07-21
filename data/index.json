@@ -2443,7 +2443,7 @@
   "2016/07/01"
  ],
  "latest_date": "2026/07/20",
- "updated_at": "2026-07-21T03:18:03+08:00",
+ "updated_at": "2026-07-21T12:32:25+08:00",
  "stocks": [
   {
    "code": "CA",
@@ -23596,7 +23596,7 @@
    "large_fut_txf": "ok",
    "stocks": "ok (315 檔)",
    "kline": "ok (253 檔)",
-   "fkline": "no-data",
+   "fkline": "ok (310 檔 · futDataDown)",
    "txf": "ok"
   }
  }
