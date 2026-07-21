@@ -1,0 +1,33 @@
+name: 資料稽核
+
+# 手動觸發, 只讀不寫。輸出:
+#   1. 期交所官方標的清單 vs 本地清單 (有無新掛牌被漏抓 / 已下架)
+#   2. 當日 CSV 中所有非個股商品代碼 (確認沒有個股被誤判)
+#   3. 每檔個股期貨的歷史涵蓋 (首筆 / 末筆 / 筆數), 並列出不完整者
+
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "檢查用日期 YYYY/MM/DD (留空=資料庫最新日)"
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TZ: Asia/Taipei
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: 執行稽核
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.date }}" ]; then ARGS="--date ${{ github.event.inputs.date }}"; fi
+          python tools/audit.py $ARGS

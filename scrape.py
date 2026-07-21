@@ -182,9 +182,11 @@ def _fut_rows_pick(lines, want_code=None):
     return best  # {(code,date): (vol, ohlc)}
 
 
-def fetch_fkline_day(date_slash):
-    """當日全市場股票期貨近月日K — 從期交所每日行情 zip (僅保留近期)。
-    回傳 {code: [o,h,l,c]}。"""
+def fetch_fkline_day(date_slash, diag=False):
+    """當日全市場股票期貨近月日K — 從期交所每日行情 zip (一次請求涵蓋全市場, 最快)。
+    回傳 {code: [o,h,l,c]}; 拿不到當日資料則回空 dict (由呼叫端決定是否走退路)。
+    注意: 該 zip 需等「盤後交易時段」(至次日05:00) 結束才會有完整當日資料,
+          15:35 盤後排程時常抓不到 → 這是預期情形, 不是錯誤。"""
     import io, zipfile
     ymd = date_slash.replace("/", "_")
     url = f"https://www.taifex.com.tw/file/taifex/Dailydownload/DailydownloadCSV/Daily_{ymd}.zip"
@@ -195,7 +197,33 @@ def fetch_fkline_day(date_slash):
     name = zf.namelist()[0]
     txt = zf.read(name).decode("cp950", errors="replace")
     best = _fut_rows_pick(txt.splitlines())
-    return {code: v[1] for (code, d), v in best.items() if d == date_slash}
+    out = {code: v[1] for (code, d), v in best.items() if d == date_slash}
+    if diag and not out:
+        # 空手而回時印出線索: 是「整包沒解析到股期列」還是「有資料但日期不是今天」
+        seen = sorted({d for (_c, d) in best})
+        log(f"    診斷: zip 解析到 {len(best)} 筆股期列; 內含日期={seen[:3] or '無'}"
+            f"{'…' if len(seen) > 3 else ''} (要找 {date_slash})")
+    return out
+
+
+def fetch_fkline_by_code(date_slash, codes, sleep=0.2):
+    """退路: 逐檔以 futDataDown 查當日股期日K (與 tools/backfill_fkline.py 同一路徑)。
+    每檔一次請求, 比 zip 慢得多, 僅在 zip 拿不到當日資料時使用。"""
+    out = {}
+    fails = 0
+    for code in sorted(codes):
+        try:
+            got = fetch_fkline_range(code, date_slash, date_slash)
+            if date_slash in got:
+                out[code] = got[date_slash]
+        except Exception as e:
+            fails += 1
+            if fails <= 3:                       # 只印前幾筆, 避免洗版
+                log(f"    {code}: {e}")
+        time.sleep(sleep)
+    if fails:
+        log(f"    (共 {fails} 檔查詢失敗)")
+    return out
 
 
 def fetch_fkline_range(code, start_slash, end_slash):
@@ -523,6 +551,7 @@ def run(date_slash, no_retry=False, skip_kline=False):
     os.makedirs(KLINE, exist_ok=True)
     yyyymmdd = date_slash.replace("/", "")
     status = {}
+    fk_codes = set()      # 當日實際有部位的股期代碼; 供「來源 7」股期日K退路使用
 
     trading, why = is_trading_day(date_slash)
     if not trading:
@@ -612,6 +641,7 @@ def run(date_slash, no_retry=False, skip_kline=False):
                 stock_map[code] = info
                 new_codes.append(f"{code} {name}")
             append_stock(code, name or info.get("short", code), info.get("sid", ""), date_slash, g["rows"])
+            fk_codes.add(code)          # 當日實際有部位資料的股期 → 股期日K 退路只查這些
             n += 1
         if new_codes:
             save_json(os.path.join(DATA, "stock_map.json"), stock_map)
@@ -636,17 +666,32 @@ def run(date_slash, no_retry=False, skip_kline=False):
     else:
         status["kline"] = "資料未更新"
 
-    # --- 來源 7: 股票期貨近月日K (每日行情 zip, 供個股頁K棒/規模計算) ---
+    # --- 來源 7: 股票期貨近月日K (供個股頁K棒/規模計算) ---
+    # 兩段式: 先試每日行情 zip (一次請求最快); 該 zip 要等盤後交易時段結束才會有當日資料,
+    # 15:35 排程常抓不到 → 自動退回 futDataDown 逐檔查詢 (慢但可靠, 與回補工具同路徑)。
+    # 少了這個退路, 每日排程會靜靜地留下 "no-data", 資料就永遠缺一天。
     if not skip_kline:
+        fk, src = {}, ""
         try:
-            fk = fetch_fkline_day(date_slash)
-            for code, ohlc in fk.items():
-                append_fkline(code, date_slash, ohlc)
-            status["fkline"] = f"ok ({len(fk)} 檔)" if fk else "no-data"
-            log(f"  股期日K: 寫入 {len(fk)} 檔")
+            fk = fetch_fkline_day(date_slash, diag=True)
+            if fk:
+                src = "每日行情zip"
         except Exception as e:
-            status["fkline"] = "error"
-            log(f"  股期日K失敗: {e}")
+            log(f"  股期日K: 每日行情zip 取得失敗 ({e})")
+        if not fk:
+            # 以當日大額交易人資料實際出現的股期代碼為準 (新掛牌也涵蓋)
+            codes = sorted(fk_codes) if fk_codes else sorted(stock_map.keys())
+            log(f"  股期日K: zip 無當日資料 → 改用 futDataDown 逐檔查詢 ({len(codes)} 檔, 約需數分鐘)…")
+            try:
+                fk = fetch_fkline_by_code(date_slash, codes)
+                if fk:
+                    src = "futDataDown"
+            except Exception as e:
+                log(f"  股期日K: 退路亦失敗 ({e})")
+        for code, ohlc in fk.items():
+            append_fkline(code, date_slash, ohlc)
+        status["fkline"] = f"ok ({len(fk)} 檔 · {src})" if fk else "資料未更新"
+        log(f"  股期日K: 寫入 {len(fk)} 檔" + (f" (來源 {src})" if src else " ← 兩種來源都沒拿到"))
 
     # --- 來源 6: 台指期近月收盤 (供外資/自營選擇權歷史趨勢疊圖) ---
     if not skip_kline:
