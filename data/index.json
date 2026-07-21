@@ -1,5 +1,6 @@
 {
  "dates": [
+  "2026/07/21",
   "2026/07/20",
   "2026/07/17",
   "2026/07/16",
@@ -2442,8 +2443,8 @@
   "2016/07/04",
   "2016/07/01"
  ],
- "latest_date": "2026/07/20",
- "updated_at": "2026-07-21T12:32:25+08:00",
+ "latest_date": "2026/07/21",
+ "updated_at": "2026-07-21T15:56:15+08:00",
  "stocks": [
   {
    "code": "CA",
@@ -3271,16 +3272,6 @@
    "sid": "0050"
   },
   {
-   "code": "OA",
-   "name": "富邦上証ETF期貨",
-   "sid": "006205"
-  },
-  {
-   "code": "OB",
-   "name": "元大上證50ETF期貨",
-   "sid": "006206"
-  },
-  {
    "code": "OD",
    "name": "為升期貨",
    "sid": "2231"
@@ -3296,16 +3287,6 @@
    "sid": "6279"
   },
   {
-   "code": "OJ",
-   "name": "國泰中國A50ETF期貨",
-   "sid": "00636"
-  },
-  {
-   "code": "OK",
-   "name": "富邦深100ETF期貨",
-   "sid": "00639"
-  },
-  {
    "code": "OL",
    "name": "小型大立光期貨",
    "sid": "3008"
@@ -3314,11 +3295,6 @@
    "code": "OM",
    "name": "小型精華期貨",
    "sid": "1565"
-  },
-  {
-   "code": "OO",
-   "name": "群益深証中小ETF期貨",
-   "sid": "00643"
   },
   {
    "code": "OP",
@@ -3726,19 +3702,9 @@
    "sid": "3443"
   },
   {
-   "code": "RX",
-   "name": "富邦越南ETF期貨",
-   "sid": "00885"
-  },
-  {
    "code": "RY",
    "name": "群益台ESG低碳50ETF期貨",
    "sid": "00923"
-  },
-  {
-   "code": "RZ",
-   "name": "元大美債20年ETF期貨",
-   "sid": "00679B"
   },
   {
    "code": "SA",
@@ -3771,16 +3737,6 @@
    "sid": "2383"
   },
   {
-   "code": "SG",
-   "name": "國泰智能電動車ETF期貨",
-   "sid": "00893"
-  },
-  {
-   "code": "SI",
-   "name": "元大美債1-3ETF期貨",
-   "sid": "00719B"
-  },
-  {
    "code": "SJ",
    "name": "神基期貨",
    "sid": "3005"
@@ -3804,11 +3760,6 @@
    "code": "SN",
    "name": "復華台灣科技優息ETF期貨",
    "sid": "00929"
-  },
-  {
-   "code": "SQ",
-   "name": "中信高評級公司債ETF期貨",
-   "sid": "00772B"
   },
   {
    "code": "SR",
@@ -3886,16 +3837,6 @@
    "sid": "6526"
   },
   {
-   "code": "UJ",
-   "name": "群益ESG投等債20+ETF期貨",
-   "sid": ""
-  },
-  {
-   "code": "UK",
-   "name": "國泰20年美債ETF期貨",
-   "sid": ""
-  },
-  {
    "code": "UL",
    "name": "小型雙鴻期貨",
    "sid": "3324"
@@ -3918,16 +3859,6 @@
   {
    "code": "UQ",
    "name": "小型保瑞期貨",
-   "sid": ""
-  },
-  {
-   "code": "UR",
-   "name": "統一FANG+ETF期貨",
-   "sid": ""
-  },
-  {
-   "code": "US",
-   "name": "小型統一FANG+ETF期貨",
    "sid": ""
   },
   {
@@ -23597,6 +23528,17 @@
    "stocks": "ok (315 檔)",
    "kline": "ok (253 檔)",
    "fkline": "ok (310 檔 · futDataDown)",
+   "txf": "ok"
+  },
+  "2026/07/21": {
+   "options_foreign": "ok",
+   "options_dealer": "ok",
+   "foreign_fut_spot": "ok",
+   "large_opt": "ok",
+   "large_fut_txf": "ok",
+   "stocks": "ok (301 檔)",
+   "kline": "ok (253 檔)",
+   "fkline": "ok (287 檔 · futDataDown逐檔)",
    "txf": "ok"
   }
  }
