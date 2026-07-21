@@ -2444,7 +2444,7 @@
   "2016/07/01"
  ],
  "latest_date": "2026/07/21",
- "updated_at": "2026-07-21T15:56:15+08:00",
+ "updated_at": "2026-07-21T16:24:36+08:00",
  "stocks": [
   {
    "code": "CA",
@@ -23538,7 +23538,7 @@
    "large_fut_txf": "ok",
    "stocks": "ok (301 檔)",
    "kline": "ok (253 檔)",
-   "fkline": "ok (287 檔 · futDataDown逐檔)",
+   "fkline": "ok (287 檔 · 每日行情(全部))",
    "txf": "ok"
   }
  }
