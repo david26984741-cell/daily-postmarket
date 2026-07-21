@@ -231,4 +231,29 @@ https://david26984741-cell.github.io/daily-postmarket/
   兩者皆 continue-on-error — 圖掛掉不影響報告寄出。
 - runner 仍需 `fonts-noto-cjk`(matplotlib 與截圖都會用到)。
 
+### 2026/07/21(公司電腦)— 股期日K:每日排程其實從沒成功過
+- **症狀**:網站股期日K停在 7/17,7/20 沒進來。查 index.json `status_log` 發現
+  7/17、7/20 都是 `fkline: no-data` — 也就是**每日排程從這功能上線起就沒抓成功過**;
+  7/17 那批資料其實是事後用 fkline.yml 手動回補的。
+- **根因**:`fetch_fkline_day` 走 `Dailydownload/Daily_*.zip`,但那是**逐筆成交明細**:
+  欄位 = 成交日期/商品代號/到期月份/成交時間/成交價格/成交數量,
+  **單日 135 萬列、沒有開高低收**,日期還是 `20260717`(無斜線)。
+  → 根本不是日K資料源,`_fut_rows_pick` 解析必然 0 筆,然後靜靜記 `no-data` 就結束。
+  (檔案 3MB,探測時還發生下載逾時)
+- **修正**:改用「**期貨每日交易行情下載**」契約=全部,一次請求拿回全市場(約 2,100 列)。
+  - 端點仍是 `futDataDown`,但**必須 POST**(新增 `http_post()`)。
+  - 「全部」= **`commodity_id=all`**。頁面上選單叫 `commodity_idt`/`commodity_id2t`,
+    送出前由 `checkSubmit()` 複製到 `commodity_id`/`commodity_id2` 再 POST。
+  - 實測四種組合(2026/07/21):`commodity_id=all` → 2113 列 ✓;
+    `specialid`+`id2=all` → 1813 列;`commodity_id` 留空 → **只有標題列 1 行**(先前踩此坑)。
+  - 「全部」會一併含 `BRF`/`GDF` 等 3 碼商品期貨 → 以當日大額交易人的股期代碼(`fk_codes`)濾除。
+- **保留退路**:主路徑空手時自動退回 `futDataDown` 逐檔查詢(與 backfill_fkline 同路徑)。
+  少了退路,排程只會留下 `no-data`,資料就永遠缺一天。
+- **狀態改寫實情**:`ok (287 檔 · 每日行情(全部))` / `資料未更新`,不再用曖昧的 `no-data`。
+- **效果**:抓取步驟 **4m53s → 59 秒**;對期交所請求 **315 次 → 1 次**。
+- `tools/audit.py` 新增 `--probe-zip`(workflow「資料稽核」填 probe_zip=yes):
+  印出來源的標題列、樣本列與現行解析器命中數。這次就是靠它一眼看出「解析到 0 筆」。
+  期交所日後若再改格式,同樣手法可快速定位。
+- 註:7/20 缺的資料已先用 fkline.yml 補齊(310 檔)。
+
 (之後的修改請接著往下記)
