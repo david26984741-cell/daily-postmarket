@@ -87,7 +87,7 @@ def http_post(url, data, big5=False, timeout=90, headers=None):
     from urllib.parse import urlencode
     h = {"User-Agent": BROWSER_UA,
          "Content-Type": "application/x-www-form-urlencoded",
-         "Referer": TAIFEX + "dlFutDailyMarketView"}
+         "Referer": TAIFEX + "futDailyMarketView"}
     if headers:
         h.update(headers)
     req = urllib.request.Request(url, data=urlencode(data).encode("utf-8"), headers=h)
@@ -198,16 +198,17 @@ def _fut_rows_pick(lines, want_code=None):
 
 def fetch_fkline_day(date_slash, diag=False):
     """當日全市場股票期貨近月日K — 期交所「期貨每日交易行情下載」契約=全部, 一次請求搞定。
-    端點 futDataDown 需 **POST**, 且「全部」是靠 commodity_id2t=all (不是 commodity_id 留空)。
+    端點 futDataDown 需 **POST**, 且「全部」是 commodity_id=all。
+    (頁面上選單叫 commodity_idt/commodity_id2t, 送出前由 JS 複製到 commodity_id/commodity_id2;
+     實測 commodity_id=all → 2,113 列全市場; 留空只會回標題列 1 行。)
     回傳 {code: [o,h,l,c]}; 拿不到當日資料則回空 dict (由呼叫端決定是否走退路)。
 
     歷史備註: 舊版走 Dailydownload 的 Daily_*.zip, 但那是「逐筆成交明細」(單日 135 萬列,
     只有成交價/量、沒有開高低收), 解析必然 0 筆 — 每日排程的股期日K 因此從上線起就沒成功過。"""
     txt = http_post(TAIFEX + "futDataDown", {
         "down_type": "1",
-        "commodity_id": "",
+        "commodity_id": "all",            # ← 契約「全部」; 留空只會回標題列
         "commodity_id2": "",
-        "commodity_id2t": "all",          # ← 契約「全部」
         "queryStartDate": date_slash,
         "queryEndDate": date_slash,
     }, big5=True)
