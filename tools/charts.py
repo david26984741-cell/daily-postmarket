@@ -46,12 +46,19 @@ def sgn(v):
     return UP if (v or 0) > 0 else (DN if (v or 0) < 0 else TXT)
 
 
-def f_lot(v):
-    return "—" if v is None else f"{v:+,.0f} 口"
+# signed=True → 帶 +/- (用於「較前一日」這種真正的變動量)
+# signed=False → 不帶符號、只顯示絕對值 (用於「未平倉金額/淨部位」等當下水位;
+#                方向改由顏色表達 sgn(): 紅=正/多方、綠=負/空方, 避免 + 被誤讀成「增加」)
+def f_lot(v, signed=True):
+    if v is None:
+        return "—"
+    return f"{v:+,.0f} 口" if signed else f"{abs(v):,.0f} 口"
 
 
-def f_e(v, unit="億"):
-    return "—" if v is None else f"{v:+,.2f} {unit}"
+def f_e(v, unit="億", signed=True):
+    if v is None:
+        return "—"
+    return f"{v:+,.2f} {unit}" if signed else f"{abs(v):,.2f} {unit}"
 
 
 # ------------------------------------------------------------------ 版面元件
@@ -200,8 +207,8 @@ def opt_charts(doc, txf, days, out, who, idx):
         v = g(d, k, "diff_oi_amt")
         return None if v is None else v / K2E
 
-    stats = [("CALL 未平倉金額", f_e(amt(cur, "call")), sgn(amt(cur, "call"))),
-             ("PUT 未平倉金額", f_e(amt(cur, "put")), sgn(amt(cur, "put")))]
+    stats = [("CALL 未平倉金額", f_e(amt(cur, "call"), signed=False), sgn(amt(cur, "call"))),
+             ("PUT 未平倉金額", f_e(amt(cur, "put"), signed=False), sgn(amt(cur, "put")))]
 
     # 近五日表 — 欄位比照網站 (金額改億元較好讀)
     heads = ["日期", "CALL差額(口)", "PUT差額(口)", "CALL金額(億)", "PUT金額(億)"]
@@ -231,9 +238,9 @@ def futspot_chart(doc, txf, days, out):
     cur, prev = ds[-1], (ds[-2] if len(ds) > 1 else None)
     dn = (net(cur) - net(prev)) if prev and net(prev) is not None and net(cur) is not None else None
     sp = spot(cur)
-    stats = [("期貨多空淨額", f_lot(net(cur)), sgn(net(cur))),
-             ("較前一日", f_lot(dn), sgn(dn)),
-             ("現貨買賣差額", f_e(None if sp is None else sp / E), sgn(sp))]
+    stats = [("期貨多空淨額", f_lot(net(cur), signed=False), sgn(net(cur))),
+             ("較前一日", f_lot(dn), sgn(dn)),                              # 變動 → 保留 +/-
+             ("現貨買賣差額", f_e(None if sp is None else sp / E, signed=False), sgn(sp))]
 
     heads = ["日期", "期貨多空淨額(口)", "較前一日增減(口)", "現貨買賣差額(億)"]
     rows = []
@@ -269,8 +276,8 @@ def largefut_chart(doc, txf, days, out):
     n_cur = pick(cur)[0]
     n_prev = pick(prev)[0] if prev else None
     dn = (n_cur - n_prev) if (n_cur is not None and n_prev is not None) else None
-    stats = [("未平倉淨部位", f_lot(n_cur), sgn(n_cur)),
-             ("較前一日", f_lot(dn), sgn(dn))]
+    stats = [("未平倉淨部位", f_lot(n_cur, signed=False), sgn(n_cur)),
+             ("較前一日", f_lot(dn), sgn(dn))]                              # 變動 → 保留 +/-
 
     heads = ["日期", "前十特定法人淨部位(口)", "全市場未沖銷(口)"]
     rows = []

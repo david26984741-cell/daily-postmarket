@@ -256,4 +256,16 @@ https://david26984741-cell.github.io/daily-postmarket/
   期交所日後若再改格式,同樣手法可快速定位。
 - 註:7/20 缺的資料已先用 fkline.yml 補齊(310 檔)。
 
+### 2026/07/22(公司電腦)— Cowork 操作方式的取捨(重要)
+- 問題:能不能全程用「檔案處理 + 程式執行」取代「操控電腦」?實測結論:**部分可以,pull/push 不行**。
+- **改檔/讀檔/驗語法/分析資料** → 用 Read/Write/Edit + bash,不碰電腦操控,又快又準(本來就這樣做)。
+- **git pull** → 砂箱**連得到** GitHub(`git ls-remote` 成功),但 **`git pull` 會逾時**:
+  本 repo 九年資料、幾千檔,物件量大,超過工具 45 秒上限。逾時中斷會留下 `.git/index.lock`,
+  而**砂箱對 `.git` 無刪除權限**(`Operation not permitted`),那個 lock 連 GitHub Desktop 都會擋
+  (跳 "A lock file already exists")。清 lock 只能回頭用電腦操控(「執行」對話框下 del)。
+  → **不要用 bash `git pull` 硬拉本 repo**,只會卡出 lock。pull 一律走 GitHub Desktop(增量+背景+有憑證)。
+- **git push** → 砂箱無憑證,**永遠只能經 GitHub Desktop**。
+- 另注意:砂箱讀 `.git/` 是舊快取(`ls` 看到的 lock 狀態不可信),要判斷 git 狀態以 GitHub Desktop 為準。
+- 一句話:**盡量用程式,只有 pull/push 走 GitHub Desktop**。
+
 (之後的修改請接著往下記)
