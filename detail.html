@@ -132,8 +132,11 @@
     function drawHist(){
       const labels=allLabels.slice(vA,vB+1);
       const vals=asc.slice(vA,vB+1).map(r=>{const v=r[curCol]; return (v&&v.raw!==undefined&&v.raw!==null)?Number(v.raw):null;});
+      // PUT 欄位配色反轉: PUT 為正 = BUY PUT 增溫 = 偏空 → 綠; 為負 → 紅
+      const inv=/^PUT/.test(curCol);
+      const [posC,negC]=inv?["rgba(34,197,94,.85)","rgba(255,91,91,.85)"]:["rgba(255,91,91,.85)","rgba(34,197,94,.85)"];
       const ds=[{label:curCol,data:vals,borderWidth:0,order:1,
-        backgroundColor:vals.map(v=>v==null?"rgba(0,0,0,0)":(v>=0?"rgba(255,91,91,.85)":"rgba(34,197,94,.85)"))}];
+        backgroundColor:vals.map(v=>v==null?"rgba(0,0,0,0)":(v>=0?posC:negC))}];
       const sc={ x:{ticks:{color:"#c3d2e0",maxTicksLimit:12,font:{size:11}},grid:{color:"rgba(255,255,255,.04)"}},
                  y:{ticks:{color:"#c3d2e0",font:{size:11}},grid:{color:"rgba(255,255,255,.06)"}} };
       if(txf){
