@@ -385,6 +385,63 @@ def fetch_kline_maps(date_yyyymmdd):
     return out
 
 
+def fetch_name_sid_map(date_yyyymmdd):
+    """當日「證券名稱 → 證券代號」對照 (上市 TWSE + 上櫃 TPEx)。
+    用途:新掛牌股期只在大額 CSV 有「商品代號+名稱」、沒有證券代號;
+         期交所 stockLists 頁又常漏列新標的 (2026/07 旺矽、貿聯…皆如此),
+         故改用當日現貨行情的名稱反查代號, 自動補上 sid (含既有漏補的檔)。
+    回傳 {正規化名稱: 代號};任一步失敗都不影響主流程 (回什麼算什麼)。
+    名稱正規化(_norm_name):去空白 + 破折號統一為半形 '-',
+    因 KY 股在期貨/現貨兩邊可能用全形'－'或半形'-',不統一會對不上。"""
+    m = {}
+    try:
+        txt = http_get(TWSE_MI, {"response": "json", "date": date_yyyymmdd, "type": "ALLBUT0999"},
+                       headers={"User-Agent": BROWSER_UA,
+                                "Referer": "https://www.twse.com.tw/zh/trading/historical/mi-index.html",
+                                "Accept": "application/json, text/javascript, */*; q=0.01",
+                                "X-Requested-With": "XMLHttpRequest"})
+        obj = json.loads(txt)
+        for tb in obj.get("tables", []):
+            f = tb.get("fields") or []
+            if "證券代號" in f and "證券名稱" in f:
+                si, ni = f.index("證券代號"), f.index("證券名稱")
+                for row in tb.get("data", []):
+                    m[_norm_name(row[ni])] = str(row[si]).strip()
+    except Exception as e:
+        log(f"  名稱對照(TWSE)錯誤: {e}")
+    try:
+        roc = f"{int(date_yyyymmdd[:4])-1911}/{date_yyyymmdd[4:6]}/{date_yyyymmdd[6:]}"
+        txt = http_get(TPEX_DQ, {"date": roc, "response": "json"},
+                       headers={"User-Agent": BROWSER_UA,
+                                "Referer": "https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing.html",
+                                "Accept": "application/json"})
+        obj = json.loads(txt)
+        for tb in (obj.get("tables") or [])[:1]:
+            f = tb.get("fields") or []
+            if "代號" in f and "名稱" in f:
+                si, ni = f.index("代號"), f.index("名稱")
+                for row in tb.get("data", []):
+                    m.setdefault(_norm_name(row[ni]), str(row[si]).strip())
+    except Exception as e:
+        log(f"  名稱對照(TPEx)錯誤: {e}")
+    return m
+
+
+def _norm_name(s):
+    """名稱正規化: 去所有空白 + 破折號統一半形 (KY 股常有全形/半形差異)。"""
+    return "".join(str(s).split()).replace("－", "-").replace("–", "-").replace("—", "-")
+
+
+def resolve_sid(short, name2sid, stock_map):
+    """由股期簡稱推證券代號:小型契約先繼承本尊, 否則以現貨名稱反查。查不到回空字串。"""
+    base = short[2:] if short.startswith("小型") else short
+    if short.startswith("小型"):                 # 小型 → 繼承本尊 (本尊多半已有 sid)
+        for v in stock_map.values():
+            if v.get("short") == base and v.get("sid"):
+                return v["sid"]
+    return name2sid.get(_norm_name(base)) or name2sid.get(_norm_name(short)) or ""
+
+
 def append_kline(sid, date_slash, ohlcv):
     path = os.path.join(KLINE, f"{sid}.json")
     doc = load_json(path, {"sid": sid, "records": {}})
@@ -639,28 +696,35 @@ def run(date_slash, no_retry=False, skip_kline=False):
         stocks = parse_large_fut(lf_rows)
         n = 0
         new_codes = []
+        map_dirty = False
+        _name2sid = None            # 當日名稱→代號對照 (只在有缺 sid 時才抓一次)
         for code, g in stocks.items():
             name = g["name"] or ""
             if len(code) != 2 or code in NON_STOCK_2CHAR or "(" in name or "(" in name:
                 continue
             info = stock_map.get(code)
             if info is None:
-                # 新掛牌: 自動補進對照表; 小型契約嘗試繼承本尊的證券代號
                 short = name[:-2] if name.endswith("期貨") else (name or code)
-                sid = ""
-                if short.startswith("小型"):
-                    base = short[2:]
-                    for v in stock_map.values():
-                        if v.get("short") == base and v.get("sid"):
-                            sid = v["sid"]; break
-                info = {"short": short, "sid": sid, "full": ""}
+                info = {"short": short, "sid": "", "full": ""}
                 stock_map[code] = info
                 new_codes.append(f"{code} {name}")
+                map_dirty = True
+            # 補證券代號: 新掛牌 + 既有漏補的檔都會被治好 (見 fetch_name_sid_map 說明)。
+            # 名稱對照只在確實缺 sid 時才抓, 一天最多抓一次;正常日完全不觸發。
+            if not info.get("sid"):
+                if _name2sid is None:
+                    _name2sid = fetch_name_sid_map(yyyymmdd)
+                sid = resolve_sid(info["short"], _name2sid, stock_map)
+                if sid:
+                    info["sid"] = sid
+                    map_dirty = True
+                    log(f"  補證券代號: {code} {info['short']} → {sid}")
             append_stock(code, name or info.get("short", code), info.get("sid", ""), date_slash, g["rows"])
             fk_codes.add(code)          # 當日實際有部位資料的股期 → 股期日K 退路只查這些
             n += 1
-        if new_codes:
+        if map_dirty:
             save_json(os.path.join(DATA, "stock_map.json"), stock_map)
+        if new_codes:
             log("  新增個股期貨對照: " + "、".join(new_codes))
         status["stocks"] = f"ok ({n} 檔)"
         log(f"  個股期貨: 寫入 {n} 檔")
