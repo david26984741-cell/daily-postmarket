@@ -268,4 +268,12 @@ https://david26984741-cell.github.io/daily-postmarket/
 - 另注意:砂箱讀 `.git/` 是舊快取(`ls` 看到的 lock 狀態不可信),要判斷 git 狀態以 GitHub Desktop 為準。
 - 一句話:**盡量用程式,只有 pull/push 走 GitHub Desktop**。
 
+### 2026/07/23(家用電腦)
+- 歷史趨勢圖(detail.html):PUT 開頭欄位柱色反轉(正=綠 偏空/負=紅),與報告圖表一致。
+- stocks.html 與 screener.html 新增口徑「**第六~十大**」(rk=6):
+  = 前十大 − 前五大(t0/t1 各自相減後,主力/自然人/法人公式照舊)。
+  stocks.html:NET() 支援 rk=6、radio rk6、prefs 與 ?rk=6 皆可帶入;
+  screener.html:vals() 以 main−main5 / inst−inst5 推導,點股名連結帶 rk=6。
+  驗證:前五 + 六~十 = 前十(t0/t1 皆成立)。rank.html 未加(未要求)。
+
 (之後的修改請接著往下記)
