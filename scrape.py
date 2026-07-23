@@ -433,13 +433,22 @@ def _norm_name(s):
 
 
 def resolve_sid(short, name2sid, stock_map):
-    """由股期簡稱推證券代號:小型契約先繼承本尊, 否則以現貨名稱反查。查不到回空字串。"""
+    """由股期簡稱推證券代號:小型契約先繼承本尊, 否則以現貨名稱反查。查不到回空字串。
+    ETF 期貨簡稱帶「ETF」尾綴 (如「統一FANG+ETF」), 現貨名稱不帶 (「統一FANG+」)
+    → 對不上時去掉尾綴再查一次。"""
     base = short[2:] if short.startswith("小型") else short
     if short.startswith("小型"):                 # 小型 → 繼承本尊 (本尊多半已有 sid)
         for v in stock_map.values():
             if v.get("short") == base and v.get("sid"):
                 return v["sid"]
-    return name2sid.get(_norm_name(base)) or name2sid.get(_norm_name(short)) or ""
+    cands = [base, short]
+    if base.endswith("ETF"):
+        cands.append(base[:-3])                  # 去「ETF」尾綴
+    for c in cands:
+        sid = name2sid.get(_norm_name(c))
+        if sid:
+            return sid
+    return ""
 
 
 def append_kline(sid, date_slash, ohlcv):
