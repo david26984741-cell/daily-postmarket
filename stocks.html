@@ -21,6 +21,7 @@
   <div class="stk-toolbar">
     <span class="tlabel">口徑</span>
     <label class="ck" title="以期交所「前五大交易人」為母體換算"><input type="radio" name="rank" id="rk5" value="5"><span>前五大</span></label>
+    <label class="ck" title="第六~十名交易人 = 前十大 − 前五大"><input type="radio" name="rank" id="rk6" value="6"><span>第六~十大</span></label>
     <label class="ck" title="以期交所「前十大交易人」為母體換算"><input type="radio" name="rank" id="rk10" value="10" checked><span>前十大</span></label>
   </div>
 
@@ -107,14 +108,17 @@
   }
 
   // ---- 資料轉換 -------------------------------------------------------------
-  // 口徑 (前五大 / 前十大) — 擇一; 影響所有面板的換算母體
-  const RANK=()=>($("#rk5").checked?5:10);
-  const rankTag=()=>RANK()===5?"前五":"前十";
+  // 口徑 (前五大 / 第六~十大 / 前十大) — 擇一; 影響所有面板的換算母體
+  // rk=6 代表「第六~十名」= 前十大 − 前五大 (交易人/主力/自然人/法人皆以此母體推導)
+  const RANK=()=>($("#rk5").checked?5:($("#rk6").checked?6:10));
+  const rankTag=()=>{const r=RANK(); return r===5?"前五":(r===6?"六~十":"前十");};
   // t0 = 交易人合計淨部位 (期交所原始值), t1 = 其中特定法人淨部位
   const NET=(rows,t,rk)=>{
     const r=(rows||[]).find(x=>x.month==="999999"&&x.type===t);
     if(!r) return null;
-    return rk===5 ? (r.top5_buy-r.top5_sell) : (r.top10_buy-r.top10_sell);
+    if(rk===5) return r.top5_buy-r.top5_sell;
+    if(rk===6) return (r.top10_buy-r.top5_buy)-(r.top10_sell-r.top5_sell);
+    return r.top10_buy-r.top10_sell;
   };
   function series(doc,rk){
     const dates=Object.keys(doc.records).sort();
@@ -611,7 +615,7 @@
   });
 
   // ---- 面板勾選 --------------------------------------------------------------
-  CKS.concat([$("#rk5"),$("#rk10"),$("#gK"),$("#gArea"),$("#gBar"),$("#gAmt"),$("#cols")]).forEach(cb=>cb.addEventListener("change",render));
+  CKS.concat([$("#rk5"),$("#rk6"),$("#rk10"),$("#gK"),$("#gArea"),$("#gBar"),$("#gAmt"),$("#cols")]).forEach(cb=>cb.addEventListener("change",render));
 
   // ---- 期間選擇 --------------------------------------------------------------
   if(allDates.length){
@@ -636,7 +640,7 @@
   const saved=loadPrefs();
   if(saved){
     if(Array.isArray(saved.ck)) CKS.forEach((c,i)=>{ if(typeof saved.ck[i]==="boolean") c.checked=saved.ck[i]; });
-    if(saved.rank===5||saved.rank===10){ $("#rk5").checked=(saved.rank===5); $("#rk10").checked=(saved.rank===10); }
+    if([5,6,10].includes(saved.rank)){ $("#rk5").checked=(saved.rank===5); $("#rk6").checked=(saved.rank===6); $("#rk10").checked=(saved.rank===10); }
     ["gK","gArea","gBar","gAmt"].forEach(id=>{ if(typeof saved[id]==="boolean") $("#"+id).checked=saved[id]; });
     if(saved.cols) $("#cols").value=saved.cols;
     if(saved.from!==undefined||saved.to!==undefined){ range.from=saved.from||null; range.to=saved.to||null; syncRangeInputs(); }
@@ -644,7 +648,7 @@
   // ---- 網址帶入顯示設定 (?rk=5&panels=t0,main — 由篩選器點入時同步前五/前十與口徑) ----
   const qs=new URLSearchParams(location.search);
   const qrk=qs.get("rk");
-  if(qrk==="5"||qrk==="10"){ $("#rk5").checked=(qrk==="5"); $("#rk10").checked=(qrk==="10"); }
+  if(qrk==="5"||qrk==="6"||qrk==="10"){ $("#rk5").checked=(qrk==="5"); $("#rk6").checked=(qrk==="6"); $("#rk10").checked=(qrk==="10"); }
   const qp=qs.get("panels");
   if(qp){
     const MAPP={t0:0,main:1,nat:2,inst:3};   // ck0交易人/ck1主力/ck2自然人/ck3法人
