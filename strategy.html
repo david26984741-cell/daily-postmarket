@@ -3,10 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>主力6-10大 多空策略追蹤 — 每日盤後資料</title>
+<title>主力6-10大 多空策略追蹤</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
+.sy-top{border-bottom:2px solid var(--accent)}
+.sy-top h1 small{color:var(--mut);font-weight:400;font-size:13px;margin-left:10px}
 .sy-hero{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:12px}
 .sy-hero h3{margin:0 0 8px;font-size:16px}
 .sy-crit{font-size:13.5px;line-height:1.7;color:var(--txt)}
@@ -49,13 +51,11 @@ td.nm a{color:var(--txt)} td.nm a:hover{color:var(--accent)}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap">
-  <h1><a href="index.html" style="color:inherit">每日盤後資料</a><small>主力6-10大 多空策略</small></h1>
-  <nav class="main" id="nav"></nav>
+<header class="top sy-top"><div class="wrap">
+  <h1>主力6-10大 多空策略<small>固定各10檔 · H3 · 每日部位追蹤</small></h1>
 </div></header>
 
 <div class="wrap">
-  <div class="crumbs"><a href="index.html">← 當日整合總覽</a></div>
   <h2 class="sec">主力 第6~10大 多空固定10檔 H3 策略追蹤 <span class="tag" id="dchip"></span></h2>
 
   <!-- 策略說明 + 回測績效 -->
@@ -133,7 +133,6 @@ const nameOf=c=>(D.names[c]&&D.names[c].name)||c;
 async function boot(){
   D=await fetch("data/strategy610.json",{cache:"no-store"}).then(r=>r.json());
   $("#dchip").textContent="資料日 "+D.updated;
-  // 導覽(若 app.js 有載入會自建;這裡容錯)
   const c=D.criteria;
   $("#crit").innerHTML=
     `<b>選股池</b>:${c.universe}<br>`+
@@ -239,6 +238,5 @@ function showTab(t){
 }
 boot();
 </script>
-<script src="assets/app.js"></script>
 </body>
 </html>

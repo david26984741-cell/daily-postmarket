@@ -298,5 +298,9 @@ https://david26984741-cell.github.io/daily-postmarket/
   strategy.html 加入六個 workflow 部署 cp 清單(screener.html 之後)。
 - 註:daily.yml 原本純標準庫(scrape.py),本步驟需 pandas/numpy 故自帶 pip install。
   strategy610.json 隨 `git add -A data/` 一併 commit(如 rank.json)。
+- **獨立頁面(使用者要求)**:strategy.html 做成「獨立站」——移除共用頁首「每日盤後資料」、
+  導覽列(不載入 app.js)、返回總覽連結;app.js CATS/PAGE_MAP 不放 strategy(原站導覽不出現此頁)。
+  仍在同 repo、同 Pages 網址(.../strategy.html),仍在六個部署清單與 daily 產生步驟內。
+  頁面自帶標題頁首(.sy-top,accent 底線),沿用 assets/style.css 主題。
 
 (之後的修改請接著往下記)
