@@ -279,4 +279,24 @@ https://david26984741-cell.github.io/daily-postmarket/
   輸出改**兩張表**(主力持有比率 前20高=偏多 / 前20低=偏空,TOP_N 常數可調)。
 - 導覽移除「籌碼研究」分頁(analysis.html 檔案與 analysis.yml 照舊保留,直接打網址仍可看)。
 
+### 2026/07/24 — 新增「主力6-10大 多空策略追蹤」頁
+- 新增 `tools/strategy610.py` + `strategy.html`:主力第6~10大 多空固定10檔 H3 策略的每日部位追蹤器。
+  - `strategy610.py`(每日由 daily.yml 產生 `data/strategy610.json`,純讀 repo 內既有資料、不對外連線):
+    口徑=主力6-10比率 ((a10−a5)−2×(s10−s5))/moi;池子規模 2.5億~100億;每日比率最高10檔多、最低10檔空;
+    H3 三批重疊;價格股期(fkline)優先、缺漏退回現股(kline)。輸出:今日進場、目前部位(近3日入榜次數)、
+    YTD 每日策略累積 vs 台指期(txf.json)、口數/名目/保證金(估13.5%)、過往每日訊號與部位(供下拉查詢)。
+  - **價格來源踩雷**:同一碼在序列中途於 fkline/kline 間切換(基差)會製造假跳空 → `ret1` 只在前後同源時計算,
+    跨來源當天設 NaN(82 碼、1542 次切換,不修的話 YTD 被灌大)。
+  - **等權口數**:以「單口名目盡量相等」求最少口數;基準=最貴的無小型標的(單口最大,設1口);
+    有小型契約的標的一律用小型(100股)算,降低門檻。目前完整部位(31檔)名目約1.6億、保證金約2164萬。
+  - `strategy.html`:頂部策略標準/邏輯/回測績效(年化43.1%·Sharpe2.43·t6.2·MDD−16.5%,毛值);
+    今日/過往兩分頁;走勢圖用 Chart.js(策略紅實線 vs 台指虛線)。過往用下拉選日期(避免單頁資料過多)。
+  - **驗證**:兩套獨立引擎(strategy610 與 big.pkl 回測引擎)2026 YTD 皆 +132%(現股),確認非 bug——
+    2026 是特別強的年(Sharpe 5.6,長期均值 2.4);股期口徑 YTD +138%。
+- 接線:app.js CATS + PAGE_MAP 新增 strategy;daily.yml 於 scrape 後、commit 前新增步驟
+  (`pip install pandas numpy` → `python tools/strategy610.py`,continue-on-error);
+  strategy.html 加入六個 workflow 部署 cp 清單(screener.html 之後)。
+- 註:daily.yml 原本純標準庫(scrape.py),本步驟需 pandas/numpy 故自帶 pip install。
+  strategy610.json 隨 `git add -A data/` 一併 commit(如 rank.json)。
+
 (之後的修改請接著往下記)

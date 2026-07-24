@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>主力6-10大 多空策略追蹤 — 每日盤後資料</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+.sy-hero{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:12px}
+.sy-hero h3{margin:0 0 8px;font-size:16px}
+.sy-crit{font-size:13.5px;line-height:1.7;color:var(--txt)}
+.sy-crit b{color:var(--accent)}
+.sy-stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.sy-stat{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 14px;min-width:96px}
+.sy-stat .k{font-size:11.5px;color:var(--mut)}
+.sy-stat .v{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.sy-stat .v.pos{color:var(--up,#ff5b5b)} .sy-stat .v.neg{color:var(--down,#31c46b)}
+.tabs{display:flex;gap:8px;margin:18px 0 6px}
+.tabs button{background:var(--card2);border:1px solid var(--line);color:var(--mut);border-radius:9px;padding:8px 18px;font-size:14.5px;cursor:pointer}
+.tabs button.on{background:rgba(78,161,255,.12);border-color:var(--accent);color:var(--accent);font-weight:600}
+.panel{display:none} .panel.on{display:block}
+.chartbox{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px 6px;margin-top:12px}
+.chartbox h3{margin:0 0 4px;font-size:15px}
+.chartbox .sub{color:var(--mut);font-size:12.5px;margin-bottom:8px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card h3{margin:0 0 4px;font-size:15px}
+.card h3 small{color:var(--mut);font-weight:400;font-size:12px;margin-left:6px}
+table.sy{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+table.sy th{color:var(--mut);font-weight:500;text-align:right;padding:4px 6px;border-bottom:1px solid var(--line);font-size:12px}
+table.sy th.l,table.sy td.l{text-align:left}
+table.sy td{padding:5px 6px;border-bottom:1px solid rgba(255,255,255,.05);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.sy tr:last-child td{border-bottom:none}
+td.nm a{color:var(--txt)} td.nm a:hover{color:var(--accent)}
+.long{color:var(--up,#ff5b5b);font-weight:600} .short{color:var(--down,#31c46b);font-weight:600}
+.badge{display:inline-block;font-size:11px;border-radius:5px;padding:0 6px;border:1px solid var(--line);color:var(--mut);margin-left:5px}
+.badge.mini{background:var(--card2)}
+.cnt{display:inline-block;min-width:18px;text-align:center;font-size:11.5px;border-radius:5px;padding:0 5px;background:rgba(255,180,60,.14);border:1px solid #6b5626;color:#e6b768}
+.cap{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.cap .box{flex:1 1 200px;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.cap .box .k{font-size:12px;color:var(--mut)} .cap .box .v{font-size:18px;font-weight:700;margin-top:2px}
+.cap .box .v small{font-size:12px;color:var(--mut);font-weight:400}
+.hint{color:var(--mut);font-size:12.5px;margin-top:8px;line-height:1.6}
+.selrow{display:flex;align-items:center;gap:10px;margin-top:14px}
+.selrow select{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:14px}
+.note-foot{color:var(--mut);font-size:12px;margin:22px 0 40px;line-height:1.7}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1><a href="index.html" style="color:inherit">每日盤後資料</a><small>主力6-10大 多空策略</small></h1>
+  <nav class="main" id="nav"></nav>
+</div></header>
+
+<div class="wrap">
+  <div class="crumbs"><a href="index.html">← 當日整合總覽</a></div>
+  <h2 class="sec">主力 第6~10大 多空固定10檔 H3 策略追蹤 <span class="tag" id="dchip"></span></h2>
+
+  <!-- 策略說明 + 回測績效 -->
+  <div class="sy-hero">
+    <h3>策略標準與邏輯</h3>
+    <div class="sy-crit" id="crit"></div>
+    <div class="sy-stats" id="btstats"></div>
+    <div class="hint" id="btnote"></div>
+  </div>
+
+  <div class="tabs">
+    <button id="tabToday" class="on" onclick="showTab('today')">今日部位</button>
+    <button id="tabHist" onclick="showTab('hist')">過往查詢</button>
+  </div>
+
+  <!-- ===== 今日 ===== -->
+  <section id="pToday" class="panel on">
+    <div class="chartbox">
+      <h3>今年以來累積報酬走勢 <small class="sub" id="eqsub"></small></h3>
+      <canvas id="eq" height="120"></canvas>
+    </div>
+
+    <div class="cap" id="capbox"></div>
+    <div class="hint" id="caphint"></div>
+
+    <div class="grid2" style="margin-top:16px">
+      <div class="card">
+        <h3>今日進場 · 做多 <small>比率最高10檔</small></h3>
+        <div id="todayLong"></div>
+      </div>
+      <div class="card">
+        <h3>今日進場 · 做空 <small>比率最低10檔</small></h3>
+        <div id="todayShort"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3>目前持有部位 <small>今日與前2個交易日的三批聯集(H3);被選次數=近3日入榜次數</small></h3>
+      <div id="posTbl"></div>
+    </div>
+  </section>
+
+  <!-- ===== 過往 ===== -->
+  <section id="pHist" class="panel">
+    <div class="selrow">
+      <span>選擇日期:</span>
+      <select id="hsel" onchange="renderHist()"></select>
+    </div>
+    <div class="grid2" style="margin-top:14px">
+      <div class="card"><h3>當日訊號 · 做多</h3><div id="hLong"></div></div>
+      <div class="card"><h3>當日訊號 · 做空</h3><div id="hShort"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>當日持有部位 <small>當日與前2交易日三批聯集</small></h3>
+      <div id="hPos"></div>
+    </div>
+  </section>
+
+  <div class="note-foot" id="foot"></div>
+</div>
+
+<script>
+const $=(s)=>document.querySelector(s);
+const DZ=null;
+let D=null;
+const fmt=n=>(n===null||n===undefined)?"–":Number(n).toLocaleString("en-US");
+function money(n){ // 元 → 億/萬 可讀
+  if(n===null||n===undefined) return "–";
+  if(Math.abs(n)>=1e8) return (n/1e8).toFixed(2)+"億";
+  if(Math.abs(n)>=1e4) return Math.round(n/1e4).toLocaleString("en-US")+"萬";
+  return fmt(n);
+}
+const nameOf=c=>(D.names[c]&&D.names[c].name)||c;
+
+async function boot(){
+  D=await fetch("data/strategy610.json",{cache:"no-store"}).then(r=>r.json());
+  $("#dchip").textContent="資料日 "+D.updated;
+  // 導覽(若 app.js 有載入會自建;這裡容錯)
+  const c=D.criteria;
+  $("#crit").innerHTML=
+    `<b>選股池</b>:${c.universe}<br>`+
+    `<b>訊號</b>:${c.signal}<br>`+
+    `<b>進出場</b>:${c.rule}<br>`+
+    `<b>價格</b>:${c.price} <b>保證金</b>:${c.margin}`;
+  const b=D.backtest;
+  $("#btstats").innerHTML=[
+    ["回測年化報酬",b.ann+"%","pos"],["Sharpe",b.sharpe,""],["t 值",b.t,""],
+    ["最大回撤",b.mdd+"%","neg"],["今年以來",D.ytd.ret+"%","pos"],["今年Sharpe",D.ytd.sharpe,""]
+  ].map(([k,v,cl])=>`<div class="sy-stat"><div class="k">${k}</div><div class="v ${cl}">${v}</div></div>`).join("");
+  $("#btnote").textContent="回測期間 "+b.period+"。"+b.note+"　今年以來為策略實際口徑(股期報價、多空對沖)。";
+  drawChart(); drawCap(); drawToday(); drawPos(); buildHistSel();
+  $("#foot").innerHTML="※ 本頁為研究/追蹤用途,非投資建議。報酬為多空對沖毛報酬(未扣手續費、交易稅、滑價);"+
+    "實際下單摩擦成本會侵蝕績效。保證金為估算值,實際依期交所各契約公告為準。資料來源:期交所大額交易人 + 股期/現股日K。";
+}
+
+function drawChart(){
+  const e=D.equity;
+  $("#eqsub").textContent=`策略 +${D.ytd.ret}%　vs　台指期 +${e.txf[e.txf.length-1]}%　(${D.ytd.days}個交易日)`;
+  new Chart($("#eq"),{type:"line",
+    data:{labels:e.dates,datasets:[
+      {label:"策略(多空對沖)",data:e.strategy,borderColor:"#ff5b5b",backgroundColor:"transparent",borderWidth:2,pointRadius:0,tension:.12},
+      {label:"台指期(買進持有)",data:e.txf,borderColor:"#7fa8d0",backgroundColor:"transparent",borderWidth:1.6,pointRadius:0,tension:.12,borderDash:[5,4]}
+    ]},
+    options:{responsive:true,interaction:{mode:"index",intersect:false},
+      plugins:{legend:{labels:{color:"#cfd6de",boxWidth:22}},
+        tooltip:{callbacks:{label:x=>x.dataset.label+": "+x.parsed.y.toFixed(1)+"%"}}},
+      scales:{x:{ticks:{color:"#8a94a0",maxTicksLimit:10,autoSkip:true},grid:{color:"rgba(255,255,255,.05)"}},
+              y:{ticks:{color:"#8a94a0",callback:v=>v+"%"},grid:{color:"rgba(255,255,255,.06)"}}}}
+  });
+}
+
+function drawCap(){
+  const t=D.today,p=D.positions;
+  $("#capbox").innerHTML=[
+    ["今日進場(多空各10檔)","名目 "+money(t.notional),"保證金 "+money(t.margin)],
+    ["完整部位(H3三批,共"+p.n+"檔)","名目 "+money(p.notional),"保證金 "+money(p.margin)]
+  ].map(([k,a,c])=>`<div class="box"><div class="k">${k}</div><div class="v">${a} <small>/ ${c}</small></div></div>`).join("");
+  $("#caphint").innerHTML="「至少要準備多少錢」指<b>完整部位的保證金</b>約 "+money(p.margin)+
+    "(要跑滿 H3 需同時持有三批,共 "+p.n+" 檔)。各檔以「單口名目盡量相等」計算最少口數,"+
+    "最貴的無小型標的(單口最大)設為基準;有小型契約的標的一律用小型(100股)計算以降低門檻。";
+}
+
+function legTable(rows,showRatio){
+  let h=`<table class="sy"><tr><th class="l">股票</th>${showRatio?'<th>比率</th>':'<th>次</th>'}<th>股期價</th><th>口數</th><th>名目</th><th>保證金</th></tr>`;
+  for(const r of rows){
+    const dir=r.dir==="多"?"long":"short";
+    h+=`<tr><td class="l nm"><a href="stocks.html?code=${r.code}&rk=6&panels=main">${r.name}</a>`+
+       `<span class="badge ${r.mini?'mini':''}">${r.mini?'小型':r.src||''}</span></td>`+
+       (showRatio?`<td>${(r.ratio!=null?r.ratio.toFixed(3):'')}</td>`:`<td><span class="cnt">${r.count}</span></td>`)+
+       `<td>${fmt(r.price)}</td><td>${fmt(r.lots)}</td><td>${money(r.notional)}</td><td>${money(r.margin)}</td></tr>`;
+  }
+  return h+"</table>";
+}
+function drawToday(){
+  const L=D.today.rows.filter(r=>r.dir==="多"),S=D.today.rows.filter(r=>r.dir==="空");
+  $("#todayLong").innerHTML=legTable(L,true);
+  $("#todayShort").innerHTML=legTable(S,true);
+}
+function drawPos(){
+  const rows=D.positions.rows.slice().sort((a,b)=>(a.dir!==b.dir)?(a.dir==="多"?-1:1):b.count-a.count||b.notional-a.notional);
+  let h=`<table class="sy"><tr><th class="l">股票</th><th>方向</th><th>被選次數</th><th>股期價</th><th>口數</th><th>名目</th><th>保證金</th></tr>`;
+  for(const r of rows){
+    h+=`<tr><td class="l nm"><a href="stocks.html?code=${r.code}&rk=6&panels=main">${r.name}</a>`+
+       `<span class="badge ${r.mini?'mini':''}">${r.mini?'小型':r.src||''}</span></td>`+
+       `<td class="${r.dir==='多'?'long':'short'}">${r.dir}</td>`+
+       `<td><span class="cnt">${r.count}</span></td>`+
+       `<td>${fmt(r.price)}</td><td>${fmt(r.lots)}</td><td>${money(r.notional)}</td><td>${money(r.margin)}</td></tr>`;
+  }
+  $("#posTbl").innerHTML=h+"</table>";
+}
+
+/* ---- 過往 ---- */
+function buildHistSel(){
+  const ds=Object.keys(D.history).sort().reverse();
+  $("#hsel").innerHTML=ds.map(d=>`<option value="${d}">${d}</option>`).join("");
+  renderHist();
+}
+function sigTable(arr){
+  let h=`<table class="sy"><tr><th class="l">股票</th><th>比率</th></tr>`;
+  for(const [c,r] of arr) h+=`<tr><td class="l nm"><a href="stocks.html?code=${c}&rk=6&panels=main">${nameOf(c)}</a></td><td>${r.toFixed(3)}</td></tr>`;
+  return h+"</table>";
+}
+function posRows(arr,dir){
+  return arr.map(([c,n])=>`<tr><td class="l nm"><a href="stocks.html?code=${c}&rk=6&panels=main">${nameOf(c)}</a></td>`+
+    `<td class="${dir==='多'?'long':'short'}">${dir}</td><td><span class="cnt">${n}</span></td></tr>`).join("");
+}
+function renderHist(){
+  const d=$("#hsel").value,H=D.history[d];
+  if(!H) return;
+  $("#hLong").innerHTML=sigTable(H.L);
+  $("#hShort").innerHTML=sigTable(H.S);
+  $("#hPos").innerHTML=`<table class="sy"><tr><th class="l">股票</th><th>方向</th><th>被選次數</th></tr>`+
+    posRows(H.posL,"多")+posRows(H.posS,"空")+"</table>";
+}
+
+function showTab(t){
+  $("#pToday").classList.toggle("on",t==="today");
+  $("#pHist").classList.toggle("on",t==="hist");
+  $("#tabToday").classList.toggle("on",t==="today");
+  $("#tabHist").classList.toggle("on",t==="hist");
+}
+boot();
+</script>
+<script src="assets/app.js"></script>
+</body>
+</html>

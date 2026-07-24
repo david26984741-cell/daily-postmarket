@@ -8,9 +8,10 @@ const CATS = [
   {id:"stocks",          title:"大額交易人股票期貨",file:null},
   {id:"rank",            title:"股期增減排行",      file:null},
   {id:"screener",        title:"股期篩選器",        file:null},
+  {id:"strategy",        title:"主力6-10策略",      file:null},
   {id:"help",            title:"使用說明",          file:null},
 ];
-const PAGE_MAP = {stocks:"stocks.html", rank:"rank.html", screener:"screener.html", analysis:"analysis.html", help:"help.html"};
+const PAGE_MAP = {stocks:"stocks.html", rank:"rank.html", screener:"screener.html", analysis:"analysis.html", help:"help.html", strategy:"strategy.html"};
 const catHref = c => PAGE_MAP[c.id] || `detail.html?cat=${c.id}`;
 const UPDATE_NOTE = " · 每交易日約 16:00 前更新";
 const $ = (s,r=document)=>r.querySelector(s);
