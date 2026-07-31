@@ -1,7 +1,7 @@
 {
  "code": "UJ",
  "name": "群益ESG投等債20+ETF期貨",
- "sid": "",
+ "sid": "00937B",
  "records": {
   "2025/07/09": [
    {
@@ -17724,6 +17724,48 @@
     "top10_buy": 78,
     "top10_sell": 1164,
     "market_oi": 1872,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/07/31": [
+   {
+    "month": "202608",
+    "type": "0",
+    "top5_buy": 130,
+    "top5_sell": 192,
+    "top10_buy": 162,
+    "top10_sell": 192,
+    "market_oi": 192,
+    "scope": "當月"
+   },
+   {
+    "month": "202608",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 152,
+    "top10_buy": 7,
+    "top10_sell": 152,
+    "market_oi": 192,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 775,
+    "top5_sell": 1881,
+    "top10_buy": 1084,
+    "top10_sell": 1891,
+    "market_oi": 1891,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1216,
+    "top10_buy": 78,
+    "top10_sell": 1217,
+    "market_oi": 1891,
     "scope": "所有契約"
    }
   ]
