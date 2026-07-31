@@ -175,4 +175,9 @@ details.rawdet>div{padding:2px 12px 12px}
   /* 個股頁面板標題資訊很長 → 允許換行, 不要被截斷 */
   .stk-panelhd{white-space:normal;line-height:1.6}
   .stk-title{font-size:14.5px}
+
+  /* 「圖表欄位」等標籤不要被壓成直排; 標題列允許換行 */
+  .optbar{flex-wrap:wrap}
+  .optbar .muted,.toolbar .muted{white-space:nowrap}
+  h2.sec{flex-wrap:wrap}
 }
