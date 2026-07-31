@@ -138,3 +138,41 @@ details.rawdet>div{padding:2px 12px 12px}
 /* 歷史趨勢柱狀圖 */
 .hist-canvas{position:relative;height:240px;width:100%;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:6px 0 14px}
 .hist-canvas canvas{width:100%!important;height:100%!important}
+
+/* ================================================================
+   手機優化 (≤768px) — 只在小螢幕生效, 桌面版完全不受影響
+   ================================================================ */
+@media (max-width:768px){
+  /* 取消整站 125% 放大: 手機視窗本來就窄, 再放大等於可用寬度只剩 8 成, 必爆版 */
+  html{zoom:1}
+  body{font-size:14px}
+  .wrap{padding:0 10px 40px}
+
+  /* 頁首/導覽: 標題縮小; 導覽改「單行左右滑動」, 不再換行佔半個螢幕 */
+  header.top .wrap{padding-top:10px;padding-bottom:8px;gap:8px;flex-wrap:nowrap;flex-direction:column;align-items:stretch}
+  header.top h1{font-size:16px}
+  nav.main{margin-left:0;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+           scrollbar-width:none;padding-bottom:2px}
+  nav.main::-webkit-scrollbar{display:none}
+  nav.main a{flex:0 0 auto;white-space:nowrap;font-size:12.5px;padding:5px 9px}
+
+  /* 表格: 多欄+不換行在手機必超寬 → 一律可左右滑動, 字級縮一級 */
+  table{font-size:12.5px}
+  th,td{padding:6px 7px}
+  .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .grid .card .tablewrap{overflow-x:auto}   /* 覆蓋桌面的 visible, 避免卡片撐寬整頁 */
+  .grid .card table{font-size:12.5px}
+
+  /* 工具列/表單控制項: 縮小字級與間距 */
+  .toolbar,.stk-toolbar{gap:6px}
+  select,input{font-size:13px;padding:6px 8px}
+  .ck{font-size:12.5px;padding:5px 9px;gap:4px}
+  .stk-toolbar #q{flex:1 1 100%;min-width:0}
+
+  /* 圖表容器: 高度略降, 手機一屏能看到更多 */
+  .hist-canvas{height:200px;padding:8px 8px}
+
+  /* 個股頁面板標題資訊很長 → 允許換行, 不要被截斷 */
+  .stk-panelhd{white-space:normal;line-height:1.6}
+  .stk-title{font-size:14.5px}
+}
