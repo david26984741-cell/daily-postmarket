@@ -283,5 +283,88 @@ https://david26984741-cell.github.io/daily-postmarket/
 - **已驗證生效**:7/22 排程自動補上 貿聯3665/世芯3661/保瑞6472/台灣虎航6757 等 14 檔。
   剩 72 檔缺 sid:67 檔為已下市股期(當日無部位,不影響網站);5 檔 ETF 期貨因簡稱帶
   「ETF」尾綴對不上現貨名稱 → 7/23 再補「去 ETF 尾綴重查」規則(本機已驗 5 檔全中)。
+### 2026/07/23(家用電腦)
+- 歷史趨勢圖(detail.html):PUT 開頭欄位柱色反轉(正=綠 偏空/負=紅),與報告圖表一致。
+- stocks.html 與 screener.html 新增口徑「**第六~十大**」(rk=6):
+  = 前十大 − 前五大(t0/t1 各自相減後,主力/自然人/法人公式照舊)。
+  stocks.html:NET() 支援 rk=6、radio rk6、prefs 與 ?rk=6 皆可帶入;
+  screener.html:vals() 以 main−main5 / inst−inst5 推導,點股名連結帶 rk=6。
+  驗證:前五 + 六~十 = 前十(t0/t1 皆成立)。rank.html 未加(未要求)。
+- 盤後 Email 報告改版:口徑=第六~十大、規模 2.5~100 億、主力持有比率|x|>0%;
+  輸出改**兩張表**(主力持有比率 前20高=偏多 / 前20低=偏空,TOP_N 常數可調)。
+- 導覽移除「籌碼研究」分頁(analysis.html 檔案與 analysis.yml 照舊保留,直接打網址仍可看)。
+
+### 2026/07/24 — 新增「主力6-10大 多空策略追蹤」頁
+- 新增 `tools/strategy610.py` + `strategy.html`:主力第6~10大 多空固定10檔 H3 策略的每日部位追蹤器。
+  - `strategy610.py`(每日由 daily.yml 產生 `data/strategy610.json`,純讀 repo 內既有資料、不對外連線):
+    口徑=主力6-10比率 ((a10−a5)−2×(s10−s5))/moi;池子規模 2.5億~100億;每日比率最高10檔多、最低10檔空;
+    H3 三批重疊;價格股期(fkline)優先、缺漏退回現股(kline)。輸出:今日進場、目前部位(近3日入榜次數)、
+    YTD 每日策略累積 vs 台指期(txf.json)、口數/名目/保證金(估13.5%)、過往每日訊號與部位(供下拉查詢)。
+  - **價格來源踩雷**:同一碼在序列中途於 fkline/kline 間切換(基差)會製造假跳空 → `ret1` 只在前後同源時計算,
+    跨來源當天設 NaN(82 碼、1542 次切換,不修的話 YTD 被灌大)。
+  - **等權口數**:以「單口名目盡量相等」求最少口數;基準=最貴的無小型標的(單口最大,設1口);
+    有小型契約的標的一律用小型(100股)算,降低門檻。目前完整部位(31檔)名目約1.6億、保證金約2164萬。
+  - `strategy.html`:頂部策略標準/邏輯/回測績效(年化43.1%·Sharpe2.43·t6.2·MDD−16.5%,毛值);
+    今日/過往兩分頁;走勢圖用 Chart.js(策略紅實線 vs 台指虛線)。過往用下拉選日期(避免單頁資料過多)。
+  - **驗證**:兩套獨立引擎(strategy610 與 big.pkl 回測引擎)2026 YTD 皆 +132%(現股),確認非 bug——
+    2026 是特別強的年(Sharpe 5.6,長期均值 2.4);股期口徑 YTD +138%。
+- 接線:app.js CATS + PAGE_MAP 新增 strategy;daily.yml 於 scrape 後、commit 前新增步驟
+  (`pip install pandas numpy` → `python tools/strategy610.py`,continue-on-error);
+  strategy.html 加入六個 workflow 部署 cp 清單(screener.html 之後)。
+- 註:daily.yml 原本純標準庫(scrape.py),本步驟需 pandas/numpy 故自帶 pip install。
+  strategy610.json 隨 `git add -A data/` 一併 commit(如 rank.json)。
+- **獨立頁面(使用者要求)**:strategy.html 做成「獨立站」——移除共用頁首「每日盤後資料」、
+  導覽列(不載入 app.js)、返回總覽連結;app.js CATS/PAGE_MAP 不放 strategy(原站導覽不出現此頁)。
+  仍在同 repo、同 Pages 網址(.../strategy.html),仍在六個部署清單與 daily 產生步驟內。
+  頁面自帶標題頁首(.sy-top,accent 底線),沿用 assets/style.css 主題。
+
+### 2026/07/25 — 策略網站改為「去重+滾動續抱+隔日開盤進」並加歷史資料分頁
+- **strategy610.py 全面改寫**(口徑改為使用者最終確認的實際可執行版):
+  - 進場=訊號隔一交易日【開盤價】;持有3交易日,期間內再入榜即續抱(出場日重設為末次入榜+3日、不重複買進);
+    連續3日未入榜於第3日【收盤】賣出;賣出後再入榜隔日重買。價格每筆整筆同源(股期優先退現股)。
+  - 引擎用「入榜串(streak)」分組產生部位;輸出:今日新進場(隔日開盤買的新入榜檔)、目前部位(滾動book,含進場日/已持有天)、
+    全期+YTD 多空對沖淨值、回測統計、逐年表。淨值=每日 mean(多當日報酬)−mean(空當日報酬),進場日開→收、其後收→收。
+  - **績效(全期2017~今,毛值):年化27.2%、Sharpe1.85、t5.2、MDD−18.8%、總報酬+811%;2026 YTD +93.2%。**
+    比舊「重疊H3、當日收盤進」版(年化43%)低,主因隔日開盤讓出訊號後第一天的走勢(最強一段)——此為貼近實際的代價。
+  - 註:今年以來顯示【累積】報酬(年化會把5個月放大失真);今年Sharpe=累積/年化波動。
+- **strategy.html**:頂部數據改新版;移除「過往查詢」分頁;新增「歷史資料」分頁(全期走勢圖 策略vs台指 + 逐年表 + 全期績效)。
+  今日部位改滾動版(今日新進場可能只有0~數檔;目前部位顯示進場日/已持有天,取代舊「被選次數」)。
+- 註:txf.json 實際涵蓋 2016/07~今(非僅3年),故全期圖台指線可完整對照。
+
+### 2026/07/29~31(家用電腦)— 除權息資料與 backward 還原因子
+- 新增 `scrape_exright.py`(逐月爬 TWSE+TPEx 除權息)、`build_adjfactor.py`(算還原因子)、
+  `test_exright.py`(規格書 §4 全部驗收測試)、workflow `exright_backfill.yml`(手動回補,
+  含斷點續抓)與 `exright_daily.yml`(每日增量)。
+- 資料:`data/exright/{twse,tpex}.json`(2016-01~2026-07, 127 個月, **零失敗月份**,
+  TWSE 10,751 筆 + TPEx 9,509 筆 = 20,260 筆)、`data/adjfactor/<sid>.json`(264 檔,
+  backward 最新一日=1.0, 格式照規格書 §3.2 每日一個值)。
+- **端點(皆用 DevTools 實查, 非猜測)**:
+  - TWSE `GET /rwd/zh/exRight/TWT49U?startDate=YYYYMMDD&endDate=YYYYMMDD&response=json`,
+    成功判斷 `stat=="OK"`。**必須逐月**, 跨年度區間會靜默截斷。
+  - TPEx `POST /www/zh-tw/bulletin/exDailyQ`,
+    body `startDate=YYYY/MM/DD&endDate=YYYY/MM/DD&id=&response=json`。
+    三個陷阱:①送出是**西元**日期但回傳資料是**民國**;②`stat` 是**小寫** `"ok"`;
+    ③欄位與 TWSE 不同(權值/息值拆兩欄, 故「權值+息值」在 index 7、「權/息」在 8)。
+    資料在 `tables[0].data`。
+  - `openapi/v1/tpex_exright_daily` **不能用**:只回最近數筆, 無日期參數(已實測)。
+- **效果**:264 檔宇宙內 2,383 個除息日, 平均日報酬 **−3.646% → +0.110%**,
+  跌超過 5% 者 748 → 100 筆。2412 三個除息日 −3.69/−4.38/−2.60% → +0.20/−0.61/+1.16%。
+- **修正規格書三處錯誤**:
+  ① 「2024/06 應有 278 筆」不成立 — 實測 TWSE 177 + TPEx 136 = 313, 回應完整未截斷,
+     任何子集合都湊不出 278。驗收改用區間, 不寫死數字。
+  ② 2412 的 2024 年除息日是 **07/04** 不是 07/05;且 `data/kline/2412.json` 缺 07/04 該日。
+  ③ 2025/07/03 還原後 +1.16% 非計算錯誤而是真實填息(參考價 129.50, 開 130.00 收 131.00),
+     門檻放寬為 ±1.5%。
+- **方法邊界**:除權息表**不含分割/減資**(TWSE 表格註記自己寫明)。實測唯一重大案例
+  **0050 於 2025/06/18 一拆四**, 還原後仍留 −74.1% 假跌幅, 下游用 0050 要另外處理。
+  其餘殘留跳空多為大盤事件(2024/08/05 同日 140 檔), 屬真實波動不該還原。
+- **抓取管道**:Cowork 沙箱連不到 twse/tpex/github(proxy 擋), 但**瀏覽器可以**。
+  作法:Chrome 導到 twse.com.tw / tpex.org.tw 後用**同源 fetch** 逐月抓, 在瀏覽器內彙總,
+  再用 Blob download 落地到 Downloads。沙箱只能讀 `raw.githubusercontent.com`(web_fetch), 不能寫。
+- **踩雷**:沙箱跑 `git status` 會建 `.git/index.lock` 且刪不掉(`Operation not permitted`),
+  會卡住 GitHub Desktop。改用 Cowork 的 `allow_cowork_file_delete` 授權後即可刪除。
+  結論不變:**沙箱不要對本 repo 跑任何會寫 index 的 git 指令**。
+- GitHub Desktop 授權:程式名稱會綁到外層啟動器而被擋, 要用 request_access 傳
+  **`githubdesktop.exe`** 才會解析到 `app-3.6.3\githubdesktop.exe`(版本更新後需重新授權)。
 
 (之後的修改請接著往下記)

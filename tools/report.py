@@ -22,35 +22,44 @@ E = 1e8   # 億
 
 # ---------------------------------------------------------------- 篩選設定
 # 對應 screener.html 的 ①~⑤; 要改條件只動這一區即可。
-RK        = 10        # ① 大額交易人: 10=前十大 / 5=前五大
+RK        = 6         # ① 大額交易人: 10=前十大 / 5=前五大 / 6=第六~十大(前十−前五)
 SCALE_ON  = True      # ② 股票期貨規模區間 (億)
 SCALE_LO  = 2.5
-SCALE_HI  = 500
+SCALE_HI  = 100
 HOLD_ON   = True      # ③ 當日【口徑】持有
-HOLD_MET  = "nat"     # t0=交易人合計 / main=主力 / nat=自然人 / inst=法人
+HOLD_MET  = "main"    # t0=交易人合計 / main=主力 / nat=自然人 / inst=法人
 HOLD_UNIT = "ratio"   # ratio=比率(%) / amt=規模(億)
 HOLD_OP   = ">"       # > 或 <
-HOLD_VAL  = 20
-HOLD_ABS  = False     # 是否取絕對值
-CHG_ON    = True      # ④ 當日【口徑】變化
+HOLD_VAL  = 0
+HOLD_ABS  = True      # 取絕對值>0 → 只要有部位就列入; 目的在把持有比率欄顯示出來
+CHG_ON    = False     # ④ 當日【口徑】變化 (未啟用)
 CHG_MET   = "nat"
-CHG_UNIT  = "amt"     # ratio=比率(%) / amt=規模(億)
+CHG_UNIT  = "ratio"
 CHG_OP    = ">"
-CHG_VAL   = 0         # 搭配取絕對值 → 等同「當日有變動就列入」, 主要用途是把該欄顯示出來
+CHG_VAL   = 0
 CHG_ABS   = True
-DAYS_ON   = True      # ⑤ 近X日漲跌
+DAYS_ON   = False     # ⑤ 近X日漲跌 (未啟用)
 DAYS_N    = 20
-DAYS_DIR  = "up"      # up=上漲 / down=下跌
+DAYS_DIR  = "up"
 SORT_KEY  = "hold"    # 排序: name/px/chg/scale/hold/dchg/chgN
 SORT_DESC = True
+TOP_N     = 20        # 兩張表各取前 N 檔 (降冪=偏多前N / 升冪=偏空前N)
 
 MET = {"t0": "交易人合計", "main": "主力", "nat": "自然人", "inst": "法人"}
+RK_TAG = {10: "前十大", 5: "前五大", 6: "第六~十大"}
 
 
 # ---------------------------------------------------------------- 公式 (對齊 screener.html)
+def _sub(a, b):
+    return a - b if (a is not None and b is not None) else None
+
+
 def vals(r, has5):
     if RK == 5 and has5:
         return r.get("main5"), r.get("main5_prev"), r.get("inst5"), r.get("inst5_prev")
+    if RK == 6 and has5:   # 第六~十大 = 前十大 − 前五大 (t0/t1 各自相減)
+        return (_sub(r.get("main"), r.get("main5")), _sub(r.get("main_prev"), r.get("main5_prev")),
+                _sub(r.get("inst"), r.get("inst5")), _sub(r.get("inst_prev"), r.get("inst5_prev")))
     return r.get("main"), r.get("main_prev"), r.get("inst"), r.get("inst_prev")
 
 
@@ -175,7 +184,7 @@ def f_ratio(v):
 
 
 def cond_text():
-    bits = [f"前{'十' if RK==10 else '五'}大"]
+    bits = [RK_TAG.get(RK, "前十大")]
     if SCALE_ON:
         lo = f"{SCALE_LO:g}" if SCALE_LO is not None else ""
         hi = f"{SCALE_HI:g}" if SCALE_HI is not None else ""
@@ -193,8 +202,11 @@ def cond_text():
     return " ・ ".join(bits)
 
 
-def build_html(rows, date):
-    UP, DN, MUT, LINE = "#ff6b6b", "#4ade80", "#9aa7b4", "#2a3441"
+UPC, DNC, MUT, LINE = "#ff6b6b", "#4ade80", "#9aa7b4", "#2a3441"
+
+
+def _table(rows, title, note):
+    """單一排行表 (標題 + 表格) 的 HTML。"""
     hold_hd = MET[HOLD_MET] + ("持有比率" if HOLD_UNIT == "ratio" else "持有規模")
     th = ('style="text-align:right;padding:8px 10px;border-bottom:1px solid %s;'
           'color:%s;font-weight:400;white-space:nowrap"' % (LINE, MUT))
@@ -206,11 +218,12 @@ def build_html(rows, date):
     head = (f'<tr><th {thl}>股票名稱</th><th {th}>收盤價</th><th {th}>漲跌%</th>'
             f'<th {th}>股票期貨規模</th><th {th}>{hold_hd}</th>'
             + (f'<th {th}>{chg_hd}</th>' if CHG_ON else "")
-            + f'<th {th}>近{DAYS_N}日漲跌</th></tr>')
+            + (f'<th {th}>近{DAYS_N}日漲跌</th>' if DAYS_ON else "")
+            + '</tr>')
 
     body = []
     for r in rows:
-        c = lambda v: UP if (v or 0) > 0 else (DN if (v or 0) < 0 else MUT)
+        c = lambda v: UPC if (v or 0) > 0 else (DNC if (v or 0) < 0 else MUT)
         link = f'{SITE}/stocks.html?code={r["code"]}&rk={RK}&panels={HOLD_MET}'
         mini = ' <span style="color:%s;font-size:11px">小型</span>' % MUT if r.get("mini") else ""
         sid = f'<span style="color:{MUT};font-size:12.5px;margin-right:5px">{r["sid"]}</span>' if r.get("sid") else ""
@@ -224,21 +237,30 @@ def build_html(rows, date):
             f'{f_ratio(r["_hold"]) if HOLD_UNIT=="ratio" else f_amt(r["_hold"])}</span></td>'
             + (f'<td {td}><span style="color:{c(r["_dchg"])}">'
                f'{f_ratio(r["_dchg"]) if CHG_UNIT=="ratio" else f_amt(r["_dchg"])}</span></td>' if CHG_ON else "")
-            + f'<td {td}><span style="color:{c(r["_chgN"])}">{f_ratio(r["_chgN"])}</span></td>'
-            f'</tr>')
+            + (f'<td {td}><span style="color:{c(r["_chgN"])}">{f_ratio(r["_chgN"])}</span></td>' if DAYS_ON else "")
+            + '</tr>')
 
-    empty = (f'<tr><td colspan="6" style="padding:16px;color:{MUT}">本日無符合條件的個股。</td></tr>')
-    return f"""<div style="background:#0f1620;padding:20px;font-family:-apple-system,'Segoe UI','Microsoft JhengHei',sans-serif;color:#e6edf3">
-  <div style="font-size:18px;font-weight:700;margin-bottom:4px">股票期貨篩選報告</div>
-  <div style="color:{MUT};font-size:13px;margin-bottom:14px">資料日期 <b style="color:#e6edf3">{date}</b> ・ 符合條件 <b style="color:#e6edf3">{len(rows)}</b> 檔</div>
-  <div style="color:{MUT};font-size:12.5px;background:#161d27;border:1px solid {LINE};border-radius:8px;padding:9px 12px;margin-bottom:14px">
-    篩選條件:{cond_text()}<br>排序:{MET[HOLD_MET]}持有{'比率' if HOLD_UNIT=='ratio' else '規模'}由大到小
-  </div>
+    empty = (f'<tr><td colspan="7" style="padding:16px;color:{MUT}">本日無符合條件的個股。</td></tr>')
+    return f"""
+  <div style="font-size:15px;font-weight:700;margin:18px 0 4px">{title}
+    <span style="color:{MUT};font-size:12px;font-weight:400;margin-left:8px">{note}</span></div>
   <table style="border-collapse:collapse;font-size:14px;width:100%;background:#131a24;border:1px solid {LINE};border-radius:8px">
     <thead>{head}</thead><tbody>{''.join(body) if body else empty}</tbody>
-  </table>
+  </table>"""
+
+
+def build_html(desc_rows, asc_rows, total, date):
+    hold_name = MET[HOLD_MET] + ("持有比率" if HOLD_UNIT == "ratio" else "持有規模")
+    return f"""<div style="background:#0f1620;padding:20px;font-family:-apple-system,'Segoe UI','Microsoft JhengHei',sans-serif;color:#e6edf3">
+  <div style="font-size:18px;font-weight:700;margin-bottom:4px">股票期貨篩選報告</div>
+  <div style="color:{MUT};font-size:13px;margin-bottom:14px">資料日期 <b style="color:#e6edf3">{date}</b> ・ 符合條件 <b style="color:#e6edf3">{total}</b> 檔</div>
+  <div style="color:{MUT};font-size:12.5px;background:#161d27;border:1px solid {LINE};border-radius:8px;padding:9px 12px">
+    篩選條件:{cond_text()}
+  </div>
+  {_table(desc_rows, f"▲ {hold_name} 前 {len(desc_rows)} 高", f"{hold_name}由大到小(偏多)")}
+  {_table(asc_rows, f"▼ {hold_name} 前 {len(asc_rows)} 低", f"{hold_name}由小到大(偏空)")}
   <div style="color:{MUT};font-size:12px;margin-top:14px;line-height:1.7">
-    點股票名稱可開啟該檔圖表(已自動切換為前{'十' if RK==10 else '五'}大、只顯示{MET[HOLD_MET]}面板)。<br>
+    點股票名稱可開啟該檔圖表(已自動切換為{RK_TAG.get(RK,'前十大')}、只顯示{MET[HOLD_MET]}面板)。<br>
     持有比率 = 淨部位 ÷ 全市場未沖銷口數;股票期貨規模 = 全市場未沖銷口數 × 近月股期收盤價 × 每口股數。<br>
     <a href="{SITE}/screener.html" style="color:#7cc4ff;text-decoration:none">開啟線上篩選器</a>
     ・資料來源:臺灣期貨交易所。本報告僅供參考,不構成投資建議。
@@ -246,18 +268,23 @@ def build_html(rows, date):
 </div>"""
 
 
-def build_text(rows, date):
-    lines = [f"股票期貨篩選報告 — 資料日期 {date} — 符合 {len(rows)} 檔",
-             f"條件:{cond_text()}", ""]
+def _text_rows(rows):
+    lines = []
     for r in rows:
         hold = f_ratio(r["_hold"]) if HOLD_UNIT == "ratio" else f_amt(r["_hold"])
-        ch = ""
-        if CHG_ON:
-            ch = "  " + MET[CHG_MET] + "變化" + (f_ratio(r["_dchg"]) if CHG_UNIT == "ratio" else f_amt(r["_dchg"]))
         lines.append(f'{(r.get("sid") or ""):>4} {r["name"]}  收{r["_px"]:g}  {f_pct(r["_chg"])}  '
-                     f'規模{f_amt(r["_scale"])}  {MET[HOLD_MET]}{hold}{ch}  近{DAYS_N}日{f_ratio(r["_chgN"])}')
-    if not rows:
-        lines.append("(本日無符合條件的個股)")
+                     f'規模{f_amt(r["_scale"])}  {MET[HOLD_MET]}{hold}')
+    return lines or ["(無符合)"]
+
+
+def build_text(desc_rows, asc_rows, total, date):
+    hold_name = MET[HOLD_MET] + ("持有比率" if HOLD_UNIT == "ratio" else "持有規模")
+    lines = [f"股票期貨篩選報告 — 資料日期 {date} — 符合 {total} 檔",
+             f"條件:{cond_text()}", "",
+             f"▲ {hold_name} 前 {len(desc_rows)} 高(偏多)"]
+    lines += _text_rows(desc_rows)
+    lines += ["", f"▼ {hold_name} 前 {len(asc_rows)} 低(偏空)"]
+    lines += _text_rows(asc_rows)
     return "\n".join(lines)
 
 
@@ -310,8 +337,11 @@ def send(subject, html, text, shots=None):
 def main():
     rank = json.load(open(os.path.join(DATA, "rank.json"), encoding="utf-8"))
     date = rank.get("date", "")
-    rows = compute(rank)
-    html, text = build_html(rows, date), build_text(rows, date)
+    rows = compute(rank)                        # 已依 hold 降冪
+    desc_rows = rows[:TOP_N]                    # 持有比率最高 前N (偏多)
+    asc_rows = rows[::-1][:TOP_N]               # 持有比率最低 前N (偏空)
+    html = build_html(desc_rows, asc_rows, len(rows), date)
+    text = build_text(desc_rows, asc_rows, len(rows), date)
     print(text)
     shots = collect_shots()
     print(f"\n附圖 {len(shots)} 張: " + (", ".join(fn for fn, _ in shots) if shots else "(無)"))

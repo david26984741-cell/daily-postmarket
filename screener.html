@@ -45,6 +45,7 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
       <span class="lb">① 大額交易人</span>
       <label class="ck"><input type="radio" name="rk" id="rk10" checked><span>前十大</span></label>
       <label class="ck"><input type="radio" name="rk" id="rk5"><span>前五大</span></label>
+      <label class="ck" title="第六~十名交易人 = 前十大 − 前五大"><input type="radio" name="rk" id="rk6"><span>第六~十大</span></label>
       <span class="lb" style="min-width:0;margin-left:6px">(必選,②③④可任意組合)</span>
     </div>
     <div class="frow" id="row2">
@@ -89,7 +90,7 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
       <button id="clear" class="ghost">清除條件</button>
     </div>
   </div>
-  <div class="warn" id="rk5warn" style="display:none">前五大資料將於下一次每日更新後提供,暫以前十大計算。</div>
+  <div class="warn" id="rk5warn" style="display:none">前五大/第六~十大所需資料將於下一次每日更新後提供,暫以前十大計算。</div>
 
   <div id="out"></div>
   <div class="cnt" id="cnt"></div>
@@ -111,7 +112,7 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
 
   const MET={t0:"交易人合計", main:"主力", nat:"自然人", inst:"法人"};
   const has5=(rk.rows||[]).some(r=>r.main5!=null);
-  const RK=()=>$("#rk5").checked?5:10;
+  const RK=()=>$("#rk5").checked?5:($("#rk6").checked?6:10);
   const E=1e8;   // 億
 
   // ---- 條件保存/恢復 (localStorage): 返回本頁時不清除 ----
@@ -128,7 +129,7 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
   try{
     const o=JSON.parse(localStorage.getItem(PREF)||"null");
     if(o){
-      if(o.rk===5) $("#rk5").checked=true;
+      if(o.rk===5) $("#rk5").checked=true; else if(o.rk===6) $("#rk6").checked=true;
       IDS.forEach(i=>{ if(typeof o[i]==="boolean") $("#"+i).checked=o[i]; });
       VALS.forEach(i=>{ if(o[i]!=null && $("#"+i)) $("#"+i).value=o[i]; });
     }
@@ -139,12 +140,16 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
   ["c2","c3","c4","c5"].forEach(i=>$("#"+i).onchange=()=>{ rowDim(); save(); });
   ["u3","u4"].forEach(i=>$("#"+i).onchange=()=>{ unitLbl(); save(); });
   [...IDS.slice(4),...VALS].forEach(i=>{ if($("#"+i)) $("#"+i).onchange=save; });
-  [$("#rk5"),$("#rk10")].forEach(x=>x.onchange=()=>{ save(); });
+  [$("#rk5"),$("#rk6"),$("#rk10")].forEach(x=>x.onchange=()=>{ save(); });
   rowDim(); unitLbl();
 
   // ---- 口徑值 (口數): 依前五/前十選擇原始欄位 ----
+  // rk=6 → 第六~十名 = 前十大 − 前五大 (t0/t1 相減後, 主力/自然人/法人公式照舊)
+  const sub=(a,b)=>(a!=null&&b!=null)?a-b:null;
   function vals(r){
     if(RK()===5&&has5) return {t0:r.main5,t0p:r.main5_prev,t1:r.inst5,t1p:r.inst5_prev};
+    if(RK()===6&&has5) return {t0:sub(r.main,r.main5),t0p:sub(r.main_prev,r.main5_prev),
+                               t1:sub(r.inst,r.inst5),t1p:sub(r.inst_prev,r.inst5_prev)};
     return {t0:r.main,t0p:r.main_prev,t1:r.inst,t1p:r.inst_prev};
   }
   function lots(r,m){
@@ -213,7 +218,7 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
     return out;
   }
   function render(){
-    $("#rk5warn").style.display=(RK()===5&&!has5)?"block":"none";
+    $("#rk5warn").style.display=(RK()!==10&&!has5)?"block":"none";
     lastRows=compute();
     const m3=$("#m3").value, m4=$("#m4").value, u3=$("#u3").value, u4=$("#u4").value;
     const cols=[
@@ -271,7 +276,7 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
     $("#u3").value="amt"; $("#u4").value="amt"; $("#dir5").value="up";
     $("#rk10").checked=true; rowDim(); unitLbl(); save(); render();
   };
-  [$("#rk5"),$("#rk10")].forEach(x=>x.addEventListener("change",render));
+  [$("#rk5"),$("#rk6"),$("#rk10")].forEach(x=>x.addEventListener("change",render));
   render();
 })();
 </script>
