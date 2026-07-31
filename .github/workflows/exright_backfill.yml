@@ -1,0 +1,78 @@
+# .github/workflows/exright_backfill.yml
+#
+# 除權息歷史回補 —— 手動觸發的一次性 workflow。
+# 逐月抓 2016-01 至今 (TWSE ~127 次 + TPEx ~127 次), 含重試與斷點續抓。
+# 預估 20-30 分鐘。
+#
+# 斷點續抓: data/exright/_progress.json 會被 commit 回倉庫,
+# 中斷後重跑同一個 workflow 會自動跳過已完成的月份。
+
+name: 除權息歷史回補
+
+on:
+  workflow_dispatch:
+    inputs:
+      market:
+        description: "市場"
+        type: choice
+        options: [both, twse, tpex]
+        default: both
+      start:
+        description: "起始月份 YYYY-MM"
+        default: "2016-01"
+      end:
+        description: "結束月份 YYYY-MM (留空 = 本月)"
+        default: ""
+      no_resume:
+        description: "忽略進度檔, 全部重抓"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 逐月抓取除權息事件
+        env:
+          EXRIGHT_SLEEP: "3.2"
+          EXRIGHT_RETRY: "5"
+        run: |
+          python scrape_exright.py \
+            --market "${{ inputs.market }}" \
+            --start  "${{ inputs.start }}" \
+            ${{ inputs.end && format('--end "{0}"', inputs.end) || '' }} \
+            ${{ inputs.no_resume && '--no-resume' || '' }}
+
+      - name: 計算還原因子
+        run: python build_adjfactor.py
+
+      - name: 執行驗收測試
+        run: |
+          python test_exright.py | tee acceptance_report.txt
+          pip install pytest
+          pytest -v test_exright.py
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: acceptance-report
+          path: acceptance_report.txt
+
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/exright data/adjfactor
+          git diff --staged --quiet || git commit -m "除權息回補 ${{ inputs.start }} 起"
+          git push
