@@ -268,6 +268,21 @@ https://david26984741-cell.github.io/daily-postmarket/
 - 另注意:砂箱讀 `.git/` 是舊快取(`ls` 看到的 lock 狀態不可信),要判斷 git 狀態以 GitHub Desktop 為準。
 - 一句話:**盡量用程式,只有 pull/push 走 GitHub Desktop**。
 
+### 2026/07/22~23(公司+家用電腦)— 新掛牌股期自動補證券代號 & 報告圖符號
+- (公司)**報告圖標題右側**:水位值(未平倉金額/淨部位/多空淨額)不帶 +/-,方向改用顏色
+  (紅正/綠負);只有「較前一日」這種真變動量保留 +/-。charts.py f_lot/f_e 加 signed 參數。
+  近五日表格維持現狀(使用者確認)。
+- (家用)detail.html 歷史趨勢圖:**PUT 欄位柱色反轉**(正=綠,代表空方增溫)— 與 charts.py 的
+  PUT invert 口徑一致。
+- (公司)**新掛牌股期自動補證券代號**:貿聯-KY 等新契約原本 sid 空白(共 86 檔)。
+  原因:新契約自動發現時,大額 CSV 只有商品代號+名稱;期交所 stockLists 頁又常漏列新標的
+  (實測 86 檔在該頁零命中)。
+  修正:`fetch_name_sid_map()` 用當日現貨行情(TWSE MI_INDEX + 上櫃 TPEx)的「名稱→代號」
+  反查補 sid;`resolve_sid()` 小型契約先繼承本尊;`_norm_name()` 破折號統一半形(KY 股)。
+  只在確實缺 sid 時才抓對照(一天最多一次),純加值、查不到就維持現狀。
+- **已驗證生效**:7/22 排程自動補上 貿聯3665/世芯3661/保瑞6472/台灣虎航6757 等 14 檔。
+  剩 72 檔缺 sid:67 檔為已下市股期(當日無部位,不影響網站);5 檔 ETF 期貨因簡稱帶
+  「ETF」尾綴對不上現貨名稱 → 7/23 再補「去 ETF 尾綴重查」規則(本機已驗 5 檔全中)。
 ### 2026/07/23(家用電腦)
 - 歷史趨勢圖(detail.html):PUT 開頭欄位柱色反轉(正=綠 偏空/負=紅),與報告圖表一致。
 - stocks.html 與 screener.html 新增口徑「**第六~十大**」(rk=6):
@@ -328,5 +343,41 @@ https://david26984741-cell.github.io/daily-postmarket/
 - 改動:`tools/strategy610.py`(rat 全體比率字典、wsig 權重、streak 內逐日生效權重、wmean 淨值、
   basket 口數 ×w、criteria/note 文案);`strategy.html`(今日/持倉表加「權重」欄、caphint 說明)。
 - 未部署:需手動觸發 kline.yml 或等每日班次。data/strategy610.json 已在本地重產(數字已驗證與實驗一致)。
+
+### 2026/07/29~31(家用電腦)— 除權息資料與 backward 還原因子
+- 新增 `scrape_exright.py`(逐月爬 TWSE+TPEx 除權息)、`build_adjfactor.py`(算還原因子)、
+  `test_exright.py`(規格書 §4 全部驗收測試)、workflow `exright_backfill.yml`(手動回補,
+  含斷點續抓)與 `exright_daily.yml`(每日增量)。
+- 資料:`data/exright/{twse,tpex}.json`(2016-01~2026-07, 127 個月, **零失敗月份**,
+  TWSE 10,751 筆 + TPEx 9,509 筆 = 20,260 筆)、`data/adjfactor/<sid>.json`(264 檔,
+  backward 最新一日=1.0, 格式照規格書 §3.2 每日一個值)。
+- **端點(皆用 DevTools 實查, 非猜測)**:
+  - TWSE `GET /rwd/zh/exRight/TWT49U?startDate=YYYYMMDD&endDate=YYYYMMDD&response=json`,
+    成功判斷 `stat=="OK"`。**必須逐月**, 跨年度區間會靜默截斷。
+  - TPEx `POST /www/zh-tw/bulletin/exDailyQ`,
+    body `startDate=YYYY/MM/DD&endDate=YYYY/MM/DD&id=&response=json`。
+    三個陷阱:①送出是**西元**日期但回傳資料是**民國**;②`stat` 是**小寫** `"ok"`;
+    ③欄位與 TWSE 不同(權值/息值拆兩欄, 故「權值+息值」在 index 7、「權/息」在 8)。
+    資料在 `tables[0].data`。
+  - `openapi/v1/tpex_exright_daily` **不能用**:只回最近數筆, 無日期參數(已實測)。
+- **效果**:264 檔宇宙內 2,383 個除息日, 平均日報酬 **−3.646% → +0.110%**,
+  跌超過 5% 者 748 → 100 筆。2412 三個除息日 −3.69/−4.38/−2.60% → +0.20/−0.61/+1.16%。
+- **修正規格書三處錯誤**:
+  ① 「2024/06 應有 278 筆」不成立 — 實測 TWSE 177 + TPEx 136 = 313, 回應完整未截斷,
+     任何子集合都湊不出 278。驗收改用區間, 不寫死數字。
+  ② 2412 的 2024 年除息日是 **07/04** 不是 07/05;且 `data/kline/2412.json` 缺 07/04 該日。
+  ③ 2025/07/03 還原後 +1.16% 非計算錯誤而是真實填息(參考價 129.50, 開 130.00 收 131.00),
+     門檻放寬為 ±1.5%。
+- **方法邊界**:除權息表**不含分割/減資**(TWSE 表格註記自己寫明)。實測唯一重大案例
+  **0050 於 2025/06/18 一拆四**, 還原後仍留 −74.1% 假跌幅, 下游用 0050 要另外處理。
+  其餘殘留跳空多為大盤事件(2024/08/05 同日 140 檔), 屬真實波動不該還原。
+- **抓取管道**:Cowork 沙箱連不到 twse/tpex/github(proxy 擋), 但**瀏覽器可以**。
+  作法:Chrome 導到 twse.com.tw / tpex.org.tw 後用**同源 fetch** 逐月抓, 在瀏覽器內彙總,
+  再用 Blob download 落地到 Downloads。沙箱只能讀 `raw.githubusercontent.com`(web_fetch), 不能寫。
+- **踩雷**:沙箱跑 `git status` 會建 `.git/index.lock` 且刪不掉(`Operation not permitted`),
+  會卡住 GitHub Desktop。改用 Cowork 的 `allow_cowork_file_delete` 授權後即可刪除。
+  結論不變:**沙箱不要對本 repo 跑任何會寫 index 的 git 指令**。
+- GitHub Desktop 授權:程式名稱會綁到外層啟動器而被擋, 要用 request_access 傳
+  **`githubdesktop.exe`** 才會解析到 `app-3.6.3\githubdesktop.exe`(版本更新後需重新授權)。
 
 (之後的修改請接著往下記)
