@@ -74,6 +74,13 @@ jobs:
         continue-on-error: true
         run: python tools/shots.py --out .shots
 
+      # 圖 6: 選擇權籌碼 (OI 金額變化分布) — runner 即時抓期交所/證交所當日資料, 不進 repo
+      - name: 產生選擇權籌碼圖 (1 張)
+        id: optchips
+        if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
+        continue-on-error: true
+        run: python tools/optchips.py --fetch --out .shots
+
       - name: 產生並寄出報告
         if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
         env:

@@ -380,4 +380,17 @@ https://david26984741-cell.github.io/daily-postmarket/
 - GitHub Desktop 授權:程式名稱會綁到外層啟動器而被擋, 要用 request_access 傳
   **`githubdesktop.exe`** 才會解析到 `app-3.6.3\githubdesktop.exe`(版本更新後需重新授權)。
 
+### 2026/08/01(家用電腦)— 選擇權籌碼圖(報告附圖第6張)
+- 新增 `tools/optchips.py`:TXO「OI 金額變化」分布圖,接進 report.yml(--fetch 模式,
+  runner 即時抓期交所/證交所**當日+前一交易日**資料,當場算增減,**不進 repo**)。
+- 資料源(皆實測):`optDataDown`(POST, commodity_id=TXO)每履約價一列,含結算價/收盤/
+  未沖銷契約數;**OI 增減無現成欄位**,以兩日相減。週別碼:`W`=週三選、`F`=週五選、
+  純六碼=月選。到期別自動選「最早到期且未到期」者。TAIEX 收盤用 TWSE MI_INDEX(type=IND)。
+- 圖規格:柱=增減口數×結算價×50元;CALL左紅/PUT右綠;**減少=負向柱**(不用淡色);
+  顯示範圍卡在 CALL/PUT 增額**前三**履約價的 min~max;增額**前二**亮色+金框凸顯;
+  兩邊金額皆<30萬(MIN_AMT)不畫。四個關鍵數字=履約價+價差(期−現)±結算價
+  (CALL 用 +、PUT 用 −),**圖上不顯示公式**(使用者要求保密),標籤只寫「CALL增額第一」等。
+- 標題下有一段使用者提供的 OI 說明文字(散戶買方/大戶賣方收租、支撐壓力邏輯)。
+- 本地測試:`--input rows.json --tx --taiex --date --expiry`(資料經瀏覽器同源抓取取回)。
+
 (之後的修改請接著往下記)
