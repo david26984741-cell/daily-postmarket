@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-07-31",
+ "updated_at": "2026-08-03",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -85664,6 +85664,114 @@
    "pre_close": 28.4,
    "ref_price": 27.69,
    "value": 0.71,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/03",
+   "sid": "3306",
+   "name": "鼎天",
+   "pre_close": 43.75,
+   "ref_price": 42.05,
+   "value": 1.7,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/03",
+   "sid": "3689",
+   "name": "湧德",
+   "pre_close": 105.0,
+   "ref_price": 101.35,
+   "value": 3.648399,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/03",
+   "sid": "5014",
+   "name": "建錩",
+   "pre_close": 10.95,
+   "ref_price": 10.45,
+   "value": 0.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/03",
+   "sid": "6122",
+   "name": "擎邦",
+   "pre_close": 50.3,
+   "ref_price": 46.9,
+   "value": 3.4,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/03",
+   "sid": "6187",
+   "name": "萬潤",
+   "pre_close": 929.0,
+   "ref_price": 917.34,
+   "value": 11.660591,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "3332",
+   "name": "幸康",
+   "pre_close": 63.9,
+   "ref_price": 61.9,
+   "value": 2.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "3483",
+   "name": "力致",
+   "pre_close": 76.4,
+   "ref_price": 73.4,
+   "value": 3.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "5450",
+   "name": "南良",
+   "pre_close": 14.25,
+   "ref_price": 14.0,
+   "value": 0.25,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "6203",
+   "name": "海韻電",
+   "pre_close": 64.3,
+   "ref_price": 60.3,
+   "value": 4.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "6417",
+   "name": "韋僑",
+   "pre_close": 114.0,
+   "ref_price": 111.6,
+   "value": 2.4,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "6469",
+   "name": "大樹",
+   "pre_close": 77.4,
+   "ref_price": 70.04,
+   "value": 7.357072,
+   "type": "除權息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "6728",
+   "name": "上洋",
+   "pre_close": 109.5,
+   "ref_price": 103.0,
+   "value": 6.5,
    "type": "除息"
   }
  ]

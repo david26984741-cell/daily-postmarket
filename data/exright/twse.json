@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-07-31",
+ "updated_at": "2026-08-03",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -96832,6 +96832,240 @@
    "name": "波力-KY",
    "pre_close": 99.7,
    "ref_price": 96.7,
+   "value": 3.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/03",
+   "sid": "1465",
+   "name": "偉全",
+   "pre_close": 12.7,
+   "ref_price": 12.4,
+   "value": 0.3,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/03",
+   "sid": "1527",
+   "name": "鑽全",
+   "pre_close": 33.75,
+   "ref_price": 32.25,
+   "value": 1.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/03",
+   "sid": "2367",
+   "name": "燿華",
+   "pre_close": 36.3,
+   "ref_price": 36.1,
+   "value": 0.2,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/03",
+   "sid": "2376",
+   "name": "技嘉",
+   "pre_close": 336.5,
+   "ref_price": 324.5,
+   "value": 12.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/03",
+   "sid": "3051",
+   "name": "力特",
+   "pre_close": 22.15,
+   "ref_price": 21.65,
+   "value": 0.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/03",
+   "sid": "3501",
+   "name": "維熹",
+   "pre_close": 39.95,
+   "ref_price": 37.95,
+   "value": 2.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/03",
+   "sid": "6957",
+   "name": "裕慶-KY",
+   "pre_close": 226.0,
+   "ref_price": 216.89,
+   "value": 9.104411,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "00946",
+   "name": "群益科技高息成長",
+   "pre_close": 14.56,
+   "ref_price": 14.5,
+   "value": 0.058,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "00953B",
+   "name": "群益優選非投等債",
+   "pre_close": 9.83,
+   "ref_price": 9.76,
+   "value": 0.061,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "00985B",
+   "name": "群益ESG投等債0-5",
+   "pre_close": 10.41,
+   "ref_price": 10.35,
+   "value": 0.053,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "1474",
+   "name": "弘裕",
+   "pre_close": 10.25,
+   "ref_price": 10.0,
+   "value": 0.25,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "1736",
+   "name": "喬山",
+   "pre_close": 130.0,
+   "ref_price": 125.5,
+   "value": 4.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "2348",
+   "name": "海悅",
+   "pre_close": 74.4,
+   "ref_price": 66.09,
+   "value": 8.304762,
+   "type": "權息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "2348A",
+   "name": "海悅甲特",
+   "pre_close": 38.1,
+   "ref_price": 36.5,
+   "value": 1.6,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "2351",
+   "name": "順德",
+   "pre_close": 156.5,
+   "ref_price": 155.47,
+   "value": 1.028839,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "2393",
+   "name": "億光",
+   "pre_close": 61.5,
+   "ref_price": 57.0,
+   "value": 4.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "2543",
+   "name": "皇昌",
+   "pre_close": 37.45,
+   "ref_price": 36.42,
+   "value": 1.027678,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "2812",
+   "name": "台中銀",
+   "pre_close": 20.65,
+   "ref_price": 18.98,
+   "value": 1.662184,
+   "type": "權息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "2834",
+   "name": "臺企銀",
+   "pre_close": 18.2,
+   "ref_price": 16.72,
+   "value": 1.471029,
+   "type": "權息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "3533",
+   "name": "嘉澤",
+   "pre_close": 2005.0,
+   "ref_price": 1970.06,
+   "value": 34.93436,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "3545",
+   "name": "敦泰",
+   "pre_close": 50.1,
+   "ref_price": 49.28,
+   "value": 0.81494,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "4190",
+   "name": "佐登-KY",
+   "pre_close": 25.5,
+   "ref_price": 25.0,
+   "value": 0.499953,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "6209",
+   "name": "今國光",
+   "pre_close": 69.8,
+   "ref_price": 69.3,
+   "value": 0.495687,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "6743",
+   "name": "安普新",
+   "pre_close": 30.3,
+   "ref_price": 27.3,
+   "value": 3.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "8404",
+   "name": "百和興業-KY",
+   "pre_close": 16.65,
+   "ref_price": 16.15,
+   "value": 0.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/04",
+   "sid": "9938",
+   "name": "百和",
+   "pre_close": 45.9,
+   "ref_price": 42.9,
    "value": 3.0,
    "type": "息"
   }
