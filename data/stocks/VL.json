@@ -1,0 +1,49 @@
+{
+ "code": "VL",
+ "name": "智通期貨",
+ "sid": "",
+ "records": {
+  "2026/08/03": [
+   {
+    "month": "202608",
+    "type": "0",
+    "top5_buy": 25,
+    "top5_sell": 25,
+    "top10_buy": 25,
+    "top10_sell": 25,
+    "market_oi": 25,
+    "scope": "當月"
+   },
+   {
+    "month": "202608",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 25,
+    "top10_buy": 0,
+    "top10_sell": 25,
+    "market_oi": 25,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 25,
+    "top5_sell": 25,
+    "top10_buy": 25,
+    "top10_sell": 25,
+    "market_oi": 25,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 25,
+    "top10_buy": 0,
+    "top10_sell": 25,
+    "market_oi": 25,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

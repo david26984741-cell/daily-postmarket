@@ -1,0 +1,49 @@
+{
+ "code": "VN",
+ "name": "小型華城期貨",
+ "sid": "1519",
+ "records": {
+  "2026/08/03": [
+   {
+    "month": "202608",
+    "type": "0",
+    "top5_buy": 31,
+    "top5_sell": 34,
+    "top10_buy": 34,
+    "top10_sell": 34,
+    "market_oi": 34,
+    "scope": "當月"
+   },
+   {
+    "month": "202608",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 19,
+    "top10_buy": 0,
+    "top10_sell": 19,
+    "market_oi": 34,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 31,
+    "top5_sell": 34,
+    "top10_buy": 34,
+    "top10_sell": 34,
+    "market_oi": 34,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 19,
+    "top10_buy": 0,
+    "top10_sell": 19,
+    "market_oi": 34,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

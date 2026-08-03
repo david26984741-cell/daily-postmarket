@@ -1,0 +1,49 @@
+{
+ "code": "VO",
+ "name": "小型京元電子期貨",
+ "sid": "2449",
+ "records": {
+  "2026/08/03": [
+   {
+    "month": "202608",
+    "type": "0",
+    "top5_buy": 192,
+    "top5_sell": 271,
+    "top10_buy": 219,
+    "top10_sell": 285,
+    "market_oi": 285,
+    "scope": "當月"
+   },
+   {
+    "month": "202608",
+    "type": "1",
+    "top5_buy": 106,
+    "top5_sell": 89,
+    "top10_buy": 106,
+    "top10_sell": 97,
+    "market_oi": 285,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 192,
+    "top5_sell": 277,
+    "top10_buy": 219,
+    "top10_sell": 291,
+    "market_oi": 291,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 106,
+    "top5_sell": 94,
+    "top10_buy": 106,
+    "top10_sell": 102,
+    "market_oi": 291,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

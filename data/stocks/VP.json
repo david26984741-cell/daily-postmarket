@@ -1,0 +1,49 @@
+{
+ "code": "VP",
+ "name": "小型日月光投控期貨",
+ "sid": "3711",
+ "records": {
+  "2026/08/03": [
+   {
+    "month": "202608",
+    "type": "0",
+    "top5_buy": 137,
+    "top5_sell": 355,
+    "top10_buy": 181,
+    "top10_sell": 374,
+    "market_oi": 380,
+    "scope": "當月"
+   },
+   {
+    "month": "202608",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 141,
+    "top10_buy": 8,
+    "top10_sell": 144,
+    "market_oi": 380,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 137,
+    "top5_sell": 355,
+    "top10_buy": 181,
+    "top10_sell": 374,
+    "market_oi": 384,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 141,
+    "top10_buy": 8,
+    "top10_sell": 144,
+    "market_oi": 384,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}
