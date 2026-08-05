@@ -102902,6 +102902,48 @@
     "market_oi": 27576,
     "scope": "所有契約"
    }
+  ],
+  "2026/08/05": [
+   {
+    "month": "202608",
+    "type": "0",
+    "top5_buy": 6194,
+    "top5_sell": 20455,
+    "top10_buy": 9569,
+    "top10_sell": 22968,
+    "market_oi": 25817,
+    "scope": "當月"
+   },
+   {
+    "month": "202608",
+    "type": "1",
+    "top5_buy": 6194,
+    "top5_sell": 20455,
+    "top10_buy": 8869,
+    "top10_sell": 21438,
+    "market_oi": 25817,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 6794,
+    "top5_sell": 23010,
+    "top10_buy": 10178,
+    "top10_sell": 25598,
+    "market_oi": 30933,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 6794,
+    "top5_sell": 23010,
+    "top10_buy": 9478,
+    "top10_sell": 23993,
+    "market_oi": 30933,
+    "scope": "所有契約"
+   }
   ]
  }
 }
