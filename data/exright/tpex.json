@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-08-03",
+ "updated_at": "2026-08-07",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -85772,6 +85772,177 @@
    "pre_close": 109.5,
    "ref_price": 103.0,
    "value": 6.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/05",
+   "sid": "3289",
+   "name": "宜特",
+   "pre_close": 145.0,
+   "ref_price": 143.8,
+   "value": 1.198413,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/05",
+   "sid": "5903",
+   "name": "全家",
+   "pre_close": 189.0,
+   "ref_price": 182.5,
+   "value": 6.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/05",
+   "sid": "6134",
+   "name": "萬旭",
+   "pre_close": 26.3,
+   "ref_price": 26.1,
+   "value": 0.2,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/05",
+   "sid": "6725",
+   "name": "矽科宏晟",
+   "pre_close": 256.0,
+   "ref_price": 249.0,
+   "value": 7.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/05",
+   "sid": "6997",
+   "name": "博弘",
+   "pre_close": 76.6,
+   "ref_price": 72.0,
+   "value": 4.6,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/05",
+   "sid": "8354",
+   "name": "冠好",
+   "pre_close": 15.8,
+   "ref_price": 15.69,
+   "value": 0.11,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/06",
+   "sid": "3152",
+   "name": "璟德",
+   "pre_close": 232.0,
+   "ref_price": 224.89,
+   "value": 7.111024,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/06",
+   "sid": "3516",
+   "name": "亞帝歐",
+   "pre_close": 27.05,
+   "ref_price": 26.85,
+   "value": 0.2,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/06",
+   "sid": "6125",
+   "name": "廣運",
+   "pre_close": 49.1,
+   "ref_price": 48.6,
+   "value": 0.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/06",
+   "sid": "6186",
+   "name": "新潤",
+   "pre_close": 42.45,
+   "ref_price": 37.44,
+   "value": 5.007933,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/06",
+   "sid": "6855",
+   "name": "數泓科",
+   "pre_close": 119.5,
+   "ref_price": 114.0,
+   "value": 5.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/06",
+   "sid": "9960",
+   "name": "邁達康",
+   "pre_close": 32.9,
+   "ref_price": 31.35,
+   "value": 1.550369,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/07",
+   "sid": "6662",
+   "name": "樂斯科",
+   "pre_close": 30.2,
+   "ref_price": 28.65,
+   "value": 1.55,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/10",
+   "sid": "2948",
+   "name": "寶陞",
+   "pre_close": 38.65,
+   "ref_price": 35.57,
+   "value": 3.076192,
+   "type": "除權息"
+  },
+  {
+   "date": "2026/08/10",
+   "sid": "3709",
+   "name": "鑫聯大投控",
+   "pre_close": 79.4,
+   "ref_price": 77.24,
+   "value": 2.156521,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/10",
+   "sid": "6680",
+   "name": "鑫創電子",
+   "pre_close": 57.8,
+   "ref_price": 56.12,
+   "value": 1.68029,
+   "type": "除權"
+  },
+  {
+   "date": "2026/08/10",
+   "sid": "7743",
+   "name": "金利食安",
+   "pre_close": 21.2,
+   "ref_price": 20.7,
+   "value": 0.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/10",
+   "sid": "8421",
+   "name": "旭源",
+   "pre_close": 15.3,
+   "ref_price": 14.68,
+   "value": 0.618733,
+   "type": "除權"
+  },
+  {
+   "date": "2026/08/10",
+   "sid": "8927",
+   "name": "北基",
+   "pre_close": 21.05,
+   "ref_price": 20.74,
+   "value": 0.306248,
    "type": "除息"
   }
  ]
