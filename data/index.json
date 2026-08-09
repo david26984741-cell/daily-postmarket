@@ -1,5 +1,10 @@
 {
  "dates": [
+  "2026/08/07",
+  "2026/08/06",
+  "2026/08/05",
+  "2026/08/04",
+  "2026/08/03",
   "2026/07/31",
   "2026/07/30",
   "2026/07/29",
@@ -2451,8 +2456,8 @@
   "2016/07/04",
   "2016/07/01"
  ],
- "latest_date": "2026/07/31",
- "updated_at": "2026-07-31T23:39:48+08:00",
+ "latest_date": "2026/08/07",
+ "updated_at": "2026-08-07T22:35:38+08:00",
  "stocks": [
   {
    "code": "CA",
@@ -4028,6 +4033,31 @@
    "code": "VK",
    "name": "小型亞翔期貨",
    "sid": "6139"
+  },
+  {
+   "code": "VL",
+   "name": "智通期貨",
+   "sid": ""
+  },
+  {
+   "code": "VM",
+   "name": "華城期貨",
+   "sid": "1519"
+  },
+  {
+   "code": "VN",
+   "name": "小型華城期貨",
+   "sid": "1519"
+  },
+  {
+   "code": "VO",
+   "name": "小型京元電子期貨",
+   "sid": "2449"
+  },
+  {
+   "code": "VP",
+   "name": "小型日月光投控期貨",
+   "sid": "3711"
   }
  ],
  "categories": [
@@ -23705,6 +23735,61 @@
    "stocks": "ok (315 檔)",
    "kline": "ok (267 檔)",
    "fkline": "ok (297 檔 · 每日行情(全部))",
+   "txf": "ok"
+  },
+  "2026/08/03": {
+   "options_foreign": "ok",
+   "options_dealer": "ok",
+   "foreign_fut_spot": "ok",
+   "large_opt": "ok",
+   "large_fut_txf": "ok",
+   "stocks": "ok (320 檔)",
+   "kline": "ok (268 檔)",
+   "fkline": "ok (305 檔 · 每日行情(全部))",
+   "txf": "ok"
+  },
+  "2026/08/04": {
+   "options_foreign": "ok",
+   "options_dealer": "ok",
+   "foreign_fut_spot": "ok",
+   "large_opt": "ok",
+   "large_fut_txf": "ok",
+   "stocks": "ok (320 檔)",
+   "kline": "ok (268 檔)",
+   "fkline": "ok (307 檔 · 每日行情(全部))",
+   "txf": "ok"
+  },
+  "2026/08/05": {
+   "options_foreign": "ok",
+   "options_dealer": "ok",
+   "foreign_fut_spot": "ok",
+   "large_opt": "ok",
+   "large_fut_txf": "ok",
+   "stocks": "ok (320 檔)",
+   "kline": "ok (268 檔)",
+   "fkline": "ok (305 檔 · 每日行情(全部))",
+   "txf": "ok"
+  },
+  "2026/08/06": {
+   "options_foreign": "ok",
+   "options_dealer": "ok",
+   "foreign_fut_spot": "ok",
+   "large_opt": "ok",
+   "large_fut_txf": "ok",
+   "stocks": "ok (320 檔)",
+   "kline": "ok (268 檔)",
+   "fkline": "ok (305 檔 · 每日行情(全部))",
+   "txf": "ok"
+  },
+  "2026/08/07": {
+   "options_foreign": "ok",
+   "options_dealer": "ok",
+   "foreign_fut_spot": "ok",
+   "large_opt": "ok",
+   "large_fut_txf": "ok",
+   "stocks": "ok (320 檔)",
+   "kline": "ok (268 檔)",
+   "fkline": "ok (304 檔 · 每日行情(全部))",
    "txf": "ok"
   }
  }
