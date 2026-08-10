@@ -222,33 +222,70 @@
     range.from=D[na]; range.to=D[na+ns-1];
     applyRange();
   }
-  function attachPan(reg,cv){                              // 按住拖曳 → 左右平移時間窗
-    let drag=null;
+  function attachPan(reg,cv){                              // 單指/滑鼠拖曳=平移, 雙指捏合=縮放
+    const pts=new Map();                                   // pointerId -> clientX (支援多點觸控)
+    let drag=null, pinch=null;
     cv.style.cursor="grab";
-    cv.style.touchAction="pan-y";                          // 觸控裝置仍可垂直捲頁
-    cv.addEventListener("pointerdown",ev=>{
-      if(ev.button!==0) return;
-      const D=reg.dates; if(D.length<2) return;
-      const [a,b]=visWin(D);
-      if(b-a+1>=D.length) return;                          // 顯示全區間時無可平移
+    cv.style.touchAction="pan-y";                          // 垂直交給瀏覽器捲頁; 水平拖曳與雙指手勢由本頁處理
+    function metrics(){                                    // 繪圖區的螢幕像素寬與左緣 (含頁面 zoom 校正)
       const area=reg.chart.chartArea, rect=cv.getBoundingClientRect();
-      const sc=(rect.width>0&&cv.offsetWidth>0)?rect.width/cv.offsetWidth:1;    // 頁面 zoom 校正
-      const w=((area&&area.width>0)?area.width:(cv.offsetWidth||rect.width))*sc; // 以螢幕像素計
-      drag={x0:ev.clientX, a, b, ppd:w/(b-a+1)};           // ppd = 每個交易日佔的螢幕像素
+      const sc=(rect.width>0&&cv.offsetWidth>0)?rect.width/cv.offsetWidth:1;
+      const w=((area&&area.width>0)?area.width:(cv.offsetWidth||rect.width))*sc;
+      const left=rect.left+(area?area.left*sc:0);
+      return {w,left};
+    }
+    cv.addEventListener("pointerdown",ev=>{
+      if(ev.pointerType==="mouse"&&ev.button!==0) return;
+      const D=reg.dates; if(D.length<2) return;
+      pts.set(ev.pointerId, ev.clientX);
       try{ cv.setPointerCapture(ev.pointerId); }catch(e){}
-      cv.style.cursor="grabbing";
-      ev.preventDefault();
+      if(pts.size===2){                                    // 第二指落下 → 進入捏合縮放
+        drag=null;
+        const [a,b]=visWin(D), span=b-a+1;
+        const xs=[...pts.values()], d0=Math.max(1,Math.abs(xs[0]-xs[1]));
+        const m=metrics();
+        const ratio=Math.min(1,Math.max(0,((xs[0]+xs[1])/2-m.left)/m.w));
+        pinch={d0, span0:span, anchor:a+Math.round(ratio*(span-1)), ratio};
+        ev.preventDefault();
+      }else{
+        const [a,b]=visWin(D);
+        if(b-a+1>=D.length) return;                        // 顯示全區間時無可平移 (指位仍記錄, 供捏合)
+        drag={x0:ev.clientX, a, b, ppd:metrics().w/(b-a+1)}; // ppd = 每個交易日佔的螢幕像素
+        cv.style.cursor="grabbing";
+        if(ev.pointerType==="mouse") ev.preventDefault();
+      }
     });
     cv.addEventListener("pointermove",ev=>{
-      if(!drag) return;
-      const D=reg.dates, span=drag.b-drag.a+1;
-      const shift=Math.round((ev.clientX-drag.x0)/drag.ppd); // 往右拖 = 看更早
-      let na=Math.max(0, Math.min(drag.a-shift, D.length-span));
-      if(D[na]===range.from) return;
-      range.from=D[na]; range.to=D[na+span-1];
-      applyRange();
+      if(!pts.has(ev.pointerId)&&!drag) return;
+      if(pts.has(ev.pointerId)) pts.set(ev.pointerId, ev.clientX);
+      const D=reg.dates;
+      if(pinch&&pts.size>=2){                              // 兩指距離變大=放大(窗口變短), 變小=縮小
+        const xs=[...pts.values()];
+        const d=Math.max(1,Math.abs(xs[0]-xs[1]));
+        let ns=Math.min(D.length, Math.max(10, Math.round(pinch.span0*pinch.d0/d)));
+        let na=Math.max(0, Math.min(pinch.anchor-Math.round(pinch.ratio*(ns-1)), D.length-ns));
+        if(D[na]!==range.from||D[na+ns-1]!==range.to){
+          range.from=D[na]; range.to=D[na+ns-1];
+          applyRange();                                    // rAF 節流, 捏合過程不會狂重繪
+        }
+        ev.preventDefault();
+        return;
+      }
+      if(drag){
+        const span=drag.b-drag.a+1;
+        const shift=Math.round((ev.clientX-drag.x0)/drag.ppd); // 往右拖 = 看更早
+        let na=Math.max(0, Math.min(drag.a-shift, D.length-span));
+        if(D[na]===range.from) return;
+        range.from=D[na]; range.to=D[na+span-1];
+        applyRange();
+      }
     });
-    const endDrag=()=>{ if(drag){ drag=null; cv.style.cursor="grab"; } };
+    const endDrag=ev=>{
+      if(ev&&ev.pointerId!==undefined) pts.delete(ev.pointerId);
+      if(pts.size<2) pinch=null;
+      if(pts.size===0&&drag){ drag=null; }
+      if(pts.size===0) cv.style.cursor="grab";
+    };
     cv.addEventListener("pointerup",endDrag);
     cv.addEventListener("pointercancel",endDrag);
   }
