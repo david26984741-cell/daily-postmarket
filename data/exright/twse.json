@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-08-11",
+ "updated_at": "2026-08-12",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -97373,6 +97373,69 @@
    "pre_close": 65.8,
    "ref_price": 62.1,
    "value": 3.693092,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/13",
+   "sid": "2476",
+   "name": "鉅祥",
+   "pre_close": 128.0,
+   "ref_price": 125.02,
+   "value": 2.973128,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/13",
+   "sid": "2880",
+   "name": "華南金",
+   "pre_close": 43.2,
+   "ref_price": 41.43,
+   "value": 1.764357,
+   "type": "權息"
+  },
+  {
+   "date": "2026/08/13",
+   "sid": "2886",
+   "name": "兆豐金",
+   "pre_close": 48.7,
+   "ref_price": 46.95,
+   "value": 1.75,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/13",
+   "sid": "3008",
+   "name": "大立光",
+   "pre_close": 4585.0,
+   "ref_price": 4543.5,
+   "value": 41.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/13",
+   "sid": "3050",
+   "name": "鈺德",
+   "pre_close": 11.55,
+   "ref_price": 11.3,
+   "value": 0.25,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/13",
+   "sid": "6117",
+   "name": "迎廣",
+   "pre_close": 66.8,
+   "ref_price": 64.8,
+   "value": 1.999441,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/13",
+   "sid": "6202",
+   "name": "盛群",
+   "pre_close": 63.8,
+   "ref_price": 63.12,
+   "value": 0.68,
    "type": "息"
   }
  ]

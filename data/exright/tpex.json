@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-08-11",
+ "updated_at": "2026-08-12",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -85988,6 +85988,42 @@
    "pre_close": 43.25,
    "ref_price": 40.22,
    "value": 3.033984,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/13",
+   "sid": "2754",
+   "name": "亞洲藏壽司",
+   "pre_close": 72.6,
+   "ref_price": 71.6,
+   "value": 1.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/13",
+   "sid": "3232",
+   "name": "昱捷",
+   "pre_close": 19.9,
+   "ref_price": 19.4,
+   "value": 0.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/13",
+   "sid": "6485",
+   "name": "點序",
+   "pre_close": 66.6,
+   "ref_price": 66.12,
+   "value": 0.478255,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/13",
+   "sid": "7712",
+   "name": "博盛半導體",
+   "pre_close": 151.0,
+   "ref_price": 147.0,
+   "value": 4.0,
    "type": "除息"
   }
  ]
