@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-08-12",
+ "updated_at": "2026-08-13",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -86024,6 +86024,33 @@
    "pre_close": 151.0,
    "ref_price": 147.0,
    "value": 4.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/14",
+   "sid": "5314",
+   "name": "世紀*",
+   "pre_close": 61.3,
+   "ref_price": 14.75,
+   "value": 46.553893,
+   "type": "除權"
+  },
+  {
+   "date": "2026/08/14",
+   "sid": "6179",
+   "name": "亞通",
+   "pre_close": 27.85,
+   "ref_price": 27.35,
+   "value": 0.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/14",
+   "sid": "6188",
+   "name": "廣明",
+   "pre_close": 72.2,
+   "ref_price": 71.4,
+   "value": 0.8,
    "type": "除息"
   }
  ]
