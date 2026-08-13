@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-08-12",
+ "updated_at": "2026-08-13",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -97436,6 +97436,15 @@
    "pre_close": 63.8,
    "ref_price": 63.12,
    "value": 0.68,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/14",
+   "sid": "00401A",
+   "name": "主動摩根台灣鑫收",
+   "pre_close": 13.81,
+   "ref_price": 13.68,
+   "value": 0.121,
    "type": "息"
   }
  ]
