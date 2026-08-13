@@ -857,6 +857,20 @@ def _rank_row(doc, latest, stock_map):
         out = [recs_map[d][3] for d in ds[-n:] if recs_map[d] and recs_map[d][3] is not None]
         return out
 
+    def spot_turnover(recs_map, n=5):
+        """現貨成交金額 (元): 近 n 個交易日的 成交量(股)×收盤價 平均。
+        kline 每列 = [開,高,低,收,成交量(股)]。用均值而非當日: 單日易被法說會/除權息/
+        突發事件放大或縮小, 均值較能代表常態承接能力 (股期規模是存量, 分母用流量均值較對稱)。"""
+        ds = sorted(d for d in recs_map if d <= latest)
+        vals = []
+        for d in reversed(ds):
+            r = recs_map.get(d)
+            if r and len(r) >= 5 and r[3] and r[4]:
+                vals.append(r[3] * r[4])
+                if len(vals) >= n:
+                    break
+        return round(sum(vals) / len(vals)) if vals else None
+
     price = price_prev = None
     spot = load_json(os.path.join(KLINE, f"{sid}.json"), {}).get("records", {}) if sid else {}
     if spot:
@@ -868,6 +882,8 @@ def _rank_row(doc, latest, stock_map):
         fprice, fprice_prev = last_two(fk)
     # phist: 近日收盤序列 (現股, 全史完整; 缺漏退回股期) — 篩選器判斷近X日漲跌
     phist = last_closes(spot) or last_closes(fk)
+    # samt5: 現貨近五日均成交金額 (元) — 策略頁篩選器「股期規模 ÷ 現貨成交金額」的分母
+    samt5 = spot_turnover(spot) if spot else None
     return {"code": code, "name": name, "sid": sid, "mini": mini,
             "shares": 100 if mini else 2000, "price": price, "price_prev": price_prev,
             "fprice": fprice, "fprice_prev": fprice_prev, "prev_date": prev,
@@ -876,7 +892,7 @@ def _rank_row(doc, latest, stock_map):
             "main5": net5(a0), "main5_prev": net5(b0),
             "inst5": net5(a1), "inst5_prev": net5(b1),
             "moi": (a0 or {}).get("market_oi"), "moi_prev": (b0 or {}).get("market_oi"),
-            "phist": phist}
+            "phist": phist, "samt5": samt5}
 
 
 def update_index(date_slash, status, stock_map=None):

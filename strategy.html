@@ -46,6 +46,27 @@ td.nm a{color:var(--txt)} td.nm a:hover{color:var(--accent)}
 .hint{color:var(--mut);font-size:12.5px;margin-top:8px;line-height:1.6}
 .empty{color:var(--mut);font-size:13px;padding:10px 2px}
 .note-foot{color:var(--mut);font-size:12px;margin:22px 0 40px;line-height:1.7}
+/* ---- 股期篩選器 (本頁獨有: 多一個「股期規模 ÷ 現貨成交金額」比率) ---- */
+.flt{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px;display:flex;flex-direction:column;gap:10px}
+.frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px}
+.frow .lb{color:var(--mut);min-width:64px}
+.frow select,.frow input[type=number]{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:14px}
+.frow input[type=number]{width:100px}
+.frow.off select,.frow.off input{opacity:.35;pointer-events:none}
+.ck{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:5px 11px;font-size:13.5px;cursor:pointer;user-select:none}
+.ck input{accent-color:var(--accent);cursor:pointer;margin:0}
+.ck:hover{border-color:var(--accent)}
+.fbtns{display:flex;gap:10px;margin-top:2px}
+.fbtns button{background:var(--accent);color:#08131f;border:none;border-radius:8px;padding:7px 18px;font-size:14px;font-weight:700;cursor:pointer}
+.fbtns button.ghost{background:var(--card2);color:var(--mut);border:1px solid var(--line);font-weight:400}
+table.scr{width:100%;border-collapse:collapse;font-size:14px;margin-top:14px}
+table.scr th{color:var(--mut);font-weight:400;text-align:right;padding:7px 8px;border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap;user-select:none}
+table.scr th.l{text-align:left} table.scr th.on{color:var(--accent)}
+table.scr td{padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.05);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.scr td.l{text-align:left} table.scr td.l a{color:var(--txt)} table.scr td.l a:hover{color:var(--accent)}
+table.scr td.l .sid{color:var(--mut);font-size:12.5px;margin-right:5px}
+.cnt{color:var(--mut);font-size:13px;margin-top:12px}
+.up{color:var(--up,#ff5b5b)} .down{color:var(--down,#31c46b)}
 </style>
 </head>
 <body>
@@ -66,6 +87,7 @@ td.nm a{color:var(--txt)} td.nm a:hover{color:var(--accent)}
   <div class="tabs">
     <button id="tabToday" class="on" onclick="showTab('today')">今日部位</button>
     <button id="tabHist" onclick="showTab('hist')">歷史資料</button>
+    <button id="tabScr" onclick="showTab('scr')">股期篩選器</button>
   </div>
 
   <!-- ===== 今日部位 ===== -->
@@ -98,6 +120,65 @@ td.nm a{color:var(--txt)} td.nm a:hover{color:var(--accent)}
       <h3>逐年績效</h3>
       <div id="yearTbl"></div>
     </div>
+  </section>
+
+  <!-- ===== 股期篩選器 ===== -->
+  <section id="pScr" class="panel">
+    <p class="hint" style="margin-top:12px">依大額交易人資料篩選個股期貨。規模單位:億元。持有/變化可切換「規模(億)」或「比率(%)」。
+      <b>⑥ 股期規模 ÷ 現貨成交金額</b>為本頁獨有:分母是<b>現貨近五日均成交金額</b>,用來衡量這檔股期相對現貨的份量
+      ——只看佔全市場 OI 的比率是「拿股期跟自己比」,佔比高但現貨很大時,籌碼其實推不動價格。</p>
+
+    <div class="flt">
+      <div class="frow">
+        <span class="lb">① 大額交易人</span>
+        <label class="ck"><input type="radio" name="srk" id="srk10" checked><span>前十大</span></label>
+        <label class="ck"><input type="radio" name="srk" id="srk5"><span>前五大</span></label>
+        <label class="ck" title="第六~十名 = 前十大 − 前五大"><input type="radio" name="srk" id="srk6"><span>第六~十大</span></label>
+        <span class="lb" style="min-width:0;margin-left:6px">(必選,②~⑥可任意組合)</span>
+      </div>
+      <div class="frow" id="srow2">
+        <label class="ck"><input type="checkbox" id="sc2"><span>② 股票期貨規模</span></label>
+        <input type="number" id="sv2" step="any" placeholder="下限"> 億 <span>~</span>
+        <input type="number" id="sv2b" step="any" placeholder="上限"> 億
+      </div>
+      <div class="frow" id="srow3">
+        <label class="ck"><input type="checkbox" id="sc3"><span>③ 當日</span></label>
+        <select id="sm3"><option value="t0">交易人合計</option><option value="main" selected>主力</option>
+          <option value="nat">自然人</option><option value="inst">法人</option></select>
+        <span>持有</span>
+        <select id="su3"><option value="amt">規模(億)</option><option value="ratio">比率(%)</option></select>
+        <select id="sop3"><option value=">">大於</option><option value="<">小於</option></select>
+        <input type="number" id="sv3" step="any" placeholder="例 5"> <span id="su3lb">億</span>
+        <label class="ck"><input type="checkbox" id="sabs3" checked><span>取絕對值</span></label>
+      </div>
+      <div class="frow" id="srow4">
+        <label class="ck"><input type="checkbox" id="sc4"><span>④ 當日</span></label>
+        <select id="sm4"><option value="t0">交易人合計</option><option value="main" selected>主力</option>
+          <option value="nat">自然人</option><option value="inst">法人</option></select>
+        <span>變化</span>
+        <select id="su4"><option value="amt">規模(億)</option><option value="ratio">比率(%)</option></select>
+        <select id="sop4"><option value=">">大於</option><option value="<">小於</option></select>
+        <input type="number" id="sv4" step="any" placeholder="例 1"> <span id="su4lb">億</span>
+        <label class="ck"><input type="checkbox" id="sabs4" checked><span>取絕對值</span></label>
+      </div>
+      <div class="frow" id="srow5">
+        <label class="ck"><input type="checkbox" id="sc5"><span>⑤ 近</span></label>
+        <input type="number" id="sv5" step="1" min="1" placeholder="5"> 日收盤
+        <select id="sdir5"><option value="up">上漲</option><option value="down">下跌</option></select>
+      </div>
+      <div class="frow" id="srow6">
+        <label class="ck"><input type="checkbox" id="sc6"><span>⑥ 股期規模 ÷ 現貨成交金額</span></label>
+        <select id="sop6"><option value=">">大於</option><option value="<">小於</option></select>
+        <input type="number" id="sv6" step="any" placeholder="例 100"> %
+        <span class="hint" style="margin:0">(分母=現貨近五日均成交金額;100% = 股期規模與現貨日成交金額相當)</span>
+      </div>
+      <div class="fbtns">
+        <button id="srun">篩選</button>
+        <button id="sclear" class="ghost">清除條件</button>
+      </div>
+    </div>
+    <div id="sout"></div>
+    <div class="cnt" id="scnt"></div>
   </section>
 
   <div class="note-foot" id="foot"></div>
@@ -169,15 +250,15 @@ function drawCap(){
     ["目前完整部位("+p.n+"檔)","名目 "+money(p.notional),"保證金 "+money(p.margin)]
   ].map(([k,a,c])=>`<div class="box"><div class="k">${k}</div><div class="v">${a} <small>/ ${c}</small></div></div>`).join("");
   $("#caphint").innerHTML="「至少要準備多少錢」指<b>目前完整部位的保證金</b>約 "+money(p.margin)+
-    "(要維持策略需同時持有目前 "+p.n+" 檔)。各檔以「單口名目盡量相等」計算最少口數,最貴的無小型標的設為基準;有小型契約者一律用小型(100股)計算以降低門檻。";
+    "(要維持策略需同時持有目前 "+p.n+" 檔)。各檔以「單口名目盡量相等」計算最少口數,最貴的無小型標的設為基準;有小型契約者一律用小型(100股)計算以降低門檻。口數再依進場權重(×0.5~1.5,榜內Δ1排名)縮放。";
 }
 function legTable(rows){
   if(!rows.length) return '<div class="empty">今日無新進場</div>';
-  let h=`<table class="sy"><tr><th class="l">股票</th><th>比率</th><th>股期價</th><th>口數</th><th>名目</th><th>保證金</th></tr>`;
+  let h=`<table class="sy"><tr><th class="l">股票</th><th>比率</th><th>權重</th><th>股期價</th><th>口數</th><th>名目</th><th>保證金</th></tr>`;
   for(const r of rows){
     h+=`<tr><td class="l nm"><a href="stocks.html?code=${r.code}&rk=6&panels=main">${r.name}</a>`+
        `<span class="badge ${r.mini?'mini':''}">${r.mini?'小型':r.src||''}</span></td>`+
-       `<td>${(r.ratio!=null?r.ratio.toFixed(3):'')}</td><td>${fmt(r.price)}</td><td>${fmt(r.lots)}</td>`+
+       `<td>${(r.ratio!=null?r.ratio.toFixed(3):'')}</td><td>${r.w!=null?('×'+r.w.toFixed(2)):'×1.00'}</td><td>${fmt(r.price)}</td><td>${fmt(r.lots)}</td>`+
        `<td>${money(r.notional)}</td><td>${money(r.margin)}</td></tr>`;
   }
   return h+"</table>";
@@ -188,12 +269,12 @@ function drawToday(){
 }
 function drawPos(){
   const rows=D.positions.rows.slice().sort((a,b)=>(a.dir!==b.dir)?(a.dir==="多"?-1:1):b.held-a.held||b.notional-a.notional);
-  let h=`<table class="sy"><tr><th class="l">股票</th><th>方向</th><th>進場日</th><th>已持有</th><th>股期價</th><th>口數</th><th>名目</th><th>保證金</th></tr>`;
+  let h=`<table class="sy"><tr><th class="l">股票</th><th>方向</th><th>進場日</th><th>已持有</th><th>權重</th><th>股期價</th><th>口數</th><th>名目</th><th>保證金</th></tr>`;
   for(const r of rows){
     h+=`<tr><td class="l nm"><a href="stocks.html?code=${r.code}&rk=6&panels=main">${r.name}</a>`+
        `<span class="badge ${r.mini?'mini':''}">${r.mini?'小型':r.src||''}</span></td>`+
        `<td class="${r.dir==='多'?'long':'short'}">${r.dir}</td>`+
-       `<td>${r.entry}</td><td>${r.held}日</td>`+
+       `<td>${r.entry}</td><td>${r.held}日</td><td>${r.w!=null?('×'+r.w.toFixed(2)):'×1.00'}</td>`+
        `<td>${fmt(r.price)}</td><td>${fmt(r.lots)}</td><td>${money(r.notional)}</td><td>${money(r.margin)}</td></tr>`;
   }
   $("#posTbl").innerHTML=h+"</table>";
@@ -210,8 +291,184 @@ function drawYearly(){
 function showTab(t){
   $("#pToday").classList.toggle("on",t==="today");
   $("#pHist").classList.toggle("on",t==="hist");
+  $("#pScr").classList.toggle("on",t==="scr");
   $("#tabToday").classList.toggle("on",t==="today");
   $("#tabHist").classList.toggle("on",t==="hist");
+  $("#tabScr").classList.toggle("on",t==="scr");
+  if(t==="scr") initScreener();          // 首次切到才載 rank.json (不拖慢本頁開啟)
+}
+
+/* ================= 股期篩選器 (本頁獨有: ⑥ 股期規模 ÷ 現貨成交金額) =================
+   公式與「每日盤後資料」站的篩選器一致; ⑥ 的分母 samt5 = 現貨近五日均成交金額。 */
+let SCR=null;
+async function initScreener(){
+  if(SCR) return;
+  SCR={loading:true};
+  const q=(s)=>document.querySelector(s);
+  const el=(t,c,h)=>{const e=document.createElement(t); if(c)e.className=c; if(h!=null)e.innerHTML=h; return e;};
+  const E=1e8, SITE="https://david26984741-cell.github.io/daily-postmarket";
+  const MET={t0:"交易人合計",main:"主力",nat:"自然人",inst:"法人"};
+  let rk;
+  try{ rk=await fetch("data/rank.json",{cache:"no-store"}).then(r=>r.json()); }
+  catch(e){ q("#scnt").textContent="排行資料尚未產生。"; return; }
+  SCR={rk};
+  const has5=(rk.rows||[]).some(r=>r.main5!=null);
+  const RK=()=>q("#srk5").checked?5:(q("#srk6").checked?6:10);
+
+  // 條件保存 (與主站篩選器分開存, 互不干擾)
+  const PREF="dpm.strategy.screener";
+  const IDS=["sc2","sc3","sc4","sc5","sc6","sabs3","sabs4"];
+  const VALS=["sv2","sv2b","sm3","su3","sop3","sv3","sm4","su4","sop4","sv4","sv5","sdir5","sop6","sv6"];
+  const save=()=>{ try{
+      const o={rk:RK()};
+      IDS.forEach(i=>o[i]=q("#"+i).checked); VALS.forEach(i=>o[i]=q("#"+i).value);
+      localStorage.setItem(PREF,JSON.stringify(o));
+    }catch(e){} };
+  try{
+    const o=JSON.parse(localStorage.getItem(PREF)||"null");
+    if(o){
+      if(o.rk===5) q("#srk5").checked=true; else if(o.rk===6) q("#srk6").checked=true;
+      IDS.forEach(i=>{ if(typeof o[i]==="boolean") q("#"+i).checked=o[i]; });
+      VALS.forEach(i=>{ if(o[i]!=null&&q("#"+i)) q("#"+i).value=o[i]; });
+    }
+  }catch(e){}
+
+  const rowDim=()=>["2","3","4","5","6"].forEach(n=>q("#srow"+n).classList.toggle("off",!q("#sc"+n).checked));
+  const unitLbl=()=>{ q("#su3lb").textContent=q("#su3").value==="ratio"?"%":"億";
+                      q("#su4lb").textContent=q("#su4").value==="ratio"?"%":"億"; };
+  ["sc2","sc3","sc4","sc5","sc6"].forEach(i=>q("#"+i).onchange=()=>{rowDim();save();});
+  ["su3","su4"].forEach(i=>q("#"+i).onchange=()=>{unitLbl();save();});
+  [...IDS.slice(5),...VALS].forEach(i=>{ if(q("#"+i)) q("#"+i).onchange=save; });
+  rowDim(); unitLbl();
+
+  const sub=(a,b)=>(a!=null&&b!=null)?a-b:null;
+  function vals(r){
+    if(RK()===5&&has5) return {t0:r.main5,t0p:r.main5_prev,t1:r.inst5,t1p:r.inst5_prev};
+    if(RK()===6&&has5) return {t0:sub(r.main,r.main5),t0p:sub(r.main_prev,r.main5_prev),
+                               t1:sub(r.inst,r.inst5),t1p:sub(r.inst_prev,r.inst5_prev)};
+    return {t0:r.main,t0p:r.main_prev,t1:r.inst,t1p:r.inst_prev};
+  }
+  function lots(r,m){
+    const {t0,t0p,t1,t1p}=vals(r); const ok=(a,b)=>a!=null&&b!=null;
+    const cv=(a,b)=> m==="t0"? a : (m==="inst"? b : (ok(a,b)? (m==="nat"? a-b : a-2*b) : null));
+    return {cur:cv(t0,t1), prev:cv(t0p,t1p)};
+  }
+  const px=r=> r.fprice!=null? r.fprice : r.price;
+  const pxp=r=> r.fprice!=null? (r.fprice_prev!=null?r.fprice_prev:r.price_prev) : r.price_prev;
+  const fA=v=> v==null? "—" : ((v<0?"-":"")+(Math.abs(v)>=E?(Math.abs(v)/E).toFixed(2)+" 億":(Math.abs(v)/1e4).toFixed(0)+" 萬"));
+  const fR=v=> v==null? "—" : ((v>0?"+":"")+v.toFixed(1)+"%");
+  const fP=v=> v==null? "—" : v.toFixed(0)+"%";
+  const f2=(v,u)=> u==="ratio"? fR(v):fA(v);
+
+  let sortKey="scale", sortDir=-1;
+  function compute(){
+    const m3=q("#sm3").value,m4=q("#sm4").value,u3=q("#su3").value,u4=q("#su4").value;
+    const out=[];
+    (rk.rows||[]).forEach(r=>{
+      const p=px(r); if(p==null) return;
+      const pp=pxp(r);
+      const chgPct=(pp!=null&&pp!==0)?(p-pp)/pp*100:null;
+      const scale=(r.moi!=null)? r.moi*p*r.shares : null;
+      const L3=lots(r,m3), L4=lots(r,m4);
+      const holdAmt=(L3.cur!=null)? L3.cur*p*r.shares : null;
+      const holdRat=(L3.cur!=null&&r.moi)? L3.cur/r.moi*100 : null;
+      const hold=(u3==="ratio")?holdRat:holdAmt;
+      const dAmt=(L4.cur!=null&&L4.prev!=null)?(L4.cur-L4.prev)*p*r.shares:null;
+      const dRat=(L4.cur!=null&&L4.prev!=null&&r.moi&&r.moi_prev)?(L4.cur/r.moi-L4.prev/r.moi_prev)*100:null;
+      const dchg=(u4==="ratio")?dRat:dAmt;
+      // ⑥ 股期規模 ÷ 現貨近五日均成交金額
+      const sRat=(scale!=null&&r.samt5)? scale/r.samt5*100 : null;
+
+      if(q("#sc2").checked){
+        if(scale==null) return;
+        const lo=parseFloat(q("#sv2").value), hi=parseFloat(q("#sv2b").value);
+        if(!isNaN(lo)&&scale<lo*E) return;
+        if(!isNaN(hi)&&scale>hi*E) return;
+      }
+      if(q("#sc3").checked){
+        const v=parseFloat(q("#sv3").value);
+        if(!isNaN(v)){ if(hold==null) return;
+          const hv=q("#sabs3").checked?Math.abs(hold):hold, fac=(u3==="ratio")?1:E;
+          if(q("#sop3").value===">"? hv<=v*fac : hv>=v*fac) return; }
+      }
+      if(q("#sc4").checked){
+        const v=parseFloat(q("#sv4").value);
+        if(!isNaN(v)){ if(dchg==null) return;
+          const dv=q("#sabs4").checked?Math.abs(dchg):dchg, fac=(u4==="ratio")?1:E;
+          if(q("#sop4").value===">"? dv<=v*fac : dv>=v*fac) return; }
+      }
+      let chgN=null; const ph=r.phist;
+      if(ph&&ph.length>=2){
+        const X=Math.max(1,Math.round(parseFloat(q("#sv5").value)||5)), j=ph.length-1-X;
+        if(j>=0&&ph[j]) chgN=(ph[ph.length-1]/ph[j]-1)*100;
+      }
+      if(q("#sc5").checked){
+        if(chgN==null) return;
+        if(q("#sdir5").value==="up"? chgN<=0 : chgN>=0) return;
+      }
+      if(q("#sc6").checked){
+        const v=parseFloat(q("#sv6").value);
+        if(!isNaN(v)){ if(sRat==null) return;
+          if(q("#sop6").value===">"? sRat<=v : sRat>=v) return; }
+      }
+      out.push({...r,_p:p,_chg:chgPct,scale,hold,dchg,_chgN:chgN,_sRat:sRat});
+    });
+    return out;
+  }
+  function render(){
+    const rows0=compute();
+    const m3=q("#sm3").value,m4=q("#sm4").value,u3=q("#su3").value,u4=q("#su4").value;
+    const cols=[{k:"name",t:"股票名稱",l:true},{k:"_p",t:"收盤價"},{k:"_chg",t:"漲跌%"},{k:"scale",t:"股票期貨規模"}];
+    if(q("#sc3").checked) cols.push({k:"hold",t:MET[m3]+(u3==="ratio"?"持有比率":"持有規模"),u:u3});
+    if(q("#sc4").checked) cols.push({k:"dchg",t:MET[m4]+(u4==="ratio"?"變化比率":"變化規模"),u:u4});
+    const X5=Math.max(1,Math.round(parseFloat(q("#sv5").value)||5));
+    if(q("#sc5").checked) cols.push({k:"_chgN",t:`近${X5}日漲跌`,u:"pct"});
+    cols.push({k:"_sRat",t:"股期/現貨成交",u:"p"});     // ⑥ 一律顯示 (本頁重點)
+    if(!cols.some(c=>c.k===sortKey)){ sortKey="scale"; sortDir=-1; }
+    const rows=rows0.slice().sort((a,b)=>{
+      if(sortKey==="name") return sortDir*String(a.name).localeCompare(String(b.name),"zh-Hant");
+      const av=a[sortKey],bv=b[sortKey];
+      if(av==null&&bv==null) return 0; if(av==null) return 1; if(bv==null) return -1;
+      return sortDir*(av-bv);
+    });
+    const t=el("table","scr"), th=el("thead"), trh=el("tr");
+    cols.forEach(c=>{
+      const h=el("th",(c.l?"l ":"")+(sortKey===c.k?"on":""),c.t+(sortKey===c.k?(sortDir<0?" ▼":" ▲"):""));
+      h.onclick=()=>{ if(sortKey===c.k) sortDir=-sortDir; else {sortKey=c.k;sortDir=-1;} render(); };
+      trh.appendChild(h);
+    });
+    th.appendChild(trh); t.appendChild(th);
+    const tb=el("tbody");
+    const ps=[]; if(q("#sc3").checked) ps.push(m3); if(q("#sc4").checked&&!ps.includes(m4)) ps.push(m4);
+    const sfx=`&rk=${RK()}`+(ps.length?`&panels=${ps.join(",")}`:"");
+    rows.forEach(r=>{
+      const tr=el("tr"), nm=el("td","l");
+      const a=el("a",null,(r.sid?`<span class="sid">${r.sid}</span>`:"")+r.name);
+      a.href=`${SITE}/stocks.html?code=${r.code}${sfx}`; a.target="_blank"; nm.appendChild(a);
+      if(r.mini) nm.appendChild(el("span","badge mini","小型"));
+      tr.appendChild(nm);
+      tr.appendChild(el("td",null,r._p==null?"—":Number(r._p).toLocaleString("en-US")));
+      tr.appendChild(el("td",r._chg>0?"up":(r._chg<0?"down":null),r._chg==null?"—":(r._chg>0?"+":"")+r._chg.toFixed(2)+"%"));
+      tr.appendChild(el("td",null,fA(r.scale)));
+      if(q("#sc3").checked) tr.appendChild(el("td",r.hold>0?"up":(r.hold<0?"down":null),f2(r.hold,u3)));
+      if(q("#sc4").checked) tr.appendChild(el("td",r.dchg>0?"up":(r.dchg<0?"down":null),f2(r.dchg,u4)));
+      if(q("#sc5").checked) tr.appendChild(el("td",r._chgN>0?"up":(r._chgN<0?"down":null),fR(r._chgN)));
+      tr.appendChild(el("td",null,fP(r._sRat)));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    const out=q("#sout"); out.innerHTML=""; out.appendChild(t);
+    q("#scnt").textContent=`符合條件:${rows.length} 檔(共 ${(rk.rows||[]).length} 檔股票期貨)・資料日期 ${rk.date}`;
+  }
+  q("#srun").onclick=()=>{save();render();};
+  q("#sclear").onclick=()=>{
+    ["sc2","sc3","sc4","sc5","sc6"].forEach(i=>q("#"+i).checked=false);
+    ["sv2","sv2b","sv3","sv4","sv5","sv6"].forEach(i=>q("#"+i).value="");
+    q("#su3").value="amt"; q("#su4").value="amt"; q("#sdir5").value="up";
+    q("#srk10").checked=true; rowDim(); unitLbl(); save(); render();
+  };
+  [q("#srk5"),q("#srk6"),q("#srk10")].forEach(x=>x.onchange=()=>{save();render();});
+  render();
 }
 boot();
 </script>
