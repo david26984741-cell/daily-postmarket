@@ -394,3 +394,21 @@ https://david26984741-cell.github.io/daily-postmarket/
 - 本地測試:`--input rows.json --tx --taiex --date --expiry`(資料經瀏覽器同源抓取取回)。
 
 (之後的修改請接著往下記)
+
+### 2026/08/14(家用電腦)— 新比率「股期規模÷現貨成交金額」+ 報告改多組篩選
+- **新比率**:`scrape.py` 新增 `spot_turnover()` → rank.json 每列多 `samt5`
+  (現貨**近五日均**成交金額,元)。用均值不用當日:股期規模是存量,分母用流量均值較對稱,
+  且單日易被法說會/除權息/突發事件放大縮小。新比率 = 股期規模 ÷ samt5 × 100%
+  (台積 303%、長榮 189%、緯穎 172%;小型京元電子 1%)。
+- **只加在 strategy.html**(使用者要求,不動主站 screener.html):策略頁新增第三分頁
+  「股期篩選器」= 複製主站篩選器 + ⑥股期/現貨成交比率(該欄一律顯示)。
+  localStorage 鍵 `dpm.strategy.screener`(與主站 `dpm.screener.prefs` 分開),
+  點股名開新分頁到 stocks.html 並帶 ?rk/?panels。
+- **tools/report.py 改多組篩選(SCANS)**:原本一組全域常數 → 頂端 `SCANS` 清單,
+  每組 = 信件中一個區塊。目前三組:
+  ① 第六~十大・主力持有比率(2.5~100億,`mode:"hilo"` → 前20高+前20低兩張表,原本的表)
+  ② 前十大・自然人持有+變化 × 股期/現貨>100%(10~500億,`mode:"top"`)
+  ③ 第六~十大・主力持有+變化 × 股期/現貨>100%(10~500億,`mode:"top"`)
+  新表排在舊表後面。要改門檻/加減組別只動 `SCANS`。
+- `vals()/lots()` 加 rk 參數、`compute(rank,cfg)` 改吃 cfg;新增 `fill_samt5()`:
+  rank.json 若無 samt5(舊版 scrape 產的)就地由 data/kline 補算,新條件不會整組落空。

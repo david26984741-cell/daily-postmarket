@@ -21,29 +21,29 @@ SITE = "https://david26984741-cell.github.io/daily-postmarket"
 E = 1e8   # 億
 
 # ---------------------------------------------------------------- 篩選設定
-# 對應 screener.html 的 ①~⑤; 要改條件只動這一區即可。
-RK        = 6         # ① 大額交易人: 10=前十大 / 5=前五大 / 6=第六~十大(前十−前五)
-SCALE_ON  = True      # ② 股票期貨規模區間 (億)
-SCALE_LO  = 2.5
-SCALE_HI  = 100
-HOLD_ON   = True      # ③ 當日【口徑】持有
-HOLD_MET  = "main"    # t0=交易人合計 / main=主力 / nat=自然人 / inst=法人
-HOLD_UNIT = "ratio"   # ratio=比率(%) / amt=規模(億)
-HOLD_OP   = ">"       # > 或 <
-HOLD_VAL  = 0
-HOLD_ABS  = True      # 取絕對值>0 → 只要有部位就列入; 目的在把持有比率欄顯示出來
-CHG_ON    = False     # ④ 當日【口徑】變化 (未啟用)
-CHG_MET   = "nat"
-CHG_UNIT  = "ratio"
-CHG_OP    = ">"
-CHG_VAL   = 0
-CHG_ABS   = True
-DAYS_ON   = False     # ⑤ 近X日漲跌 (未啟用)
-DAYS_N    = 20
-DAYS_DIR  = "up"
-SORT_KEY  = "hold"    # 排序: name/px/chg/scale/hold/dchg/chgN
-SORT_DESC = True
-TOP_N     = 20        # 兩張表各取前 N 檔 (降冪=偏多前N / 升冪=偏空前N)
+# 對應網站篩選器的 ①~⑥;每一組 = 信件中的一個區塊。要改條件只動這一區。
+#   rk        ① 10=前十大 / 5=前五大 / 6=第六~十大(前十−前五)
+#   scale     ② 股期規模區間 (億), None=不限
+#   hold      ③ (口徑, ratio|amt, 運算子, 門檻, 取絕對值)
+#   chg       ④ 同上, None=不啟用
+#   days      ⑤ (X日, up|down), None=不啟用
+#   sratio    ⑥ 股期規模 ÷ 現貨近五日均成交金額 (%) → (運算子, 門檻), None=不啟用
+#   mode      "hilo"=同時出前N高與前N低兩張表 / "top"=只出一張(依排序取前N)
+SCANS = [
+    {"title": "主力持有比率", "rk": 6, "scale": (2.5, 100),
+     "hold": ("main", "ratio", ">", 0, True), "chg": None, "days": None, "sratio": None,
+     "sort": "hold", "desc": True, "mode": "hilo", "top": 20},
+
+    {"title": "前十大・自然人 × 股期/現貨>100%", "rk": 10, "scale": (10, 500),
+     "hold": ("nat", "ratio", ">", 0, True), "chg": ("nat", "ratio", ">", 0, True),
+     "days": None, "sratio": (">", 100),
+     "sort": "hold", "desc": True, "mode": "top", "top": 20},
+
+    {"title": "第六~十大・主力 × 股期/現貨>100%", "rk": 6, "scale": (10, 500),
+     "hold": ("main", "ratio", ">", 0, True), "chg": ("main", "ratio", ">", 0, True),
+     "days": None, "sratio": (">", 100),
+     "sort": "hold", "desc": True, "mode": "top", "top": 20},
+]
 
 MET = {"t0": "交易人合計", "main": "主力", "nat": "自然人", "inst": "法人"}
 RK_TAG = {10: "前十大", 5: "前五大", 6: "第六~十大"}
@@ -54,17 +54,17 @@ def _sub(a, b):
     return a - b if (a is not None and b is not None) else None
 
 
-def vals(r, has5):
-    if RK == 5 and has5:
+def vals(r, has5, rk):
+    if rk == 5 and has5:
         return r.get("main5"), r.get("main5_prev"), r.get("inst5"), r.get("inst5_prev")
-    if RK == 6 and has5:   # 第六~十大 = 前十大 − 前五大 (t0/t1 各自相減)
+    if rk == 6 and has5:   # 第六~十大 = 前十大 − 前五大 (t0/t1 各自相減)
         return (_sub(r.get("main"), r.get("main5")), _sub(r.get("main_prev"), r.get("main5_prev")),
                 _sub(r.get("inst"), r.get("inst5")), _sub(r.get("inst_prev"), r.get("inst5_prev")))
     return r.get("main"), r.get("main_prev"), r.get("inst"), r.get("inst_prev")
 
 
-def lots(r, m, has5):
-    t0, t0p, t1, t1p = vals(r, has5)
+def lots(r, m, has5, rk):
+    t0, t0p, t1, t1p = vals(r, has5, rk)
     def cv(a, b):
         if m == "t0":
             return a
@@ -90,9 +90,13 @@ def passes(v, op, target):
     return v > target if op == ">" else v < target
 
 
-def compute(rank):
+def compute(rank, cfg):
+    """依單一組設定 cfg 篩選並排序, 回傳 row 清單。"""
     rows = rank.get("rows", [])
     has5 = any(x.get("main5") is not None for x in rows)
+    rk = cfg["rk"]
+    hm, hu, hop, hv0, habs = cfg["hold"]
+    cm, cu, cop, cv0, cabs = cfg["chg"] if cfg["chg"] else (None,)*5
     out = []
     for r in rows:
         p = px(r)
@@ -102,63 +106,73 @@ def compute(rank):
         chg_pct = (p - pp) / pp * 100 if pp else None
         moi = r.get("moi")
         scale = moi * p * r["shares"] if moi is not None else None
+        samt = r.get("samt5")
+        sratio = (scale / samt * 100) if (scale is not None and samt) else None
 
-        h_cur, _ = lots(r, HOLD_MET, has5)
+        h_cur, _ = lots(r, hm, has5, rk)
         hold = None
         if h_cur is not None:
-            hold = (h_cur / moi * 100) if (HOLD_UNIT == "ratio" and moi) else h_cur * p * r["shares"]
+            hold = (h_cur / moi * 100) if (hu == "ratio" and moi) else h_cur * p * r["shares"]
 
-        d_cur, d_prev = lots(r, CHG_MET, has5)
         dchg = None
-        if d_cur is not None and d_prev is not None:
-            if CHG_UNIT == "ratio":
-                if moi and r.get("moi_prev"):
-                    dchg = (d_cur / moi - d_prev / r["moi_prev"]) * 100
-            else:
-                dchg = (d_cur - d_prev) * p * r["shares"]
+        if cm:
+            d_cur, d_prev = lots(r, cm, has5, rk)
+            if d_cur is not None and d_prev is not None:
+                if cu == "ratio":
+                    if moi and r.get("moi_prev"):
+                        dchg = (d_cur / moi - d_prev / r["moi_prev"]) * 100
+                else:
+                    dchg = (d_cur - d_prev) * p * r["shares"]
 
-        ph = r.get("phist") or []
         chg_n = None
-        if len(ph) >= 2:
-            j = len(ph) - 1 - DAYS_N
-            if j >= 0 and ph[j]:
-                chg_n = (ph[-1] / ph[j] - 1) * 100
+        if cfg["days"]:
+            ph = r.get("phist") or []
+            n = cfg["days"][0]
+            if len(ph) >= 2:
+                j = len(ph) - 1 - n
+                if j >= 0 and ph[j]:
+                    chg_n = (ph[-1] / ph[j] - 1) * 100
 
         # ---- 條件 ----
-        if SCALE_ON:
+        if cfg["scale"]:
+            lo, hi = cfg["scale"]
             if scale is None:
                 continue
-            if SCALE_LO is not None and scale < SCALE_LO * E:
+            if lo is not None and scale < lo * E:
                 continue
-            if SCALE_HI is not None and scale > SCALE_HI * E:
+            if hi is not None and scale > hi * E:
                 continue
-        if HOLD_ON:
-            if hold is None:
-                continue
-            hv = abs(hold) if HOLD_ABS else hold
-            fac = 1 if HOLD_UNIT == "ratio" else E
-            if not passes(hv, HOLD_OP, HOLD_VAL * fac):
-                continue
-        if CHG_ON:
+        if hold is None:
+            continue
+        hvv = abs(hold) if habs else hold
+        if not passes(hvv, hop, hv0 * (1 if hu == "ratio" else E)):
+            continue
+        if cfg["chg"]:
             if dchg is None:
                 continue
-            dv = abs(dchg) if CHG_ABS else dchg
-            fac = 1 if CHG_UNIT == "ratio" else E
-            if not passes(dv, CHG_OP, CHG_VAL * fac):
+            dvv = abs(dchg) if cabs else dchg
+            if not passes(dvv, cop, cv0 * (1 if cu == "ratio" else E)):
                 continue
-        if DAYS_ON:
+        if cfg["days"]:
             if chg_n is None:
                 continue
-            if (chg_n <= 0) if DAYS_DIR == "up" else (chg_n >= 0):
+            if (chg_n <= 0) if cfg["days"][1] == "up" else (chg_n >= 0):
+                continue
+        if cfg["sratio"]:
+            op, thr = cfg["sratio"]
+            if sratio is None:
+                continue
+            if not passes(sratio, op, thr):
                 continue
 
         out.append({**r, "_px": p, "_chg": chg_pct, "_scale": scale,
-                    "_hold": hold, "_dchg": dchg, "_chgN": chg_n})
+                    "_hold": hold, "_dchg": dchg, "_chgN": chg_n, "_sRat": sratio})
 
     key = {"name": lambda x: x["name"], "px": lambda x: x["_px"], "chg": lambda x: x["_chg"] or 0,
            "scale": lambda x: x["_scale"] or 0, "hold": lambda x: x["_hold"] or 0,
-           "dchg": lambda x: x["_dchg"] or 0, "chgN": lambda x: x["_chgN"] or 0}[SORT_KEY]
-    out.sort(key=key, reverse=SORT_DESC)
+           "dchg": lambda x: x["_dchg"] or 0, "chgN": lambda x: x["_chgN"] or 0,
+           "sRat": lambda x: x["_sRat"] or 0}[cfg["sort"]]
+    out.sort(key=key, reverse=cfg["desc"])
     return out
 
 
@@ -183,48 +197,62 @@ def f_ratio(v):
     return f"{'+' if v > 0 else ''}{v:.1f}%"
 
 
-def cond_text():
-    bits = [RK_TAG.get(RK, "前十大")]
-    if SCALE_ON:
-        lo = f"{SCALE_LO:g}" if SCALE_LO is not None else ""
-        hi = f"{SCALE_HI:g}" if SCALE_HI is not None else ""
-        bits.append(f"股期規模 {lo}~{hi} 億")
-    if HOLD_ON:
-        u = "比率" if HOLD_UNIT == "ratio" else "規模"
-        unit = "%" if HOLD_UNIT == "ratio" else " 億"
-        bits.append(f"{MET[HOLD_MET]}持有{u} {HOLD_OP} {HOLD_VAL:g}{unit}")
-    if CHG_ON:
-        u = "比率" if CHG_UNIT == "ratio" else "規模"
-        unit = "%" if CHG_UNIT == "ratio" else " 億"
-        bits.append(f"{MET[CHG_MET]}變化{u} {CHG_OP} {CHG_VAL:g}{unit}")
-    if DAYS_ON:
-        bits.append(f"近{DAYS_N}日{'上漲' if DAYS_DIR=='up' else '下跌'}")
+def cond_text(cfg):
+    bits = [RK_TAG.get(cfg["rk"], "前十大")]
+    if cfg["scale"]:
+        lo, hi = cfg["scale"]
+        bits.append(f"股期規模 {lo if lo is not None else ''}~{hi if hi is not None else ''} 億")
+    hm, hu, hop, hv0, habs = cfg["hold"]
+    u = "比率" if hu == "ratio" else "規模"
+    unit = "%" if hu == "ratio" else " 億"
+    bits.append(f"{MET[hm]}持有{u} {'|x| ' if habs else ''}{hop} {hv0:g}{unit}")
+    if cfg["chg"]:
+        cm, cu, cop, cv0, cabs = cfg["chg"]
+        u = "比率" if cu == "ratio" else "規模"
+        unit = "%" if cu == "ratio" else " 億"
+        bits.append(f"{MET[cm]}變化{u} {'|x| ' if cabs else ''}{cop} {cv0:g}{unit}")
+    if cfg["days"]:
+        bits.append(f"近{cfg['days'][0]}日{'上漲' if cfg['days'][1]=='up' else '下跌'}")
+    if cfg["sratio"]:
+        op, thr = cfg["sratio"]
+        bits.append(f"股期/現貨成交 {op} {thr:g}%")
     return " ・ ".join(bits)
 
 
 UPC, DNC, MUT, LINE = "#ff6b6b", "#4ade80", "#9aa7b4", "#2a3441"
 
 
-def _table(rows, title, note):
+def _srtxt(r):
+    v = r.get("_sRat")
+    return "—" if v is None else f"{v:.0f}%"
+
+
+def _table(rows, cfg, title, note):
     """單一排行表 (標題 + 表格) 的 HTML。"""
-    hold_hd = MET[HOLD_MET] + ("持有比率" if HOLD_UNIT == "ratio" else "持有規模")
+    hm, hu = cfg["hold"][0], cfg["hold"][1]
+    hold_hd = MET[hm] + ("持有比率" if hu == "ratio" else "持有規模")
     th = ('style="text-align:right;padding:8px 10px;border-bottom:1px solid %s;'
           'color:%s;font-weight:400;white-space:nowrap"' % (LINE, MUT))
     thl = th.replace("text-align:right", "text-align:left")
     td = 'style="text-align:right;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.05);white-space:nowrap"'
     tdl = td.replace("text-align:right", "text-align:left")
 
-    chg_hd = MET[CHG_MET] + ("變化比率" if CHG_UNIT == "ratio" else "變化規模")
+    has_chg, has_days, has_sr = bool(cfg["chg"]), bool(cfg["days"]), bool(cfg["sratio"])
+    chg_hd = ""
+    if has_chg:
+        cm, cu = cfg["chg"][0], cfg["chg"][1]
+        chg_hd = MET[cm] + ("變化比率" if cu == "ratio" else "變化規模")
     head = (f'<tr><th {thl}>股票名稱</th><th {th}>收盤價</th><th {th}>漲跌%</th>'
             f'<th {th}>股票期貨規模</th><th {th}>{hold_hd}</th>'
-            + (f'<th {th}>{chg_hd}</th>' if CHG_ON else "")
-            + (f'<th {th}>近{DAYS_N}日漲跌</th>' if DAYS_ON else "")
+            + (f'<th {th}>{chg_hd}</th>' if has_chg else "")
+            + (f'<th {th}>近{cfg["days"][0]}日漲跌</th>' if has_days else "")
+            + (f'<th {th}>股期/現貨成交</th>' if has_sr else "")
             + '</tr>')
 
     body = []
     for r in rows:
         c = lambda v: UPC if (v or 0) > 0 else (DNC if (v or 0) < 0 else MUT)
-        link = f'{SITE}/stocks.html?code={r["code"]}&rk={RK}&panels={HOLD_MET}'
+        link = f'{SITE}/stocks.html?code={r["code"]}&rk={cfg["rk"]}&panels={hm}'
         mini = ' <span style="color:%s;font-size:11px">小型</span>' % MUT if r.get("mini") else ""
         sid = f'<span style="color:{MUT};font-size:12.5px;margin-right:5px">{r["sid"]}</span>' if r.get("sid") else ""
         body.append(
@@ -234,57 +262,96 @@ def _table(rows, title, note):
             f'<td {td}><span style="color:{c(r["_chg"])}">{f_pct(r["_chg"])}</span></td>'
             f'<td {td}>{f_amt(r["_scale"])}</td>'
             f'<td {td}><span style="color:{c(r["_hold"])}">'
-            f'{f_ratio(r["_hold"]) if HOLD_UNIT=="ratio" else f_amt(r["_hold"])}</span></td>'
+            f'{f_ratio(r["_hold"]) if hu=="ratio" else f_amt(r["_hold"])}</span></td>'
             + (f'<td {td}><span style="color:{c(r["_dchg"])}">'
-               f'{f_ratio(r["_dchg"]) if CHG_UNIT=="ratio" else f_amt(r["_dchg"])}</span></td>' if CHG_ON else "")
-            + (f'<td {td}><span style="color:{c(r["_chgN"])}">{f_ratio(r["_chgN"])}</span></td>' if DAYS_ON else "")
+               f'{f_ratio(r["_dchg"]) if cfg["chg"][1]=="ratio" else f_amt(r["_dchg"])}</span></td>' if has_chg else "")
+            + (f'<td {td}><span style="color:{c(r["_chgN"])}">{f_ratio(r["_chgN"])}</span></td>' if has_days else "")
+            + (f'<td {td}>{_srtxt(r)}</td>' if has_sr else "")
             + '</tr>')
 
-    empty = (f'<tr><td colspan="7" style="padding:16px;color:{MUT}">本日無符合條件的個股。</td></tr>')
+    empty = (f'<tr><td colspan="8" style="padding:16px;color:{MUT}">本日無符合條件的個股。</td></tr>')
     return f"""
-  <div style="font-size:15px;font-weight:700;margin:18px 0 4px">{title}
+  <div style="font-size:15px;font-weight:700;margin:20px 0 4px">{title}
     <span style="color:{MUT};font-size:12px;font-weight:400;margin-left:8px">{note}</span></div>
+  <div style="color:{MUT};font-size:11.5px;margin-bottom:6px">篩選:{cond_text(cfg)}</div>
   <table style="border-collapse:collapse;font-size:14px;width:100%;background:#131a24;border:1px solid {LINE};border-radius:8px">
     <thead>{head}</thead><tbody>{''.join(body) if body else empty}</tbody>
   </table>"""
 
 
-def build_html(desc_rows, asc_rows, total, date):
-    hold_name = MET[HOLD_MET] + ("持有比率" if HOLD_UNIT == "ratio" else "持有規模")
+def fill_samt5(rank):
+    """rank.json 若無 samt5 (舊版 scrape.py 產生的檔), 就地由 data/kline 補算,
+    使 ⑥股期/現貨成交 條件不會因為欄位缺漏而全部落空。"""
+    rows = rank.get("rows", [])
+    if any(r.get("samt5") for r in rows):
+        return
+    latest = rank.get("date", "")
+    kd = os.path.join(DATA, "kline")
+    for r in rows:
+        sid = r.get("sid")
+        if not sid:
+            continue
+        try:
+            recs = json.load(open(os.path.join(kd, f"{sid}.json"), encoding="utf-8"))["records"]
+        except Exception:
+            continue
+        vals = []
+        for d in sorted((d for d in recs if d <= latest), reverse=True):
+            k = recs[d]
+            if k and len(k) >= 5 and k[3] and k[4]:
+                vals.append(k[3] * k[4])
+                if len(vals) >= 5:
+                    break
+        if vals:
+            r["samt5"] = round(sum(vals) / len(vals))
+
+
+def _blocks(rank):
+    """跑完所有 SCANS → [(cfg, 標題, 註解, rows), ...]"""
+    out = []
+    for cfg in SCANS:
+        rows = compute(rank, cfg)
+        hm, hu = cfg["hold"][0], cfg["hold"][1]
+        nm = MET[hm] + ("持有比率" if hu == "ratio" else "持有規模")
+        n = cfg["top"]
+        if cfg["mode"] == "hilo":
+            out.append((cfg, f"▲ {nm} 前 {min(n,len(rows))} 高", f"{nm}由大到小(偏多)", rows[:n], len(rows)))
+            out.append((cfg, f"▼ {nm} 前 {min(n,len(rows))} 低", f"{nm}由小到大(偏空)", rows[::-1][:n], len(rows)))
+        else:
+            out.append((cfg, f"◆ {cfg['title']}", f"依{nm}排序,取前 {min(n,len(rows))} 檔", rows[:n], len(rows)))
+    return out
+
+
+def build_html(blocks, date):
+    tables = "".join(_table(rows, cfg, title, note + f" ・符合 {tot} 檔")
+                     for cfg, title, note, rows, tot in blocks)
     return f"""<div style="background:#0f1620;padding:20px;font-family:-apple-system,'Segoe UI','Microsoft JhengHei',sans-serif;color:#e6edf3">
   <div style="font-size:18px;font-weight:700;margin-bottom:4px">股票期貨篩選報告</div>
-  <div style="color:{MUT};font-size:13px;margin-bottom:14px">資料日期 <b style="color:#e6edf3">{date}</b> ・ 符合條件 <b style="color:#e6edf3">{total}</b> 檔</div>
-  <div style="color:{MUT};font-size:12.5px;background:#161d27;border:1px solid {LINE};border-radius:8px;padding:9px 12px">
-    篩選條件:{cond_text()}
-  </div>
-  {_table(desc_rows, f"▲ {hold_name} 前 {len(desc_rows)} 高", f"{hold_name}由大到小(偏多)")}
-  {_table(asc_rows, f"▼ {hold_name} 前 {len(asc_rows)} 低", f"{hold_name}由小到大(偏空)")}
-  <div style="color:{MUT};font-size:12px;margin-top:14px;line-height:1.7">
-    點股票名稱可開啟該檔圖表(已自動切換為{RK_TAG.get(RK,'前十大')}、只顯示{MET[HOLD_MET]}面板)。<br>
-    持有比率 = 淨部位 ÷ 全市場未沖銷口數;股票期貨規模 = 全市場未沖銷口數 × 近月股期收盤價 × 每口股數。<br>
+  <div style="color:{MUT};font-size:13px;margin-bottom:6px">資料日期 <b style="color:#e6edf3">{date}</b></div>
+  {tables}
+  <div style="color:{MUT};font-size:12px;margin-top:16px;line-height:1.7">
+    點股票名稱可開啟該檔圖表(自動切換為該區塊的口徑與面板)。<br>
+    持有比率 = 淨部位 ÷ 全市場未沖銷口數;股期/現貨成交 = 股期規模 ÷ 現貨近五日均成交金額。<br>
     <a href="{SITE}/screener.html" style="color:#7cc4ff;text-decoration:none">開啟線上篩選器</a>
-    ・資料來源:臺灣期貨交易所。本報告僅供參考,不構成投資建議。
+    ・資料來源:臺灣期貨交易所、臺灣證券交易所。本報告僅供參考,不構成投資建議。
   </div>
 </div>"""
 
 
-def _text_rows(rows):
-    lines = []
-    for r in rows:
-        hold = f_ratio(r["_hold"]) if HOLD_UNIT == "ratio" else f_amt(r["_hold"])
-        lines.append(f'{(r.get("sid") or ""):>4} {r["name"]}  收{r["_px"]:g}  {f_pct(r["_chg"])}  '
-                     f'規模{f_amt(r["_scale"])}  {MET[HOLD_MET]}{hold}')
-    return lines or ["(無符合)"]
-
-
-def build_text(desc_rows, asc_rows, total, date):
-    hold_name = MET[HOLD_MET] + ("持有比率" if HOLD_UNIT == "ratio" else "持有規模")
-    lines = [f"股票期貨篩選報告 — 資料日期 {date} — 符合 {total} 檔",
-             f"條件:{cond_text()}", "",
-             f"▲ {hold_name} 前 {len(desc_rows)} 高(偏多)"]
-    lines += _text_rows(desc_rows)
-    lines += ["", f"▼ {hold_name} 前 {len(asc_rows)} 低(偏空)"]
-    lines += _text_rows(asc_rows)
+def build_text(blocks, date):
+    lines = [f"股票期貨篩選報告 — 資料日期 {date}", ""]
+    for cfg, title, note, rows, tot in blocks:
+        hm, hu = cfg["hold"][0], cfg["hold"][1]
+        lines.append(f"{title}({note} ・符合 {tot} 檔)")
+        lines.append(f"  篩選:{cond_text(cfg)}")
+        if not rows:
+            lines.append("  (無符合)")
+        for r in rows:
+            hold = f_ratio(r["_hold"]) if hu == "ratio" else f_amt(r["_hold"])
+            extra = f'  股期/現貨 {r["_sRat"]:.0f}%' if (cfg["sratio"] and r["_sRat"] is not None) else ""
+            lines.append(f'  {(r.get("sid") or ""):>6} {r["name"]}  收{r["_px"]:g}  {f_pct(r["_chg"])}  '
+                         f'規模{f_amt(r["_scale"])}  {MET[hm]}{hold}{extra}')
+        lines.append("")
     return "\n".join(lines)
 
 
@@ -337,18 +404,18 @@ def send(subject, html, text, shots=None):
 def main():
     rank = json.load(open(os.path.join(DATA, "rank.json"), encoding="utf-8"))
     date = rank.get("date", "")
-    rows = compute(rank)                        # 已依 hold 降冪
-    desc_rows = rows[:TOP_N]                    # 持有比率最高 前N (偏多)
-    asc_rows = rows[::-1][:TOP_N]               # 持有比率最低 前N (偏空)
-    html = build_html(desc_rows, asc_rows, len(rows), date)
-    text = build_text(desc_rows, asc_rows, len(rows), date)
+    fill_samt5(rank)
+    blocks = _blocks(rank)
+    html = build_html(blocks, date)
+    text = build_text(blocks, date)
     print(text)
     shots = collect_shots()
     print(f"\n附圖 {len(shots)} 張: " + (", ".join(fn for fn, _ in shots) if shots else "(無)"))
     if os.environ.get("DRY_RUN") == "1":
         print("\n[DRY_RUN] 不寄信")
         return
-    send(f"[股期報告] {date} ・ 符合 {len(rows)} 檔", html, text, shots)
+    n = sum(len(r) for _, _, _, r, _ in blocks)
+    send(f"[股期報告] {date} ・ {len(blocks)} 張排行", html, text, shots)
 
 
 if __name__ == "__main__":
