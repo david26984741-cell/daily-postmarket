@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-08-13",
+ "updated_at": "2026-08-14",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -86051,6 +86051,96 @@
    "pre_close": 72.2,
    "ref_price": 71.4,
    "value": 0.8,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "00844B",
+   "name": "台新15年IG金融債",
+   "pre_close": 31.34,
+   "ref_price": 30.93,
+   "value": 0.41,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "00867B",
+   "name": "台新A-BBB電信債",
+   "pre_close": 30.26,
+   "ref_price": 29.85,
+   "value": 0.41,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "00942B",
+   "name": "台新美A公司債20+",
+   "pre_close": 13.92,
+   "ref_price": 13.86,
+   "value": 0.062,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "00970B",
+   "name": "台新BBB投等債20+",
+   "pre_close": 9.18,
+   "ref_price": 9.13,
+   "value": 0.05,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "00980B",
+   "name": "台新特選IG債10+",
+   "pre_close": 9.29,
+   "ref_price": 9.24,
+   "value": 0.047,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "00989B",
+   "name": "台新美國非投等債",
+   "pre_close": 10.28,
+   "ref_price": 10.19,
+   "value": 0.088,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "4123",
+   "name": "晟德",
+   "pre_close": 34.3,
+   "ref_price": 31.01,
+   "value": 3.294062,
+   "type": "除權息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "4162",
+   "name": "智擎",
+   "pre_close": 62.1,
+   "ref_price": 60.1,
+   "value": 2.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "4432",
+   "name": "銘旺實",
+   "pre_close": 16.55,
+   "ref_price": 16.15,
+   "value": 0.4,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "8049",
+   "name": "晶采",
+   "pre_close": 26.45,
+   "ref_price": 25.05,
+   "value": 1.4,
    "type": "除息"
   }
  ]

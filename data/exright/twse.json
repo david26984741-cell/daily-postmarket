@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-08-13",
+ "updated_at": "2026-08-14",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -97446,6 +97446,87 @@
    "ref_price": 13.68,
    "value": 0.121,
    "type": "息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "00775B",
+   "name": "台新投等債15+",
+   "pre_close": 31.46,
+   "ref_price": 31.11,
+   "value": 0.35,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "00936",
+   "name": "台新永續高息中小",
+   "pre_close": 21.47,
+   "ref_price": 21.35,
+   "value": 0.12,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "00962",
+   "name": "台新AI優息動能",
+   "pre_close": 15.65,
+   "ref_price": 15.49,
+   "value": 0.16,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "1477",
+   "name": "聚陽",
+   "pre_close": 218.0,
+   "ref_price": 212.0,
+   "value": 6.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "1618",
+   "name": "合機",
+   "pre_close": 41.7,
+   "ref_price": 40.0,
+   "value": 1.7,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "2231",
+   "name": "為升",
+   "pre_close": 102.0,
+   "ref_price": 101.5,
+   "value": 0.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "4967",
+   "name": "十銓",
+   "pre_close": 275.0,
+   "ref_price": 266.38,
+   "value": 8.619904,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "6282",
+   "name": "康舒",
+   "pre_close": 47.8,
+   "ref_price": 47.0,
+   "value": 0.799933,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/17",
+   "sid": "6698",
+   "name": "旭暉應材",
+   "pre_close": 31.45,
+   "ref_price": 31.02,
+   "value": 0.420271,
+   "type": "權"
   }
  ]
 }
