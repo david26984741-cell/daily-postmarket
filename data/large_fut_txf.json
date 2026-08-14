@@ -113025,6 +113025,52 @@
      "scope": "所有契約"
     }
    ]
+  },
+  "2026/08/14": {
+   "code": "TX",
+   "name": "臺股期貨(TX+MTX/4+TMF/20)",
+   "rows": [
+    {
+     "month": "202608",
+     "type": "0",
+     "top5_buy": 59000,
+     "top5_sell": 47922,
+     "top10_buy": 65915,
+     "top10_sell": 65219,
+     "market_oi": 91453,
+     "scope": "當月"
+    },
+    {
+     "month": "202608",
+     "type": "1",
+     "top5_buy": 59000,
+     "top5_sell": 47922,
+     "top10_buy": 65086,
+     "top10_sell": 65219,
+     "market_oi": 91453,
+     "scope": "當月"
+    },
+    {
+     "month": "999999",
+     "type": "0",
+     "top5_buy": 78115,
+     "top5_sell": 64986,
+     "top10_buy": 88401,
+     "top10_sell": 87288,
+     "market_oi": 125652,
+     "scope": "所有契約"
+    },
+    {
+     "month": "999999",
+     "type": "1",
+     "top5_buy": 78115,
+     "top5_sell": 64986,
+     "top10_buy": 84742,
+     "top10_sell": 87288,
+     "market_oi": 125652,
+     "scope": "所有契約"
+    }
+   ]
   }
  }
 }
