@@ -428,8 +428,12 @@ def fetch_name_sid_map(date_yyyymmdd):
 
 
 def _norm_name(s):
-    """名稱正規化: 去所有空白 + 破折號統一半形 (KY 股常有全形/半形差異)。"""
-    return "".join(str(s).split()).replace("－", "-").replace("–", "-").replace("—", "-")
+    """名稱正規化: 去所有空白 + 破折號統一半形 (KY 股常有全形/半形差異)
+    + 剝除簡稱的 '*' 註記與跳脫用的 '\\'。
+    星號是交易所加在證券簡稱後的註記 (智通*、國巨*、寶雅*), 期交所商品名稱不帶,
+    兩邊都剝掉才對得上 — 2026/08 新掛牌的 VL 智通 就是卡在這裡, sid 一直補不上。"""
+    s = "".join(str(s).split()).replace("－", "-").replace("–", "-").replace("—", "-")
+    return s.replace("\\", "").replace("*", "")
 
 
 def resolve_sid(short, name2sid, stock_map):
