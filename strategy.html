@@ -250,15 +250,15 @@ function drawCap(){
     ["目前完整部位("+p.n+"檔)","名目 "+money(p.notional),"保證金 "+money(p.margin)]
   ].map(([k,a,c])=>`<div class="box"><div class="k">${k}</div><div class="v">${a} <small>/ ${c}</small></div></div>`).join("");
   $("#caphint").innerHTML="「至少要準備多少錢」指<b>目前完整部位的保證金</b>約 "+money(p.margin)+
-    "(要維持策略需同時持有目前 "+p.n+" 檔)。各檔以「單口名目盡量相等」計算最少口數,最貴的無小型標的設為基準;有小型契約者一律用小型(100股)計算以降低門檻。口數再依進場權重(×0.5~1.5,榜內Δ1排名)縮放。";
+    "(要維持策略需同時持有目前 "+p.n+" 檔)。各檔以「單口名目盡量相等」計算最少口數,最貴的無小型標的設為基準;有小型契約者一律用小型(100股)計算以降低門檻。各檔等權,不做加減碼。";
 }
 function legTable(rows){
   if(!rows.length) return '<div class="empty">今日無新進場</div>';
-  let h=`<table class="sy"><tr><th class="l">股票</th><th>比率</th><th>權重</th><th>股期價</th><th>口數</th><th>名目</th><th>保證金</th></tr>`;
+  let h=`<table class="sy"><tr><th class="l">股票</th><th>比率</th><th>股期價</th><th>口數</th><th>名目</th><th>保證金</th></tr>`;
   for(const r of rows){
     h+=`<tr><td class="l nm"><a href="stocks.html?code=${r.code}&rk=6&panels=main">${r.name}</a>`+
        `<span class="badge ${r.mini?'mini':''}">${r.mini?'小型':r.src||''}</span></td>`+
-       `<td>${(r.ratio!=null?r.ratio.toFixed(3):'')}</td><td>${r.w!=null?('×'+r.w.toFixed(2)):'×1.00'}</td><td>${fmt(r.price)}</td><td>${fmt(r.lots)}</td>`+
+       `<td>${(r.ratio!=null?r.ratio.toFixed(3):'')}</td><td>${fmt(r.price)}</td><td>${fmt(r.lots)}</td>`+
        `<td>${money(r.notional)}</td><td>${money(r.margin)}</td></tr>`;
   }
   return h+"</table>";
@@ -269,12 +269,12 @@ function drawToday(){
 }
 function drawPos(){
   const rows=D.positions.rows.slice().sort((a,b)=>(a.dir!==b.dir)?(a.dir==="多"?-1:1):b.held-a.held||b.notional-a.notional);
-  let h=`<table class="sy"><tr><th class="l">股票</th><th>方向</th><th>進場日</th><th>已持有</th><th>權重</th><th>股期價</th><th>口數</th><th>名目</th><th>保證金</th></tr>`;
+  let h=`<table class="sy"><tr><th class="l">股票</th><th>方向</th><th>進場日</th><th>已持有</th><th>股期價</th><th>口數</th><th>名目</th><th>保證金</th></tr>`;
   for(const r of rows){
     h+=`<tr><td class="l nm"><a href="stocks.html?code=${r.code}&rk=6&panels=main">${r.name}</a>`+
        `<span class="badge ${r.mini?'mini':''}">${r.mini?'小型':r.src||''}</span></td>`+
        `<td class="${r.dir==='多'?'long':'short'}">${r.dir}</td>`+
-       `<td>${r.entry}</td><td>${r.held}日</td><td>${r.w!=null?('×'+r.w.toFixed(2)):'×1.00'}</td>`+
+       `<td>${r.entry}</td><td>${r.held}日</td>`+
        `<td>${fmt(r.price)}</td><td>${fmt(r.lots)}</td><td>${money(r.notional)}</td><td>${money(r.margin)}</td></tr>`;
   }
   $("#posTbl").innerHTML=h+"</table>";

@@ -446,3 +446,15 @@ https://david26984741-cell.github.io/daily-postmarket/
   `www.taifex.com.tw`(2026/08/15 實測),但**長頁面會被截斷**(stockLists 只到 `UJ`,
   拿不到 8 月新掛牌的 VL~VP),要完整內容仍須走瀏覽器同源 fetch。
   砂箱 bash 本身的對外連線這次沒重測,沿用舊結論(不要用 bash 抓網頁)。
+
+### 2026/08/15(家用電腦)— 移除「進場定權重加減碼」,策略回到等權
+- **使用者決定:加權版不要,直接刪除。** 策略一律「每檔等權」,不再依榜內 Δ1 排名把口數 ×0.5~1.5。
+- 實際狀況(釐清後):`tools/strategy610.py` 的加權程式碼**從未進入 main**——它一直在本機的
+  git **stash** 裡(那個 stash 是進行中的除權息/adjprice 工作,含 scrape.py、tools/adjprice.py 等 10 檔,
+  刻意保留未動)。所以 main 的引擎與每日產出的 `data/strategy610.json` 本來就是等權
+  (note 無「加減碼」、資料列無 `w` 欄位)。
+- 因此本次只需清 `strategy.html` 的殘留 UI:
+  移除「權重」欄(今日進場表 `legTable`、持倉表 `drawPos`)與 `caphint` 的「口數再依進場權重…縮放」,
+  改為「各檔等權,不做加減碼」。已驗證兩表 th/td 欄數一致、JS 語法通過。
+- **教訓**:判斷「線上到底跑哪一版」時,要同時看三個地方——main 的程式碼、每日產出的 JSON
+  (看 note / 欄位)、以及前端 HTML。三者可能不同步(程式已推、資料未重產;或改動還在 stash 裡)。
