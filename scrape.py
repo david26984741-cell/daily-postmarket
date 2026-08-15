@@ -214,7 +214,9 @@ def fetch_fkline_day(date_slash, diag=False):
     }, big5=True)
     lines = [l for l in txt.splitlines() if l.strip()]
     best = _fut_rows_pick(lines)
-    out = {code: v[1] for (code, d), v in best.items() if d == date_slash}
+    # 第5欄 = 成交量(口)。與現股 kline 的 [開,高,低,收,成交股數] 對齊。
+    # 舊資料只有 4 欄, 讀取端一律位置索引 0~3, 故加欄不影響既有頁面。
+    out = {code: v[1] + [v[0]] for (code, d), v in best.items() if d == date_slash}
     if diag and not out:
         seen = sorted({d for (_c, d) in best})
         log(f"    診斷: 回傳 {len(lines)} 行, 解析 {len(best)} 筆; 內含日期={seen[:3] or '無'}"
@@ -243,21 +245,27 @@ def fetch_fkline_by_code(date_slash, codes, sleep=0.2):
 
 
 def fetch_fkline_range(code, start_slash, end_slash):
-    """單一股期(2碼代號)區間日K — futDataDown 逐月查詢用。回傳 {date: [o,h,l,c]}。"""
+    """單一股期(2碼代號)區間日K — futDataDown 逐月查詢用。回傳 {date: [o,h,l,c,vol]}。"""
     txt = http_get(TAIFEX + "futDataDown",
                    {"down_type": "1", "commodity_id": code + "F",
                     "queryStartDate": start_slash, "queryEndDate": end_slash}, big5=True)
     best = _fut_rows_pick(txt.splitlines(), want_code=code)
-    return {d: v[1] for (c, d), v in best.items()}
+    return {d: v[1] + [v[0]] for (c, d), v in best.items()}
 
 
 FKLINE = os.path.join(DATA, "fkline")
 
-def append_fkline(code, date_slash, ohlc):
+def append_fkline(code, date_slash, bar):
+    """bar = [開,高,低,收] 或 [開,高,低,收,成交量(口)]。
+    2026/08 起新增第5欄成交量; 舊記錄維持 4 欄, 讀取端一律位置索引 0~3 故相容。
+    若新資料缺成交量而舊記錄已有, 保留舊值以免回填被覆蓋掉。"""
     os.makedirs(FKLINE, exist_ok=True)
     path = os.path.join(FKLINE, f"{code}.json")
     doc = load_json(path, {"code": code, "records": {}})
-    doc["records"][date_slash] = ohlc
+    old = doc["records"].get(date_slash)
+    if len(bar) < 5 and old and len(old) > 4:
+        bar = list(bar) + [old[4]]
+    doc["records"][date_slash] = bar
     save_json(path, doc)
 
 

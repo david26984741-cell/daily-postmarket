@@ -1,0 +1,112 @@
+name: 回補股期成交量
+
+# 手動觸發: 把股票期貨「成交量」補進 data/fkline/ 的第 5 欄 (只動 data/fkline/)。
+#
+# 走 futDataDown 每日全市場路徑 (POST, commodity_id=all): 一天一次請求拿回全市場約 2,100 列,
+# 比逐檔逐月快非常多。9 年約 2,300 個交易日, 以 sleep 0.3 估算約 40~60 分鐘。
+#
+# 建議分段跑 (每段約 1~2 年), 好處是失敗只需重跑該段, 且中途可看成果:
+#   2017/01/01~2018/12/31、2019/01/01~2020/12/31、2021/01/01~2022/12/31、
+#   2023/01/01~2024/12/31、2025/01/01~2026/12/31
+# 腳本會自動跳過「已有成交量」的日期, 所以重複跑同一段是安全的 (要強制重抓才加 redo=yes)。
+
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "起始日期 YYYY/MM/DD"
+        required: true
+      end:
+        description: "結束日期 YYYY/MM/DD"
+        required: true
+      sleep:
+        description: "每次查詢間隔秒數"
+        required: false
+        default: "0.3"
+      redo:
+        description: "已有成交量的日期也重抓 (yes/no)"
+        required: false
+        default: "no"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: daily-postmarket-fvol
+  cancel-in-progress: false
+
+jobs:
+  backfill-fvol:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # ref: main — 取開跑當下最新版, 避免佇列等待期間基底過期導致 rebase 衝突 (#16 事故)
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 回補股期成交量
+        run: |
+          EXTRA=""
+          if [ "${{ github.event.inputs.redo }}" = "yes" ]; then EXTRA="--redo"; fi
+          python tools/backfill_fvol.py \
+            --start ${{ github.event.inputs.start }} \
+            --end   ${{ github.event.inputs.end }} \
+            --sleep ${{ github.event.inputs.sleep }} $EXTRA
+
+      - name: Commit 資料更新
+        if: always()
+        run: |
+          pkill -9 -f backfill_fvol.py 2>/dev/null || true
+          sleep 3
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          MSG="回補股期成交量 ${{ github.event.inputs.start }} ~ ${{ github.event.inputs.end }}"
+          git add -A data/
+          if git diff --cached --quiet; then
+            echo "無資料變更"; exit 0
+          fi
+          git commit -m "$MSG"
+          for i in 1 2 3 4; do
+            git add -A data/
+            git diff --cached --quiet || git commit -m "$MSG (補收$i)"
+            git checkout -- . 2>/dev/null || true
+            git fetch origin main
+            if git rebase origin/main; then
+              git push origin main && exit 0
+            else
+              git rebase --abort || true
+            fi
+            echo "push 失敗, 15 秒後重試 ($i/4)"; sleep 15
+          done
+          exit 1
+
+      - name: 準備網站檔案
+        if: always()
+        run: |
+          rm -rf _site && mkdir -p _site
+          cp -r index.html stocks.html detail.html stock.html rank.html concept.html screener.html strategy.html help.html analysis.html assets data .nojekyll _site/ 2>/dev/null || true
+
+      - name: Setup Pages
+        if: always()
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        if: always()
+        uses: actions/deploy-pages@v4
