@@ -3,17 +3,21 @@
 台股期貨盤後籌碼網站。每交易日自動抓取期交所/證交所資料,發布於 GitHub Pages:
 https://david26984741-cell.github.io/daily-postmarket/
 
-使用者(老黑)在**公司**與**家裡**兩台電腦上分別與 Claude 協作,以此 GitHub 儲存庫為唯一同步管道。
+使用者(老黑)只在**家裡**這台電腦與 Claude 協作(2026/08 起;先前為公司+家裡雙機)。
+但**遠端仍會自己長出 commit** —— 每日排程機器人每交易日會推資料上來,
+所以下面的規則跟雙機時代一樣重要,只是對手從「另一台電腦」換成「機器人」。
 
-## ⚠️ 跨電腦工作規則(最重要)
+## ⚠️ 工作規則(最重要)
 
 1. **開工前必先 Pull**:GitHub Desktop → Fetch origin → Pull origin(或 `git pull`)。
-   兩台電腦的 Claude 對話記憶不互通,唯一的共同事實是這個儲存庫。
-   不 pull 就看不到另一台電腦(以及每日自動更新機器人)的修改。
+   排程機器人(daily/kline/exright 等 workflow)每天都會往 main 推資料 commit。
+   不 pull 就是在舊版上改,push 時得回頭處理合併。
 2. **收工後必 Commit + Push**。
 3. **絕對不要 force push**:遠端隨時可能有 workflow 機器人的資料 commit。
    跳出 force push 確認視窗時一律 Cancel,改用 Pull(合併)後再 Push。
-4. 交接紀錄請更新本檔末尾的「變更日誌」。
+4. 變更紀錄請更新本檔末尾的「變更日誌」—— 這是跨 session 唯一的共同事實
+   (Claude 每次對話的記憶不互通)。
+5. `handoffs/` 目前刻意不進版控(單機作業,交接文件留在本機即可)。
 
 ## 部署方式(常見誤區)
 
@@ -432,5 +436,13 @@ https://david26984741-cell.github.io/daily-postmarket/
 - 併發現(非 bug):`stock_map` 裡小型契約的 `short` 會剝掉「小型」前綴以繼承本尊 sid,
   故 CD/QF 同為 `台積電`;而 `mini`/`shares` 判定看的是 `data/stocks/*.json` 的**商品名稱**
   (「小型台積電期貨」),不是 `short` —— 兩者用途不同,不要混用。
-- 註:`data/kline/8932.json` 與 `data/adjfactor/8932.json` 需靠 kline.yml 回補才會生成;
-  在那之前 VL 的 `price`/`samt5` 仍為 null。
+- 已跑 kline.yml #47 回補 2026/07/01~08/14 → 產出 `data/kline/8932.json`(32 個交易日)。
+- **踩到的時間差**:`tools/backfill_kline.py` **不呼叫 `update_index`**,所以 kline.yml 跑完
+  `data/rank.json` 並未重建 —— VL 的 sid/price/samt5 要等下一次 daily 排程才會進 rank.json。
+  當時以新 stock_map + 新日K 直接呼叫 `_rank_row()` 驗證過結果正確
+  (sid=8932、price=108.0、samt5=2.58 億、股期/現貨比率 40.7%)。
+  日後只補資料卻發現網站沒變,先想到這一層,不要誤判成抓取失敗。
+- **網路可達性(修正 2026/07/29 那節的部分敘述)**:`web_fetch` 工具 **讀得到**
+  `www.taifex.com.tw`(2026/08/15 實測),但**長頁面會被截斷**(stockLists 只到 `UJ`,
+  拿不到 8 月新掛牌的 VL~VP),要完整內容仍須走瀏覽器同源 fetch。
+  砂箱 bash 本身的對外連線這次沒重測,沿用舊結論(不要用 bash 抓網頁)。
