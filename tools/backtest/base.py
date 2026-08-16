@@ -136,6 +136,33 @@ def _read_px():
     return out
 
 
+def _read_fvol():
+    """
+    股期成交金額 —— fkline 第 5 欄(成交量,口) × 該契約原始收盤 × 每口股數。
+    2026/08 起由 tools/backfill_fvol.py 補齊 2017~今。
+    沒成交的日子期交所行情不會列出該契約 -> 該日無記錄 -> 自然為缺值(不是 0),
+    這是對的:沒交易代表沒資訊,不該當成「成交金額為零」參與平均。
+    回傳 {code: {date: 成交金額(元)}}
+    """
+    fdir = os.path.join(REPO, "data", "fkline")
+    out = {}
+    if not os.path.isdir(fdir):
+        return out
+    for fn in sorted(os.listdir(fdir)):
+        if not fn.endswith(".json"):
+            continue
+        code = fn[:-5]
+        rec = json.load(open(os.path.join(fdir, fn), encoding="utf-8")).get("records", {})
+        d = {}
+        for date, bar in rec.items():
+            if not bar or len(bar) < 5 or not bar[4] or not bar[3]:
+                continue
+            d[date] = bar[4] * bar[3]      # 口數 × 原始收盤;每口股數稍後乘上
+        if d:
+            out[code] = d
+    return out
+
+
 def build():
     t0 = time.time()
     chips = _read_chips()
@@ -193,8 +220,24 @@ def build():
 
     # 股期規模(元) 必須用「原始收盤」,還原價不是真實價格
     scale = R["moi"] * rawc * spl
-    # 股期規模 / 現貨成交金額 (代表性比率)
+    # 代表性①(存量):股期未平倉金額 / 現貨成交金額
     rep = scale / amt
+
+    # 代表性②(流量):股期成交金額 / 現貨成交金額
+    # 同一支股票的一般與小型契約要「相加」—— 成交金額是流量,合計才是該股票
+    # 在期貨市場的總交易量;這與存量版(逐契約)的處理刻意不同。
+    fv = _read_fvol()
+    famt_c = pd.DataFrame(
+        {c: pd.Series(fv[c]) for c in codes if c in fv}
+    ).sort_index().reindex(index=dates, columns=codes) * spl
+    sid_of = pd.Series({c: code2sid[c] for c in codes})
+    famt_sid = famt_c.T.groupby(sid_of).sum(min_count=1).T      # 每支股票的合計
+    famt = famt_sid.reindex(columns=[code2sid[c] for c in codes])
+    famt.columns = codes                                        # 同 sid 的契約共用該值
+    rep2 = famt / amt
+    # 成交量日間跳動遠大於未平倉(法說會/結算日/突發事件) -> 一律提供平滑版
+    rep2_5 = famt.rolling(5, min_periods=3).mean() / amt.rolling(5, min_periods=3).mean()
+    rep2_20 = famt.rolling(20, min_periods=10).mean() / amt.rolling(20, min_periods=10).mean()
 
     D = {
         "codes": codes,
@@ -209,8 +252,12 @@ def build():
         "rawc": rawc,    # 原始收盤
         "amt": amt,      # 現貨成交金額(元)
         "lock": lock,    # 一價到底
-        "scale": scale,  # 股期規模(元)
-        "rep": rep,      # 股期規模 / 現貨成交金額
+        "scale": scale,      # 股期未平倉金額(元)
+        "rep": rep,          # 代表性①存量: 未平倉金額 / 現貨成交金額
+        "famt": famt,        # 股期成交金額(元, 同 sid 合計)
+        "rep2": rep2,        # 代表性②流量: 成交金額 / 現貨成交金額 (當日)
+        "rep2_5": rep2_5,    # 同上, 5 日均
+        "rep2_20": rep2_20,  # 同上, 20 日均
         "built_at": time.strftime("%Y-%m-%d %H:%M:%S"),
         "build_sec": round(time.time() - t0, 1),
     }
