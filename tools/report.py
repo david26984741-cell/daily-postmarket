@@ -34,15 +34,10 @@ SCANS = [
      "hold": ("main", "ratio", ">", 0, True), "chg": None, "days": None, "sratio": None,
      "sort": "hold", "desc": True, "mode": "hilo", "top": 20},
 
-    {"title": "前十大・自然人 × 股期/現貨>100%", "rk": 10, "scale": (10, 500),
-     "hold": ("nat", "ratio", ">", 0, True), "chg": ("nat", "ratio", ">", 0, True),
-     "days": None, "sratio": (">", 100),
-     "sort": "hold", "desc": True, "mode": "top", "top": 20},
-
-    {"title": "第六~十大・主力 × 股期/現貨>100%", "rk": 6, "scale": (10, 500),
-     "hold": ("main", "ratio", ">", 0, True), "chg": ("main", "ratio", ">", 0, True),
-     "days": None, "sratio": (">", 100),
-     "sort": "hold", "desc": True, "mode": "top", "top": 20},
+    {"title": "第六~十大・法人持有比率", "rk": 6, "scale": (2.5, 500),
+     "hold": ("inst", "ratio", ">", 0, True), "chg": ("inst", "ratio", ">", 0, True),
+     "days": None, "sratio": None,
+     "sort": "hold", "desc": True, "mode": "hilo", "top": 10},
 ]
 
 MET = {"t0": "交易人合計", "main": "主力", "nat": "自然人", "inst": "法人"}
