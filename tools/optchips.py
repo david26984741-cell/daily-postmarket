@@ -137,7 +137,7 @@ def fetch_all():
 
 
 # ------------------------------------------------------------------ 產圖
-def render(date, expiry, rows, tx_close, taiex, out, fname="6_選擇權籌碼.png"):
+def render(date, expiry, rows, tx_close, taiex, out, fname="9_選擇權籌碼.png"):
     basis = tx_close - taiex
     calc = [{"k": k, "dC": dC, "Cs": Cs, "dP": dP, "Ps": Ps,
              "cAmt": dC * Cs * PT, "pAmt": dP * Ps * PT}

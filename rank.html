@@ -8,6 +8,9 @@
 <style>
 .rank-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
 @media (max-width:900px){.rank-grid{grid-template-columns:1fr}}
+/* 報告截圖用標題:平常隱藏,只有帶 ?rk=/?metric= 進來時才顯示(四張圖長得一樣,靠這行分辨) */
+.rank-cap{grid-column:1/-1;font-size:19px;font-weight:700;letter-spacing:.5px;padding:2px 2px 4px}
+.rank-cap small{color:var(--mut);font-weight:400;font-size:14px;margin-left:10px}
 .rank-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .rank-card h3{margin:0 0 10px;font-size:15.5px}
 .rank-card h3 small{color:var(--mut);font-weight:400;margin-left:6px;font-size:12px}
@@ -53,6 +56,7 @@ a.cpt-tag:hover{border-color:var(--accent);color:var(--accent)}
   <div class="warn" id="rk5warn" style="display:none">前五大資料將於下一次每日更新後提供,暫以前十大顯示。</div>
 
   <div class="rank-grid">
+    <div class="rank-cap" id="rankCap" style="display:none"></div>
     <div class="rank-card"><h3>增加口數 前十<small>口</small></h3><div id="upLots"></div></div>
     <div class="rank-card"><h3>減少口數 前十<small>口</small></h3><div id="dnLots"></div></div>
     <div class="rank-card"><h3>增加金額 前十<small>口數×股價×每口股數</small></h3><div id="upAmt"></div></div>
@@ -87,12 +91,29 @@ a.cpt-tag:hover{border-color:var(--accent);color:var(--accent)}
   try{ const m=localStorage.getItem("dpm.rank.metric"); if(m&&$("#metric").querySelector(`option[value=${m}]`)) $("#metric").value=m; }catch(e){}
   try{ if(localStorage.getItem("dpm.rank.rk")==="5") $("#rk5").checked=true; }catch(e){}
 
+  // ---- 隱藏 URL 參數 (每日報告截圖專用, 網站 UI 不變) -------------------------
+  //   ?rk=5|6|10 & ?metric=main|t0|inst|nat|moi
+  // 帶了任一個就進入「截圖模式」:改由參數決定口徑、顯示標題、且不寫入 localStorage
+  // (避免影響使用者自己在網站上的偏好)。rk=6 只有這條路徑能到, 工具列刻意不加按鈕。
+  const QS=new URLSearchParams(location.search);
+  const qRk={"5":5,"6":6,"10":10}[QS.get("rk")] ?? null;
+  const qMet=["main","t0","inst","nat","moi"].includes(QS.get("metric"))? QS.get("metric") : null;
+  const SHOT=(qRk!==null||qMet!==null);
+  const RK_TAG={5:"前五大",6:"第六~十大",10:"前十大"};
+  const MET_TAG={main:"主力",t0:"交易人合計",inst:"特定法人",nat:"自然人",moi:"全市場未沖銷"};
+
   // rank.json 原始值: main/inst=前十大(t0/t1), main5/inst5=前五大 — 由前端依選擇換算。
   // 顯示口徑與個股頁/XQ一致: 自然人 = t0−t1, 主力 = 自然人−法人 = t0−2×t1。
-  const RK=()=>$("#rk5").checked?5:10;
+  const RK=()=> qRk!==null? qRk : ($("#rk5").checked?5:10);
+  const MET=()=> qMet!==null? qMet : $("#metric").value;
   const has5=(rk.rows||[]).some(r=>r.main5!=null);
+  const sub=(a,b)=>(a!=null&&b!=null)? a-b : null;
   function vals(r){
-    if(RK()===5&&has5) return {t0:r.main5,t0p:r.main5_prev,t1:r.inst5,t1p:r.inst5_prev};
+    const k=RK();
+    if(k===5&&has5) return {t0:r.main5,t0p:r.main5_prev,t1:r.inst5,t1p:r.inst5_prev};
+    // 第六~十大 = 前十大 − 前五大 (t0/t1 各自相減, 與 stocks.html / screener.html 同口徑)
+    if(k===6&&has5) return {t0:sub(r.main,r.main5), t0p:sub(r.main_prev,r.main5_prev),
+                            t1:sub(r.inst,r.inst5), t1p:sub(r.inst_prev,r.inst5_prev)};
     return {t0:r.main,t0p:r.main_prev,t1:r.inst,t1p:r.inst_prev};
   }
   function delta(r,m){
@@ -131,8 +152,14 @@ a.cpt-tag:hover{border-color:var(--accent);color:var(--accent)}
     return t;
   }
   function render(){
-    const m=$("#metric").value;
-    $("#rk5warn").style.display=(RK()===5&&!has5)?"block":"none";
+    const m=MET();
+    $("#rk5warn").style.display=((RK()===5||RK()===6)&&!has5)?"block":"none";
+    if(SHOT){   // 截圖模式:四張圖版面相同, 靠這行標題分辨是哪一組
+      const cap=$("#rankCap");
+      cap.style.display="";
+      cap.innerHTML=`${RK_TAG[RK()]} · ${MET_TAG[m]}增減`
+                   +`<small>資料日期 ${rk.date} · 對照前一交易日</small>`;
+    }
     const rows=(rk.rows||[]).map(r=>{
       const d=delta(r,m);
       const px=r.fprice!=null? r.fprice : r.price;   // 股期近月價優先, 缺漏退回現股價
@@ -145,8 +172,11 @@ a.cpt-tag:hover{border-color:var(--accent);color:var(--accent)}
     put("upAmt", amt.filter(r=>r._amt>0).sort((a,b)=>b._amt-a._amt).slice(0,10), true);
     put("dnAmt", amt.filter(r=>r._amt<0).sort((a,b)=>a._amt-b._amt).slice(0,10), true);
   }
-  $("#metric").onchange=()=>{ try{ localStorage.setItem("dpm.rank.metric", $("#metric").value); }catch(e){} render(); };
-  [$("#rk5"),$("#rk10")].forEach(x=>x.onchange=()=>{ try{ localStorage.setItem("dpm.rank.rk", String(RK())); }catch(e){} render(); });
+  // 截圖模式不掛互動、也不寫 localStorage(headless 只渲染一次就截圖)
+  if(!SHOT){
+    $("#metric").onchange=()=>{ try{ localStorage.setItem("dpm.rank.metric", $("#metric").value); }catch(e){} render(); };
+    [$("#rk5"),$("#rk10")].forEach(x=>x.onchange=()=>{ try{ localStorage.setItem("dpm.rank.rk", String(RK())); }catch(e){} render(); });
+  }
   render();
 })();
 </script>
