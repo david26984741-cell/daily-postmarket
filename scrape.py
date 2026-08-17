@@ -838,14 +838,18 @@ def _rank_row(doc, latest, stock_map):
     pdates = [x for x in recs if x < latest]
     prev = max(pdates) if pdates else None
     prec = recs.get(prev) or []
-    def pick(rows, t):
+    def pick(rows, t, near=False):
+        """near=False → 所有契約合計 (month 999999);near=True → 當月(近月)契約。"""
         for x in rows:
-            if x.get("month") == "999999" and x.get("type") == t:
+            if (x.get("month") != "999999") == near and x.get("type") == t:
                 return x
         return None
     net = lambda r: (r["top10_buy"] - r["top10_sell"]) if r else None
     net5 = lambda r: (r["top5_buy"] - r["top5_sell"]) if r else None
     a0, a1, b0, b1 = pick(rec, "0"), pick(rec, "1"), pick(prec, "0"), pick(prec, "1")
+    # 近月契約的全市場未沖銷 — 策略頁篩選器「近月契約 OI 變化」用
+    # (只取 OI;近月的持有/變化口徑目前沒有頁面在用, 先不寫進 rank.json 免得檔案膨脹)
+    n0, m0 = pick(rec, "0", near=True), pick(prec, "0", near=True)
     code = doc.get("code")
     info = stock_map.get(code, {})
     name = doc.get("name") or info.get("short") or code
@@ -904,6 +908,7 @@ def _rank_row(doc, latest, stock_map):
             "main5": net5(a0), "main5_prev": net5(b0),
             "inst5": net5(a1), "inst5_prev": net5(b1),
             "moi": (a0 or {}).get("market_oi"), "moi_prev": (b0 or {}).get("market_oi"),
+            "moim": (n0 or {}).get("market_oi"), "moim_prev": (m0 or {}).get("market_oi"),
             "phist": phist, "samt5": samt5}
 
 

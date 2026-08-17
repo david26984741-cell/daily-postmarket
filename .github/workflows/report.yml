@@ -68,7 +68,7 @@ jobs:
         run: python tools/charts.py --out .shots --days 60
 
       # 圖 5: 增減排行四宮格 — 表格型, 仍以網頁截圖處理
-      - name: 產生排行截圖 (1 張)
+      - name: 產生排行截圖 (4 張)
         id: shots
         if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
         continue-on-error: true

@@ -23,6 +23,9 @@
     <label class="ck" title="以期交所「前五大交易人」為母體換算"><input type="radio" name="rank" id="rk5" value="5"><span>前五大</span></label>
     <label class="ck" title="第六~十名交易人 = 前十大 − 前五大"><input type="radio" name="rank" id="rk6" value="6"><span>第六~十大</span></label>
     <label class="ck" title="以期交所「前十大交易人」為母體換算"><input type="radio" name="rank" id="rk10" value="10" checked><span>前十大</span></label>
+    <span class="tlabel" style="margin-left:14px">契約</span>
+    <label class="ck" title="所有到期月份合計(期交所「所有契約」)"><input type="radio" name="scope" id="scAll" value="all" checked><span>全部契約</span></label>
+    <label class="ck" title="只看最近月份契約;接近結算日會因轉倉大幅減少"><input type="radio" name="scope" id="scNear" value="near"><span>近月契約</span></label>
   </div>
 
   <div class="stk-toolbar">
@@ -112,9 +115,14 @@
   // rk=6 代表「第六~十名」= 前十大 − 前五大 (交易人/主力/自然人/法人皆以此母體推導)
   const RANK=()=>($("#rk5").checked?5:($("#rk6").checked?6:10));
   const rankTag=()=>{const r=RANK(); return r===5?"前五":(r===6?"六~十":"前十");};
+  // 契約範圍: all=所有契約(month 999999) / near=近月(當月契約)。
+  // 兩種資料 data/stocks/*.json 本來就都有, 不必改抓取端;接近結算日兩者差很多(轉倉)。
+  const NEAR=()=>$("#scNear").checked;
+  const scopeTag=()=>NEAR()?"近月":"全部";
+  const pickRow=(rows,t)=>(rows||[]).find(x=>(x.month!=="999999")===NEAR()&&x.type===t);
   // t0 = 交易人合計淨部位 (期交所原始值), t1 = 其中特定法人淨部位
   const NET=(rows,t,rk)=>{
-    const r=(rows||[]).find(x=>x.month==="999999"&&x.type===t);
+    const r=pickRow(rows,t);
     if(!r) return null;
     if(rk===5) return r.top5_buy-r.top5_sell;
     if(rk===6) return (r.top10_buy-r.top5_buy)-(r.top10_sell-r.top5_sell);
@@ -388,7 +396,7 @@
     try{
       localStorage.setItem(PREFS, JSON.stringify({
         codes:selected.slice(), from:range.from, to:range.to,
-        ck:CKS.map(c=>c.checked), rank:RANK(),
+        ck:CKS.map(c=>c.checked), rank:RANK(), scope:NEAR()?"near":"all",
         gK:$("#gK").checked, gArea:$("#gArea").checked, gBar:$("#gBar").checked, gAmt:$("#gAmt").checked,
         cols:$("#cols").value
       }));
@@ -547,11 +555,11 @@
         let moi=null, moiD=null;
         for(let i=ser.dates.length-1;i>=0;i--){
           const rows=doc.records[ser.dates[i]]||[];
-          const r0=rows.find(x=>x.month==="999999"&&x.type==="0")||rows.find(x=>x.type==="0");
+          const r0=pickRow(rows,"0")||rows.find(x=>x.type==="0");
           if(r0&&r0.market_oi!=null){ moi=r0.market_oi; moiD=ser.dates[i]; break; }
         }
         if(moi==null) return;
-        let html=` · <span class="c">未平倉規模</span> <b>${Number(moi).toLocaleString('en-US')} 口</b>`;
+        let html=` · <span class="c">未平倉規模(${scopeTag()})</span> <b>${Number(moi).toLocaleString('en-US')} 口</b>`;
         if(priceLast!=null){
           const sc=moi*priceLast*shares, a=Math.abs(sc);
           html+=` <b>(${a>=1e8?(a/1e8).toFixed(2)+" 億":(a/1e4).toFixed(0)+" 萬"})</b>`;
@@ -652,7 +660,7 @@
   });
 
   // ---- 面板勾選 --------------------------------------------------------------
-  CKS.concat([$("#rk5"),$("#rk6"),$("#rk10"),$("#gK"),$("#gArea"),$("#gBar"),$("#gAmt"),$("#cols")]).forEach(cb=>cb.addEventListener("change",render));
+  CKS.concat([$("#rk5"),$("#rk6"),$("#rk10"),$("#scAll"),$("#scNear"),$("#gK"),$("#gArea"),$("#gBar"),$("#gAmt"),$("#cols")]).forEach(cb=>cb.addEventListener("change",render));
 
   // ---- 期間選擇 --------------------------------------------------------------
   if(allDates.length){
@@ -678,6 +686,7 @@
   if(saved){
     if(Array.isArray(saved.ck)) CKS.forEach((c,i)=>{ if(typeof saved.ck[i]==="boolean") c.checked=saved.ck[i]; });
     if([5,6,10].includes(saved.rank)){ $("#rk5").checked=(saved.rank===5); $("#rk6").checked=(saved.rank===6); $("#rk10").checked=(saved.rank===10); }
+    if(saved.scope==="near"||saved.scope==="all"){ $("#scNear").checked=(saved.scope==="near"); $("#scAll").checked=(saved.scope==="all"); }
     ["gK","gArea","gBar","gAmt"].forEach(id=>{ if(typeof saved[id]==="boolean") $("#"+id).checked=saved[id]; });
     if(saved.cols) $("#cols").value=saved.cols;
     if(saved.from!==undefined||saved.to!==undefined){ range.from=saved.from||null; range.to=saved.to||null; syncRangeInputs(); }
@@ -686,6 +695,8 @@
   const qs=new URLSearchParams(location.search);
   const qrk=qs.get("rk");
   if(qrk==="5"||qrk==="6"||qrk==="10"){ $("#rk5").checked=(qrk==="5"); $("#rk6").checked=(qrk==="6"); $("#rk10").checked=(qrk==="10"); }
+  const qsc=qs.get("scope");   // ?scope=all|near — 由策略頁篩選器點入時同步契約範圍
+  if(qsc==="all"||qsc==="near"){ $("#scNear").checked=(qsc==="near"); $("#scAll").checked=(qsc==="all"); }
   const qp=qs.get("panels");
   if(qp){
     const MAPP={t0:0,main:1,nat:2,inst:3};   // ck0交易人/ck1主力/ck2自然人/ck3法人

@@ -125,8 +125,8 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;margin-right:5px}
   <!-- ===== 股期篩選器 ===== -->
   <section id="pScr" class="panel">
     <p class="hint" style="margin-top:12px">依大額交易人資料篩選個股期貨。規模單位:億元。持有/變化可切換「規模(億)」或「比率(%)」。
-      <b>⑥ 股期規模 ÷ 現貨成交金額</b>為本頁獨有:分母是<b>現貨近五日均成交金額</b>,用來衡量這檔股期相對現貨的份量
-      ——只看佔全市場 OI 的比率是「拿股期跟自己比」,佔比高但現貨很大時,籌碼其實推不動價格。</p>
+      <b>⑤ OI 變化</b>為本頁獨有:看全市場未沖銷口數的當日增減,可分「<b>全部契約</b>」或「<b>近月契約</b>」——
+      接近結算日時近月會因轉倉大幅減少,但全部契約未必,兩者一起看才分得出是真的退場還是只是換月。</p>
 
     <div class="flt">
       <div class="frow">
@@ -162,15 +162,14 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;margin-right:5px}
         <label class="ck"><input type="checkbox" id="sabs4" checked><span>取絕對值</span></label>
       </div>
       <div class="frow" id="srow5">
-        <label class="ck"><input type="checkbox" id="sc5"><span>⑤ 近</span></label>
-        <input type="number" id="sv5" step="1" min="1" placeholder="5"> 日收盤
-        <select id="sdir5"><option value="up">上漲</option><option value="down">下跌</option></select>
-      </div>
-      <div class="frow" id="srow6">
-        <label class="ck"><input type="checkbox" id="sc6"><span>⑥ 股期規模 ÷ 現貨成交金額</span></label>
-        <select id="sop6"><option value=">">大於</option><option value="<">小於</option></select>
-        <input type="number" id="sv6" step="any" placeholder="例 100"> %
-        <span class="hint" style="margin:0">(分母=現貨近五日均成交金額;100% = 股期規模與現貨日成交金額相當)</span>
+        <label class="ck"><input type="checkbox" id="sc5"><span>⑤ 當日</span></label>
+        <select id="ssc5"><option value="all" selected>全部契約</option><option value="near">近月契約</option></select>
+        <span>OI 變化</span>
+        <select id="su5"><option value="lots">口數</option><option value="ratio">比率(%)</option></select>
+        <select id="sop5"><option value=">">大於</option><option value="<">小於</option></select>
+        <input type="number" id="sv5" step="any" placeholder="例 500"> <span id="su5lb">口</span>
+        <label class="ck"><input type="checkbox" id="sabs5"><span>取絕對值</span></label>
+        <span class="hint" style="margin:0">(比率 = 變化口數 ÷ 前一日 OI)</span>
       </div>
       <div class="fbtns">
         <button id="srun">篩選</button>
@@ -299,7 +298,8 @@ function showTab(t){
 }
 
 /* ================= 股期篩選器 (本頁獨有: ⑥ 股期規模 ÷ 現貨成交金額) =================
-   公式與「每日盤後資料」站的篩選器一致; ⑥ 的分母 samt5 = 現貨近五日均成交金額。 */
+   ①~④ 公式與「每日盤後資料」站的篩選器一致;⑤ OI 變化為本頁獨有。
+   ⑤ 的近月 OI 來自 rank.json 的 moim/moim_prev (scrape.py _rank_row 由當月契約列取得)。 */
 let SCR=null;
 async function initScreener(){
   if(SCR) return;
@@ -317,8 +317,10 @@ async function initScreener(){
 
   // 條件保存 (與主站篩選器分開存, 互不干擾)
   const PREF="dpm.strategy.screener";
-  const IDS=["sc2","sc3","sc4","sc5","sc6","sabs3","sabs4"];
-  const VALS=["sv2","sv2b","sm3","su3","sop3","sv3","sm4","su4","sop4","sv4","sv5","sdir5","sop6","sv6"];
+  // 註:2026/08 移除舊的 ⑤近X日收盤 與 ⑥股期/現貨成交, ⑤ 改為 OI 變化。
+  //    舊存檔殘留的 sc6/sv6/sdir5 等鍵不在下面清單裡, 讀取時會被忽略, 不必特別清理。
+  const IDS=["sc2","sc3","sc4","sc5","sabs3","sabs4","sabs5"];
+  const VALS=["sv2","sv2b","sm3","su3","sop3","sv3","sm4","su4","sop4","sv4","ssc5","su5","sop5","sv5"];
   const save=()=>{ try{
       const o={rk:RK()};
       IDS.forEach(i=>o[i]=q("#"+i).checked); VALS.forEach(i=>o[i]=q("#"+i).value);
@@ -333,12 +335,13 @@ async function initScreener(){
     }
   }catch(e){}
 
-  const rowDim=()=>["2","3","4","5","6"].forEach(n=>q("#srow"+n).classList.toggle("off",!q("#sc"+n).checked));
+  const rowDim=()=>["2","3","4","5"].forEach(n=>q("#srow"+n).classList.toggle("off",!q("#sc"+n).checked));
   const unitLbl=()=>{ q("#su3lb").textContent=q("#su3").value==="ratio"?"%":"億";
-                      q("#su4lb").textContent=q("#su4").value==="ratio"?"%":"億"; };
-  ["sc2","sc3","sc4","sc5","sc6"].forEach(i=>q("#"+i).onchange=()=>{rowDim();save();});
-  ["su3","su4"].forEach(i=>q("#"+i).onchange=()=>{unitLbl();save();});
-  [...IDS.slice(5),...VALS].forEach(i=>{ if(q("#"+i)) q("#"+i).onchange=save; });
+                      q("#su4lb").textContent=q("#su4").value==="ratio"?"%":"億";
+                      q("#su5lb").textContent=q("#su5").value==="ratio"?"%":"口"; };
+  ["sc2","sc3","sc4","sc5"].forEach(i=>q("#"+i).onchange=()=>{rowDim();save();});
+  ["su3","su4","su5"].forEach(i=>q("#"+i).onchange=()=>{unitLbl();save();});
+  [...IDS.slice(4),...VALS].forEach(i=>{ if(q("#"+i)) q("#"+i).onchange=save; });
   rowDim(); unitLbl();
 
   const sub=(a,b)=>(a!=null&&b!=null)?a-b:null;
@@ -376,8 +379,12 @@ async function initScreener(){
       const dAmt=(L4.cur!=null&&L4.prev!=null)?(L4.cur-L4.prev)*p*r.shares:null;
       const dRat=(L4.cur!=null&&L4.prev!=null&&r.moi&&r.moi_prev)?(L4.cur/r.moi-L4.prev/r.moi_prev)*100:null;
       const dchg=(u4==="ratio")?dRat:dAmt;
-      // ⑥ 股期規模 ÷ 現貨近五日均成交金額
-      const sRat=(scale!=null&&r.samt5)? scale/r.samt5*100 : null;
+      // ⑤ OI 變化 (全部契約 moi / 近月契約 moim);比率 = 變化口數 ÷ 前一日 OI
+      const near=q("#ssc5").value==="near";
+      const oiC=near? r.moim : r.moi, oiP=near? r.moim_prev : r.moi_prev;
+      const oiD=(oiC!=null&&oiP!=null)? oiC-oiP : null;
+      const oiR=(oiD!=null&&oiP)? oiD/oiP*100 : null;
+      const oiV=(q("#su5").value==="ratio")? oiR : oiD;
 
       if(q("#sc2").checked){
         if(scale==null) return;
@@ -397,21 +404,13 @@ async function initScreener(){
           const dv=q("#sabs4").checked?Math.abs(dchg):dchg, fac=(u4==="ratio")?1:E;
           if(q("#sop4").value===">"? dv<=v*fac : dv>=v*fac) return; }
       }
-      let chgN=null; const ph=r.phist;
-      if(ph&&ph.length>=2){
-        const X=Math.max(1,Math.round(parseFloat(q("#sv5").value)||5)), j=ph.length-1-X;
-        if(j>=0&&ph[j]) chgN=(ph[ph.length-1]/ph[j]-1)*100;
-      }
       if(q("#sc5").checked){
-        if(chgN==null) return;
-        if(q("#sdir5").value==="up"? chgN<=0 : chgN>=0) return;
+        const v=parseFloat(q("#sv5").value);
+        if(!isNaN(v)){ if(oiV==null) return;
+          const ov=q("#sabs5").checked?Math.abs(oiV):oiV;
+          if(q("#sop5").value===">"? ov<=v : ov>=v) return; }
       }
-      if(q("#sc6").checked){
-        const v=parseFloat(q("#sv6").value);
-        if(!isNaN(v)){ if(sRat==null) return;
-          if(q("#sop6").value===">"? sRat<=v : sRat>=v) return; }
-      }
-      out.push({...r,_p:p,_chg:chgPct,scale,hold,dchg,_chgN:chgN,_sRat:sRat});
+      out.push({...r,_p:p,_chg:chgPct,scale,hold,dchg,_oiD:oiD,_oiR:oiR,_oiV:oiV});
     });
     return out;
   }
@@ -421,9 +420,8 @@ async function initScreener(){
     const cols=[{k:"name",t:"股票名稱",l:true},{k:"_p",t:"收盤價"},{k:"_chg",t:"漲跌%"},{k:"scale",t:"股票期貨規模"}];
     if(q("#sc3").checked) cols.push({k:"hold",t:MET[m3]+(u3==="ratio"?"持有比率":"持有規模"),u:u3});
     if(q("#sc4").checked) cols.push({k:"dchg",t:MET[m4]+(u4==="ratio"?"變化比率":"變化規模"),u:u4});
-    const X5=Math.max(1,Math.round(parseFloat(q("#sv5").value)||5));
-    if(q("#sc5").checked) cols.push({k:"_chgN",t:`近${X5}日漲跌`,u:"pct"});
-    cols.push({k:"_sRat",t:"股期/現貨成交",u:"p"});     // ⑥ 一律顯示 (本頁重點)
+    const u5=q("#su5").value, sc5tag=q("#ssc5").value==="near"?"近月":"全部";
+    if(q("#sc5").checked) cols.push({k:"_oiV",t:`${sc5tag}契約OI變化`+(u5==="ratio"?"(%)":"(口)"),u:u5==="ratio"?"pct":"lots"});
     if(!cols.some(c=>c.k===sortKey)){ sortKey="scale"; sortDir=-1; }
     const rows=rows0.slice().sort((a,b)=>{
       if(sortKey==="name") return sortDir*String(a.name).localeCompare(String(b.name),"zh-Hant");
@@ -452,8 +450,8 @@ async function initScreener(){
       tr.appendChild(el("td",null,fA(r.scale)));
       if(q("#sc3").checked) tr.appendChild(el("td",r.hold>0?"up":(r.hold<0?"down":null),f2(r.hold,u3)));
       if(q("#sc4").checked) tr.appendChild(el("td",r.dchg>0?"up":(r.dchg<0?"down":null),f2(r.dchg,u4)));
-      if(q("#sc5").checked) tr.appendChild(el("td",r._chgN>0?"up":(r._chgN<0?"down":null),fR(r._chgN)));
-      tr.appendChild(el("td",null,fP(r._sRat)));
+      if(q("#sc5").checked) tr.appendChild(el("td",r._oiV>0?"up":(r._oiV<0?"down":null),
+        r._oiV==null?"—":(u5==="ratio"? fR(r._oiV) : (r._oiV>0?"+":"")+Number(r._oiV).toLocaleString("en-US")+" 口")));
       tb.appendChild(tr);
     });
     t.appendChild(tb);
@@ -462,9 +460,10 @@ async function initScreener(){
   }
   q("#srun").onclick=()=>{save();render();};
   q("#sclear").onclick=()=>{
-    ["sc2","sc3","sc4","sc5","sc6"].forEach(i=>q("#"+i).checked=false);
-    ["sv2","sv2b","sv3","sv4","sv5","sv6"].forEach(i=>q("#"+i).value="");
-    q("#su3").value="amt"; q("#su4").value="amt"; q("#sdir5").value="up";
+    ["sc2","sc3","sc4","sc5"].forEach(i=>q("#"+i).checked=false);
+    ["sv2","sv2b","sv3","sv4","sv5"].forEach(i=>q("#"+i).value="");
+    q("#su3").value="amt"; q("#su4").value="amt";
+    q("#ssc5").value="all"; q("#su5").value="lots"; q("#sop5").value=">"; q("#sabs5").checked=false;
     q("#srk10").checked=true; rowDim(); unitLbl(); save(); render();
   };
   [q("#srk5"),q("#srk6"),q("#srk10")].forEach(x=>x.onchange=()=>{save();render();});
