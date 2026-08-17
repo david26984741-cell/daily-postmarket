@@ -600,3 +600,9 @@ https://david26984741-cell.github.io/daily-postmarket/
 - 為什麼要分近月:接近結算日近月會因**轉倉**大幅減少而全部契約未必。
   實測 2026/08/17(8月結算前兩日)聯電 全部契約 OI **+2.0%**、近月 **−26.8%**;
   台積電 −2.1% vs −25.2%。只看其中一個會把換月誤判成資金退場。
+- **踩雷:Pages 部署失敗的 run 不要按 Re-run。** 這次 daily.yml 部署被 GitHub 回 **503**
+  (`Failed to create deployment ... Server error, is githubstatus.com reporting a Pages outage?`)
+  —— 是 GitHub 端問題,抓取與資料 commit 都已成功(只有 deploy 那步掛)。
+  按「Re-run failed jobs」後改噴 **`Multiple artifacts named "github-pages" ... Artifact count is 2`**:
+  重跑會再上傳一份同名 artifact, deploy-pages 無法決定用哪個, 反而更死。
+  **正解:重跑沒有用,改觸發一個全新的 workflow 來部署**(最省的是 kline.yml 起訖都填最近交易日)。
