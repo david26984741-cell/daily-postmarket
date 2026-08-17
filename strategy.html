@@ -143,6 +143,7 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;margin-right:5px}
       </div>
       <div class="frow" id="srow3">
         <label class="ck"><input type="checkbox" id="sc3"><span>③ 當日</span></label>
+        <select id="ssc3"><option value="all" selected>全部契約</option><option value="near">近月契約</option></select>
         <select id="sm3"><option value="t0">交易人合計</option><option value="main" selected>主力</option>
           <option value="nat">自然人</option><option value="inst">法人</option></select>
         <span>持有</span>
@@ -153,6 +154,7 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;margin-right:5px}
       </div>
       <div class="frow" id="srow4">
         <label class="ck"><input type="checkbox" id="sc4"><span>④ 當日</span></label>
+        <select id="ssc4"><option value="all" selected>全部契約</option><option value="near">近月契約</option></select>
         <select id="sm4"><option value="t0">交易人合計</option><option value="main" selected>主力</option>
           <option value="nat">自然人</option><option value="inst">法人</option></select>
         <span>變化</span>
@@ -320,7 +322,7 @@ async function initScreener(){
   // 註:2026/08 移除舊的 ⑤近X日收盤 與 ⑥股期/現貨成交, ⑤ 改為 OI 變化。
   //    舊存檔殘留的 sc6/sv6/sdir5 等鍵不在下面清單裡, 讀取時會被忽略, 不必特別清理。
   const IDS=["sc2","sc3","sc4","sc5","sabs3","sabs4","sabs5"];
-  const VALS=["sv2","sv2b","sm3","su3","sop3","sv3","sm4","su4","sop4","sv4","ssc5","su5","sop5","sv5"];
+  const VALS=["sv2","sv2b","ssc3","sm3","su3","sop3","sv3","ssc4","sm4","su4","sop4","sv4","ssc5","su5","sop5","sv5"];
   const save=()=>{ try{
       const o={rk:RK()};
       IDS.forEach(i=>o[i]=q("#"+i).checked); VALS.forEach(i=>o[i]=q("#"+i).value);
@@ -345,17 +347,25 @@ async function initScreener(){
   rowDim(); unitLbl();
 
   const sub=(a,b)=>(a!=null&&b!=null)?a-b:null;
-  function vals(r){
-    if(RK()===5&&has5) return {t0:r.main5,t0p:r.main5_prev,t1:r.inst5,t1p:r.inst5_prev};
-    if(RK()===6&&has5) return {t0:sub(r.main,r.main5),t0p:sub(r.main_prev,r.main5_prev),
-                               t1:sub(r.inst,r.inst5),t1p:sub(r.inst_prev,r.inst5_prev)};
-    return {t0:r.main,t0p:r.main_prev,t1:r.inst,t1p:r.inst_prev};
+  // near=true → 讀近月(當月)契約那組欄位(後綴 m);兩組在 rank.json 內同結構。
+  // 舊版 rank.json 沒有 m 系列 → 一律回 null, 篩選時該檔直接落空(不會拿全部契約的數字冒充)。
+  const K=(r,base,near)=> near? r[base+"m"] : r[base];
+  const Kp=(r,base,near)=> near? r[base+"m_prev"] : r[base+"_prev"];
+  function vals(r,near){
+    const g=b=>K(r,b,near), gp=b=>Kp(r,b,near);
+    if(RK()===5&&has5) return {t0:g("main5"),t0p:gp("main5"),t1:g("inst5"),t1p:gp("inst5")};
+    if(RK()===6&&has5) return {t0:sub(g("main"),g("main5")),t0p:sub(gp("main"),gp("main5")),
+                               t1:sub(g("inst"),g("inst5")),t1p:sub(gp("inst"),gp("inst5"))};
+    return {t0:g("main"),t0p:gp("main"),t1:g("inst"),t1p:gp("inst")};
   }
-  function lots(r,m){
-    const {t0,t0p,t1,t1p}=vals(r); const ok=(a,b)=>a!=null&&b!=null;
+  function lots(r,m,near){
+    const {t0,t0p,t1,t1p}=vals(r,near); const ok=(a,b)=>a!=null&&b!=null;
     const cv=(a,b)=> m==="t0"? a : (m==="inst"? b : (ok(a,b)? (m==="nat"? a-b : a-2*b) : null));
     return {cur:cv(t0,t1), prev:cv(t0p,t1p)};
   }
+  // 該契約範圍對應的全市場 OI — ③④ 選「比率」時的分母 (使用者指定:近月部位 ÷ 近月 OI)
+  const OI=(r,near)=> near? r.moim : r.moi;
+  const OIp=(r,near)=> near? r.moim_prev : r.moi_prev;
   const px=r=> r.fprice!=null? r.fprice : r.price;
   const pxp=r=> r.fprice!=null? (r.fprice_prev!=null?r.fprice_prev:r.price_prev) : r.price_prev;
   const fA=v=> v==null? "—" : ((v<0?"-":"")+(Math.abs(v)>=E?(Math.abs(v)/E).toFixed(2)+" 億":(Math.abs(v)/1e4).toFixed(0)+" 萬"));
@@ -372,12 +382,13 @@ async function initScreener(){
       const pp=pxp(r);
       const chgPct=(pp!=null&&pp!==0)?(p-pp)/pp*100:null;
       const scale=(r.moi!=null)? r.moi*p*r.shares : null;
-      const L3=lots(r,m3), L4=lots(r,m4);
+      const n3=q("#ssc3").value==="near", n4=q("#ssc4").value==="near";
+      const L3=lots(r,m3,n3), L4=lots(r,m4,n4);
       const holdAmt=(L3.cur!=null)? L3.cur*p*r.shares : null;
-      const holdRat=(L3.cur!=null&&r.moi)? L3.cur/r.moi*100 : null;
+      const holdRat=(L3.cur!=null&&OI(r,n3))? L3.cur/OI(r,n3)*100 : null;
       const hold=(u3==="ratio")?holdRat:holdAmt;
       const dAmt=(L4.cur!=null&&L4.prev!=null)?(L4.cur-L4.prev)*p*r.shares:null;
-      const dRat=(L4.cur!=null&&L4.prev!=null&&r.moi&&r.moi_prev)?(L4.cur/r.moi-L4.prev/r.moi_prev)*100:null;
+      const dRat=(L4.cur!=null&&L4.prev!=null&&OI(r,n4)&&OIp(r,n4))?(L4.cur/OI(r,n4)-L4.prev/OIp(r,n4))*100:null;
       const dchg=(u4==="ratio")?dRat:dAmt;
       // ⑤ OI 變化 (全部契約 moi / 近月契約 moim);比率 = 變化口數 ÷ 前一日 OI
       const near=q("#ssc5").value==="near";
@@ -418,8 +429,10 @@ async function initScreener(){
     const rows0=compute();
     const m3=q("#sm3").value,m4=q("#sm4").value,u3=q("#su3").value,u4=q("#su4").value;
     const cols=[{k:"name",t:"股票名稱",l:true},{k:"_p",t:"收盤價"},{k:"_chg",t:"漲跌%"},{k:"scale",t:"股票期貨規模"}];
-    if(q("#sc3").checked) cols.push({k:"hold",t:MET[m3]+(u3==="ratio"?"持有比率":"持有規模"),u:u3});
-    if(q("#sc4").checked) cols.push({k:"dchg",t:MET[m4]+(u4==="ratio"?"變化比率":"變化規模"),u:u4});
+    // 欄名帶上契約範圍, 否則同一組口徑切近月/全部後表頭一樣、分不出在看哪個
+    const tag3=q("#ssc3").value==="near"?"近月·":"", tag4=q("#ssc4").value==="near"?"近月·":"";
+    if(q("#sc3").checked) cols.push({k:"hold",t:tag3+MET[m3]+(u3==="ratio"?"持有比率":"持有規模"),u:u3});
+    if(q("#sc4").checked) cols.push({k:"dchg",t:tag4+MET[m4]+(u4==="ratio"?"變化比率":"變化規模"),u:u4});
     const u5=q("#su5").value, sc5tag=q("#ssc5").value==="near"?"近月":"全部";
     if(q("#sc5").checked) cols.push({k:"_oiV",t:`${sc5tag}契約OI變化`+(u5==="ratio"?"(%)":"(口)"),u:u5==="ratio"?"pct":"lots"});
     if(!cols.some(c=>c.k===sortKey)){ sortKey="scale"; sortDir=-1; }
@@ -463,6 +476,7 @@ async function initScreener(){
     ["sc2","sc3","sc4","sc5"].forEach(i=>q("#"+i).checked=false);
     ["sv2","sv2b","sv3","sv4","sv5"].forEach(i=>q("#"+i).value="");
     q("#su3").value="amt"; q("#su4").value="amt";
+    q("#ssc3").value="all"; q("#ssc4").value="all";
     q("#ssc5").value="all"; q("#su5").value="lots"; q("#sop5").value=">"; q("#sabs5").checked=false;
     q("#srk10").checked=true; rowDim(); unitLbl(); save(); render();
   };

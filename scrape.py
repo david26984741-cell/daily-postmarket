@@ -847,9 +847,10 @@ def _rank_row(doc, latest, stock_map):
     net = lambda r: (r["top10_buy"] - r["top10_sell"]) if r else None
     net5 = lambda r: (r["top5_buy"] - r["top5_sell"]) if r else None
     a0, a1, b0, b1 = pick(rec, "0"), pick(rec, "1"), pick(prec, "0"), pick(prec, "1")
-    # 近月契約的全市場未沖銷 — 策略頁篩選器「近月契約 OI 變化」用
-    # (只取 OI;近月的持有/變化口徑目前沒有頁面在用, 先不寫進 rank.json 免得檔案膨脹)
-    n0, m0 = pick(rec, "0", near=True), pick(prec, "0", near=True)
+    # 近月(當月)契約 — 策略頁篩選器的③持有/④變化/⑤OI 變化 都可切「全部/近月」。
+    # 欄位一律加後綴 m;與全部契約那組同結構, 前端只換讀取的鍵。
+    n0, n1 = pick(rec, "0", near=True), pick(rec, "1", near=True)
+    m0, m1 = pick(prec, "0", near=True), pick(prec, "1", near=True)
     code = doc.get("code")
     info = stock_map.get(code, {})
     name = doc.get("name") or info.get("short") or code
@@ -908,6 +909,11 @@ def _rank_row(doc, latest, stock_map):
             "main5": net5(a0), "main5_prev": net5(b0),
             "inst5": net5(a1), "inst5_prev": net5(b1),
             "moi": (a0 or {}).get("market_oi"), "moi_prev": (b0 or {}).get("market_oi"),
+            # ---- 近月(當月)契約 同結構 ----
+            "mainm": net(n0), "mainm_prev": net(m0),
+            "instm": net(n1), "instm_prev": net(m1),
+            "main5m": net5(n0), "main5m_prev": net5(m0),
+            "inst5m": net5(n1), "inst5m_prev": net5(m1),
             "moim": (n0 or {}).get("market_oi"), "moim_prev": (m0 or {}).get("market_oi"),
             "phist": phist, "samt5": samt5}
 
