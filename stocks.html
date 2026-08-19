@@ -395,7 +395,9 @@
   function savePrefs(){
     try{
       localStorage.setItem(PREFS, JSON.stringify({
-        codes:selected.slice(), from:range.from, to:range.to,
+        // latest = 存檔當下的最新交易日。恢復時若 to 已到當時的最新, 代表使用者是「看到最新」
+        // 而不是刻意選了歷史區間 → 下次開啟要跟著新資料前進, 不能鎖死在舊日期。
+        codes:selected.slice(), from:range.from, to:range.to, latest:allDates[allDates.length-1]||null,
         ck:CKS.map(c=>c.checked), rank:RANK(), scope:NEAR()?"near":"all",
         gK:$("#gK").checked, gArea:$("#gArea").checked, gBar:$("#gBar").checked, gAmt:$("#gAmt").checked,
         cols:$("#cols").value
@@ -689,7 +691,15 @@
     if(saved.scope==="near"||saved.scope==="all"){ $("#scNear").checked=(saved.scope==="near"); $("#scAll").checked=(saved.scope==="all"); }
     ["gK","gArea","gBar","gAmt"].forEach(id=>{ if(typeof saved[id]==="boolean") $("#"+id).checked=saved[id]; });
     if(saved.cols) $("#cols").value=saved.cols;
-    if(saved.from!==undefined||saved.to!==undefined){ range.from=saved.from||null; range.to=saved.to||null; syncRangeInputs(); }
+    if(saved.from!==undefined||saved.to!==undefined){
+      range.from=saved.from||null; range.to=saved.to||null;
+      // 存檔時「到最新」的人, 不要被鎖在舊日期(否則每天打開都停在第一次開站那天, 還沒有任何提示)。
+      // 只有刻意選了歷史區間(to 早於當時最新)的人才保留 to。
+      // 舊存檔(2026/08 以前)沒有 latest 欄位 → 一律解鎖。卡在舊日期是比較糟的失效模式,
+      // 而且多數人並沒有刻意選歷史區間。
+      if(range.to && (!saved.latest || range.to>=saved.latest)) range.to=null;
+      syncRangeInputs();
+    }
   }
   // ---- 網址帶入顯示設定 (?rk=5&panels=t0,main — 由篩選器點入時同步前五/前十與口徑) ----
   const qs=new URLSearchParams(location.search);

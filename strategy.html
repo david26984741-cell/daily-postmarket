@@ -379,6 +379,15 @@ async function initScreener(){
   const fP=v=> v==null? "—" : v.toFixed(0)+"%";
   const f2=(v,u)=> u==="ratio"? fR(v):fA(v);
 
+
+  // 換月日提示:選了近月的「變化」類條件時, 結果會大量落空(不是壞掉, 是資料不可比)。
+  // 沒有這行的話使用者只會看到 0 筆, 完全不知道原因。
+  const rollCnt=()=>(rk.rows||[]).filter(x=>x.nmon&&x.nmon_prev&&x.nmon!==x.nmon_prev).length;
+  const rollNote=(usingNearChange)=>{
+    if(!usingNearChange) return "";
+    const n=rollCnt(); if(n < (rk.rows||[]).length*0.5) return "";
+    return `　⚠ 今日為換月日(${n} 檔近月契約已轉倉), 近月的「變化」類無法與前一日比較, 一律不列入。改選「全部契約」即可。`;
+  };
   let sortKey="scale", sortDir=-1;
   function compute(){
     const m3=q("#sm3").value,m4=q("#sm4").value,u3=q("#su3").value,u4=q("#su4").value;
@@ -475,7 +484,8 @@ async function initScreener(){
     });
     t.appendChild(tb);
     const out=q("#sout"); out.innerHTML=""; out.appendChild(t);
-    q("#scnt").textContent=`符合條件:${rows.length} 檔(共 ${(rk.rows||[]).length} 檔股票期貨)・資料日期 ${rk.date}`;
+    const nearChg=(q("#sc4").checked&&q("#ssc4").value==="near")||(q("#sc5").checked&&q("#ssc5").value==="near");
+    q("#scnt").textContent=`符合條件:${rows.length} 檔(共 ${(rk.rows||[]).length} 檔股票期貨)・資料日期 ${rk.date}`+rollNote(nearChg);
   }
   q("#srun").onclick=()=>{save();render();};
   q("#sclear").onclick=()=>{
