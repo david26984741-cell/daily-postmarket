@@ -915,6 +915,10 @@ def _rank_row(doc, latest, stock_map):
             "main5m": net5(n0), "main5m_prev": net5(m0),
             "inst5m": net5(n1), "inst5m_prev": net5(m1),
             "moim": (n0 or {}).get("market_oi"), "moim_prev": (m0 or {}).get("market_oi"),
+            # 近月是「哪一個月份」的契約。結算日換月後今昨兩天的近月不是同一口契約,
+            # 「近月變化」類數字就沒有意義(例:2026/08/19 聯電 202608→202609, OI 看起來 +211%,
+            # 其實只是換約)。前端比對這兩個欄位, 不同就把變化類顯示為無資料。
+            "nmon": (n0 or {}).get("month"), "nmon_prev": (m0 or {}).get("month"),
             "phist": phist, "samt5": samt5}
 
 

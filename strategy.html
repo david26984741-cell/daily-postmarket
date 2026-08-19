@@ -366,6 +366,10 @@ async function initScreener(){
   // 該契約範圍對應的全市場 OI — ③④ 選「比率」時的分母 (使用者指定:近月部位 ÷ 近月 OI)
   const OI=(r,near)=> near? r.moim : r.moi;
   const OIp=(r,near)=> near? r.moim_prev : r.moi_prev;
+  // 結算日換月後, 今昨的近月不是同一口契約 →「近月變化」類一律視為無資料。
+  // (2026/08/19 實測:聯電近月 202608→202609, OI 看起來 +211%, 其實只是換約。)
+  // 「持有」是當下水位, 換約不影響, 照常顯示。
+  const rolled=(r,near)=> near && r.nmon!=null && r.nmon_prev!=null && r.nmon!==r.nmon_prev;
   const px=r=> r.fprice!=null? r.fprice : r.price;
   const pxp=r=> r.fprice!=null? (r.fprice_prev!=null?r.fprice_prev:r.price_prev) : r.price_prev;
   const fA=v=> v==null? "—" : ((v<0?"-":"")+(Math.abs(v)>=E?(Math.abs(v)/E).toFixed(2)+" 億":(Math.abs(v)/1e4).toFixed(0)+" 萬"));
@@ -389,13 +393,13 @@ async function initScreener(){
       const hold=(u3==="ratio")?holdRat:holdAmt;
       const dAmt=(L4.cur!=null&&L4.prev!=null)?(L4.cur-L4.prev)*p*r.shares:null;
       const dRat=(L4.cur!=null&&L4.prev!=null&&OI(r,n4)&&OIp(r,n4))?(L4.cur/OI(r,n4)-L4.prev/OIp(r,n4))*100:null;
-      const dchg=(u4==="ratio")?dRat:dAmt;
+      const dchg=rolled(r,n4)? null : ((u4==="ratio")?dRat:dAmt);   // 換月日:近月變化不可比
       // ⑤ OI 變化 (全部契約 moi / 近月契約 moim);比率 = 變化口數 ÷ 前一日 OI
       const near=q("#ssc5").value==="near";
       const oiC=near? r.moim : r.moi, oiP=near? r.moim_prev : r.moi_prev;
       const oiD=(oiC!=null&&oiP!=null)? oiC-oiP : null;
       const oiR=(oiD!=null&&oiP)? oiD/oiP*100 : null;
-      const oiV=(q("#su5").value==="ratio")? oiR : oiD;
+      const oiV=rolled(r,near)? null : ((q("#su5").value==="ratio")? oiR : oiD);   // 換月日:近月 OI 變化不可比
 
       if(q("#sc2").checked){
         if(scale==null) return;

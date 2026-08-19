@@ -38,7 +38,8 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
 <div class="wrap">
   <div class="crumbs"><a href="index.html">← 當日整合總覽</a></div>
   <h2 class="sec">股票期貨篩選器 <span class="tag" id="dchip"></span></h2>
-  <p class="lead">依大額交易人資料篩選個股期貨。規模單位:億元。持有/變化可切換「規模(億)」或「比率(%)」;比率 = 淨部位 ÷ 全市場未沖銷口數,與籌碼回測分析同口徑。股票期貨規模 = 全市場未沖銷口數 × 近月股期收盤價(缺漏以現股價替代)× 每口股數。</p>
+  <p class="lead">依大額交易人資料篩選個股期貨。規模單位:億元。持有/變化可切換「規模(億)」或「比率(%)」;比率 = 淨部位 ÷ 全市場未沖銷口數,與籌碼回測分析同口徑。股票期貨規模 = 全市場未沖銷口數 × 近月股期收盤價(缺漏以現股價替代)× 每口股數。<br>
+    ③④⑥ 可各自選「<b>全部契約</b>」或「<b>近月契約</b>」——接近結算日時近月會因轉倉大幅減少,但全部契約未必,兩者一起看才分得出是真的退場還是只是換月。選近月時<b>比率的分母也會換成近月 OI</b>。</p>
 
   <div class="flt">
     <div class="frow">
@@ -46,7 +47,7 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
       <label class="ck"><input type="radio" name="rk" id="rk10" checked><span>前十大</span></label>
       <label class="ck"><input type="radio" name="rk" id="rk5"><span>前五大</span></label>
       <label class="ck" title="第六~十名交易人 = 前十大 − 前五大"><input type="radio" name="rk" id="rk6"><span>第六~十大</span></label>
-      <span class="lb" style="min-width:0;margin-left:6px">(必選,②③④可任意組合)</span>
+      <span class="lb" style="min-width:0;margin-left:6px">(必選,②~⑥可任意組合)</span>
     </div>
     <div class="frow" id="row2">
       <label class="ck"><input type="checkbox" id="c2"><span>② 股票期貨規模</span></label>
@@ -57,6 +58,7 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
     </div>
     <div class="frow" id="row3">
       <label class="ck"><input type="checkbox" id="c3"><span>③ 當日</span></label>
+      <select id="sc3" title="全部契約=所有到期月份合計;近月=最近月份契約(接近結算日會因轉倉大幅減少)"><option value="all" selected>全部契約</option><option value="near">近月契約</option></select>
       <select id="m3">
         <option value="t0">交易人合計</option><option value="main" selected>主力</option>
         <option value="nat">自然人</option><option value="inst">法人</option>
@@ -69,6 +71,7 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
     </div>
     <div class="frow" id="row4">
       <label class="ck"><input type="checkbox" id="c4"><span>④ 當日</span></label>
+      <select id="sc4" title="全部契約=所有到期月份合計;近月=最近月份契約(接近結算日會因轉倉大幅減少)"><option value="all" selected>全部契約</option><option value="near">近月契約</option></select>
       <select id="m4">
         <option value="t0">交易人合計</option><option value="main" selected>主力</option>
         <option value="nat">自然人</option><option value="inst">法人</option>
@@ -84,6 +87,16 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
       <input type="number" id="v5" step="1" min="1" placeholder="5"> 日收盤
       <select id="dir5"><option value="up">上漲</option><option value="down">下跌</option></select>
       <span class="hint">(收盤價與 X 個交易日前相比)</span>
+    </div>
+    <div class="frow" id="row6">
+      <label class="ck"><input type="checkbox" id="c6"><span>⑥ 當日</span></label>
+      <select id="sc6"><option value="all" selected>全部契約</option><option value="near">近月契約</option></select>
+      <span>OI 變化</span>
+      <select id="u6"><option value="lots">口數</option><option value="ratio">比率(%)</option></select>
+      <select id="op6"><option value=">">大於</option><option value="<">小於</option></select>
+      <input type="number" id="v6" step="any" placeholder="例 500"> <span id="u6lb">口</span>
+      <label class="ck"><input type="checkbox" id="abs6"><span>取絕對值</span></label>
+      <span class="hint">(比率 = 變化口數 ÷ 前一日 OI)</span>
     </div>
     <div class="fbtns">
       <button id="run">篩選</button>
@@ -117,7 +130,8 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
 
   // ---- 條件保存/恢復 (localStorage): 返回本頁時不清除 ----
   const PREF="dpm.screener.prefs";
-  const IDS=["c2","c3","c4","c5","abs3","abs4"], VALS=["v2","v2b","m3","u3","op3","v3","m4","u4","op4","v4","v5","dir5"];
+  const IDS=["c2","c3","c4","c5","c6","abs3","abs4","abs6"],
+        VALS=["v2","v2b","sc3","m3","u3","op3","v3","sc4","m4","u4","op4","v4","v5","dir5","sc6","u6","op6","v6"];
   function save(){
     try{
       const o={rk:RK()};
@@ -135,29 +149,42 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
     }
   }catch(e){}
 
-  function rowDim(){ ["2","3","4","5"].forEach(n=>{ $("#row"+n).classList.toggle("off",!$("#c"+n).checked); }); }
-  function unitLbl(){ $("#u3lb").textContent=$("#u3").value==="ratio"?"%":"億"; $("#u4lb").textContent=$("#u4").value==="ratio"?"%":"億"; }
-  ["c2","c3","c4","c5"].forEach(i=>$("#"+i).onchange=()=>{ rowDim(); save(); });
-  ["u3","u4"].forEach(i=>$("#"+i).onchange=()=>{ unitLbl(); save(); });
-  [...IDS.slice(4),...VALS].forEach(i=>{ if($("#"+i)) $("#"+i).onchange=save; });
+  function rowDim(){ ["2","3","4","5","6"].forEach(n=>{ $("#row"+n).classList.toggle("off",!$("#c"+n).checked); }); }
+  function unitLbl(){ $("#u3lb").textContent=$("#u3").value==="ratio"?"%":"億"; $("#u4lb").textContent=$("#u4").value==="ratio"?"%":"億";
+                      $("#u6lb").textContent=$("#u6").value==="ratio"?"%":"口"; }
+  ["c2","c3","c4","c5","c6"].forEach(i=>$("#"+i).onchange=()=>{ rowDim(); save(); });
+  ["u3","u4","u6"].forEach(i=>$("#"+i).onchange=()=>{ unitLbl(); save(); });
+  [...IDS.slice(5),...VALS].forEach(i=>{ if($("#"+i)) $("#"+i).onchange=save; });
   [$("#rk5"),$("#rk6"),$("#rk10")].forEach(x=>x.onchange=()=>{ save(); });
   rowDim(); unitLbl();
 
   // ---- 口徑值 (口數): 依前五/前十選擇原始欄位 ----
   // rk=6 → 第六~十名 = 前十大 − 前五大 (t0/t1 相減後, 主力/自然人/法人公式照舊)
   const sub=(a,b)=>(a!=null&&b!=null)?a-b:null;
-  function vals(r){
-    if(RK()===5&&has5) return {t0:r.main5,t0p:r.main5_prev,t1:r.inst5,t1p:r.inst5_prev};
-    if(RK()===6&&has5) return {t0:sub(r.main,r.main5),t0p:sub(r.main_prev,r.main5_prev),
-                               t1:sub(r.inst,r.inst5),t1p:sub(r.inst_prev,r.inst5_prev)};
-    return {t0:r.main,t0p:r.main_prev,t1:r.inst,t1p:r.inst_prev};
+  // near=true → 讀近月(當月)契約那組欄位(後綴 m);兩組在 rank.json 內同結構。
+  // 舊版 rank.json 沒有 m 系列 → 一律回 null, 該檔直接落空(不會拿全部契約的數字冒充)。
+  const K=(r,base,near)=> near? r[base+"m"] : r[base];
+  const Kp=(r,base,near)=> near? r[base+"m_prev"] : r[base+"_prev"];
+  function vals(r,near){
+    const g=b=>K(r,b,near), gp=b=>Kp(r,b,near);
+    if(RK()===5&&has5) return {t0:g("main5"),t0p:gp("main5"),t1:g("inst5"),t1p:gp("inst5")};
+    if(RK()===6&&has5) return {t0:sub(g("main"),g("main5")),t0p:sub(gp("main"),gp("main5")),
+                               t1:sub(g("inst"),g("inst5")),t1p:sub(gp("inst"),gp("inst5"))};
+    return {t0:g("main"),t0p:gp("main"),t1:g("inst"),t1p:gp("inst")};
   }
-  function lots(r,m){
-    const {t0,t0p,t1,t1p}=vals(r);
+  function lots(r,m,near){
+    const {t0,t0p,t1,t1p}=vals(r,near);
     const ok=(a,b)=>a!=null&&b!=null;
     const cv=(a,b)=> m==="t0"? a : (m==="inst"? b : (ok(a,b)? (m==="nat"? a-b : a-2*b) : null));
     return {cur:cv(t0,t1), prev:cv(t0p,t1p)};
   }
+  // 該契約範圍對應的全市場 OI — ③④選「比率」時的分母, 近月部位就配近月 OI
+  const OI=(r,near)=> near? r.moim : r.moi;
+  const OIp=(r,near)=> near? r.moim_prev : r.moi_prev;
+  // 結算日換月後, 今昨的近月不是同一口契約 →「近月變化」類一律視為無資料。
+  // (2026/08/19 實測:聯電近月 202608→202609, OI 看起來 +211%, 其實只是換約。)
+  // 「持有」是當下水位, 換約不影響, 照常顯示。
+  const rolled=(r,near)=> near && r.nmon!=null && r.nmon_prev!=null && r.nmon!==r.nmon_prev;
   const px=r=> r.fprice!=null? r.fprice : r.price;
   const pxp=r=> r.fprice!=null? (r.fprice_prev!=null?r.fprice_prev:r.price_prev) : r.price_prev;
   const fA=v=> v==null? "—" : ((v<0?"-":"")+(Math.abs(v)>=E? (Math.abs(v)/E).toFixed(2)+" 億" : (Math.abs(v)/1e4).toFixed(0)+" 萬"));
@@ -173,15 +200,22 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
       const pp=pxp(r);
       const chgPct=(pp!=null&&pp!==0)? (p-pp)/pp*100 : null;
       const scale=(r.moi!=null)? r.moi*p*r.shares : null;
-      const L3=lots(r,m3), L4=lots(r,m4);
-      // ③ 持有: 規模(億, =淨部位×價×股數) 或 比率(%, =淨部位/市場OI)
+      const n3=$("#sc3").value==="near", n4=$("#sc4").value==="near";
+      const L3=lots(r,m3,n3), L4=lots(r,m4,n4);
+      // ③ 持有: 規模(億, =淨部位×價×股數) 或 比率(%, =淨部位/該範圍市場OI)
       const holdAmt=(L3.cur!=null)? L3.cur*p*r.shares : null;
-      const holdRat=(L3.cur!=null&&r.moi)? L3.cur/r.moi*100 : null;
+      const holdRat=(L3.cur!=null&&OI(r,n3))? L3.cur/OI(r,n3)*100 : null;
       const hold=(u3==="ratio")? holdRat : holdAmt;
       // ④ 變化: 規模(億) 或 比率變化(百分點, =今日比率−昨日比率)
       const dAmt=(L4.cur!=null&&L4.prev!=null)? (L4.cur-L4.prev)*p*r.shares : null;
-      const dRat=(L4.cur!=null&&L4.prev!=null&&r.moi&&r.moi_prev)? (L4.cur/r.moi - L4.prev/r.moi_prev)*100 : null;
-      const dchg=(u4==="ratio")? dRat : dAmt;
+      const dRat=(L4.cur!=null&&L4.prev!=null&&OI(r,n4)&&OIp(r,n4))? (L4.cur/OI(r,n4) - L4.prev/OIp(r,n4))*100 : null;
+      const dchg=rolled(r,n4)? null : ((u4==="ratio")? dRat : dAmt);   // 換月日:近月變化不可比
+      // ⑥ OI 變化 (全部契約 moi / 近月契約 moim);比率 = 變化口數 ÷ 前一日 OI
+      const n6=$("#sc6").value==="near";
+      const oiC=OI(r,n6), oiP=OIp(r,n6);
+      const oiD=(oiC!=null&&oiP!=null)? oiC-oiP : null;
+      const oiR=(oiD!=null&&oiP)? oiD/oiP*100 : null;
+      const oiV=rolled(r,n6)? null : (($("#u6").value==="ratio")? oiR : oiD);   // 換月日:近月 OI 變化不可比
       // ---- 套用條件 ----
       if($("#c2").checked){
         if(scale==null) return;
@@ -213,7 +247,12 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
         if(chgN==null) return;
         if($("#dir5").value==="up"? chgN<=0 : chgN>=0) return;
       }
-      out.push({...r,_p:p,_chg:chgPct,scale,hold,dchg,_chgN:chgN});
+      if($("#c6").checked){
+        const v=parseFloat($("#v6").value); if(!isNaN(v)){ if(oiV==null) return;
+          const ov=$("#abs6").checked? Math.abs(oiV):oiV;
+          if($("#op6").value===">"? ov<=v : ov>=v) return; }
+      }
+      out.push({...r,_p:p,_chg:chgPct,scale,hold,dchg,_chgN:chgN,_oiV:oiV});
     });
     return out;
   }
@@ -227,10 +266,14 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
       {k:"_chg", t:"漲跌%"},
       {k:"scale",t:"股票期貨規模"},
     ];
-    if($("#c3").checked) cols.push({k:"hold", t:MET[m3]+(u3==="ratio"?"持有比率":"持有規模"), u:u3});
-    if($("#c4").checked) cols.push({k:"dchg", t:MET[m4]+(u4==="ratio"?"變化比率":"變化規模"), u:u4});
+    // 欄名帶上契約範圍, 否則同一組口徑切近月/全部後表頭一樣、分不出在看哪個
+    const tag3=$("#sc3").value==="near"?"近月·":"", tag4=$("#sc4").value==="near"?"近月·":"";
+    if($("#c3").checked) cols.push({k:"hold", t:tag3+MET[m3]+(u3==="ratio"?"持有比率":"持有規模"), u:u3});
+    if($("#c4").checked) cols.push({k:"dchg", t:tag4+MET[m4]+(u4==="ratio"?"變化比率":"變化規模"), u:u4});
     const X5=Math.max(1,Math.round(parseFloat($("#v5").value)||5));
     if($("#c5").checked) cols.push({k:"_chgN", t:`近${X5}日漲跌`, u:"pct"});
+    const u6=$("#u6").value, tag6=$("#sc6").value==="near"?"近月":"全部";
+    if($("#c6").checked) cols.push({k:"_oiV", t:`${tag6}契約OI變化`+(u6==="ratio"?"(%)":"(口)"), u:u6==="ratio"?"pct":"lots"});
     if(!cols.some(c=>c.k===sortKey)) { sortKey="scale"; sortDir=-1; }
     const rows=lastRows.slice().sort((a,b)=>{
       if(sortKey==="name") return sortDir*String(a.name).localeCompare(String(b.name),"zh-Hant");
@@ -249,7 +292,9 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
     const tb=el("tbody");
     // 點股名 → 個股頁同步顯示設定: 前五/前十 + 篩選用到的口徑面板 (③④; 未用則交由個股頁預設)
     const ps=[]; if($("#c3").checked) ps.push(m3); if($("#c4").checked&&!ps.includes(m4)) ps.push(m4);
-    const sfx=`&rk=${RK()}`+(ps.length?`&panels=${ps.join(",")}`:"");
+    // 個股頁只有一個契約切換, 所以 ③④ 任一選近月就帶 near 過去
+    const near=($("#c3").checked&&$("#sc3").value==="near")||($("#c4").checked&&$("#sc4").value==="near");
+    const sfx=`&rk=${RK()}`+(ps.length?`&panels=${ps.join(",")}`:"")+`&scope=${near?"near":"all"}`;
     rows.forEach(r=>{
       const tr=el("tr");
       const nm=el("td","l");
@@ -263,6 +308,8 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
       if($("#c3").checked) tr.appendChild(el("td", r.hold>0?"up":(r.hold<0?"down":null), fmt(r.hold,u3)));
       if($("#c4").checked) tr.appendChild(el("td", r.dchg>0?"up":(r.dchg<0?"down":null), fmt(r.dchg,u4)));
       if($("#c5").checked) tr.appendChild(el("td", r._chgN>0?"up":(r._chgN<0?"down":null), fR(r._chgN)));
+      if($("#c6").checked) tr.appendChild(el("td", r._oiV>0?"up":(r._oiV<0?"down":null),
+        r._oiV==null?"—":(u6==="ratio"? fR(r._oiV) : (r._oiV>0?"+":"")+Number(r._oiV).toLocaleString("en-US")+" 口")));
       tb.appendChild(tr);
     });
     t.appendChild(tb);
@@ -271,9 +318,11 @@ table.scr td.l .sid{color:var(--mut);font-size:12.5px;font-variant-numeric:tabul
   }
   $("#run").onclick=()=>{ save(); render(); };
   $("#clear").onclick=()=>{
-    ["c2","c3","c4","c5"].forEach(i=>$("#"+i).checked=false);
-    ["v2","v2b","v3","v4","v5"].forEach(i=>$("#"+i).value="");
+    ["c2","c3","c4","c5","c6"].forEach(i=>$("#"+i).checked=false);
+    ["v2","v2b","v3","v4","v5","v6"].forEach(i=>$("#"+i).value="");
     $("#u3").value="amt"; $("#u4").value="amt"; $("#dir5").value="up";
+    ["sc3","sc4","sc6"].forEach(i=>$("#"+i).value="all");
+    $("#u6").value="lots"; $("#op6").value=">"; $("#abs6").checked=false;
     $("#rk10").checked=true; rowDim(); unitLbl(); save(); render();
   };
   [$("#rk5"),$("#rk6"),$("#rk10")].forEach(x=>x.addEventListener("change",render));
