@@ -369,9 +369,6 @@ async function initScreener(){
   // 結算日換月後, 今昨的近月不是同一口契約 →「近月變化」類一律視為無資料。
   // (2026/08/19 實測:聯電近月 202608→202609, OI 看起來 +211%, 其實只是換約。)
   // 「持有」是當下水位, 換約不影響, 照常顯示。
-  const rolled=(r,near)=> near && (r.nmon==null || r.nmon_prev==null || r.nmon!==r.nmon_prev);
-  // 註:nmon 缺漏時也視為不可比(保守)。判斷不出來是不是同一口契約, 就不要給數字 —
-  //    2026/08/19 實測有 14 檔 ETF 期貨因故缺 nmon, 若放行會顯示 +361% 這種換約造成的假數字。
   const px=r=> r.fprice!=null? r.fprice : r.price;
   const pxp=r=> r.fprice!=null? (r.fprice_prev!=null?r.fprice_prev:r.price_prev) : r.price_prev;
   const fA=v=> v==null? "—" : ((v<0?"-":"")+(Math.abs(v)>=E?(Math.abs(v)/E).toFixed(2)+" 億":(Math.abs(v)/1e4).toFixed(0)+" 萬"));
@@ -380,13 +377,13 @@ async function initScreener(){
   const f2=(v,u)=> u==="ratio"? fR(v):fA(v);
 
 
-  // 換月日提示:選了近月的「變化」類條件時, 結果會大量落空(不是壞掉, 是資料不可比)。
-  // 沒有這行的話使用者只會看到 0 筆, 完全不知道原因。
+  // 換月日提示:轉倉是真實市場行為, 數字照實顯示(使用者確認不要排除)。
+  // 但近月變化會因換約而特別大, 附一行中性提醒讓人知道數字為什麼跳。
   const rollCnt=()=>(rk.rows||[]).filter(x=>x.nmon&&x.nmon_prev&&x.nmon!==x.nmon_prev).length;
   const rollNote=(usingNearChange)=>{
     if(!usingNearChange) return "";
     const n=rollCnt(); if(n < (rk.rows||[]).length*0.5) return "";
-    return `　⚠ 今日為換月日(${n} 檔近月契約已轉倉), 近月的「變化」類無法與前一日比較, 一律不列入。改選「全部契約」即可。`;
+    return `　· 今日為換月日(${n} 檔已轉倉), 近月的變化數字含換約效應, 會明顯偏大。`;
   };
   let sortKey="scale", sortDir=-1;
   function compute(){
@@ -404,13 +401,13 @@ async function initScreener(){
       const hold=(u3==="ratio")?holdRat:holdAmt;
       const dAmt=(L4.cur!=null&&L4.prev!=null)?(L4.cur-L4.prev)*p*r.shares:null;
       const dRat=(L4.cur!=null&&L4.prev!=null&&OI(r,n4)&&OIp(r,n4))?(L4.cur/OI(r,n4)-L4.prev/OIp(r,n4))*100:null;
-      const dchg=rolled(r,n4)? null : ((u4==="ratio")?dRat:dAmt);   // 換月日:近月變化不可比
+      const dchg=(u4==="ratio")?dRat:dAmt;
       // ⑤ OI 變化 (全部契約 moi / 近月契約 moim);比率 = 變化口數 ÷ 前一日 OI
       const near=q("#ssc5").value==="near";
       const oiC=near? r.moim : r.moi, oiP=near? r.moim_prev : r.moi_prev;
       const oiD=(oiC!=null&&oiP!=null)? oiC-oiP : null;
       const oiR=(oiD!=null&&oiP)? oiD/oiP*100 : null;
-      const oiV=rolled(r,near)? null : ((q("#su5").value==="ratio")? oiR : oiD);   // 換月日:近月 OI 變化不可比
+      const oiV=(q("#su5").value==="ratio")? oiR : oiD;
 
       if(q("#sc2").checked){
         if(scale==null) return;
