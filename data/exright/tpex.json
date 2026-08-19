@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-08-17",
+ "updated_at": "2026-08-19",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -86456,6 +86456,123 @@
    "pre_close": 23.85,
    "ref_price": 23.05,
    "value": 0.8,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "00758B",
+   "name": "復華能源債",
+   "pre_close": 50.1,
+   "ref_price": 49.5,
+   "value": 0.6,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "00759B",
+   "name": "復華製藥債",
+   "pre_close": 52.7,
+   "ref_price": 52.07,
+   "value": 0.63,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "00760B",
+   "name": "復華新興企業債",
+   "pre_close": 53.2,
+   "ref_price": 52.49,
+   "value": 0.71,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "00768B",
+   "name": "復華20年美債",
+   "pre_close": 48.31,
+   "ref_price": 47.46,
+   "value": 0.85,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "00986D",
+   "name": "主動復華金融債息",
+   "pre_close": 14.49,
+   "ref_price": 14.4,
+   "value": 0.09,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "5489",
+   "name": "彩富",
+   "pre_close": 44.4,
+   "ref_price": 42.88,
+   "value": 1.515233,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "6574",
+   "name": "霈方",
+   "pre_close": 126.0,
+   "ref_price": 123.0,
+   "value": 3.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "8043",
+   "name": "蜜望實",
+   "pre_close": 138.5,
+   "ref_price": 137.6,
+   "value": 0.9,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "00981B",
+   "name": "第一金優選非投債",
+   "pre_close": 9.25,
+   "ref_price": 9.19,
+   "value": 0.064,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "4908",
+   "name": "前鼎",
+   "pre_close": 152.5,
+   "ref_price": 151.5,
+   "value": 1.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "4966",
+   "name": "譜瑞-KY",
+   "pre_close": 582.0,
+   "ref_price": 573.12,
+   "value": 8.881773,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "5206",
+   "name": "坤悅",
+   "pre_close": 23.0,
+   "ref_price": 22.69,
+   "value": 0.313287,
+   "type": "除權"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "8077",
+   "name": "洛碁",
+   "pre_close": 44.9,
+   "ref_price": 42.9,
+   "value": 2.0,
    "type": "除息"
   }
  ]

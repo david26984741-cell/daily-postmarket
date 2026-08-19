@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-08-17",
+ "updated_at": "2026-08-19",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -97805,6 +97805,195 @@
    "pre_close": 84.1,
    "ref_price": 81.59,
    "value": 2.501141,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "00731",
+   "name": "復華富時高息低波",
+   "pre_close": 91.75,
+   "ref_price": 90.29,
+   "value": 1.458,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "00929",
+   "name": "復華台灣科技優息",
+   "pre_close": 28.87,
+   "ref_price": 28.49,
+   "value": 0.38,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "1537",
+   "name": "廣隆",
+   "pre_close": 127.5,
+   "ref_price": 120.3,
+   "value": 7.2,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "2301",
+   "name": "光寶科",
+   "pre_close": 273.5,
+   "ref_price": 271.0,
+   "value": 2.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "2363",
+   "name": "矽統",
+   "pre_close": 51.3,
+   "ref_price": 50.69,
+   "value": 0.605882,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "2374",
+   "name": "佳能",
+   "pre_close": 69.3,
+   "ref_price": 67.3,
+   "value": 1.991664,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "2496",
+   "name": "卓越",
+   "pre_close": 59.4,
+   "ref_price": 55.14,
+   "value": 4.257143,
+   "type": "權息"
+  },
+  {
+   "date": "2026/08/19",
+   "sid": "3017",
+   "name": "奇鋐",
+   "pre_close": 3035.0,
+   "ref_price": 3014.11,
+   "value": 20.881604,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "1597",
+   "name": "直得",
+   "pre_close": 135.0,
+   "ref_price": 134.3,
+   "value": 0.7,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "1714",
+   "name": "和桐",
+   "pre_close": 16.75,
+   "ref_price": 16.57,
+   "value": 0.18,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "2377",
+   "name": "微星",
+   "pre_close": 146.5,
+   "ref_price": 142.3,
+   "value": 4.2,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "2472",
+   "name": "立隆電",
+   "pre_close": 234.0,
+   "ref_price": 230.5,
+   "value": 3.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "2505",
+   "name": "國揚",
+   "pre_close": 18.2,
+   "ref_price": 17.2,
+   "value": 1.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "2539",
+   "name": "櫻花建",
+   "pre_close": 41.25,
+   "ref_price": 33.31,
+   "value": 7.930328,
+   "type": "權息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "4441",
+   "name": "振大環球",
+   "pre_close": 196.5,
+   "ref_price": 185.7,
+   "value": 10.8,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "4764",
+   "name": "雙鍵",
+   "pre_close": 203.0,
+   "ref_price": 200.77,
+   "value": 2.228484,
+   "type": "權"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "5222",
+   "name": "全訊",
+   "pre_close": 117.5,
+   "ref_price": 106.82,
+   "value": 10.678579,
+   "type": "權"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "6177",
+   "name": "達麗",
+   "pre_close": 48.4,
+   "ref_price": 45.4,
+   "value": 3.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "6666",
+   "name": "羅麗芬-KY",
+   "pre_close": 43.5,
+   "ref_price": 41.5,
+   "value": 2.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "6691",
+   "name": "洋基工程",
+   "pre_close": 706.0,
+   "ref_price": 622.72,
+   "value": 83.272728,
+   "type": "權息"
+  },
+  {
+   "date": "2026/08/20",
+   "sid": "6805",
+   "name": "富世達",
+   "pre_close": 1800.0,
+   "ref_price": 1787.5,
+   "value": 12.5,
    "type": "息"
   }
  ]
