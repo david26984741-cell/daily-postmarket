@@ -622,3 +622,25 @@ https://david26984741-cell.github.io/daily-postmarket/
   持有比率 全部 **37.75%** vs 近月 **30.88%**;變化比率 **+0.96%** vs **−2.68%** —— 連正負號都不同。
 - 驗證:以新 `_rank_row` 重算全站 388 檔,恆等式「前五 + 六~十 = 前十」在
   **兩種契約範圍**下皆成立;近月部位 320 檔齊全(缺的 68 檔是已下市股期,本來就無當日資料)。
+
+### 2026/08/19(家用電腦)— 事故:報告連三班次沒寄出(安裝步驟撞 10 分鐘上限)
+- **症狀**:網站資料有更新到當日,但**沒收到 Email**,而且沒有任何錯誤通知。
+- **查法**:report.yml 的 run 清單 → #80/#81/#82(8/19 的 15:03、15:41、16:06)
+  狀態都是 **cancelled、時長剛好 10m 2x s**。點進 job 看各步驟耗時,
+  一眼看到「安裝中文字型、matplotlib 與 Playwright」**9m16s**,其後所有步驟 0s。
+  → 是 `timeout-minutes: 10` 把 job 砍了,不是程式錯。前一天(8/18)還正常。
+- **根因**:那一步每天重下 Playwright 的 Chromium(約 150MB)+ `--with-deps` 的 apt 相依,
+  完全沒有快取。runner 慢的日子就從 1~2 分鐘暴增到 9 分鐘以上。
+- **修正三層**:
+  1. `timeout-minutes` 10 → **25**(保險)。
+  2. 新增 **相依套件快取**(`~/.cache/pip` + `~/.cache/ms-playwright`,key 固定 `report-deps-<os>-v1`,
+     要強制更新就把 v1 改 v2)—— 這才是真正的解法。
+  3. 安裝步驟改 **`continue-on-error: true` + 自己的 `timeout-minutes: 12`**。
+     **`tools/report.py` 是純標準庫**(只 import os/sys/json/smtplib/email),
+     那些套件只給附圖用 → 裝不起來時信照樣寄,只是沒有附圖。
+     **附圖掛掉不該讓整封報告消失** —— 這次就是被它整封拖走。
+- **教訓**:`continue-on-error` 只擋「步驟失敗」,擋不住「job 逾時被 cancel」。
+  逾時會讓後面所有步驟(包含寄信)一起消失,而且**不會寄失敗通知**,只能自己去看 Actions。
+  日後若又發生「網站有更新但沒收到信」,第一件事就是去 report.yml 看 run 是不是 cancelled。
+- 補寄:修好後手動觸發 report.yml(force=yes)把當日報告補寄。
+  註:被 cancel 的 run 不會寫入 `.sent` 防重複快取,所以重跑不會被略過。

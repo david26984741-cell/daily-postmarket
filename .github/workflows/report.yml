@@ -28,7 +28,10 @@ jobs:
     # workflow_run: 只在來源 workflow 成功時才寄; 手動觸發則一律執行
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # 2026/08/19 事故:安裝步驟(Chromium + apt 相依)在 runner 慢的日子跑了 9m16s,
+    # 撞上原本的 10 分鐘上限被 cancel → 三次班次全部沒寄信, 而且不會有任何錯誤通知。
+    # 上限放寬到 25 分鐘當保險;真正的解法是下面那個相依套件快取。
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
@@ -50,9 +53,26 @@ jobs:
           path: .sent
           key: report-sent-${{ steps.d.outputs.date }}
 
+      # 相依套件快取: pip 輪子 + Playwright 的 Chromium(約 150MB)。
+      # 不快取的話每天重下, 慢的日子整步驟要 9 分鐘以上 (2026/08/19 就是這樣被 timeout 砍掉)。
+      # key 固定不帶 hash — 這些相依很穩定, 要強制更新就把 v1 改成 v2。
+      - name: 相依套件快取 (pip / Chromium)
+        if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/ms-playwright
+          key: report-deps-${{ runner.os }}-v1
+
       # 中文字型: runner 預設沒有 CJK 字型, 不裝的話 matplotlib 圖與截圖都變豆腐方塊 (□□□)。
       - name: 安裝中文字型、matplotlib 與 Playwright
         if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
+        timeout-minutes: 12       # 卡住就讓這一步失敗, 不要把整個 job 的時間吃光
+        # 關鍵:這些套件只給「附圖」用, report.py 本身是純標準庫。
+        # 裝不起來時讓它過去 → 後面 charts/shots/optchips 會失敗(它們也都 continue-on-error),
+        # 但信照樣寄得出去, 只是沒有附圖。附圖掛掉不該讓整封報告消失。
+        continue-on-error: true
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-noto-cjk >/dev/null
