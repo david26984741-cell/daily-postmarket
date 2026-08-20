@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-08-19",
+ "updated_at": "2026-08-20",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -97994,6 +97994,33 @@
    "pre_close": 1800.0,
    "ref_price": 1787.5,
    "value": 12.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/21",
+   "sid": "00771",
+   "name": "元大US高息特別股",
+   "pre_close": 15.65,
+   "ref_price": 15.44,
+   "value": 0.21,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/21",
+   "sid": "00850",
+   "name": "元大臺灣ESG永續",
+   "pre_close": 89.2,
+   "ref_price": 88.35,
+   "value": 0.85,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/21",
+   "sid": "2458",
+   "name": "義隆",
+   "pre_close": 146.0,
+   "ref_price": 141.57,
+   "value": 4.426,
    "type": "息"
   }
  ]
