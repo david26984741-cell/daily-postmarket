@@ -155,6 +155,98 @@ def fetch_txf_range(start_slash, end_slash):
     return {d: v[1] for d, v in best.items()}
 
 
+# 指數期貨日K(含夜盤)要抓的商品代碼。TX 台指、TE 電子、TF 金融、XIF 非金電、M1F 中型100。
+# 新增商品只要加代碼即可, 抓不到的月份會自動略過。
+TXK_PRODUCTS = ["TX", "TE", "TF", "XIF", "M1F"]
+TXK = os.path.join(DATA, "txk")
+
+
+def fetch_txk_range(commodity_id, start_slash, end_slash):
+    """指數期貨近月日K(日盤 + 夜盤) — futDataDown, 單次查詢限一個月內。
+    回傳 {date: {"month": "YYYYMM", "day": [開,高,低,收,量], "night": [...]|None, "settle": 結算價}}
+
+    ⚠⚠ 夜盤(盤後時段)的「日期歸屬」— 回測對齊的關鍵, 弄錯會整整差一個交易日:
+
+        期交所把「D-1 15:00 → D 05:00」這一段夜盤, 標記為交易日 D。
+
+        實測依據(2026/08/22): 夜盤於 2017/05/15 晚間上線, 而 CSV 中第一筆「盤後」列的
+        日期是 2017/05/16, 5/15 當天只有「一般」列。價格也完全連續:
+            2017/05/15 日盤收 10028 → 05/16 夜盤開 10023 → 夜盤收 10045 → 05/16 日盤開 10040
+        所以時間軸的真實順序是:   D-1 日盤  →  D 夜盤  →  D 日盤
+        換句話說 records[D]["night"] 是「D 這根日盤之前的那一夜」, 不是「D 收盤後的那一夜」。
+        要取某日收盤後的夜盤, 請看下一個交易日的 night。
+
+    近月定義: 一般時段中成交量最大的月契約(與 fetch_txf_range 相同, 結算日自動換月);
+              夜盤取「同一個月契約」的盤後列, 沒有就是 None(如非金電目前無夜盤)。
+    夜盤列的結算價與未沖銷契約數在來源即為 "-", 屬正常, 這兩項只有日盤有。
+    """
+    txt = http_get(TAIFEX + "futDataDown",
+                   {"down_type": "1", "commodity_id": commodity_id,
+                    "queryStartDate": start_slash, "queryEndDate": end_slash}, big5=True)
+    header, idx = None, {}
+    day, night = {}, {}            # (date, month) -> bar ; date -> ...
+    for line in txt.splitlines():
+        if not line.strip():
+            continue
+        cols = [c.strip() for c in line.split(",")]
+        if header is None:
+            header = cols
+            for i, h in enumerate(header):
+                for key, want in (("open", "開盤價"), ("high", "最高價"), ("low", "最低價"),
+                                  ("close", "收盤價"), ("vol", "成交量"), ("settle", "結算價")):
+                    if h == want:
+                        idx[key] = i
+                if "交易時段" in h:
+                    idx["sess"] = i
+            # 舊格式沒有標題名稱時的位置備援 (與 fetch_txf_range 一致)
+            idx.setdefault("open", 3); idx.setdefault("high", 4); idx.setdefault("low", 5)
+            idx.setdefault("close", 6); idx.setdefault("vol", 9); idx.setdefault("settle", 10)
+            continue
+        if len(cols) <= idx["close"] or cols[1] != commodity_id:
+            continue
+        m = cols[2]
+        if not (len(m) == 6 and m.isdigit()):
+            continue                                   # 排除週契約與價差組合
+        c = num(cols[idx["close"]])
+        if not c:
+            continue                                   # 無成交(開高低收皆 "-")
+        bar = [num(cols[idx["open"]]), num(cols[idx["high"]]),
+               num(cols[idx["low"]]), c, num(cols[idx["vol"]])]
+        d = cols[0]
+        sess = cols[idx["sess"]] if "sess" in idx and len(cols) > idx["sess"] else "一般"
+        if sess == "一般":
+            day[(d, m)] = (bar, num(cols[idx["settle"]]) if len(cols) > idx["settle"] else 0)
+        else:
+            night[(d, m)] = bar
+
+    # 每個日期挑「日盤成交量最大」的月契約, 夜盤取同一月份
+    pick = {}
+    for (d, m), (bar, settle) in day.items():
+        cur = pick.get(d)
+        if cur is None or bar[4] > cur[1][4]:
+            pick[d] = (m, bar, settle)
+    out = {}
+    for d, (m, bar, settle) in pick.items():
+        out[d] = {"month": m, "day": bar, "night": night.get((d, m)), "settle": settle or bar[3]}
+    return out
+
+
+def append_txk(date_slash, payload):
+    """指數期貨日K → data/txk/<西元年>.json;records[日期][商品代碼] = {month, day, night, settle}。
+    按年切檔的理由同 append_index_fut: 每日只重寫當年那一檔, 不必背著全史。"""
+    path = os.path.join(TXK, f"{date_slash[:4]}.json")
+    doc = load_json(path, {"meta": {
+        "title": "指數期貨近月日K(含夜盤)",
+        "source": "TAIFEX futDataDown · 一般時段成交量最大之月契約",
+        "night_note": "night 為「D-1 15:00 → D 05:00」的盤後時段, 即該日日盤之前的那一夜; "
+                      "非該日收盤後的夜盤。要取 D 收盤後的夜盤請看下一個交易日的 night。",
+        "fields": "day/night = [開, 高, 低, 收, 成交量]; settle 僅日盤有",
+    }, "records": {}})
+    doc["records"].setdefault(date_slash, {})
+    doc["records"][date_slash].update(payload)
+    save_json(path, doc)
+
+
 def _fut_rows_pick(lines, want_code=None):
     """解析期貨每日行情 CSV 行 → {code(不含F): (vol, [o,h,l,c])}
     規則: 月契約(6位數字)、一般時段、成交量最大。"""
@@ -599,6 +691,26 @@ def append_stock(code, name, sid, date_slash, rows):
     save_json(path, doc)
 
 
+INDEX_FUT = os.path.join(DATA, "large_fut_index")
+
+def append_index_fut(date_slash, payload):
+    """大額交易人指數期貨 → data/large_fut_index/<西元年>.json。
+
+    刻意「按年切檔」而非全史單一檔:
+      本表回補後會涵蓋 2004~今 約 5,400 個交易日, 每日約 15 個契約。
+      若全部放同一個檔, 該檔會長到約 40 MB, 而且每天的排程都要把它整個重寫一次 —
+      git 的儲存成本是按「被改動的檔案」計算的, 等於每天多背 40 MB。
+      切成一年一檔後, 每日只重寫當年那一檔(約 2 MB), 往年檔案寫完就永不變動。
+    讀取端要取某日資料時, 用日期前四碼決定要載入哪一檔。
+    """
+    path = os.path.join(INDEX_FUT, f"{date_slash[:4]}.json")
+    doc = load_json(path, {"meta": {"title": "大額交易人指數期貨",
+                                    "source": "台指期/電子/金融/非金電/中型100 等非個股契約 當月+所有契約"},
+                           "records": {}})
+    doc["records"][date_slash] = payload
+    save_json(path, doc)
+
+
 # ----------------------------------------------------------------------------- trading-day
 def load_holidays():
     path = os.path.join(DATA, "holidays.txt")
@@ -750,8 +862,28 @@ def run(date_slash, no_retry=False, skip_kline=False):
             log("  新增個股期貨對照: " + "、".join(new_codes))
         status["stocks"] = f"ok ({n} 檔)"
         log(f"  個股期貨: 寫入 {n} 檔")
+
+        # cat5b: 指數/商品期貨大額交易人 — 台指期(TX)、電子(TE)、金融(TF)、非金電(XIF)、
+        #   中型100(M1F)、櫃買(GTF)、黃金(GDF)、布蘭特原油(BRF) 等。
+        #   收錄規則刻意寫成 cat6 那個 if 的「嚴格補集」: 凡不被 cat6 收為個股/ETF 期貨的契約
+        #   一律收進來。兩邊條件互為反面, 所以不會有契約重複計入或整個漏掉,
+        #   新掛牌的指數契約也免維護即自動納入。
+        #   寫入 data/large_fut_index/<年>.json, records[日期][商品代碼] = {name, rows}。
+        #   註: 期交所本表自 2004/07/01 起提供; 早年只有 CPF/GBF/T5F/TE/TF/TX 六種。
+        idx_rows = {}
+        for code, g in stocks.items():
+            name = g["name"] or ""
+            if len(code) == 2 and code not in NON_STOCK_2CHAR and "(" not in name:
+                continue                     # 個股/ETF 期貨 — 已由 cat6 寫入 data/stocks/
+            idx_rows[code] = {"name": name, "rows": g["rows"]}
+        if idx_rows:
+            append_index_fut(date_slash, idx_rows)
+            status["large_fut_index"] = f"ok ({len(idx_rows)} 契約)"
+            log(f"  指數期貨大額: 寫入 {len(idx_rows)} 契約 ({'、'.join(sorted(idx_rows))})")
+        else:
+            status["large_fut_index"] = "no-data"
     else:
-        status["large_fut_txf"] = status["stocks"] = "資料未更新"
+        status["large_fut_txf"] = status["stocks"] = status["large_fut_index"] = "資料未更新"
 
     # --- 來源 5: 個股現貨日K (上市 + 上櫃, 各一次呼叫涵蓋全市場) ---
     kmap = {} if skip_kline else fetch_kline_maps(yyyymmdd)
@@ -818,6 +950,30 @@ def run(date_slash, no_retry=False, skip_kline=False):
         except Exception as e:
             status["txf"] = f"error"
             log(f"  台指期收盤失敗: {e}")
+
+    # --- 來源 8: 指數期貨近月日K, 含夜盤 (供回測用) ---
+    # 與來源 6 的差別: 來源 6 只存日盤結算價一個數字, 供選擇權趨勢圖疊線;
+    # 這裡存開高低收量, 而且日盤與夜盤分開。夜盤的日期歸屬見 fetch_txk_range 的說明。
+    if not skip_kline:
+        got, miss = {}, []
+        for cid in TXK_PRODUCTS:
+            try:
+                r = fetch_txk_range(cid, date_slash, date_slash).get(date_slash)
+                if r:
+                    got[cid] = r
+                else:
+                    miss.append(cid)
+            except Exception as e:
+                miss.append(cid)
+                log(f"  指數日K {cid} 失敗: {e}")
+            time.sleep(0.3)
+        if got:
+            append_txk(date_slash, got)
+            n_night = sum(1 for v in got.values() if v.get("night"))
+            status["txk"] = f"ok ({len(got)} 商品, {n_night} 含夜盤)"
+            log(f"  指數期貨日K: {'、'.join(got)}" + (f"  (無資料: {'、'.join(miss)})" if miss else ""))
+        else:
+            status["txk"] = "no-data"
 
     # --- 臨時休市保護 (颱風假等「平日但全市場無資料」的情況) ---
     # 所有來源皆無當日資料時, 不把該日寫進索引, 避免個股清單/最新日期被清空。

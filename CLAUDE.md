@@ -38,6 +38,8 @@ https://david26984741-cell.github.io/daily-postmarket/
 | analysis.yml | 籌碼研究分析 | 週日 02:00 UTC + 手動 | daily-postmarket-analysis |
 | txf.yml | 回補台指期近月 | 手動(起訖日期) | daily-postmarket-txf |
 | fkline.yml | 回補股期近月日K | 手動(起訖日期,量大建議分段) | daily-postmarket-fkline |
+| backfill_index.yml | 回補指數期貨大額交易人 | 手動(起訖日期) | daily-postmarket |
+| backfill_txk.yml | 回補指數期貨日K(含夜盤) | 手動(起訖日期+商品) | daily-postmarket |
 
 重要細節:
 - Runner 跑在 UTC 且**無視 TZ 環境變數**,所有時間邏輯用 scrape.py 的 `now_taipei()`(utcnow+8h)。
@@ -70,8 +72,13 @@ https://david26984741-cell.github.io/daily-postmarket/
   `help.html`(名詞解釋)、`analysis.html`。
 - `assets/style.css`(html zoom:1.25 全站放大 — Chart.js 內建 tooltip 因此座標會偏移,已停用,
   一律用自製查價視窗)、`assets/app.js`(CATS 導覽/共用工具)。
-- `data/`:stocks/(部位,2017/07/10 起)、kline/(現股日K,2017 起)、fkline/(股期近月日K,
-  期交所行情,前端優先使用)、txf.json(台指期近月)、rank.json、concepts.json
+- `data/`:stocks/(個股期貨部位,實測最早 2016/07/01)、kline/(現股日K)、fkline/(股期近月日K,
+  期交所行情,前端優先使用)、
+  **large_fut_index/<年>.json**(指數期貨大額交易人:TX/TE/TF/XIF/M1F 等非個股契約,
+  收錄規則為 cat6 判斷式的嚴格補集)、
+  **txk/<年>.json**(指數期貨近月日K,**日盤與夜盤分開**,供回測;
+  夜盤日期歸屬見 `scrape.fetch_txk_range` docstring — records[D].night 是 D 日盤「之前」那一夜)、
+  txf.json(台指期近月結算價,僅日盤,供選擇權趨勢疊圖)、rank.json、concepts.json
   (概念股對照,整理自財報狗產業地圖,格式 {sid:{m:主標籤,t:[產業·子產業,...]}})、
   index.json、analysis.json、stock_map.json、holidays.txt(2026 含颱風假)。
 
@@ -766,3 +773,88 @@ https://david26984741-cell.github.io/daily-postmarket/
 依 GitHub 2026 定價**本來就不計入額度**。需查 Billing → Usage 按 repo 拆解,
 確認是否為其他(可能是私有)repo 消耗。**在查清楚之前,「等 9/01 額度重置再做輕量部署 workflow」
 這個待辦的前提可能不成立。**
+
+### 2026/08/22 — Actions 額度真兇查明:不是本 repo
+查 Billing → Usage 按 repo 拆解, 結論明確:
+- Actions minutes **1,846 / 2,000**(92%), 但實際帳單 **$0** —— 全額折抵。
+- 用量 gross:`tw-postmarket` **$11.08** / `daily-postmarket` $3.12 / `tw-stock-futures-spec` $0.92。
+- $11.08 ÷ 1,846 分 ≈ **$0.006/分**, 正好是 Linux 標準 runner 單價 →
+  **那 1,846 分鐘全部來自 `tw-postmarket`(私有 repo)**。
+  另兩個是 public, 走「public repo 免費折抵」, **一分鐘都沒佔到額度**。
+- 兇手是 `tw-postmarket` 的 `morning.yml`:`timeout-minutes: 350` + `--max-minutes 320`,
+  **用 runner 執行時間「等」法說會影音上架**。實測 run 時間 5h20m/5h19m/5h19m/5h50m/5h50m,
+  五天吃掉 1,658 分鐘。日用量圖也吻合:8/1~16 每天 $0.03~0.36, **8/17 起跳到 $2.2~3.0**。
+- **已於 2026/08/22 停用該 workflow**(Actions → 早場 → Disable workflow)。
+  其餘三個(晚場 ~1 分/日、產報告 ~16 秒/日、回補為手動)未動。
+- 治本方向:不要用 runner 分鐘數等待。把 320 分鐘長等待改成 cron 短輪詢
+  (每 30 分鐘觸發一次、每次跑 2~3 分鐘檢查資料好了沒), 同樣涵蓋 8 小時窗口, 消耗降到約 30 分鐘。
+
+**因此本檔第 114 行「不要為了看改動效果而手動觸發 workflow」與待辦①「等 9/01 額度重置」
+的前提都不成立** —— 本 repo 是 public, 手動觸發不花額度。兩處待修。
+
+### 2026/08/22 — 每日 commit 的真實體積成本(實測, 推翻先前估算)
+用 `git pack-objects --stdout --revs --thin`(等同 push 實際傳送量)量到:
+**主班次每個交易日 22.5 MB**。先前用「.git 總量 ÷ commit 數」估的 4.9 MB 是低估。
+單一 commit 重寫的內容(未壓縮):
+
+| 路徑 | 大小 | 檔數 |
+|---|---|---|
+| `data/stocks/*` | **381 MB** | 306 |
+| `data/kline/*` | 36 MB | 269 |
+| `data/fkline/*` | 29 MB | 291 |
+| `data/large_opt.json` | 5.1 MB | 1 |
+
+合計約 455 MB → 壓縮後 22.5 MB。`data/stocks/` 佔 **84%**。
+成因:每檔 JSON 裝全史(平均 1.15 MB), 每天只追加一個日期鍵, 但 git 是按「被改動的檔案」計價。
+
+- repo 現況 969 MB(GitHub 端)。repo 才兩個多月大 × 約 40 個交易日 × 22.5 MB ≈ 900 MB, 吻合。
+- 年成長約 **5.6 GB**, 約十個月撞到 GitHub「強烈建議上限」5 GB。
+- GitHub 政策(實查):<1 GB 建議、<5 GB 強烈建議、>5 GB 可能來信要求縮減。**無硬性配額, 也不計費。**
+- 帳單頁的「Actions storage 0/0.5 GB」是 **artifact 配額, 與 repo 大小無關**, 別再誤會。
+
+**治本方向(使用者 2026/08/22 決定暫時跳過, 之後要做再回頭看這段)**:
+把 `data/stocks/CD.json`(全史一檔)改成 `data/stocks/CD/<年>.json`,
+每日只重寫當年那一檔, 成本可降一個數量級。注意:**切檔只讓未來成長變慢,
+不會縮小既有的 969 MB** —— git 歷史不可竄改, 要縮小得改寫歷史 + force push,
+而本檔明文禁止 force push。
+新建的 `data/large_fut_index/` 與 `data/txk/` 已直接採用按年切檔(見下一節)。
+
+### 2026/08/22 — 新增指數期貨兩組資料(大額交易人 + 含夜盤日K)
+使用者需求:回測要用到台指期、電子、金融、非金電的籌碼與行情, 且**台指期要有夜盤**。
+原本這些全都沒有 —— `scrape.py` cat5 只收 TXF/TX, cat6 明文排除 TX/TE/TF 且只收 2 碼代碼,
+所以 XIF(非金電)、M1F(中型100) 因為是 3 碼也一併被擋掉。
+
+**新增 1:指數期貨大額交易人 → `data/large_fut_index/<年>.json`**
+- `scrape.py` 新增 cat5b 區塊 + `append_index_fut()`。
+- 收錄規則刻意寫成 **cat6 判斷式的嚴格補集**(`len(code)==2 and code not in {TX,TE,TF} and "(" not in name`
+  的反面), 兩邊互為反面 → 不會重複計入也不會整個漏掉, 新掛牌指數契約免維護即納入。
+- 以使用者提供的 2015/01~02 真實 CSV 驗證分流:248 檔個股 + 9 個指數契約 = 原始 257 組, 無重複無遺漏。
+  指數組正確含 TX/TE/TF/XIF, 另有 GTF/GDF/TGF/T5F/GBF。
+- 專用回補工具 `tools/backfill_index_fut.py` + `backfill_index.yml`。
+  **不走 backfill.py** —— 後者每日打 6 次來源(證交所現貨對舊日期固定空轉 15 秒)並重寫 388 個個股檔;
+  本表只要 largeTraderFut 一次請求、只寫一個年度檔, 每日約 2 秒而非約 27 秒。
+
+**新增 2:指數期貨近月日K(含夜盤) → `data/txk/<年>.json`**
+- `scrape.py` 新增 `fetch_txk_range()` / `append_txk()` / `TXK_PRODUCTS` + run() 來源 8。
+- 商品:TX、TE、TF、XIF、M1F。欄位 `{month, day:[開高低收量], night:[開高低收量]|null, settle}`。
+- 與既有 `txf.json` 的差別:txf.json 只存日盤結算價一個數字(供選擇權趨勢疊圖, 保留不動);
+  txk 存開高低收量, 且日盤夜盤分開。
+- 回補工具 `tools/backfill_txk.py` + `backfill_txk.yml`, 逐月抓(單次查詢限一個月內)。
+  每商品每月一次請求, 2010/01~2026/08 約 200 月 × 5 商品 ≈ 1,000 次, 約 20 分鐘。
+
+**⚠⚠ 夜盤的日期歸屬 —— 回測對齊關鍵, 弄錯整整差一個交易日:**
+期交所把「**D-1 15:00 → D 05:00**」這段盤後時段標記為交易日 **D**。
+實測依據:夜盤 2017/05/15 晚間上線, 但 CSV 第一筆「盤後」列的日期是 **2017/05/16**,
+5/15 當天只有「一般」列。價格完全連續:
+`2017/05/15 日盤收 10028 → 05/16 夜盤開 10023 → 夜盤收 10045 → 05/16 日盤開 10040`。
+所以真實時間順序是 **D-1 日盤 → D 夜盤 → D 日盤**,
+`records[D].night` 是「D 這根日盤之前的那一夜」, **不是 D 收盤後的那一夜**。
+要取 D 收盤後的夜盤, 請看**下一個交易日**的 night。
+已用這幾天的真實數值寫成單元測試驗過(含週契約/價差組合排除), 全部通過。
+
+**資料範圍(實測)**:大額交易人本表 2004/07/01 起;futDataDown 行情至少 2010/01 起;
+夜盤 2017/05/16(標記日)起, 更早的 night 一律 null 屬正常;非金電目前無夜盤列。
+
+**這兩組新檔一開始就採「按年切檔」**, 理由見上一節:若做成全史單一檔,
+large_fut_index 會長到約 40 MB 並且每天陪著重寫。前端目前尚未使用這兩組資料,
+兩支回補 workflow 也刻意不含部署步驟以縮短執行時間。

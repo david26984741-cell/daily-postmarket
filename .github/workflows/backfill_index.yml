@@ -1,0 +1,100 @@
+name: 回補指數期貨大額交易人
+
+# 手動觸發:回補 台指期/電子/金融/非金電/中型100 等「非個股契約」的大額交易人未沖銷部位,
+# 寫入 data/large_fut_index/<西元年>.json。
+#
+# 為什麼不用 backfill.yml:
+#   backfill.yml 會跑完整 scrape.run(), 每個交易日打 6 次來源並重寫 388 個個股檔;
+#   本表只需要 largeTraderFut 一次請求、只寫一個年度檔, 每日約 2 秒而非 27 秒。
+#
+# 資料範圍:期交所本表自 2004/07/01 起提供(2026/08/22 實測)。
+#          股票期貨 2010/01 才掛牌, 更早只有指數與商品契約。
+#
+# 不含部署:前端目前尚未使用這份資料, 省去部署步驟以縮短執行時間。
+#          資料會在下一次 daily.yml / backfill.yml 執行時一併部署上去。
+
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "起始日期 YYYY/MM/DD (最早 2004/07/01)"
+        required: true
+        default: "2010/01/01"
+      end:
+        description: "結束日期 YYYY/MM/DD"
+        required: true
+      force:
+        description: "已有資料的日期也重抓覆蓋 (true/false)"
+        required: false
+        default: "false"
+      sleep:
+        description: "每日之間間隔秒數"
+        required: false
+        default: "0.5"
+
+permissions:
+  contents: write
+
+# 與每日排程共用佇列, 避免同時 commit 造成 rebase 衝突
+concurrency:
+  group: daily-postmarket
+  cancel-in-progress: false
+
+jobs:
+  backfill-index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      TZ: Asia/Taipei
+    steps:
+      # ref: main — 取開跑當下的最新版, 而非觸發當下凍結的舊版 (見 #16 事故)
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 回補指定期間
+        run: |
+          ARGS="--start ${{ inputs.start }} --end ${{ inputs.end }} --sleep ${{ inputs.sleep }}"
+          if [ "${{ inputs.force }}" = "true" ]; then ARGS="$ARGS --force"; fi
+          python tools/backfill_index_fut.py $ARGS
+
+      - name: Commit 資料更新
+        if: always()   # 逾時被砍也要把已抓到的部分存下來, 重跑只需補剩餘區間
+        run: |
+          pkill -9 -f backfill_index_fut.py 2>/dev/null || true
+          sleep 3
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          MSG="回補指數期貨大額 ${{ inputs.start }} ~ ${{ inputs.end }}"
+          git add -A data/large_fut_index/
+          if git diff --cached --quiet; then
+            echo "無資料變更 (該期間可能已補齊)"; exit 0
+          fi
+          git commit -m "$MSG"
+          for i in 1 2 3 4; do
+            git add -A data/large_fut_index/
+            git diff --cached --quiet || git commit -m "$MSG (補收$i)"
+            git checkout -- . 2>/dev/null || true
+            git fetch origin main
+            if git rebase origin/main; then
+              git push origin main && exit 0
+            else
+              git rebase --abort || true
+            fi
+            echo "push 失敗, 15 秒後重試 ($i/4)"; sleep 15
+          done
+          exit 1
+
+      - name: 摘要
+        if: always()
+        run: |
+          {
+            echo "## 回補指數期貨大額交易人"
+            echo "- 期間:${{ inputs.start }} ~ ${{ inputs.end }}"
+            echo "- 年度檔:"
+            ls -la data/large_fut_index/ 2>/dev/null || echo "  (無)"
+          } >> "$GITHUB_STEP_SUMMARY"

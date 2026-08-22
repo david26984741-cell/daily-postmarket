@@ -1,0 +1,98 @@
+name: 回補指數期貨日K（含夜盤）
+
+# 手動觸發:回補 台指期(TX)/電子(TE)/金融(TF)/非金電(XIF)/中型100(M1F) 的近月日K,
+# 日盤與夜盤分開存, 寫入 data/txk/<西元年>.json。供回測使用。
+#
+# ⚠ 夜盤的日期歸屬:期交所把「D-1 15:00 → D 05:00」標為交易日 D,
+#   所以 records[D].night 是 D 這根日盤「之前」的那一夜。詳見 scrape.fetch_txk_range 說明。
+#   夜盤自 2017/05/16(標記日)起才有;更早的 night 一律 null, 屬正常。
+#
+# 資料範圍:futDataDown 至少回溯到 2010/01 (2026/08/22 實測)。單次查詢限一個月內, 故逐月抓。
+# 效率:每商品每月一次請求。2010/01~2026/08 約 200 個月 × 5 商品 ≈ 1,000 次請求, 約 20 分鐘。
+
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "起始日期 YYYY/MM/DD"
+        required: true
+        default: "2010/01/01"
+      end:
+        description: "結束日期 YYYY/MM/DD"
+        required: true
+      products:
+        description: "商品代碼, 逗號分隔 (留空 = TX,TE,TF,XIF,M1F)"
+        required: false
+        default: "TX,TE,TF,XIF,M1F"
+      sleep:
+        description: "每次請求間隔秒數"
+        required: false
+        default: "0.6"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-postmarket
+  cancel-in-progress: false
+
+jobs:
+  backfill-txk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      TZ: Asia/Taipei
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 回補指定期間
+        run: |
+          python tools/backfill_txk.py \
+            --start ${{ inputs.start }} \
+            --end ${{ inputs.end }} \
+            --products "${{ inputs.products }}" \
+            --sleep ${{ inputs.sleep }}
+
+      - name: Commit 資料更新
+        if: always()
+        run: |
+          pkill -9 -f backfill_txk.py 2>/dev/null || true
+          sleep 3
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          MSG="回補指數期貨日K ${{ inputs.start }} ~ ${{ inputs.end }}"
+          git add -A data/txk/
+          if git diff --cached --quiet; then
+            echo "無資料變更 (該期間可能已補齊)"; exit 0
+          fi
+          git commit -m "$MSG"
+          for i in 1 2 3 4; do
+            git add -A data/txk/
+            git diff --cached --quiet || git commit -m "$MSG (補收$i)"
+            git checkout -- . 2>/dev/null || true
+            git fetch origin main
+            if git rebase origin/main; then
+              git push origin main && exit 0
+            else
+              git rebase --abort || true
+            fi
+            echo "push 失敗, 15 秒後重試 ($i/4)"; sleep 15
+          done
+          exit 1
+
+      - name: 摘要
+        if: always()
+        run: |
+          {
+            echo "## 回補指數期貨日K(含夜盤)"
+            echo "- 期間:${{ inputs.start }} ~ ${{ inputs.end }}"
+            echo "- 商品:${{ inputs.products }}"
+            echo "- 年度檔:"
+            ls -la data/txk/ 2>/dev/null || echo "  (無)"
+          } >> "$GITHUB_STEP_SUMMARY"
