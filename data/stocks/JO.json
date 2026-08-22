@@ -1,0 +1,91 @@
+{
+ "code": "JO",
+ "name": "F-晨星期貨",
+ "sid": "3697",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 143,
+    "top5_sell": 155,
+    "top10_buy": 153,
+    "top10_sell": 157,
+    "market_oi": 157,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 24,
+    "top10_buy": 1,
+    "top10_sell": 24,
+    "market_oi": 157,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 725,
+    "top5_sell": 905,
+    "top10_buy": 834,
+    "top10_sell": 960,
+    "market_oi": 972,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 187,
+    "top10_buy": 0,
+    "top10_sell": 216,
+    "market_oi": 972,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 133,
+    "top5_sell": 149,
+    "top10_buy": 146,
+    "top10_sell": 151,
+    "market_oi": 151,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 5,
+    "top5_sell": 24,
+    "top10_buy": 5,
+    "top10_sell": 24,
+    "market_oi": 151,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 719,
+    "top5_sell": 895,
+    "top10_buy": 825,
+    "top10_sell": 952,
+    "market_oi": 963,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 187,
+    "top10_buy": 0,
+    "top10_sell": 216,
+    "market_oi": 963,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

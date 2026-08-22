@@ -1,0 +1,91 @@
+{
+ "code": "HR",
+ "name": "榮運期貨",
+ "sid": "2607",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 173,
+    "top5_sell": 211,
+    "top10_buy": 193,
+    "top10_sell": 212,
+    "market_oi": 212,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 5,
+    "top10_buy": 0,
+    "top10_sell": 5,
+    "market_oi": 212,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 273,
+    "top5_sell": 334,
+    "top10_buy": 305,
+    "top10_sell": 346,
+    "market_oi": 346,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 11,
+    "top10_buy": 0,
+    "top10_sell": 17,
+    "market_oi": 346,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 163,
+    "top5_sell": 209,
+    "top10_buy": 184,
+    "top10_sell": 210,
+    "market_oi": 210,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4,
+    "top10_buy": 0,
+    "top10_sell": 4,
+    "market_oi": 210,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 263,
+    "top5_sell": 328,
+    "top10_buy": 297,
+    "top10_sell": 346,
+    "market_oi": 346,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 13,
+    "top10_buy": 0,
+    "top10_sell": 25,
+    "market_oi": 346,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "code": "HP",
+ "name": "益航期貨",
+ "sid": "2601",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 53,
+    "top5_sell": 50,
+    "top10_buy": 64,
+    "top10_sell": 64,
+    "market_oi": 64,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 20,
+    "top10_buy": 0,
+    "top10_sell": 28,
+    "market_oi": 64,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 92,
+    "top5_sell": 98,
+    "top10_buy": 114,
+    "top10_sell": 120,
+    "market_oi": 120,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 48,
+    "top10_buy": 0,
+    "top10_sell": 56,
+    "market_oi": 120,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 53,
+    "top5_sell": 52,
+    "top10_buy": 63,
+    "top10_sell": 63,
+    "market_oi": 63,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 18,
+    "top10_buy": 0,
+    "top10_sell": 23,
+    "market_oi": 63,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 92,
+    "top5_sell": 100,
+    "top10_buy": 114,
+    "top10_sell": 122,
+    "market_oi": 122,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 48,
+    "top10_buy": 0,
+    "top10_sell": 56,
+    "market_oi": 122,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

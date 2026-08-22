@@ -1,0 +1,91 @@
+{
+ "code": "JE",
+ "name": "綠能期貨",
+ "sid": "3519",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 203,
+    "top5_sell": 258,
+    "top10_buy": 264,
+    "top10_sell": 290,
+    "market_oi": 329,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 0,
+    "top10_sell": 0,
+    "market_oi": 329,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1435,
+    "top5_sell": 1443,
+    "top10_buy": 1523,
+    "top10_sell": 1570,
+    "market_oi": 1647,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1050,
+    "top10_buy": 0,
+    "top10_sell": 1077,
+    "market_oi": 1647,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 138,
+    "top5_sell": 184,
+    "top10_buy": 194,
+    "top10_sell": 214,
+    "market_oi": 249,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 0,
+    "top10_sell": 0,
+    "market_oi": 249,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1304,
+    "top5_sell": 1334,
+    "top10_buy": 1379,
+    "top10_sell": 1409,
+    "market_oi": 1485,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1050,
+    "top10_buy": 0,
+    "top10_sell": 1074,
+    "market_oi": 1485,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

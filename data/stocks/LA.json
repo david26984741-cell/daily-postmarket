@@ -1,0 +1,91 @@
+{
+ "code": "LA",
+ "name": "三商行期貨",
+ "sid": "",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 28,
+    "top5_sell": 38,
+    "top10_buy": 38,
+    "top10_sell": 38,
+    "market_oi": 38,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 9,
+    "top5_sell": 0,
+    "top10_buy": 11,
+    "top10_sell": 0,
+    "market_oi": 38,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 28,
+    "top5_sell": 40,
+    "top10_buy": 39,
+    "top10_sell": 40,
+    "market_oi": 40,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 9,
+    "top5_sell": 2,
+    "top10_buy": 11,
+    "top10_sell": 2,
+    "market_oi": 40,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 27,
+    "top5_sell": 36,
+    "top10_buy": 36,
+    "top10_sell": 36,
+    "market_oi": 36,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 9,
+    "top5_sell": 0,
+    "top10_buy": 11,
+    "top10_sell": 0,
+    "market_oi": 36,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 27,
+    "top5_sell": 39,
+    "top10_buy": 37,
+    "top10_sell": 39,
+    "market_oi": 39,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 9,
+    "top5_sell": 2,
+    "top10_buy": 11,
+    "top10_sell": 2,
+    "market_oi": 39,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

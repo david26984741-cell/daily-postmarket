@@ -1,7 +1,7 @@
 {
  "code": "LZ",
  "name": "可寧衛期貨",
- "sid": "",
+ "sid": "8422",
  "records": {
   "2017/07/10": [
    {
@@ -25410,6 +25410,90 @@
     "top10_buy": 0,
     "top10_sell": 1,
     "market_oi": 12,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 24,
+    "top5_sell": 29,
+    "top10_buy": 29,
+    "top10_sell": 29,
+    "market_oi": 29,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 11,
+    "top10_buy": 0,
+    "top10_sell": 11,
+    "market_oi": 29,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 35,
+    "top5_sell": 39,
+    "top10_buy": 40,
+    "top10_sell": 41,
+    "market_oi": 41,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 11,
+    "top10_buy": 0,
+    "top10_sell": 11,
+    "market_oi": 41,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 19,
+    "top5_sell": 23,
+    "top10_buy": 23,
+    "top10_sell": 23,
+    "market_oi": 23,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 11,
+    "top10_buy": 0,
+    "top10_sell": 11,
+    "market_oi": 23,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 35,
+    "top5_sell": 38,
+    "top10_buy": 40,
+    "top10_sell": 42,
+    "market_oi": 42,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 14,
+    "top10_buy": 0,
+    "top10_sell": 16,
+    "market_oi": 42,
     "scope": "所有契約"
    }
   ]

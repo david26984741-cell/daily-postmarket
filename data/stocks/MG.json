@@ -1,0 +1,91 @@
+{
+ "code": "MG",
+ "name": "年興期貨",
+ "sid": "1451",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 45,
+    "top5_sell": 45,
+    "top10_buy": 45,
+    "top10_sell": 45,
+    "market_oi": 45,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 3,
+    "top10_buy": 0,
+    "top10_sell": 3,
+    "market_oi": 45,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 50,
+    "top5_sell": 50,
+    "top10_buy": 50,
+    "top10_sell": 50,
+    "market_oi": 50,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 3,
+    "top10_buy": 0,
+    "top10_sell": 3,
+    "market_oi": 50,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 46,
+    "top5_sell": 46,
+    "top10_buy": 46,
+    "top10_sell": 46,
+    "market_oi": 46,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 3,
+    "top10_buy": 0,
+    "top10_sell": 3,
+    "market_oi": 46,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 52,
+    "top5_sell": 52,
+    "top10_buy": 52,
+    "top10_sell": 52,
+    "market_oi": 52,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4,
+    "top10_buy": 0,
+    "top10_sell": 4,
+    "market_oi": 52,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

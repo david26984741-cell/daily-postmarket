@@ -1,0 +1,91 @@
+{
+ "code": "GQ",
+ "name": "燦坤期貨",
+ "sid": "2430",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 17,
+    "top5_sell": 21,
+    "top10_buy": 21,
+    "top10_sell": 21,
+    "market_oi": 21,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 3,
+    "top10_buy": 0,
+    "top10_sell": 3,
+    "market_oi": 21,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 18,
+    "top5_sell": 28,
+    "top10_buy": 26,
+    "top10_sell": 28,
+    "market_oi": 28,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 8,
+    "top10_buy": 0,
+    "top10_sell": 8,
+    "market_oi": 28,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 16,
+    "top5_sell": 21,
+    "top10_buy": 21,
+    "top10_sell": 21,
+    "market_oi": 21,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 3,
+    "top10_buy": 0,
+    "top10_sell": 3,
+    "market_oi": 21,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 17,
+    "top5_sell": 28,
+    "top10_buy": 26,
+    "top10_sell": 28,
+    "market_oi": 28,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 8,
+    "top10_buy": 0,
+    "top10_sell": 8,
+    "market_oi": 28,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

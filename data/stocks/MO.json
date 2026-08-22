@@ -1,7 +1,7 @@
 {
  "code": "MO",
  "name": "飛捷期貨",
- "sid": "",
+ "sid": "6206",
  "records": {
   "2017/07/10": [
    {
@@ -15162,6 +15162,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 3,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 60,
+    "top5_sell": 67,
+    "top10_buy": 66,
+    "top10_sell": 69,
+    "market_oi": 69,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 25,
+    "top10_buy": 0,
+    "top10_sell": 25,
+    "market_oi": 69,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 103,
+    "top5_sell": 106,
+    "top10_buy": 109,
+    "top10_sell": 112,
+    "market_oi": 112,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 29,
+    "top10_buy": 0,
+    "top10_sell": 32,
+    "market_oi": 112,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 65,
+    "top5_sell": 69,
+    "top10_buy": 70,
+    "top10_sell": 72,
+    "market_oi": 72,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 23,
+    "top10_buy": 0,
+    "top10_sell": 24,
+    "market_oi": 72,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 110,
+    "top5_sell": 112,
+    "top10_buy": 115,
+    "top10_sell": 117,
+    "market_oi": 117,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 29,
+    "top10_buy": 0,
+    "top10_sell": 32,
+    "market_oi": 117,
     "scope": "所有契約"
    }
   ]

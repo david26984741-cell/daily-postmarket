@@ -1,0 +1,91 @@
+{
+ "code": "LN",
+ "name": "裕融期貨",
+ "sid": "9941",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 130,
+    "top5_sell": 139,
+    "top10_buy": 137,
+    "top10_sell": 141,
+    "market_oi": 141,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 0,
+    "top10_sell": 1,
+    "market_oi": 141,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 152,
+    "top5_sell": 166,
+    "top10_buy": 165,
+    "top10_sell": 178,
+    "market_oi": 178,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 0,
+    "top10_sell": 3,
+    "market_oi": 178,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 130,
+    "top5_sell": 140,
+    "top10_buy": 137,
+    "top10_sell": 141,
+    "market_oi": 141,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 0,
+    "top10_sell": 1,
+    "market_oi": 141,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 153,
+    "top5_sell": 169,
+    "top10_buy": 166,
+    "top10_sell": 180,
+    "market_oi": 180,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 0,
+    "top10_sell": 3,
+    "market_oi": 180,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

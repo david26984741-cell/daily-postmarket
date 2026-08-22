@@ -1,7 +1,7 @@
 {
  "code": "MF",
  "name": "力鵬期貨",
- "sid": "",
+ "sid": "1447",
  "records": {
   "2016/07/01": [
    {
@@ -2352,6 +2352,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 0,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 65,
+    "top5_sell": 89,
+    "top10_buy": 82,
+    "top10_sell": 89,
+    "market_oi": 89,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1,
+    "top10_buy": 1,
+    "top10_sell": 1,
+    "market_oi": 89,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 70,
+    "top5_sell": 127,
+    "top10_buy": 113,
+    "top10_sell": 128,
+    "market_oi": 128,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 6,
+    "top10_buy": 0,
+    "top10_sell": 7,
+    "market_oi": 128,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 61,
+    "top5_sell": 84,
+    "top10_buy": 77,
+    "top10_sell": 84,
+    "market_oi": 84,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1,
+    "top10_buy": 1,
+    "top10_sell": 1,
+    "market_oi": 84,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 70,
+    "top5_sell": 122,
+    "top10_buy": 108,
+    "top10_sell": 123,
+    "market_oi": 123,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 6,
+    "top10_buy": 0,
+    "top10_sell": 7,
+    "market_oi": 123,
     "scope": "所有契約"
    }
   ]

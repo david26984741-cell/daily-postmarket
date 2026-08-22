@@ -1,7 +1,7 @@
 {
  "code": "JT",
  "name": "訊連期貨",
- "sid": "",
+ "sid": "5203",
  "records": {
   "2016/07/01": [
    {
@@ -2352,6 +2352,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 0,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 2,
+    "top5_sell": 2,
+    "top10_buy": 2,
+    "top10_sell": 2,
+    "market_oi": 2,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 0,
+    "top10_sell": 0,
+    "market_oi": 2,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 55,
+    "top5_sell": 55,
+    "top10_buy": 55,
+    "top10_sell": 55,
+    "market_oi": 55,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 2,
+    "top5_sell": 51,
+    "top10_buy": 2,
+    "top10_sell": 51,
+    "market_oi": 55,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 2,
+    "top5_sell": 2,
+    "top10_buy": 2,
+    "top10_sell": 2,
+    "market_oi": 2,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 0,
+    "top10_sell": 0,
+    "market_oi": 2,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 56,
+    "top5_sell": 57,
+    "top10_buy": 57,
+    "top10_sell": 57,
+    "market_oi": 57,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 2,
+    "top5_sell": 52,
+    "top10_buy": 2,
+    "top10_sell": 52,
+    "market_oi": 57,
     "scope": "所有契約"
    }
   ]

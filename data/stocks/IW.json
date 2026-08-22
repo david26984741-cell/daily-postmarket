@@ -1,0 +1,91 @@
+{
+ "code": "IW",
+ "name": "璨圓期貨",
+ "sid": "3061",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 119,
+    "top5_sell": 146,
+    "top10_buy": 140,
+    "top10_sell": 153,
+    "market_oi": 153,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 11,
+    "top5_sell": 3,
+    "top10_buy": 11,
+    "top10_sell": 3,
+    "market_oi": 153,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 139,
+    "top5_sell": 200,
+    "top10_buy": 178,
+    "top10_sell": 210,
+    "market_oi": 212,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 11,
+    "top10_sell": 3,
+    "market_oi": 212,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 130,
+    "top5_sell": 185,
+    "top10_buy": 163,
+    "top10_sell": 189,
+    "market_oi": 189,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 12,
+    "top5_sell": 0,
+    "top10_buy": 12,
+    "top10_sell": 0,
+    "market_oi": 189,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 144,
+    "top5_sell": 227,
+    "top10_buy": 188,
+    "top10_sell": 238,
+    "market_oi": 240,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 13,
+    "top5_sell": 0,
+    "top10_buy": 13,
+    "top10_sell": 0,
+    "market_oi": 240,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

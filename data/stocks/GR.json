@@ -1,6 +1,6 @@
 {
  "code": "GR",
- "name": "京元電子期貨",
+ "name": "京元電期貨",
  "sid": "2449",
  "records": {
   "2026/06/23": [
@@ -103446,6 +103446,90 @@
     "top10_buy": 1536,
     "top10_sell": 3549,
     "market_oi": 3655,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 133,
+    "top5_sell": 163,
+    "top10_buy": 157,
+    "top10_sell": 163,
+    "market_oi": 163,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 8,
+    "top5_sell": 116,
+    "top10_buy": 13,
+    "top10_sell": 116,
+    "market_oi": 163,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 156,
+    "top5_sell": 182,
+    "top10_buy": 182,
+    "top10_sell": 193,
+    "market_oi": 193,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 8,
+    "top5_sell": 116,
+    "top10_buy": 13,
+    "top10_sell": 116,
+    "market_oi": 193,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 61,
+    "top5_sell": 79,
+    "top10_buy": 76,
+    "top10_sell": 79,
+    "market_oi": 79,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 5,
+    "top5_sell": 58,
+    "top10_buy": 7,
+    "top10_sell": 58,
+    "market_oi": 79,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 76,
+    "top5_sell": 99,
+    "top10_buy": 93,
+    "top10_sell": 99,
+    "market_oi": 99,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 5,
+    "top5_sell": 58,
+    "top10_buy": 7,
+    "top10_sell": 58,
+    "market_oi": 99,
     "scope": "所有契約"
    }
   ]

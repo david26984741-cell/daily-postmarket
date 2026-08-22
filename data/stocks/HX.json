@@ -1,0 +1,91 @@
+{
+ "code": "HX",
+ "name": "華票期貨",
+ "sid": "2820",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 99,
+    "top5_sell": 100,
+    "top10_buy": 100,
+    "top10_sell": 100,
+    "market_oi": 100,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 49,
+    "top5_sell": 39,
+    "top10_buy": 49,
+    "top10_sell": 39,
+    "market_oi": 100,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 181,
+    "top5_sell": 205,
+    "top10_buy": 205,
+    "top10_sell": 205,
+    "market_oi": 205,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 55,
+    "top5_sell": 136,
+    "top10_buy": 55,
+    "top10_sell": 136,
+    "market_oi": 205,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 99,
+    "top5_sell": 100,
+    "top10_buy": 100,
+    "top10_sell": 100,
+    "market_oi": 100,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 49,
+    "top5_sell": 39,
+    "top10_buy": 49,
+    "top10_sell": 39,
+    "market_oi": 100,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 181,
+    "top5_sell": 205,
+    "top10_buy": 205,
+    "top10_sell": 205,
+    "market_oi": 205,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 55,
+    "top5_sell": 136,
+    "top10_buy": 55,
+    "top10_sell": 136,
+    "market_oi": 205,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -1,7 +1,7 @@
 {
  "code": "HY",
  "name": "中壽期貨",
- "sid": "",
+ "sid": "2823",
  "records": {
   "2021/01/04": [
    {
@@ -55924,6 +55924,90 @@
     "top10_buy": 181,
     "top10_sell": 1040,
     "market_oi": 1175,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 286,
+    "top5_sell": 308,
+    "top10_buy": 328,
+    "top10_sell": 369,
+    "market_oi": 385,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 206,
+    "top10_buy": 6,
+    "top10_sell": 232,
+    "market_oi": 385,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 348,
+    "top5_sell": 327,
+    "top10_buy": 392,
+    "top10_sell": 427,
+    "market_oi": 468,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 249,
+    "top10_buy": 6,
+    "top10_sell": 269,
+    "market_oi": 468,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 288,
+    "top5_sell": 308,
+    "top10_buy": 330,
+    "top10_sell": 375,
+    "market_oi": 391,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 206,
+    "top10_buy": 6,
+    "top10_sell": 232,
+    "market_oi": 391,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 356,
+    "top5_sell": 333,
+    "top10_buy": 400,
+    "top10_sell": 441,
+    "market_oi": 488,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 223,
+    "top10_buy": 0,
+    "top10_sell": 269,
+    "market_oi": 488,
     "scope": "所有契約"
    }
   ]

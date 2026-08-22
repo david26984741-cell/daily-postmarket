@@ -1,6 +1,6 @@
 {
  "code": "LR",
- "name": "凱基金期貨",
+ "name": "開發金期貨",
  "sid": "2883",
  "records": {
   "2026/06/23": [
@@ -103446,6 +103446,90 @@
     "top10_buy": 953,
     "top10_sell": 1140,
     "market_oi": 1214,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 181,
+    "top5_sell": 228,
+    "top10_buy": 206,
+    "top10_sell": 238,
+    "market_oi": 238,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 144,
+    "top10_buy": 0,
+    "top10_sell": 144,
+    "market_oi": 238,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 627,
+    "top5_sell": 846,
+    "top10_buy": 755,
+    "top10_sell": 881,
+    "market_oi": 881,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 763,
+    "top10_buy": 0,
+    "top10_sell": 763,
+    "market_oi": 881,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 207,
+    "top5_sell": 269,
+    "top10_buy": 238,
+    "top10_sell": 269,
+    "market_oi": 269,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 164,
+    "top10_buy": 0,
+    "top10_sell": 164,
+    "market_oi": 269,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 648,
+    "top5_sell": 897,
+    "top10_buy": 781,
+    "top10_sell": 916,
+    "market_oi": 916,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 788,
+    "top10_buy": 0,
+    "top10_sell": 788,
+    "market_oi": 916,
     "scope": "所有契約"
    }
   ]

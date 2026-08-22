@@ -1,0 +1,91 @@
+{
+ "code": "IS",
+ "name": "揚智期貨",
+ "sid": "3041",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 75,
+    "top5_sell": 101,
+    "top10_buy": 88,
+    "top10_sell": 101,
+    "market_oi": 101,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 16,
+    "top10_buy": 0,
+    "top10_sell": 16,
+    "market_oi": 101,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 83,
+    "top5_sell": 113,
+    "top10_buy": 103,
+    "top10_sell": 129,
+    "market_oi": 129,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 7,
+    "top10_buy": 0,
+    "top10_sell": 18,
+    "market_oi": 129,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 83,
+    "top5_sell": 104,
+    "top10_buy": 96,
+    "top10_sell": 105,
+    "market_oi": 105,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 16,
+    "top10_buy": 0,
+    "top10_sell": 17,
+    "market_oi": 105,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 97,
+    "top5_sell": 120,
+    "top10_buy": 116,
+    "top10_sell": 135,
+    "market_oi": 135,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 15,
+    "top10_buy": 0,
+    "top10_sell": 23,
+    "market_oi": 135,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

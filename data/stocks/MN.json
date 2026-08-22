@@ -1,0 +1,91 @@
+{
+ "code": "MN",
+ "name": "三星期貨",
+ "sid": "5007",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 9,
+    "top5_sell": 9,
+    "top10_buy": 9,
+    "top10_sell": 9,
+    "market_oi": 9,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1,
+    "top10_buy": 0,
+    "top10_sell": 1,
+    "market_oi": 9,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 26,
+    "top5_sell": 30,
+    "top10_buy": 30,
+    "top10_sell": 30,
+    "market_oi": 30,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 3,
+    "top10_buy": 0,
+    "top10_sell": 3,
+    "market_oi": 30,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 10,
+    "top5_sell": 10,
+    "top10_buy": 10,
+    "top10_sell": 10,
+    "market_oi": 10,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 2,
+    "top10_buy": 0,
+    "top10_sell": 2,
+    "market_oi": 10,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 28,
+    "top5_sell": 33,
+    "top10_buy": 33,
+    "top10_sell": 33,
+    "market_oi": 33,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 6,
+    "top10_buy": 0,
+    "top10_sell": 6,
+    "market_oi": 33,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

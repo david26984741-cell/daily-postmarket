@@ -1,7 +1,7 @@
 {
  "code": "IF",
  "name": "遠百期貨",
- "sid": "",
+ "sid": "2903",
  "records": {
   "2016/07/01": [
    {
@@ -7098,6 +7098,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 0,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 69,
+    "top5_sell": 72,
+    "top10_buy": 74,
+    "top10_sell": 74,
+    "market_oi": 74,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 56,
+    "top10_buy": 0,
+    "top10_sell": 56,
+    "market_oi": 74,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 80,
+    "top5_sell": 76,
+    "top10_buy": 87,
+    "top10_sell": 86,
+    "market_oi": 87,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 55,
+    "top10_buy": 0,
+    "top10_sell": 57,
+    "market_oi": 87,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 73,
+    "top5_sell": 74,
+    "top10_buy": 78,
+    "top10_sell": 78,
+    "market_oi": 78,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 55,
+    "top10_buy": 0,
+    "top10_sell": 56,
+    "market_oi": 78,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 84,
+    "top5_sell": 84,
+    "top10_buy": 96,
+    "top10_sell": 97,
+    "market_oi": 98,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 55,
+    "top10_buy": 0,
+    "top10_sell": 57,
+    "market_oi": 98,
     "scope": "所有契約"
    }
   ]

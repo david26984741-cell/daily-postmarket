@@ -1,7 +1,7 @@
 {
  "code": "GE",
  "name": "藍天期貨",
- "sid": "",
+ "sid": "2362",
  "records": {
   "2016/07/01": [
    {
@@ -7098,6 +7098,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 0,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 11,
+    "top5_sell": 11,
+    "top10_buy": 11,
+    "top10_sell": 11,
+    "market_oi": 11,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 4,
+    "top5_sell": 3,
+    "top10_buy": 4,
+    "top10_sell": 3,
+    "market_oi": 11,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 25,
+    "top5_sell": 26,
+    "top10_buy": 29,
+    "top10_sell": 29,
+    "market_oi": 29,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 4,
+    "top5_sell": 6,
+    "top10_buy": 4,
+    "top10_sell": 6,
+    "market_oi": 29,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 28,
+    "top5_sell": 29,
+    "top10_buy": 29,
+    "top10_sell": 29,
+    "market_oi": 29,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 4,
+    "top5_sell": 23,
+    "top10_buy": 4,
+    "top10_sell": 23,
+    "market_oi": 29,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 43,
+    "top5_sell": 51,
+    "top10_buy": 52,
+    "top10_sell": 53,
+    "market_oi": 53,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 4,
+    "top5_sell": 26,
+    "top10_buy": 4,
+    "top10_sell": 26,
+    "market_oi": 53,
     "scope": "所有契約"
    }
   ]

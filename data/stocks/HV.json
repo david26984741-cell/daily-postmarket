@@ -1,7 +1,7 @@
 {
  "code": "HV",
  "name": "京城銀期貨",
- "sid": "",
+ "sid": "2809",
  "records": {
   "2016/07/01": [
    {
@@ -2352,6 +2352,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 0,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 35,
+    "top5_sell": 35,
+    "top10_buy": 36,
+    "top10_sell": 36,
+    "market_oi": 36,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 23,
+    "top10_buy": 0,
+    "top10_sell": 24,
+    "market_oi": 36,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 149,
+    "top5_sell": 135,
+    "top10_buy": 154,
+    "top10_sell": 154,
+    "market_oi": 154,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 81,
+    "top10_buy": 0,
+    "top10_sell": 91,
+    "market_oi": 154,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 36,
+    "top5_sell": 34,
+    "top10_buy": 38,
+    "top10_sell": 38,
+    "market_oi": 38,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 23,
+    "top10_buy": 0,
+    "top10_sell": 24,
+    "market_oi": 38,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 155,
+    "top5_sell": 141,
+    "top10_buy": 161,
+    "top10_sell": 160,
+    "market_oi": 161,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 83,
+    "top10_buy": 0,
+    "top10_sell": 93,
+    "market_oi": 161,
     "scope": "所有契約"
    }
   ]

@@ -1,0 +1,91 @@
+{
+ "code": "JR",
+ "name": "信昌化期貨",
+ "sid": "4725",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 18,
+    "top5_sell": 24,
+    "top10_buy": 24,
+    "top10_sell": 24,
+    "market_oi": 24,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 2,
+    "top10_buy": 0,
+    "top10_sell": 2,
+    "market_oi": 24,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 42,
+    "top5_sell": 49,
+    "top10_buy": 50,
+    "top10_sell": 50,
+    "market_oi": 50,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 6,
+    "top10_buy": 0,
+    "top10_sell": 6,
+    "market_oi": 50,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 18,
+    "top5_sell": 23,
+    "top10_buy": 23,
+    "top10_sell": 23,
+    "market_oi": 23,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1,
+    "top10_buy": 0,
+    "top10_sell": 1,
+    "market_oi": 23,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 42,
+    "top5_sell": 51,
+    "top10_buy": 51,
+    "top10_sell": 51,
+    "market_oi": 51,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 7,
+    "top10_buy": 0,
+    "top10_sell": 7,
+    "market_oi": 51,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

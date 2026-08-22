@@ -1,0 +1,91 @@
+{
+ "code": "JL",
+ "name": "洋華期貨",
+ "sid": "3622",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 59,
+    "top5_sell": 69,
+    "top10_buy": 71,
+    "top10_sell": 76,
+    "market_oi": 80,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 0,
+    "top10_sell": 3,
+    "market_oi": 80,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 68,
+    "top5_sell": 80,
+    "top10_buy": 85,
+    "top10_sell": 95,
+    "market_oi": 105,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4,
+    "top10_buy": 0,
+    "top10_sell": 7,
+    "market_oi": 105,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 56,
+    "top5_sell": 67,
+    "top10_buy": 67,
+    "top10_sell": 74,
+    "market_oi": 77,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 0,
+    "top10_sell": 3,
+    "market_oi": 77,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 61,
+    "top5_sell": 78,
+    "top10_buy": 82,
+    "top10_sell": 93,
+    "market_oi": 103,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4,
+    "top10_buy": 0,
+    "top10_sell": 7,
+    "market_oi": 103,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

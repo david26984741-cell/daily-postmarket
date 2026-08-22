@@ -1,7 +1,7 @@
 {
  "code": "KT",
  "name": "喬山期貨",
- "sid": "",
+ "sid": "1736",
  "records": {
   "2016/07/01": [
    {
@@ -7098,6 +7098,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 0,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 24,
+    "top5_sell": 24,
+    "top10_buy": 24,
+    "top10_sell": 24,
+    "market_oi": 24,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 3,
+    "top5_sell": 0,
+    "top10_buy": 3,
+    "top10_sell": 0,
+    "market_oi": 24,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 32,
+    "top5_sell": 39,
+    "top10_buy": 39,
+    "top10_sell": 39,
+    "market_oi": 39,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 3,
+    "top5_sell": 0,
+    "top10_buy": 3,
+    "top10_sell": 0,
+    "market_oi": 39,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 14,
+    "top5_sell": 16,
+    "top10_buy": 16,
+    "top10_sell": 16,
+    "market_oi": 16,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 3,
+    "top5_sell": 0,
+    "top10_buy": 3,
+    "top10_sell": 0,
+    "market_oi": 16,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 24,
+    "top5_sell": 31,
+    "top10_buy": 31,
+    "top10_sell": 31,
+    "market_oi": 31,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 3,
+    "top5_sell": 0,
+    "top10_buy": 3,
+    "top10_sell": 0,
+    "market_oi": 31,
     "scope": "所有契約"
    }
   ]

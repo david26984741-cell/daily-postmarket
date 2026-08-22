@@ -1,7 +1,7 @@
 {
  "code": "IB",
  "name": "遠東銀期貨",
- "sid": "",
+ "sid": "2845",
  "records": {
   "2016/07/01": [
    {
@@ -4998,6 +4998,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 0,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 241,
+    "top5_sell": 246,
+    "top10_buy": 298,
+    "top10_sell": 298,
+    "market_oi": 298,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 113,
+    "top5_sell": 29,
+    "top10_buy": 113,
+    "top10_sell": 29,
+    "market_oi": 298,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 415,
+    "top5_sell": 391,
+    "top10_buy": 526,
+    "top10_sell": 517,
+    "market_oi": 545,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 84,
+    "top5_sell": 169,
+    "top10_buy": 113,
+    "top10_sell": 200,
+    "market_oi": 545,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 231,
+    "top5_sell": 246,
+    "top10_buy": 288,
+    "top10_sell": 288,
+    "market_oi": 288,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 113,
+    "top5_sell": 29,
+    "top10_buy": 113,
+    "top10_sell": 29,
+    "market_oi": 288,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 410,
+    "top5_sell": 391,
+    "top10_buy": 516,
+    "top10_sell": 522,
+    "market_oi": 540,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 84,
+    "top5_sell": 169,
+    "top10_buy": 113,
+    "top10_sell": 200,
+    "market_oi": 540,
     "scope": "所有契約"
    }
   ]
