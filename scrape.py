@@ -109,7 +109,8 @@ def fetch_taifex_csv(key, date_slash):
 def fetch_txf_range(start_slash, end_slash):
     """台指期 TX 每日「結算價」— 近月連續: 取一般時段中「成交量最大」的月契約
     (結算日會自動換到次月, 與 XQ 期貨近月日線一致); 結算價缺漏時退回收盤價。
-    回傳 {date_slash: settle}。TAIFEX futDataDown 保留約三年, 單次查詢限一個月內。"""
+    回傳 {date_slash: settle}。TAIFEX futDataDown 單次查詢限一個月內;
+    資料至少回溯到 2015/01 (2026/08/22 實測), 非舊註解所稱的「約三年」。"""
     txt = http_get(TAIFEX + "futDataDown",
                    {"down_type": "1", "commodity_id": "TX",
                     "queryStartDate": start_slash, "queryEndDate": end_slash}, big5=True)

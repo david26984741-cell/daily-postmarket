@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """回補台指期(TX)近月收盤價 → data/txf.json。
-TAIFEX futDataDown 單次查詢限一個月內, 逐月抓取; 資料保留約三年。
-用法: python tools/backfill_txf.py --start 2023/07/01 --end 2026/07/16
+TAIFEX futDataDown 單次查詢限一個月內, 逐月抓取;
+資料至少回溯到 2015/01 (2026/08/22 實測), 非舊註解所稱的「約三年」。
+用法: python tools/backfill_txf.py --start 2015/01/01 --end 2026/08/21
 """
 import os, sys, time, datetime, argparse
 
