@@ -1,0 +1,91 @@
+{
+ "code": "IC",
+ "name": "大眾銀期貨",
+ "sid": "2847",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 86,
+    "top5_sell": 92,
+    "top10_buy": 92,
+    "top10_sell": 92,
+    "market_oi": 92,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 8,
+    "top10_buy": 3,
+    "top10_sell": 8,
+    "market_oi": 92,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 165,
+    "top5_sell": 188,
+    "top10_buy": 190,
+    "top10_sell": 191,
+    "market_oi": 191,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 82,
+    "top10_buy": 3,
+    "top10_sell": 82,
+    "market_oi": 191,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 91,
+    "top5_sell": 97,
+    "top10_buy": 97,
+    "top10_sell": 97,
+    "market_oi": 97,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 8,
+    "top10_buy": 3,
+    "top10_sell": 8,
+    "market_oi": 97,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 170,
+    "top5_sell": 193,
+    "top10_buy": 195,
+    "top10_sell": 196,
+    "market_oi": 196,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 82,
+    "top10_buy": 3,
+    "top10_sell": 82,
+    "market_oi": 196,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

@@ -103448,6 +103448,90 @@
     "market_oi": 347,
     "scope": "所有契約"
    }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 48,
+    "top5_sell": 60,
+    "top10_buy": 56,
+    "top10_sell": 60,
+    "market_oi": 60,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 2,
+    "top10_sell": 0,
+    "market_oi": 60,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 67,
+    "top5_sell": 84,
+    "top10_buy": 82,
+    "top10_sell": 88,
+    "market_oi": 88,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4,
+    "top10_buy": 2,
+    "top10_sell": 4,
+    "market_oi": 88,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 51,
+    "top5_sell": 69,
+    "top10_buy": 65,
+    "top10_sell": 69,
+    "market_oi": 69,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 2,
+    "top10_sell": 0,
+    "market_oi": 69,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 74,
+    "top5_sell": 99,
+    "top10_buy": 93,
+    "top10_sell": 103,
+    "market_oi": 103,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4,
+    "top10_buy": 0,
+    "top10_sell": 4,
+    "market_oi": 103,
+    "scope": "所有契約"
+   }
   ]
  }
 }

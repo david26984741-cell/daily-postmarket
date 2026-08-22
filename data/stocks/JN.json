@@ -1,6 +1,6 @@
 {
  "code": "JN",
- "name": "TPK-KY期貨",
+ "name": "F-TPK期貨",
  "sid": "3673",
  "records": {
   "2026/06/23": [
@@ -103446,6 +103446,90 @@
     "top10_buy": 188,
     "top10_sell": 744,
     "market_oi": 765,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 971,
+    "top5_sell": 1046,
+    "top10_buy": 1248,
+    "top10_sell": 1422,
+    "market_oi": 1843,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 111,
+    "top5_sell": 840,
+    "top10_buy": 111,
+    "top10_sell": 886,
+    "market_oi": 1843,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1996,
+    "top5_sell": 2060,
+    "top10_buy": 2458,
+    "top10_sell": 2586,
+    "market_oi": 3233,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1379,
+    "top10_buy": 111,
+    "top10_sell": 1642,
+    "market_oi": 3233,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 862,
+    "top5_sell": 967,
+    "top10_buy": 1141,
+    "top10_sell": 1296,
+    "market_oi": 1675,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 94,
+    "top5_sell": 782,
+    "top10_buy": 94,
+    "top10_sell": 828,
+    "market_oi": 1675,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1904,
+    "top5_sell": 1985,
+    "top10_buy": 2360,
+    "top10_sell": 2493,
+    "market_oi": 3074,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1326,
+    "top10_buy": 94,
+    "top10_sell": 1584,
+    "market_oi": 3074,
     "scope": "所有契約"
    }
   ]

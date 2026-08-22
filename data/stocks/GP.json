@@ -1,7 +1,7 @@
 {
  "code": "GP",
  "name": "國碩期貨",
- "sid": "",
+ "sid": "2406",
  "records": {
   "2017/07/10": [
    {
@@ -27678,6 +27678,90 @@
     "top10_buy": 154,
     "top10_sell": 0,
     "market_oi": 435,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 139,
+    "top5_sell": 232,
+    "top10_buy": 210,
+    "top10_sell": 258,
+    "market_oi": 265,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 44,
+    "top10_buy": 0,
+    "top10_sell": 49,
+    "market_oi": 265,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 146,
+    "top5_sell": 271,
+    "top10_buy": 235,
+    "top10_sell": 307,
+    "market_oi": 336,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 62,
+    "top10_buy": 0,
+    "top10_sell": 62,
+    "market_oi": 336,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 156,
+    "top5_sell": 237,
+    "top10_buy": 220,
+    "top10_sell": 262,
+    "market_oi": 276,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 44,
+    "top10_buy": 0,
+    "top10_sell": 49,
+    "market_oi": 276,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 165,
+    "top5_sell": 269,
+    "top10_buy": 240,
+    "top10_sell": 303,
+    "market_oi": 336,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 62,
+    "top10_buy": 0,
+    "top10_sell": 68,
+    "market_oi": 336,
     "scope": "所有契約"
    }
   ]

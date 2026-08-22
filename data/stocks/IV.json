@@ -1,7 +1,7 @@
 {
  "code": "IV",
  "name": "銘異期貨",
- "sid": "",
+ "sid": "3060",
  "records": {
   "2017/07/10": [
    {
@@ -30198,6 +30198,90 @@
     "top10_buy": 0,
     "top10_sell": 62,
     "market_oi": 131,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 379,
+    "top5_sell": 378,
+    "top10_buy": 548,
+    "top10_sell": 442,
+    "market_oi": 699,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 85,
+    "top5_sell": 0,
+    "top10_buy": 153,
+    "top10_sell": 0,
+    "market_oi": 699,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 400,
+    "top5_sell": 402,
+    "top10_buy": 583,
+    "top10_sell": 484,
+    "market_oi": 837,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 44,
+    "top5_sell": 0,
+    "top10_buy": 153,
+    "top10_sell": 0,
+    "market_oi": 837,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 378,
+    "top5_sell": 329,
+    "top10_buy": 547,
+    "top10_sell": 393,
+    "market_oi": 664,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 85,
+    "top5_sell": 0,
+    "top10_buy": 153,
+    "top10_sell": 0,
+    "market_oi": 664,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 432,
+    "top5_sell": 405,
+    "top10_buy": 615,
+    "top10_sell": 496,
+    "market_oi": 864,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 44,
+    "top5_sell": 0,
+    "top10_buy": 153,
+    "top10_sell": 0,
+    "market_oi": 864,
     "scope": "所有契約"
    }
   ]

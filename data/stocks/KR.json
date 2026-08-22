@@ -1,7 +1,7 @@
 {
  "code": "KR",
  "name": "味全期貨",
- "sid": "",
+ "sid": "1201",
  "records": {
   "2017/07/10": [
    {
@@ -15162,6 +15162,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 65,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 61,
+    "top5_sell": 41,
+    "top10_buy": 74,
+    "top10_sell": 59,
+    "market_oi": 74,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 6,
+    "top5_sell": 6,
+    "top10_buy": 11,
+    "top10_sell": 6,
+    "market_oi": 74,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 75,
+    "top5_sell": 50,
+    "top10_buy": 98,
+    "top10_sell": 76,
+    "market_oi": 101,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 6,
+    "top5_sell": 9,
+    "top10_buy": 11,
+    "top10_sell": 9,
+    "market_oi": 101,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 66,
+    "top5_sell": 41,
+    "top10_buy": 74,
+    "top10_sell": 59,
+    "market_oi": 74,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 6,
+    "top5_sell": 6,
+    "top10_buy": 11,
+    "top10_sell": 6,
+    "market_oi": 74,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 80,
+    "top5_sell": 52,
+    "top10_buy": 100,
+    "top10_sell": 77,
+    "market_oi": 102,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 6,
+    "top5_sell": 9,
+    "top10_buy": 11,
+    "top10_sell": 9,
+    "market_oi": 102,
     "scope": "所有契約"
    }
   ]

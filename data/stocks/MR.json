@@ -1,7 +1,7 @@
 {
  "code": "MR",
  "name": "南六期貨",
- "sid": "",
+ "sid": "6504",
  "records": {
   "2017/07/10": [
    {
@@ -17556,6 +17556,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 1,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 27,
+    "top5_sell": 33,
+    "top10_buy": 34,
+    "top10_sell": 35,
+    "market_oi": 35,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 2,
+    "top10_buy": 0,
+    "top10_sell": 2,
+    "market_oi": 35,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 44,
+    "top5_sell": 53,
+    "top10_buy": 55,
+    "top10_sell": 61,
+    "market_oi": 61,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4,
+    "top10_buy": 0,
+    "top10_sell": 7,
+    "market_oi": 61,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 26,
+    "top5_sell": 33,
+    "top10_buy": 34,
+    "top10_sell": 36,
+    "market_oi": 36,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 2,
+    "top10_buy": 0,
+    "top10_sell": 2,
+    "market_oi": 36,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 44,
+    "top5_sell": 58,
+    "top10_buy": 59,
+    "top10_sell": 66,
+    "market_oi": 67,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 7,
+    "top10_buy": 0,
+    "top10_sell": 10,
+    "market_oi": 67,
     "scope": "所有契約"
    }
   ]

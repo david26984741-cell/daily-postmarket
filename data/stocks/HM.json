@@ -1,7 +1,7 @@
 {
  "code": "HM",
  "name": "皇翔期貨",
- "sid": "",
+ "sid": "2545",
  "records": {
   "2017/07/10": [
    {
@@ -27678,6 +27678,90 @@
     "top10_buy": 4,
     "top10_sell": 4,
     "market_oi": 14,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 27,
+    "top5_sell": 24,
+    "top10_buy": 28,
+    "top10_sell": 28,
+    "market_oi": 28,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 1,
+    "top5_sell": 1,
+    "top10_buy": 1,
+    "top10_sell": 1,
+    "market_oi": 28,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 43,
+    "top5_sell": 39,
+    "top10_buy": 49,
+    "top10_sell": 46,
+    "market_oi": 49,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4,
+    "top10_buy": 1,
+    "top10_sell": 5,
+    "market_oi": 49,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 27,
+    "top5_sell": 25,
+    "top10_buy": 28,
+    "top10_sell": 28,
+    "market_oi": 28,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 1,
+    "top5_sell": 1,
+    "top10_buy": 1,
+    "top10_sell": 1,
+    "market_oi": 28,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 62,
+    "top5_sell": 56,
+    "top10_buy": 68,
+    "top10_sell": 65,
+    "market_oi": 68,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 14,
+    "top10_buy": 1,
+    "top10_sell": 15,
+    "market_oi": 68,
     "scope": "所有契約"
    }
   ]

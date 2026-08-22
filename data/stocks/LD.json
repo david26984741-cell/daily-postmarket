@@ -1,0 +1,91 @@
+{
+ "code": "LD",
+ "name": "建漢期貨",
+ "sid": "3062",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 44,
+    "top5_sell": 75,
+    "top10_buy": 59,
+    "top10_sell": 76,
+    "market_oi": 76,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1,
+    "top10_buy": 0,
+    "top10_sell": 1,
+    "market_oi": 76,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 51,
+    "top5_sell": 85,
+    "top10_buy": 70,
+    "top10_sell": 91,
+    "market_oi": 91,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4,
+    "top10_buy": 0,
+    "top10_sell": 5,
+    "market_oi": 91,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 39,
+    "top5_sell": 64,
+    "top10_buy": 52,
+    "top10_sell": 66,
+    "market_oi": 66,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1,
+    "top10_buy": 0,
+    "top10_sell": 1,
+    "market_oi": 66,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 51,
+    "top5_sell": 78,
+    "top10_buy": 67,
+    "top10_sell": 84,
+    "market_oi": 84,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 4,
+    "top10_buy": 0,
+    "top10_sell": 5,
+    "market_oi": 84,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

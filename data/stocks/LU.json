@@ -1,6 +1,6 @@
 {
  "code": "LU",
- "name": "臻鼎-KY期貨",
+ "name": "F-臻鼎期貨",
  "sid": "4958",
  "records": {
   "2026/06/23": [
@@ -103446,6 +103446,90 @@
     "top10_buy": 611,
     "top10_sell": 3976,
     "market_oi": 4231,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 112,
+    "top5_sell": 184,
+    "top10_buy": 144,
+    "top10_sell": 191,
+    "market_oi": 191,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 58,
+    "top10_buy": 0,
+    "top10_sell": 58,
+    "market_oi": 191,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 187,
+    "top5_sell": 266,
+    "top10_buy": 224,
+    "top10_sell": 295,
+    "market_oi": 300,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 104,
+    "top10_buy": 0,
+    "top10_sell": 114,
+    "market_oi": 300,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 112,
+    "top5_sell": 182,
+    "top10_buy": 141,
+    "top10_sell": 189,
+    "market_oi": 189,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 63,
+    "top10_buy": 0,
+    "top10_sell": 63,
+    "market_oi": 189,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 187,
+    "top5_sell": 272,
+    "top10_buy": 221,
+    "top10_sell": 296,
+    "market_oi": 302,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 135,
+    "top10_buy": 0,
+    "top10_sell": 135,
+    "market_oi": 302,
     "scope": "所有契約"
    }
   ]

@@ -1,7 +1,7 @@
 {
  "code": "IN",
  "name": "威強電期貨",
- "sid": "",
+ "sid": "3022",
  "records": {
   "2017/07/10": [
    {
@@ -32844,6 +32844,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 16,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 158,
+    "top5_sell": 232,
+    "top10_buy": 210,
+    "top10_sell": 236,
+    "market_oi": 236,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 22,
+    "top10_buy": 0,
+    "top10_sell": 22,
+    "market_oi": 236,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 172,
+    "top5_sell": 279,
+    "top10_buy": 244,
+    "top10_sell": 302,
+    "market_oi": 303,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 45,
+    "top10_buy": 0,
+    "top10_sell": 45,
+    "market_oi": 303,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 160,
+    "top5_sell": 234,
+    "top10_buy": 206,
+    "top10_sell": 240,
+    "market_oi": 240,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 22,
+    "top10_buy": 0,
+    "top10_sell": 22,
+    "market_oi": 240,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 182,
+    "top5_sell": 278,
+    "top10_buy": 244,
+    "top10_sell": 303,
+    "market_oi": 304,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 48,
+    "top10_buy": 0,
+    "top10_sell": 48,
+    "market_oi": 304,
     "scope": "所有契約"
    }
   ]

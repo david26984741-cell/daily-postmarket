@@ -1,7 +1,7 @@
 {
  "code": "MI",
  "name": "橋椿期貨",
- "sid": "",
+ "sid": "2062",
  "records": {
   "2017/07/10": [
    {
@@ -30198,6 +30198,90 @@
     "top10_buy": 3,
     "top10_sell": 42,
     "market_oi": 55,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 29,
+    "top5_sell": 38,
+    "top10_buy": 37,
+    "top10_sell": 38,
+    "market_oi": 38,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 6,
+    "top5_sell": 0,
+    "top10_buy": 6,
+    "top10_sell": 0,
+    "market_oi": 38,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 37,
+    "top5_sell": 50,
+    "top10_buy": 50,
+    "top10_sell": 52,
+    "market_oi": 52,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 6,
+    "top5_sell": 2,
+    "top10_buy": 6,
+    "top10_sell": 2,
+    "market_oi": 52,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 27,
+    "top5_sell": 33,
+    "top10_buy": 33,
+    "top10_sell": 33,
+    "market_oi": 33,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 4,
+    "top5_sell": 0,
+    "top10_buy": 4,
+    "top10_sell": 0,
+    "market_oi": 33,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 36,
+    "top5_sell": 45,
+    "top10_buy": 46,
+    "top10_sell": 47,
+    "market_oi": 47,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 2,
+    "top10_buy": 4,
+    "top10_sell": 2,
+    "market_oi": 47,
     "scope": "所有契約"
    }
   ]

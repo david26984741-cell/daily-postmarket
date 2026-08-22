@@ -1,7 +1,7 @@
 {
  "code": "HJ",
  "name": "宏盛期貨",
- "sid": "",
+ "sid": "2534",
  "records": {
   "2016/07/01": [
    {
@@ -2352,6 +2352,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 0,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 7,
+    "top5_sell": 7,
+    "top10_buy": 7,
+    "top10_sell": 7,
+    "market_oi": 7,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 6,
+    "top5_sell": 0,
+    "top10_buy": 6,
+    "top10_sell": 0,
+    "market_oi": 7,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 17,
+    "top5_sell": 17,
+    "top10_buy": 17,
+    "top10_sell": 17,
+    "market_oi": 17,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 10,
+    "top5_sell": 0,
+    "top10_buy": 10,
+    "top10_sell": 0,
+    "market_oi": 17,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 7,
+    "top5_sell": 7,
+    "top10_buy": 7,
+    "top10_sell": 7,
+    "market_oi": 7,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 6,
+    "top5_sell": 0,
+    "top10_buy": 6,
+    "top10_sell": 0,
+    "market_oi": 7,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 17,
+    "top5_sell": 17,
+    "top10_buy": 17,
+    "top10_sell": 17,
+    "market_oi": 17,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 10,
+    "top5_sell": 0,
+    "top10_buy": 10,
+    "top10_sell": 0,
+    "market_oi": 17,
     "scope": "所有契約"
    }
   ]

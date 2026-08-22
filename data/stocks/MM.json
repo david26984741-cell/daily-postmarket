@@ -1,7 +1,7 @@
 {
  "code": "MM",
  "name": "承業醫期貨",
- "sid": "",
+ "sid": "4164",
  "records": {
   "2016/07/01": [
    {
@@ -7098,6 +7098,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 0,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 11,
+    "top5_sell": 11,
+    "top10_buy": 11,
+    "top10_sell": 11,
+    "market_oi": 11,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 4,
+    "top5_sell": 0,
+    "top10_buy": 4,
+    "top10_sell": 0,
+    "market_oi": 11,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 15,
+    "top5_sell": 17,
+    "top10_buy": 18,
+    "top10_sell": 18,
+    "market_oi": 18,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 4,
+    "top5_sell": 4,
+    "top10_buy": 4,
+    "top10_sell": 4,
+    "market_oi": 18,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 9,
+    "top5_sell": 13,
+    "top10_buy": 13,
+    "top10_sell": 13,
+    "market_oi": 13,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 1,
+    "top5_sell": 0,
+    "top10_buy": 1,
+    "top10_sell": 0,
+    "market_oi": 13,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 12,
+    "top5_sell": 19,
+    "top10_buy": 17,
+    "top10_sell": 20,
+    "market_oi": 20,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 3,
+    "top10_buy": 1,
+    "top10_sell": 4,
+    "market_oi": 20,
     "scope": "所有契約"
    }
   ]

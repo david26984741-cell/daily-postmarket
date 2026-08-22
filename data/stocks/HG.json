@@ -1,0 +1,91 @@
+{
+ "code": "HG",
+ "name": "太子期貨",
+ "sid": "2511",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 71,
+    "top5_sell": 77,
+    "top10_buy": 77,
+    "top10_sell": 77,
+    "market_oi": 77,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 9,
+    "top10_buy": 4,
+    "top10_sell": 9,
+    "market_oi": 77,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 162,
+    "top5_sell": 162,
+    "top10_buy": 173,
+    "top10_sell": 173,
+    "market_oi": 173,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 61,
+    "top10_buy": 4,
+    "top10_sell": 66,
+    "market_oi": 173,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 61,
+    "top5_sell": 67,
+    "top10_buy": 67,
+    "top10_sell": 67,
+    "market_oi": 67,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 5,
+    "top10_buy": 4,
+    "top10_sell": 5,
+    "market_oi": 67,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 152,
+    "top5_sell": 151,
+    "top10_buy": 163,
+    "top10_sell": 163,
+    "market_oi": 163,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 57,
+    "top10_buy": 4,
+    "top10_sell": 62,
+    "market_oi": 163,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

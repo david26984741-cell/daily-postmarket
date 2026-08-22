@@ -1,7 +1,7 @@
 {
  "code": "ML",
  "name": "晶睿期貨",
- "sid": "",
+ "sid": "3454",
  "records": {
   "2017/07/10": [
    {
@@ -22764,6 +22764,90 @@
     "top10_buy": 1,
     "top10_sell": 2,
     "market_oi": 34,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 46,
+    "top5_sell": 42,
+    "top10_buy": 46,
+    "top10_sell": 46,
+    "market_oi": 46,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 7,
+    "top10_buy": 0,
+    "top10_sell": 8,
+    "market_oi": 46,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 63,
+    "top5_sell": 56,
+    "top10_buy": 63,
+    "top10_sell": 63,
+    "market_oi": 63,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 8,
+    "top10_buy": 0,
+    "top10_sell": 9,
+    "market_oi": 63,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 46,
+    "top5_sell": 42,
+    "top10_buy": 46,
+    "top10_sell": 46,
+    "market_oi": 46,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 7,
+    "top10_buy": 0,
+    "top10_sell": 8,
+    "market_oi": 46,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 63,
+    "top5_sell": 56,
+    "top10_buy": 63,
+    "top10_sell": 63,
+    "market_oi": 63,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 8,
+    "top10_buy": 0,
+    "top10_sell": 9,
+    "market_oi": 63,
     "scope": "所有契約"
    }
   ]

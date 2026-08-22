@@ -1,0 +1,91 @@
+{
+ "code": "MD",
+ "name": "瑞智期貨",
+ "sid": "4532",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 50,
+    "top5_sell": 60,
+    "top10_buy": 56,
+    "top10_sell": 60,
+    "market_oi": 60,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 18,
+    "top10_buy": 0,
+    "top10_sell": 18,
+    "market_oi": 60,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 95,
+    "top5_sell": 117,
+    "top10_buy": 113,
+    "top10_sell": 121,
+    "market_oi": 121,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 70,
+    "top10_buy": 0,
+    "top10_sell": 70,
+    "market_oi": 121,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 48,
+    "top5_sell": 53,
+    "top10_buy": 53,
+    "top10_sell": 53,
+    "market_oi": 53,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 1,
+    "top5_sell": 18,
+    "top10_buy": 1,
+    "top10_sell": 18,
+    "market_oi": 53,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 99,
+    "top5_sell": 113,
+    "top10_buy": 110,
+    "top10_sell": 113,
+    "market_oi": 113,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 70,
+    "top10_buy": 0,
+    "top10_sell": 70,
+    "market_oi": 113,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

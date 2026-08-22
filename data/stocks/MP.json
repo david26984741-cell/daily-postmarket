@@ -1,7 +1,7 @@
 {
  "code": "MP",
  "name": "精誠期貨",
- "sid": "",
+ "sid": "6214",
  "records": {
   "2021/01/04": [
    {
@@ -66318,6 +66318,90 @@
     "top10_buy": 3,
     "top10_sell": 8,
     "market_oi": 26,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 39,
+    "top5_sell": 55,
+    "top10_buy": 52,
+    "top10_sell": 59,
+    "market_oi": 59,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 18,
+    "top10_buy": 0,
+    "top10_sell": 21,
+    "market_oi": 59,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 46,
+    "top5_sell": 68,
+    "top10_buy": 64,
+    "top10_sell": 79,
+    "market_oi": 79,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 24,
+    "top10_buy": 0,
+    "top10_sell": 29,
+    "market_oi": 79,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 40,
+    "top5_sell": 59,
+    "top10_buy": 55,
+    "top10_sell": 64,
+    "market_oi": 64,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 24,
+    "top10_buy": 0,
+    "top10_sell": 28,
+    "market_oi": 64,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 46,
+    "top5_sell": 72,
+    "top10_buy": 67,
+    "top10_sell": 84,
+    "market_oi": 84,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 30,
+    "top10_buy": 0,
+    "top10_sell": 36,
+    "market_oi": 84,
     "scope": "所有契約"
    }
   ]

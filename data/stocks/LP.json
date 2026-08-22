@@ -1,7 +1,7 @@
 {
  "code": "LP",
  "name": "神隆期貨",
- "sid": "",
+ "sid": "1789",
  "records": {
   "2017/07/10": [
    {
@@ -15162,6 +15162,90 @@
     "top10_buy": 0,
     "top10_sell": 30,
     "market_oi": 62,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 24,
+    "top5_sell": 23,
+    "top10_buy": 33,
+    "top10_sell": 31,
+    "market_oi": 37,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 9,
+    "top10_buy": 0,
+    "top10_sell": 10,
+    "market_oi": 37,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 25,
+    "top5_sell": 29,
+    "top10_buy": 37,
+    "top10_sell": 37,
+    "market_oi": 43,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 10,
+    "top10_buy": 2,
+    "top10_sell": 11,
+    "market_oi": 43,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 25,
+    "top5_sell": 22,
+    "top10_buy": 32,
+    "top10_sell": 30,
+    "market_oi": 36,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 9,
+    "top10_buy": 0,
+    "top10_sell": 12,
+    "market_oi": 36,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 25,
+    "top5_sell": 28,
+    "top10_buy": 36,
+    "top10_sell": 36,
+    "market_oi": 42,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 10,
+    "top10_buy": 2,
+    "top10_sell": 13,
+    "market_oi": 42,
     "scope": "所有契約"
    }
   ]

@@ -1,7 +1,7 @@
 {
  "code": "HN",
  "name": "日勝生期貨",
- "sid": "",
+ "sid": "2547",
  "records": {
   "2016/07/01": [
    {
@@ -2352,6 +2352,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 0,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 146,
+    "top5_sell": 166,
+    "top10_buy": 174,
+    "top10_sell": 194,
+    "market_oi": 209,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 29,
+    "top5_sell": 29,
+    "top10_buy": 29,
+    "top10_sell": 29,
+    "market_oi": 209,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 342,
+    "top5_sell": 340,
+    "top10_buy": 403,
+    "top10_sell": 454,
+    "market_oi": 507,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 29,
+    "top5_sell": 104,
+    "top10_buy": 37,
+    "top10_sell": 104,
+    "market_oi": 507,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 146,
+    "top5_sell": 173,
+    "top10_buy": 177,
+    "top10_sell": 199,
+    "market_oi": 211,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 29,
+    "top5_sell": 29,
+    "top10_buy": 29,
+    "top10_sell": 29,
+    "market_oi": 211,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 340,
+    "top5_sell": 351,
+    "top10_buy": 410,
+    "top10_sell": 465,
+    "market_oi": 516,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 29,
+    "top5_sell": 109,
+    "top10_buy": 37,
+    "top10_sell": 109,
+    "market_oi": 516,
     "scope": "所有契約"
    }
   ]

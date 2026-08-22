@@ -1,6 +1,6 @@
 {
  "code": "LV",
- "name": "中租-KY期貨",
+ "name": "F-中租期貨",
  "sid": "5871",
  "records": {
   "2026/06/23": [
@@ -103446,6 +103446,90 @@
     "top10_buy": 75,
     "top10_sell": 542,
     "market_oi": 551,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 205,
+    "top5_sell": 406,
+    "top10_buy": 260,
+    "top10_sell": 437,
+    "market_oi": 455,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 17,
+    "top5_sell": 126,
+    "top10_buy": 17,
+    "top10_sell": 131,
+    "market_oi": 455,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1036,
+    "top5_sell": 1358,
+    "top10_buy": 1132,
+    "top10_sell": 1408,
+    "market_oi": 1439,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1000,
+    "top10_buy": 0,
+    "top10_sell": 1005,
+    "market_oi": 1439,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 160,
+    "top5_sell": 361,
+    "top10_buy": 214,
+    "top10_sell": 397,
+    "market_oi": 410,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 17,
+    "top5_sell": 80,
+    "top10_buy": 17,
+    "top10_sell": 94,
+    "market_oi": 410,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1022,
+    "top5_sell": 1354,
+    "top10_buy": 1127,
+    "top10_sell": 1410,
+    "market_oi": 1436,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 1041,
+    "top10_buy": 0,
+    "top10_sell": 1051,
+    "market_oi": 1436,
     "scope": "所有契約"
    }
   ]

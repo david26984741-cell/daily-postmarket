@@ -1,0 +1,91 @@
+{
+ "code": "HZ",
+ "name": "台壽保期貨",
+ "sid": "2833",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 227,
+    "top5_sell": 273,
+    "top10_buy": 281,
+    "top10_sell": 305,
+    "market_oi": 305,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 30,
+    "top10_buy": 0,
+    "top10_sell": 34,
+    "market_oi": 305,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1293,
+    "top5_sell": 1989,
+    "top10_buy": 1762,
+    "top10_sell": 2096,
+    "market_oi": 2132,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 787,
+    "top10_buy": 0,
+    "top10_sell": 846,
+    "market_oi": 2132,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 227,
+    "top5_sell": 274,
+    "top10_buy": 281,
+    "top10_sell": 304,
+    "market_oi": 304,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 30,
+    "top10_buy": 0,
+    "top10_sell": 34,
+    "market_oi": 304,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1293,
+    "top5_sell": 1990,
+    "top10_buy": 1762,
+    "top10_sell": 2096,
+    "market_oi": 2127,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 787,
+    "top10_buy": 0,
+    "top10_sell": 845,
+    "market_oi": 2127,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

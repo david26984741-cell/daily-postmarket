@@ -2464,10 +2464,12 @@
   "2016/07/06",
   "2016/07/05",
   "2016/07/04",
-  "2016/07/01"
+  "2016/07/01",
+  "2014/01/03",
+  "2014/01/02"
  ],
  "latest_date": "2026/08/21",
- "updated_at": "2026-08-21T22:08:25+08:00",
+ "updated_at": "2026-08-22T22:07:16+08:00",
  "stocks": [
   {
    "code": "CA",
@@ -23911,6 +23913,22 @@
    "kline": "ok (269 檔)",
    "fkline": "ok (297 檔 · 每日行情(全部))",
    "txf": "ok"
+  },
+  "2014/01/02": {
+   "options_foreign": "資料未更新",
+   "options_dealer": "資料未更新",
+   "foreign_fut_spot": "資料未更新",
+   "large_opt": "ok",
+   "large_fut_txf": "ok",
+   "stocks": "ok (235 檔)"
+  },
+  "2014/01/03": {
+   "options_foreign": "資料未更新",
+   "options_dealer": "資料未更新",
+   "foreign_fut_spot": "資料未更新",
+   "large_opt": "ok",
+   "large_fut_txf": "ok",
+   "stocks": "ok (235 檔)"
   }
  }
 }

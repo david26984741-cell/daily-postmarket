@@ -1,0 +1,91 @@
+{
+ "code": "LK",
+ "name": "致新期貨",
+ "sid": "8081",
+ "records": {
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 10,
+    "top5_sell": 13,
+    "top10_buy": 13,
+    "top10_sell": 13,
+    "market_oi": 13,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 3,
+    "top5_sell": 0,
+    "top10_buy": 3,
+    "top10_sell": 0,
+    "market_oi": 13,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 20,
+    "top5_sell": 27,
+    "top10_buy": 25,
+    "top10_sell": 27,
+    "market_oi": 27,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 3,
+    "top5_sell": 6,
+    "top10_buy": 3,
+    "top10_sell": 6,
+    "market_oi": 27,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 10,
+    "top5_sell": 14,
+    "top10_buy": 14,
+    "top10_sell": 14,
+    "market_oi": 14,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 3,
+    "top5_sell": 1,
+    "top10_buy": 3,
+    "top10_sell": 1,
+    "market_oi": 14,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 33,
+    "top5_sell": 40,
+    "top10_buy": 39,
+    "top10_sell": 43,
+    "market_oi": 43,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 3,
+    "top5_sell": 13,
+    "top10_buy": 3,
+    "top10_sell": 13,
+    "market_oi": 43,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}

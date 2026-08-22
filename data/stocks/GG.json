@@ -1,7 +1,7 @@
 {
  "code": "GG",
  "name": "佳能期貨",
- "sid": "",
+ "sid": "2374",
  "records": {
   "2016/07/01": [
    {
@@ -7098,6 +7098,90 @@
     "top10_buy": 0,
     "top10_sell": 0,
     "market_oi": 0,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 17,
+    "top5_sell": 19,
+    "top10_buy": 19,
+    "top10_sell": 19,
+    "market_oi": 19,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 8,
+    "top5_sell": 0,
+    "top10_buy": 8,
+    "top10_sell": 0,
+    "market_oi": 19,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 21,
+    "top5_sell": 23,
+    "top10_buy": 23,
+    "top10_sell": 23,
+    "market_oi": 23,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 7,
+    "top5_sell": 0,
+    "top10_buy": 8,
+    "top10_sell": 0,
+    "market_oi": 23,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 21,
+    "top5_sell": 23,
+    "top10_buy": 23,
+    "top10_sell": 23,
+    "market_oi": 23,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 7,
+    "top5_sell": 0,
+    "top10_buy": 8,
+    "top10_sell": 0,
+    "market_oi": 23,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 26,
+    "top5_sell": 28,
+    "top10_buy": 28,
+    "top10_sell": 28,
+    "market_oi": 28,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 7,
+    "top5_sell": 0,
+    "top10_buy": 8,
+    "top10_sell": 0,
+    "market_oi": 28,
     "scope": "所有契約"
    }
   ]

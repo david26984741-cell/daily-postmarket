@@ -1,7 +1,7 @@
 {
  "code": "JD",
  "name": "昱晶期貨",
- "sid": "",
+ "sid": "3514",
  "records": {
   "2017/07/10": [
    {
@@ -22680,6 +22680,90 @@
     "top10_buy": 10,
     "top10_sell": 166,
     "market_oi": 394,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/02": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 814,
+    "top5_sell": 932,
+    "top10_buy": 882,
+    "top10_sell": 944,
+    "market_oi": 944,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 605,
+    "top10_buy": 0,
+    "top10_sell": 608,
+    "market_oi": 944,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 906,
+    "top5_sell": 1090,
+    "top10_buy": 983,
+    "top10_sell": 1111,
+    "market_oi": 1117,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 605,
+    "top10_buy": 0,
+    "top10_sell": 611,
+    "market_oi": 1117,
+    "scope": "所有契約"
+   }
+  ],
+  "2014/01/03": [
+   {
+    "month": "201401",
+    "type": "0",
+    "top5_buy": 821,
+    "top5_sell": 932,
+    "top10_buy": 890,
+    "top10_sell": 941,
+    "market_oi": 941,
+    "scope": "當月"
+   },
+   {
+    "month": "201401",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 605,
+    "top10_buy": 0,
+    "top10_sell": 605,
+    "market_oi": 941,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 933,
+    "top5_sell": 1115,
+    "top10_buy": 1013,
+    "top10_sell": 1135,
+    "market_oi": 1139,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 605,
+    "top10_buy": 12,
+    "top10_sell": 608,
+    "market_oi": 1139,
     "scope": "所有契約"
    }
   ]
