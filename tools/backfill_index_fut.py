@@ -17,6 +17,10 @@
 資料範圍: 期交所本表自 2004/07/01 起提供 (2026/08/22 實測, 2004/06/30 及更早皆回空)。
           股票期貨 2010/01 才掛牌, 在此之前只有指數與商品契約。
 
+補行交易日: 台灣連假前後會補上班、週六照常開盤。本工具「不」用 scrape.is_trading_day
+            (它把所有週六一律當非交易日), 改成只跳過週日與 holidays.txt, 週六交給來源判斷。
+            詳見 should_try() 的說明與那 15 天的清單。
+
 用法:
     python tools/backfill_index_fut.py --start 2004/07/01 --end 2026/08/21
     python tools/backfill_index_fut.py --start 2015/01/01 --end 2015/12/31 --force
@@ -40,6 +44,40 @@ def daterange(a, b):
     while d <= e:
         yield d.strftime("%Y/%m/%d")
         d += datetime.timedelta(days=1)
+
+
+def should_try(date_slash):
+    """是否值得向來源查詢這一天。
+
+    ⚠ 刻意「不」使用 scrape.is_trading_day():
+        它的規則是 `if d.weekday() >= 5: return False`, 也就是所有週六日一律
+        視為非交易日。但台灣有「補行交易日」—— 連假前後補上班的週六照常開盤。
+        2026/08/22 實測: 2004/07~2026/08 之間有 15 個這樣的週六
+        (2010/02/06、2012/02/04、2012/03/03、2012/12/22、2013/02/23、2013/09/14、
+         2014/12/27、2016/01/30、2016/06/04、2016/09/10、2017/02/18、2017/06/03、
+         2017/09/30、2018/03/31、2018/12/22)，第一次回補時整批被跳過。
+        發現方式: 拿 data/txk/(來自 futDataDown, 不做星期判斷) 的日期當對照,
+        找出「日K有、大額缺」的日子。
+
+    因此這裡只跳過「週日」與 holidays.txt 明列的休市日, **週六一律問來源** ——
+    真的沒開盤, csv_date_ok 會擋掉, 只是多花一次請求。
+    代價: 22 年約多 1,150 次週六請求, 約多 20 分鐘, 換取零漏日。
+
+    註: 使用者決定不動 scrape.is_trading_day 與 daily.yml 的 cron(週一~五),
+        所以「每日排程」仍然抓不到補行交易日 —— 那些日子要靠本工具事後回補。
+    """
+    global _HOLIDAYS
+    if _HOLIDAYS is None:                      # 只讀一次, 別在 8,000 次迴圈裡重複開檔
+        _HOLIDAYS = scrape.load_holidays()
+    d = datetime.datetime.strptime(date_slash, "%Y/%m/%d").date()
+    if d.weekday() == 6:                       # 週日: 從無交易, 直接跳過
+        return False
+    if date_slash in _HOLIDAYS:                # 明列的休市日
+        return False
+    return True                                # 含週六 —— 交給來源判斷
+
+
+_HOLIDAYS = None
 
 
 def year_path(year):
@@ -89,9 +127,8 @@ def main():
     t0 = time.time()
 
     for d in daterange(a.start, a.end):
-        trading, why = scrape.is_trading_day(d)
-        if not trading:
-            continue                       # 週末 / holidays.txt, 不計入統計也不印
+        if not should_try(d):
+            continue                       # 週日 / holidays.txt, 不計入統計也不印
 
         doc = load_year(d[:4], cache)
         if (not a.force) and d in doc["records"]:
