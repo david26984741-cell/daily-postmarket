@@ -9255,6 +9255,40 @@
     "net_amt": -41639443960,
     "unit": "外資及陸資(不含外資自營商)"
    }
+  },
+  "2026/08/20": {
+   "fut": {
+    "long_oi_lots": 6959,
+    "long_oi_amt": 62500213,
+    "short_oi_lots": 89382,
+    "short_oi_amt": 802722542,
+    "net_oi_lots": -82423,
+    "net_oi_amt": -740222329,
+    "identity": "外資及陸資"
+   },
+   "spot": {
+    "buy_amt": 344698505243,
+    "sell_amt": 337380870875,
+    "net_amt": 7317634368,
+    "unit": "外資及陸資(不含外資自營商)"
+   }
+  },
+  "2026/08/21": {
+   "fut": {
+    "long_oi_lots": 6735,
+    "long_oi_amt": 60805243,
+    "short_oi_lots": 89329,
+    "short_oi_amt": 806446757,
+    "net_oi_lots": -82594,
+    "net_oi_amt": -745641514,
+    "identity": "外資及陸資"
+   },
+   "spot": {
+    "buy_amt": 318264155721,
+    "sell_amt": 289958734736,
+    "net_amt": 28305420985,
+    "unit": "外資及陸資(不含外資自營商)"
+   }
   }
  }
 }

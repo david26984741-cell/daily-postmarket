@@ -1,5 +1,7 @@
 {
  "dates": [
+  "2026/08/21",
+  "2026/08/20",
   "2026/08/19",
   "2026/08/18",
   "2026/08/17",
@@ -2464,8 +2466,8 @@
   "2016/07/04",
   "2016/07/01"
  ],
- "latest_date": "2026/08/19",
- "updated_at": "2026-08-19T22:09:55+08:00",
+ "latest_date": "2026/08/21",
+ "updated_at": "2026-08-21T22:08:25+08:00",
  "stocks": [
   {
    "code": "CA",
@@ -23886,6 +23888,28 @@
    "stocks": "ok (320 檔)",
    "kline": "ok (269 檔)",
    "fkline": "ok (311 檔 · 每日行情(全部))",
+   "txf": "ok"
+  },
+  "2026/08/20": {
+   "options_foreign": "ok",
+   "options_dealer": "ok",
+   "foreign_fut_spot": "ok",
+   "large_opt": "ok",
+   "large_fut_txf": "ok",
+   "stocks": "ok (320 檔)",
+   "kline": "ok (269 檔)",
+   "fkline": "ok (301 檔 · 每日行情(全部))",
+   "txf": "ok"
+  },
+  "2026/08/21": {
+   "options_foreign": "ok",
+   "options_dealer": "ok",
+   "foreign_fut_spot": "ok",
+   "large_opt": "ok",
+   "large_fut_txf": "ok",
+   "stocks": "ok (320 檔)",
+   "kline": "ok (269 檔)",
+   "fkline": "ok (297 檔 · 每日行情(全部))",
    "txf": "ok"
   }
  }

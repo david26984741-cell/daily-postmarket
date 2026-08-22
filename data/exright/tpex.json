@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-08-19",
+ "updated_at": "2026-08-20",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -86573,6 +86573,78 @@
    "pre_close": 44.9,
    "ref_price": 42.9,
    "value": 2.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/21",
+   "sid": "00679B",
+   "name": "元大美債20年",
+   "pre_close": 26.36,
+   "ref_price": 26.08,
+   "value": 0.28,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/21",
+   "sid": "00786B",
+   "name": "元大10年IG銀行債",
+   "pre_close": 32.46,
+   "ref_price": 32.08,
+   "value": 0.38,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/21",
+   "sid": "00967B",
+   "name": "元大優息美債",
+   "pre_close": 9.02,
+   "ref_price": 8.99,
+   "value": 0.033,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/21",
+   "sid": "00968B",
+   "name": "元大優息投等債",
+   "pre_close": 9.09,
+   "ref_price": 9.05,
+   "value": 0.043,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/21",
+   "sid": "2066",
+   "name": "世德",
+   "pre_close": 58.0,
+   "ref_price": 55.85,
+   "value": 2.15,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/21",
+   "sid": "3147",
+   "name": "大綜",
+   "pre_close": 224.0,
+   "ref_price": 217.5,
+   "value": 6.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/21",
+   "sid": "4430",
+   "name": "耀億",
+   "pre_close": 19.0,
+   "ref_price": 18.5,
+   "value": 0.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/21",
+   "sid": "7547",
+   "name": "碩網",
+   "pre_close": 54.4,
+   "ref_price": 52.62,
+   "value": 1.778005,
    "type": "除息"
   }
  ]
