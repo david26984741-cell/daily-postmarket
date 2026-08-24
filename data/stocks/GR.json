@@ -1,6 +1,6 @@
 {
  "code": "GR",
- "name": "京元電期貨",
+ "name": "京元電子期貨",
  "sid": "2449",
  "records": {
   "2026/06/23": [
@@ -103530,6 +103530,48 @@
     "top10_buy": 7,
     "top10_sell": 58,
     "market_oi": 99,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/08/24": [
+   {
+    "month": "202609",
+    "type": "0",
+    "top5_buy": 1360,
+    "top5_sell": 2973,
+    "top10_buy": 1799,
+    "top10_sell": 3213,
+    "market_oi": 3643,
+    "scope": "當月"
+   },
+   {
+    "month": "202609",
+    "type": "1",
+    "top5_buy": 1360,
+    "top5_sell": 2973,
+    "top10_buy": 1435,
+    "top10_sell": 3213,
+    "market_oi": 3643,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 1379,
+    "top5_sell": 3203,
+    "top10_buy": 1860,
+    "top10_sell": 3618,
+    "market_oi": 3727,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 1379,
+    "top5_sell": 3203,
+    "top10_buy": 1626,
+    "top10_sell": 3618,
+    "market_oi": 3727,
     "scope": "所有契約"
    }
   ]

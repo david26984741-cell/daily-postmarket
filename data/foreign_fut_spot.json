@@ -9289,6 +9289,18 @@
     "net_amt": 28305420985,
     "unit": "外資及陸資(不含外資自營商)"
    }
+  },
+  "2026/08/24": {
+   "fut": {
+    "long_oi_lots": 6842,
+    "long_oi_amt": 61227091,
+    "short_oi_lots": 89371,
+    "short_oi_amt": 799717724,
+    "net_oi_lots": -82529,
+    "net_oi_amt": -738490633,
+    "identity": "外資及陸資"
+   },
+   "spot": null
   }
  }
 }

@@ -1,6 +1,6 @@
 {
  "code": "FY",
- "name": "光磊期貨",
+ "name": "台亞期貨",
  "sid": "2340",
  "records": {
   "2026/06/23": [
@@ -103530,6 +103530,48 @@
     "top10_buy": 0,
     "top10_sell": 45,
     "market_oi": 268,
+    "scope": "所有契約"
+   }
+  ],
+  "2026/08/24": [
+   {
+    "month": "202609",
+    "type": "0",
+    "top5_buy": 411,
+    "top5_sell": 676,
+    "top10_buy": 581,
+    "top10_sell": 681,
+    "market_oi": 681,
+    "scope": "當月"
+   },
+   {
+    "month": "202609",
+    "type": "1",
+    "top5_buy": 411,
+    "top5_sell": 666,
+    "top10_buy": 527,
+    "top10_sell": 667,
+    "market_oi": 681,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 411,
+    "top5_sell": 677,
+    "top10_buy": 581,
+    "top10_sell": 682,
+    "market_oi": 682,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 411,
+    "top5_sell": 667,
+    "top10_buy": 527,
+    "top10_sell": 668,
+    "market_oi": 682,
     "scope": "所有契約"
    }
   ]
