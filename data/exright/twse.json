@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-08-20",
+ "updated_at": "2026-08-24",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -98021,6 +98021,150 @@
    "pre_close": 146.0,
    "ref_price": 141.57,
    "value": 4.426,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/24",
+   "sid": "1454",
+   "name": "台富",
+   "pre_close": 12.4,
+   "ref_price": 12.3,
+   "value": 0.1,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/24",
+   "sid": "1737",
+   "name": "臺鹽",
+   "pre_close": 32.5,
+   "ref_price": 31.1,
+   "value": 1.4,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/24",
+   "sid": "2413",
+   "name": "環科",
+   "pre_close": 43.8,
+   "ref_price": 43.3,
+   "value": 0.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/24",
+   "sid": "2468",
+   "name": "華經",
+   "pre_close": 35.05,
+   "ref_price": 34.05,
+   "value": 1.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/24",
+   "sid": "2484",
+   "name": "希華",
+   "pre_close": 76.5,
+   "ref_price": 75.8,
+   "value": 0.7,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/24",
+   "sid": "2527",
+   "name": "宏璟",
+   "pre_close": 44.4,
+   "ref_price": 42.9,
+   "value": 1.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/24",
+   "sid": "4746",
+   "name": "台耀",
+   "pre_close": 53.9,
+   "ref_price": 50.9,
+   "value": 3.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/24",
+   "sid": "9958",
+   "name": "世紀鋼",
+   "pre_close": 102.0,
+   "ref_price": 100.57,
+   "value": 1.423772,
+   "type": "權"
+  },
+  {
+   "date": "2026/08/25",
+   "sid": "00907",
+   "name": "永豐優息存股",
+   "pre_close": 17.47,
+   "ref_price": 17.23,
+   "value": 0.24,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/25",
+   "sid": "1722",
+   "name": "台肥",
+   "pre_close": 46.2,
+   "ref_price": 44.2,
+   "value": 2.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/25",
+   "sid": "2012",
+   "name": "春雨",
+   "pre_close": 14.95,
+   "ref_price": 14.65,
+   "value": 0.3,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/25",
+   "sid": "2201",
+   "name": "裕隆",
+   "pre_close": 29.1,
+   "ref_price": 28.54,
+   "value": 0.56,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/25",
+   "sid": "5284",
+   "name": "jpp-KY",
+   "pre_close": 318.5,
+   "ref_price": 315.7,
+   "value": 2.795022,
+   "type": "權"
+  },
+  {
+   "date": "2026/08/25",
+   "sid": "5534",
+   "name": "長虹",
+   "pre_close": 80.2,
+   "ref_price": 75.13,
+   "value": 5.063943,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/25",
+   "sid": "6873",
+   "name": "泓德能源",
+   "pre_close": 68.6,
+   "ref_price": 66.06,
+   "value": 2.537729,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/25",
+   "sid": "9921",
+   "name": "巨大",
+   "pre_close": 104.0,
+   "ref_price": 102.18,
+   "value": 1.818553,
    "type": "息"
   }
  ]
