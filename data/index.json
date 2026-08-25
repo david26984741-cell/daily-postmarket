@@ -2471,7 +2471,7 @@
   "2014/01/02"
  ],
  "latest_date": "2026/08/25",
- "updated_at": "2026-08-25T14:51:21+08:00",
+ "updated_at": "2026-08-25T15:16:40+08:00",
  "stocks": [
   {
    "code": "CA",
@@ -23878,12 +23878,12 @@
   "2026/08/25": {
    "options_foreign": "ok",
    "options_dealer": "ok",
-   "foreign_fut_spot": "partial",
+   "foreign_fut_spot": "ok",
    "large_opt": "ok",
    "large_fut_txf": "ok",
    "stocks": "ok (306 檔)",
    "large_fut_index": "ok (17 契約)",
-   "kline": "ok (285 檔)",
+   "kline": "ok (337 檔)",
    "fkline": "ok (293 檔 · 每日行情(全部))",
    "txf": "ok",
    "txk": "ok (5 商品, 4 含夜盤)"
