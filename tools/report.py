@@ -396,7 +396,78 @@ def send(subject, html, text, shots=None):
     return True
 
 
+# 影響信件內容的資料檔:①~④ 附圖由 charts.py 讀這四個, 報告表格與 ⑤~⑧ 排行圖讀 rank.json。
+# (⑨ 選擇權籌碼是 runner 即時抓、不進 repo, 無法納入指紋, 也不影響「資料補齊要重寄」的判斷。)
+SIG_FILES = ["foreign_fut_spot.json", "options_foreign.json",
+             "options_dealer.json", "large_fut_txf.json"]
+
+
+def content_sig():
+    """當日資料的「內容指紋」— 給 report.yml 當防重複快取的一部分。
+
+    為什麼需要:原本防重複只看「資料日期」, 所以 15:35 主班次抓不到證交所現貨(常見:
+    BFI82U 公布得比 15:35 晚)就先寄了一封缺圖的信, 21:35 備援補到資料後
+    因為「今天寄過了」而不再寄 —— 使用者永遠只收到殘缺那封, 而且網站是對的、信是錯的。
+    把資料本身納入指紋後:資料有補齊 → 指紋變 → 重寄;資料沒變 → 指紋同 → 不重寄。
+
+    只取「當日那一筆」而非整檔, 這樣歷史回補不會誤觸重寄。
+    rank.json 只取 date 與筆數 —— 整份 hash 太敏感(重建時的細微差異會造成無謂重寄)。
+    """
+    import hashlib
+    parts = []
+    try:
+        rk = json.load(open(os.path.join(DATA, "rank.json"), encoding="utf-8"))
+        date = rk.get("date", "")
+        parts += ["rank", date, str(len(rk.get("rows") or []))]
+    except Exception:
+        return "nodata"
+    for fn in SIG_FILES:
+        rec = None
+        try:
+            d = json.load(open(os.path.join(DATA, fn), encoding="utf-8"))
+            rec = (d.get("records") or {}).get(date)
+        except Exception:
+            pass
+        parts.append(fn + "=" + json.dumps(rec, sort_keys=True, ensure_ascii=False))
+    return hashlib.sha256("|".join(parts).encode("utf-8")).hexdigest()[:12]
+
+
+def data_gaps():
+    """當日還缺哪些資料 — 標在信件標題上。
+
+    修好防重複之後, 資料不齊的日子會收到兩封信(先殘缺、補齊後再一封)。
+    沒有標記的話兩封長得一樣, 分不出哪封才是完整的。
+    """
+    try:
+        rk = json.load(open(os.path.join(DATA, "rank.json"), encoding="utf-8"))
+        date = rk.get("date", "")
+    except Exception:
+        return ["排行資料"]
+    gaps = []
+    for fn, label in [("foreign_fut_spot.json", "外資期貨現貨"),
+                      ("options_foreign.json", "外資選擇權"),
+                      ("options_dealer.json", "自營選擇權"),
+                      ("large_fut_txf.json", "大額交易人期貨")]:
+        try:
+            rec = (json.load(open(os.path.join(DATA, fn), encoding="utf-8"))
+                   .get("records") or {}).get(date)
+        except Exception:
+            rec = None
+        if not rec:
+            gaps.append(label)
+        elif fn == "foreign_fut_spot.json":
+            # 這一項最常出包:證交所 BFI82U 公布得比 15:35 主班次晚, 期貨有、現貨還沒有
+            if not rec.get("spot"):
+                gaps.append("外資現貨")
+            if not rec.get("fut"):
+                gaps.append("外資期貨")
+    return gaps
+
+
 def main():
+    if "--sig" in sys.argv:          # 給 workflow 取指紋用, 不做其他事
+        print(content_sig())
+        return
     rank = json.load(open(os.path.join(DATA, "rank.json"), encoding="utf-8"))
     date = rank.get("date", "")
     fill_samt5(rank)
@@ -410,7 +481,10 @@ def main():
         print("\n[DRY_RUN] 不寄信")
         return
     n = sum(len(r) for _, _, _, r, _ in blocks)
-    send(f"[股期報告] {date} ・ {len(blocks)} 張排行", html, text, shots)
+    gaps = data_gaps()
+    # 資料補齊後會再寄一封, 標題沒有「⚠缺」的那封才是完整版
+    tag = ("　⚠缺:" + "、".join(gaps)) if gaps else ""
+    send(f"[股期報告] {date} ・ {len(blocks)} 張排行{tag}", html, text, shots)
 
 
 if __name__ == "__main__":

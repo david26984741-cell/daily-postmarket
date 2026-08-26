@@ -41,17 +41,23 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: 讀取資料日期
+      - name: 讀取資料日期與內容指紋
         id: d
         run: |
           echo "date=$(python -c "import json;print(json.load(open('data/rank.json'))['date'].replace('/','-'))")" >> $GITHUB_OUTPUT
+          echo "sig=$(python tools/report.py --sig)" >> $GITHUB_OUTPUT
 
-      - name: 防重複 (同一資料日期只寄一次)
+      # 防重複的 key 同時看「資料日期」與「內容指紋」:
+      #   同一天資料沒變 → 指紋相同 → 快取命中 → 不重寄 (主班次+備援不會各寄一封)
+      #   同一天資料補齊 → 指紋改變 → 快取落空 → 重寄一封正確的
+      # 為什麼要這樣:15:35 主班次常抓不到證交所現貨(BFI82U 公布得比較晚), 先寄了缺圖的信;
+      # 21:35 備援補到資料後, 舊做法會因為「今天寄過了」而不再寄 —— 網站是對的、信卻永遠是錯的。
+      - name: 防重複 (同一份資料只寄一次;資料有更新則重寄)
         id: sent
         uses: actions/cache@v4
         with:
           path: .sent
-          key: report-sent-${{ steps.d.outputs.date }}
+          key: report-sent-${{ steps.d.outputs.date }}-${{ steps.d.outputs.sig }}
 
       # 相依套件快取: pip 輪子 + Playwright 的 Chromium(約 150MB)。
       # 不快取的話每天重下, 慢的日子整步驟要 9 分鐘以上 (2026/08/19 就是這樣被 timeout 砍掉)。
