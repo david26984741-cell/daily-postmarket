@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-08-24",
+ "updated_at": "2026-08-26",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -86843,6 +86843,213 @@
    "pre_close": 19.55,
    "ref_price": 18.95,
    "value": 0.6,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/26",
+   "sid": "3128",
+   "name": "昇銳",
+   "pre_close": 22.95,
+   "ref_price": 21.27,
+   "value": 1.676415,
+   "type": "除權息"
+  },
+  {
+   "date": "2026/08/26",
+   "sid": "3234",
+   "name": "光環",
+   "pre_close": 182.5,
+   "ref_price": 173.9,
+   "value": 8.598558,
+   "type": "除權"
+  },
+  {
+   "date": "2026/08/26",
+   "sid": "3287",
+   "name": "廣寰科",
+   "pre_close": 39.0,
+   "ref_price": 37.5,
+   "value": 1.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/26",
+   "sid": "6186",
+   "name": "新潤",
+   "pre_close": 33.65,
+   "ref_price": 32.92,
+   "value": 0.726287,
+   "type": "除權"
+  },
+  {
+   "date": "2026/08/26",
+   "sid": "6612",
+   "name": "奈米醫材",
+   "pre_close": 73.5,
+   "ref_price": 66.5,
+   "value": 7.003185,
+   "type": "除權息"
+  },
+  {
+   "date": "2026/08/26",
+   "sid": "8084",
+   "name": "巨虹",
+   "pre_close": 46.9,
+   "ref_price": 46.12,
+   "value": 0.782883,
+   "type": "除權"
+  },
+  {
+   "date": "2026/08/26",
+   "sid": "8410",
+   "name": "森田",
+   "pre_close": 32.0,
+   "ref_price": 30.4,
+   "value": 1.6,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "2718",
+   "name": "全心投控",
+   "pre_close": 49.35,
+   "ref_price": 45.28,
+   "value": 4.070014,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "3236",
+   "name": "千如",
+   "pre_close": 43.9,
+   "ref_price": 43.4,
+   "value": 0.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "3558",
+   "name": "神準",
+   "pre_close": 130.0,
+   "ref_price": 127.0,
+   "value": 3.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "4303",
+   "name": "信立",
+   "pre_close": 54.6,
+   "ref_price": 38.29,
+   "value": 16.314286,
+   "type": "除權息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "4706",
+   "name": "大恭",
+   "pre_close": 32.6,
+   "ref_price": 32.3,
+   "value": 0.3,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "4707",
+   "name": "磐亞",
+   "pre_close": 34.65,
+   "ref_price": 33.56,
+   "value": 1.089024,
+   "type": "除權息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "5202",
+   "name": "力新",
+   "pre_close": 12.05,
+   "ref_price": 11.85,
+   "value": 0.2,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "5287",
+   "name": "數字",
+   "pre_close": 154.0,
+   "ref_price": 135.64,
+   "value": 18.357892,
+   "type": "除權息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "5289",
+   "name": "宜鼎",
+   "pre_close": 1500.0,
+   "ref_price": 1454.19,
+   "value": 45.806767,
+   "type": "除權息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "6221",
+   "name": "晉泰",
+   "pre_close": 23.05,
+   "ref_price": 21.85,
+   "value": 1.199851,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "6227",
+   "name": "茂綸",
+   "pre_close": 118.5,
+   "ref_price": 114.0,
+   "value": 4.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "6261",
+   "name": "久元",
+   "pre_close": 82.4,
+   "ref_price": 79.9,
+   "value": 2.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "6624",
+   "name": "萬年清",
+   "pre_close": 42.0,
+   "ref_price": 41.71,
+   "value": 0.287591,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "6637",
+   "name": "醫影",
+   "pre_close": 62.7,
+   "ref_price": 58.2,
+   "value": 4.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "7728",
+   "name": "光焱科技",
+   "pre_close": 633.0,
+   "ref_price": 626.73,
+   "value": 6.267336,
+   "type": "除權"
+  },
+  {
+   "date": "2026/08/27",
+   "sid": "8941",
+   "name": "關中",
+   "pre_close": 44.5,
+   "ref_price": 43.0,
+   "value": 1.5,
    "type": "除息"
   }
  ]
