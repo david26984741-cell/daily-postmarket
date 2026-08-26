@@ -105,7 +105,7 @@ https://david26984741-cell.github.io/daily-postmarket/
 
 ## 待辦
 
-### ① 輕量部署 workflow(等 2026/09/01 Actions 額度重置後再做)
+### ① 輕量部署 workflow(可隨時做 — 原本說要等額度重置, 但已查證公開 repo 不計費)
 - **問題**:要讓前端(HTML/CSS/JS)改動上線, 目前都是手動觸發 `kline.yml`, 每次 1~3 分鐘。
   但它會真的去抓日K —— 那段對「只改前端」完全多餘, 我們要的只是它尾巴的 deploy 步驟。
   2026/08 為了部署前端改動就跑了 6 次 kline.yml。
@@ -113,16 +113,19 @@ https://david26984741-cell.github.io/daily-postmarket/
   「準備網站檔案(cp 清單)」→ Setup Pages → Upload artifact → Deploy to GitHub Pages。
   不含任何抓取、不 commit。預估 **30 秒**跑完, 比 kline.yml 省 1~3 分鐘/次。
 - **注意**:新增 HTML 頁面時要加進部署 cp 清單的 workflow 會從**六個變七個**。
-- **為什麼要等**:建它本身也要花額度反覆測試, 而 2026/08/19 當下額度只剩 154 分鐘。
+- **原本寫「要等額度重置」已作廢**(2026/08/26 查證:公開 repo 標準 runner 免費, 見下一節)。
+  現在純粹是「省每次部署 1~3 分鐘的等待時間」的效率改善, 想做就做。
 
-## Actions 額度(免費方案 2,000 分鐘/月, 每月 1 號重置)
+## Actions 額度 — 本 repo 不受限(2026/08/26 查證)
 
-- **正常排程消耗**:交易日約 **11.5 分鐘**(daily 兩班次 ~8 + report ~2 + 除權息每日增量 ~1.5);
-  非交易日約 1.5 分鐘;週日多一次籌碼研究分析。→ 一個月約 260~280 分鐘, 額度本身很夠用。
-- **⚠ 給 Claude 的規則:不要為了看改動效果而手動觸發 workflow。** 改完 push 就好, 等排程自然跑。
-  2026/08 中旬為了驗證改動一直手動觸發(13 次 ≈ 38 分鐘), 加上 report.yml 撞 timeout
-  白燒三次 10 分鐘(≈ 31 分鐘), 幾天內吃掉約 80~100 分鐘, 導致 8/19 收到 90% 用量警告。
-- 超額後:有設 $0 預算 → 直接停跑(每日更新會斷);沒設 → 開始計費。**billing 設定屬於使用者, Claude 不要動。**
+- **repo 是 Public + 全部 workflow 都用 `ubuntu-latest`(標準 runner) → Actions 免費且無限制。**
+  GitHub 文件明載:標準 GitHub-hosted runner 在公開 repo 上免費(只有 larger runner 才計費)。
+- **2026/08/19 那封「已用 90% Actions 分鐘」的警告信不適用本 repo。** GitHub 仍會照
+  「included minutes」計數並寄警告, 但 billing 頁面實際顯示
+  **Actions: Gross $18.56 / Billed $0** —— 額度用完不會停跑、也不會收費。
+- 因此**不必為了省額度而不敢觸發 workflow**。要驗證改動就跑, 不用等排程。
+  (先前 2026/08/20 曾誤判成「要省額度」而定了不要手動觸發的規則, 前提錯誤, 已作廢。)
+- 唯一仍要留意的:別無意義地重複觸發(排隊、等待、以及 report.yml 會真的寄信給使用者)。
 
 ## 變更日誌
 
@@ -930,3 +933,12 @@ large_fut_index 會長到約 40 MB 並且每天陪著重寫。前端目前尚未
 - 註:⑨選擇權籌碼圖是 runner 即時抓、不進 repo, 無法納入指紋, 也不影響本問題。
 - 驗證(本機, 未觸發 workflow):把當日 spot 改成 null → 指紋 `d5b32e4b6967` → `483c42fe13f4`,
   標題出現「⚠缺:外資現貨」;測完還原檔案。
+
+### 2026/08/26(家用電腦)— 查證:Actions 額度對本 repo 不適用
+- 使用者提出「公開 repo 應該不計額度」→ 查證屬實, **先前的省額度規則作廢**。
+- 三層證據:① repo 是 **Public**;② 全部 workflow 都 `runs-on: ubuntu-latest`(標準 runner);
+  ③ billing 頁面 **Actions Gross $18.56 / Billed $0**。
+  GitHub 文件:標準 GitHub-hosted runner 在公開 repo 免費, 只有 larger runner 計費。
+- 那封 90% 警告信照「included minutes」計數而發, 但對公開 repo 無實質影響。
+- **教訓:收到平台的警告信時, 先確認它適不適用於這個 repo 的情境**, 不要直接照字面自我設限 ——
+  當時因此定了「不要手動觸發 workflow」的規則, 反而讓驗證變得綁手綁腳。
