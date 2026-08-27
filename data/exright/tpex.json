@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-08-26",
+ "updated_at": "2026-08-27",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87051,6 +87051,51 @@
    "ref_price": 43.0,
    "value": 1.5,
    "type": "除息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "3373",
+   "name": "熱映",
+   "pre_close": 16.65,
+   "ref_price": 16.55,
+   "value": 0.1,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "3492",
+   "name": "長盛",
+   "pre_close": 21.55,
+   "ref_price": 20.45,
+   "value": 1.1,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "3693",
+   "name": "營邦",
+   "pre_close": 556.0,
+   "ref_price": 548.0,
+   "value": 8.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "6474",
+   "name": "華豫寧",
+   "pre_close": 40.35,
+   "ref_price": 37.85,
+   "value": 2.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "8932",
+   "name": "智通*",
+   "pre_close": 105.0,
+   "ref_price": 87.47,
+   "value": 17.529107,
+   "type": "除權息"
   }
  ]
 }

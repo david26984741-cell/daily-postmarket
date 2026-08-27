@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-08-26",
+ "updated_at": "2026-08-27",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -98408,6 +98408,105 @@
    "pre_close": 19.1,
    "ref_price": 17.71,
    "value": 1.383888,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "1453",
+   "name": "大將",
+   "pre_close": 11.7,
+   "ref_price": 11.35,
+   "value": 0.340777,
+   "type": "權"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "1709",
+   "name": "和益",
+   "pre_close": 34.15,
+   "ref_price": 33.15,
+   "value": 1.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "2072",
+   "name": "世紀風電",
+   "pre_close": 149.5,
+   "ref_price": 143.5,
+   "value": 6.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "2101",
+   "name": "南港",
+   "pre_close": 32.9,
+   "ref_price": 32.3,
+   "value": 0.6,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "2250",
+   "name": "IKKA-KY",
+   "pre_close": 62.3,
+   "ref_price": 59.3,
+   "value": 3.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "2364",
+   "name": "倫飛",
+   "pre_close": 76.8,
+   "ref_price": 68.0,
+   "value": 8.8,
+   "type": "權息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "2383",
+   "name": "台光電",
+   "pre_close": 5500.0,
+   "ref_price": 5475.0,
+   "value": 25.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "5283",
+   "name": "禾聯碩",
+   "pre_close": 61.1,
+   "ref_price": 52.5,
+   "value": 8.6,
+   "type": "權息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "6183",
+   "name": "關貿",
+   "pre_close": 94.6,
+   "ref_price": 91.05,
+   "value": 3.55,
+   "type": "息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "7730",
+   "name": "暉盛-創",
+   "pre_close": 185.0,
+   "ref_price": 175.23,
+   "value": 9.761907,
+   "type": "權息"
+  },
+  {
+   "date": "2026/08/28",
+   "sid": "7822",
+   "name": "倍利科",
+   "pre_close": 957.0,
+   "ref_price": 950.61,
+   "value": 6.385436,
    "type": "息"
   }
  ]
