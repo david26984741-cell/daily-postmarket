@@ -184007,6 +184007,773 @@
      }
     ]
    }
+  },
+  "2026/08/28": {
+   "BRF": {
+    "name": "布蘭特原油期貨",
+    "rows": [
+     {
+      "month": "202610",
+      "type": "0",
+      "top5_buy": 21,
+      "top5_sell": 18,
+      "top10_buy": 21,
+      "top10_sell": 21,
+      "market_oi": 21,
+      "scope": "當月"
+     },
+     {
+      "month": "202610",
+      "type": "1",
+      "top5_buy": 0,
+      "top5_sell": 0,
+      "top10_buy": 0,
+      "top10_sell": 0,
+      "market_oi": 21,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 69,
+      "top5_sell": 51,
+      "top10_buy": 79,
+      "top10_sell": 69,
+      "market_oi": 79,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 0,
+      "top5_sell": 0,
+      "top10_buy": 0,
+      "top10_sell": 0,
+      "market_oi": 79,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "BTF": {
+    "name": "臺灣生技期貨",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 8,
+      "top5_sell": 8,
+      "top10_buy": 8,
+      "top10_sell": 8,
+      "market_oi": 8,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 0,
+      "top5_sell": 0,
+      "top10_buy": 0,
+      "top10_sell": 0,
+      "market_oi": 8,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 10,
+      "top5_sell": 10,
+      "top10_buy": 10,
+      "top10_sell": 10,
+      "market_oi": 10,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 0,
+      "top5_sell": 0,
+      "top10_buy": 0,
+      "top10_sell": 0,
+      "market_oi": 10,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "E4F": {
+    "name": "臺灣永續期貨",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 29,
+      "top5_sell": 29,
+      "top10_buy": 29,
+      "top10_sell": 29,
+      "market_oi": 29,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 0,
+      "top5_sell": 0,
+      "top10_buy": 0,
+      "top10_sell": 0,
+      "market_oi": 29,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 29,
+      "top5_sell": 29,
+      "top10_buy": 29,
+      "top10_sell": 29,
+      "market_oi": 29,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 0,
+      "top5_sell": 0,
+      "top10_buy": 0,
+      "top10_sell": 0,
+      "market_oi": 29,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "F1F": {
+    "name": "英國富時100期貨",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 97,
+      "top5_sell": 101,
+      "top10_buy": 102,
+      "top10_sell": 102,
+      "market_oi": 102,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 84,
+      "top5_sell": 0,
+      "top10_buy": 84,
+      "top10_sell": 0,
+      "market_oi": 102,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 107,
+      "top5_sell": 112,
+      "top10_buy": 114,
+      "top10_sell": 115,
+      "market_oi": 115,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 85,
+      "top5_sell": 0,
+      "top10_buy": 85,
+      "top10_sell": 0,
+      "market_oi": 115,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "G2F": {
+    "name": "富櫃200期貨",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 37,
+      "top5_sell": 31,
+      "top10_buy": 38,
+      "top10_sell": 38,
+      "market_oi": 38,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 30,
+      "top5_sell": 0,
+      "top10_buy": 30,
+      "top10_sell": 0,
+      "market_oi": 38,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 37,
+      "top5_sell": 31,
+      "top10_buy": 38,
+      "top10_sell": 38,
+      "market_oi": 38,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 30,
+      "top5_sell": 0,
+      "top10_buy": 30,
+      "top10_sell": 0,
+      "market_oi": 38,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "GTF": {
+    "name": "櫃買期貨",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 0,
+      "top5_sell": 0,
+      "top10_buy": 0,
+      "top10_sell": 0,
+      "market_oi": 0,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 0,
+      "top5_sell": 0,
+      "top10_buy": 0,
+      "top10_sell": 0,
+      "market_oi": 0,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 0,
+      "top5_sell": 0,
+      "top10_buy": 0,
+      "top10_sell": 0,
+      "market_oi": 0,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 0,
+      "top5_sell": 0,
+      "top10_buy": 0,
+      "top10_sell": 0,
+      "market_oi": 0,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "M1F": {
+    "name": "臺灣中型100期貨",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 433,
+      "top5_sell": 402,
+      "top10_buy": 438,
+      "top10_sell": 435,
+      "market_oi": 440,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 0,
+      "top5_sell": 229,
+      "top10_buy": 0,
+      "top10_sell": 229,
+      "market_oi": 440,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 485,
+      "top5_sell": 436,
+      "top10_buy": 490,
+      "top10_sell": 483,
+      "market_oi": 493,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 0,
+      "top5_sell": 234,
+      "top10_buy": 0,
+      "top10_sell": 234,
+      "market_oi": 493,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "SHF": {
+    "name": "航運期貨",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 4,
+      "top5_sell": 4,
+      "top10_buy": 4,
+      "top10_sell": 4,
+      "market_oi": 4,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 1,
+      "top5_sell": 1,
+      "top10_buy": 1,
+      "top10_sell": 1,
+      "market_oi": 4,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 4,
+      "top5_sell": 4,
+      "top10_buy": 4,
+      "top10_sell": 4,
+      "market_oi": 4,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 1,
+      "top5_sell": 1,
+      "top10_buy": 1,
+      "top10_sell": 1,
+      "market_oi": 4,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "SOF": {
+    "name": "半導體30期貨",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 33,
+      "top5_sell": 29,
+      "top10_buy": 38,
+      "top10_sell": 37,
+      "market_oi": 38,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 13,
+      "top5_sell": 0,
+      "top10_buy": 14,
+      "top10_sell": 0,
+      "market_oi": 38,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 36,
+      "top5_sell": 32,
+      "top10_buy": 43,
+      "top10_sell": 42,
+      "market_oi": 45,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 13,
+      "top5_sell": 0,
+      "top10_buy": 14,
+      "top10_sell": 0,
+      "market_oi": 45,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "SPF": {
+    "name": "美國標普500期貨",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 101,
+      "top5_sell": 109,
+      "top10_buy": 107,
+      "top10_sell": 109,
+      "market_oi": 109,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 53,
+      "top5_sell": 108,
+      "top10_buy": 54,
+      "top10_sell": 108,
+      "market_oi": 109,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 130,
+      "top5_sell": 143,
+      "top10_buy": 138,
+      "top10_sell": 143,
+      "market_oi": 143,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 71,
+      "top5_sell": 108,
+      "top10_buy": 72,
+      "top10_sell": 108,
+      "market_oi": 143,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "SXF": {
+    "name": "美國費城半導體期貨",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 490,
+      "top5_sell": 637,
+      "top10_buy": 537,
+      "top10_sell": 652,
+      "market_oi": 659,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 392,
+      "top5_sell": 135,
+      "top10_buy": 392,
+      "top10_sell": 144,
+      "market_oi": 659,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 490,
+      "top5_sell": 661,
+      "top10_buy": 543,
+      "top10_sell": 676,
+      "market_oi": 683,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 392,
+      "top5_sell": 155,
+      "top10_buy": 392,
+      "top10_sell": 164,
+      "market_oi": 683,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "TE": {
+    "name": "電子期貨(TE+ZEF/8)",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 180,
+      "top5_sell": 271,
+      "top10_buy": 242,
+      "top10_sell": 324,
+      "market_oi": 387,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 84,
+      "top5_sell": 271,
+      "top10_buy": 135,
+      "top10_sell": 294,
+      "market_oi": 387,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 180,
+      "top5_sell": 271,
+      "top10_buy": 242,
+      "top10_sell": 324,
+      "market_oi": 394,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 84,
+      "top5_sell": 271,
+      "top10_buy": 135,
+      "top10_sell": 294,
+      "market_oi": 394,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "TF": {
+    "name": "金融期貨(TF+ZFF/4)",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 151,
+      "top5_sell": 228,
+      "top10_buy": 220,
+      "top10_sell": 264,
+      "market_oi": 384,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 85,
+      "top5_sell": 228,
+      "top10_buy": 110,
+      "top10_sell": 234,
+      "market_oi": 384,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 151,
+      "top5_sell": 228,
+      "top10_buy": 220,
+      "top10_sell": 264,
+      "market_oi": 385,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 85,
+      "top5_sell": 228,
+      "top10_buy": 110,
+      "top10_sell": 234,
+      "market_oi": 385,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "TX": {
+    "name": "臺股期貨(TX+MTX/4+TMF/20)",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 75880,
+      "top5_sell": 52567,
+      "top10_buy": 82754,
+      "top10_sell": 74902,
+      "market_oi": 113537,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 75880,
+      "top5_sell": 52567,
+      "top10_buy": 81416,
+      "top10_sell": 74902,
+      "market_oi": 113537,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 75909,
+      "top5_sell": 52992,
+      "top10_buy": 83177,
+      "top10_sell": 75754,
+      "market_oi": 116764,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 75909,
+      "top5_sell": 52992,
+      "top10_buy": 80337,
+      "top10_sell": 75754,
+      "market_oi": 116764,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "UDF": {
+    "name": "美國道瓊期貨",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 96,
+      "top5_sell": 64,
+      "top10_buy": 118,
+      "top10_sell": 90,
+      "market_oi": 146,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 40,
+      "top5_sell": 0,
+      "top10_buy": 40,
+      "top10_sell": 0,
+      "market_oi": 146,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 147,
+      "top5_sell": 99,
+      "top10_buy": 175,
+      "top10_sell": 132,
+      "market_oi": 205,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 99,
+      "top5_sell": 0,
+      "top10_buy": 99,
+      "top10_sell": 0,
+      "market_oi": 205,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "UNF": {
+    "name": "美國那斯達克100期貨",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 343,
+      "top5_sell": 603,
+      "top10_buy": 482,
+      "top10_sell": 721,
+      "market_oi": 809,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 0,
+      "top5_sell": 411,
+      "top10_buy": 20,
+      "top10_sell": 427,
+      "market_oi": 809,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 400,
+      "top5_sell": 703,
+      "top10_buy": 570,
+      "top10_sell": 881,
+      "market_oi": 1005,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 0,
+      "top5_sell": 330,
+      "top10_buy": 33,
+      "top10_sell": 427,
+      "market_oi": 1005,
+      "scope": "所有契約"
+     }
+    ]
+   },
+   "XIF": {
+    "name": "非金電期貨",
+    "rows": [
+     {
+      "month": "202609",
+      "type": "0",
+      "top5_buy": 545,
+      "top5_sell": 374,
+      "top10_buy": 553,
+      "top10_sell": 503,
+      "market_oi": 553,
+      "scope": "當月"
+     },
+     {
+      "month": "202609",
+      "type": "1",
+      "top5_buy": 34,
+      "top5_sell": 85,
+      "top10_buy": 39,
+      "top10_sell": 139,
+      "market_oi": 553,
+      "scope": "當月"
+     },
+     {
+      "month": "999999",
+      "type": "0",
+      "top5_buy": 587,
+      "top5_sell": 375,
+      "top10_buy": 597,
+      "top10_sell": 516,
+      "market_oi": 598,
+      "scope": "所有契約"
+     },
+     {
+      "month": "999999",
+      "type": "1",
+      "top5_buy": 34,
+      "top5_sell": 85,
+      "top10_buy": 39,
+      "top10_sell": 139,
+      "market_oi": 598,
+      "scope": "所有契約"
+     }
+    ]
+   }
   }
  }
 }
