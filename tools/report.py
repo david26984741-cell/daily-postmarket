@@ -403,22 +403,28 @@ SIG_FILES = ["foreign_fut_spot.json", "options_foreign.json",
 
 
 def content_sig():
-    """當日資料的「內容指紋」— 給 report.yml 當防重複快取的一部分。
+    """當日資料的「**完整度**指紋」— 給 report.yml 當防重複快取的一部分。
 
-    為什麼需要:原本防重複只看「資料日期」, 所以 15:35 主班次抓不到證交所現貨(常見:
-    BFI82U 公布得比 15:35 晚)就先寄了一封缺圖的信, 21:35 備援補到資料後
-    因為「今天寄過了」而不再寄 —— 使用者永遠只收到殘缺那封, 而且網站是對的、信是錯的。
-    把資料本身納入指紋後:資料有補齊 → 指紋變 → 重寄;資料沒變 → 指紋同 → 不重寄。
+    為什麼需要:防重複若只看「資料日期」, 15:35 主班次抓不到證交所現貨
+    (BFI82U 公布得比 15:35 晚)就先寄了一封缺圖的信, 備援班次補到資料後
+    因為「今天寄過了」而不再寄 —— 網站是對的、信卻永遠是錯的。
 
-    只取「當日那一筆」而非整檔, 這樣歷史回補不會誤觸重寄。
-    rank.json 只取 date 與筆數 —— 整份 hash 太敏感(重建時的細微差異會造成無謂重寄)。
+    **只看「該有的東西到齊了沒」, 不看數值。** 這點很重要 ——
+    2026/08/29 踩過:原本對「內容」做雜湊, 結果每天都重寄, 因為每天都有東西在變:
+      · 證交所現貨 15:0x 給的是初版, 之後會更新(例:買 3906→4003 億、淨 415.9→417.5 億)
+      · rank.json 主班次 306 檔 → 備援 320 檔(多出的 14 檔全是規模 <1 億的 ETF 期貨,
+        低於報告 2.5 億門檻, 根本不進報告)
+    這些變動不影響報告內容, 卻讓使用者每天多收一封。改看完整度後:
+      資料到齊 → 指紋固定 → 只寄一封;真的缺了再補齊 → 指紋變 → 補寄一封。
+
+    只取「當日那一筆」而非整檔, 歷史回補不會誤觸重寄。
     """
     import hashlib
     parts = []
     try:
         rk = json.load(open(os.path.join(DATA, "rank.json"), encoding="utf-8"))
         date = rk.get("date", "")
-        parts += ["rank", date, str(len(rk.get("rows") or []))]
+        parts.append("date=" + date)
     except Exception:
         return "nodata"
     for fn in SIG_FILES:
@@ -428,7 +434,14 @@ def content_sig():
             rec = (d.get("records") or {}).get(date)
         except Exception:
             pass
-        parts.append(fn + "=" + json.dumps(rec, sort_keys=True, ensure_ascii=False))
+        if not rec:
+            parts.append(fn + "=none")
+        elif fn == "foreign_fut_spot.json":
+            # 這一項最常出包, 兩個子項目要分開看(常見:期貨有、現貨還沒公布)
+            parts.append(fn + "=" + ("fut" if rec.get("fut") else "-")
+                              + "/" + ("spot" if rec.get("spot") else "-"))
+        else:
+            parts.append(fn + "=ok")
     return hashlib.sha256("|".join(parts).encode("utf-8")).hexdigest()[:12]
 
 
