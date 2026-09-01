@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-08-27",
+ "updated_at": "2026-09-01",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -98507,6 +98507,249 @@
    "pre_close": 957.0,
    "ref_price": 950.61,
    "value": 6.385436,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "00939",
+   "name": "統一台灣高息動能",
+   "pre_close": 23.17,
+   "ref_price": 23.04,
+   "value": 0.125,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "00984D",
+   "name": "主動聯博全球非投",
+   "pre_close": 10.01,
+   "ref_price": 9.92,
+   "value": 0.085,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "1732",
+   "name": "毛寶",
+   "pre_close": 26.45,
+   "ref_price": 25.85,
+   "value": 0.6,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "1783",
+   "name": "和康生",
+   "pre_close": 41.35,
+   "ref_price": 39.35,
+   "value": 1.999598,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "2701",
+   "name": "萬企",
+   "pre_close": 10.65,
+   "ref_price": 10.37,
+   "value": 0.28,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "2889",
+   "name": "國票金",
+   "pre_close": 15.95,
+   "ref_price": 15.31,
+   "value": 0.636293,
+   "type": "權息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "3052",
+   "name": "夆典",
+   "pre_close": 11.15,
+   "ref_price": 10.55,
+   "value": 0.6,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "3135",
+   "name": "凌航",
+   "pre_close": 182.5,
+   "ref_price": 171.08,
+   "value": 11.416952,
+   "type": "權息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "3416",
+   "name": "融程電",
+   "pre_close": 182.0,
+   "ref_price": 173.37,
+   "value": 8.627321,
+   "type": "權"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "4977",
+   "name": "眾達-KY",
+   "pre_close": 175.0,
+   "ref_price": 168.61,
+   "value": 6.385328,
+   "type": "權"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "6534",
+   "name": "正瀚-創",
+   "pre_close": 92.0,
+   "ref_price": 90.99,
+   "value": 1.008501,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "9941",
+   "name": "裕融",
+   "pre_close": 86.9,
+   "ref_price": 80.9,
+   "value": 5.99804,
+   "type": "權息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "9941A",
+   "name": "裕融甲特",
+   "pre_close": 51.4,
+   "ref_price": 49.06,
+   "value": 2.339375,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "00406A",
+   "name": "主動中信台灣收益",
+   "pre_close": 9.96,
+   "ref_price": 9.82,
+   "value": 0.138,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "00946",
+   "name": "群益科技高息成長",
+   "pre_close": 15.74,
+   "ref_price": 15.68,
+   "value": 0.058,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "00953B",
+   "name": "群益優選非投等債",
+   "pre_close": 9.63,
+   "ref_price": 9.56,
+   "value": 0.067,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "00985B",
+   "name": "群益ESG投等債0-5",
+   "pre_close": 10.16,
+   "ref_price": 10.1,
+   "value": 0.053,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "2464",
+   "name": "盟立",
+   "pre_close": 184.5,
+   "ref_price": 182.3,
+   "value": 2.192145,
+   "type": "權息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "2845",
+   "name": "遠東銀",
+   "pre_close": 13.65,
+   "ref_price": 12.98,
+   "value": 0.669122,
+   "type": "權息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "2923",
+   "name": "鼎固-KY",
+   "pre_close": 24.75,
+   "ref_price": 24.63,
+   "value": 0.12,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "3013",
+   "name": "晟銘電",
+   "pre_close": 92.4,
+   "ref_price": 88.84,
+   "value": 3.553847,
+   "type": "權"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "3346",
+   "name": "麗清",
+   "pre_close": 19.6,
+   "ref_price": 19.49,
+   "value": 0.11,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "4438",
+   "name": "廣越",
+   "pre_close": 60.8,
+   "ref_price": 58.5,
+   "value": 2.3,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "6139",
+   "name": "亞翔",
+   "pre_close": 770.0,
+   "ref_price": 747.0,
+   "value": 22.996187,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "6426",
+   "name": "統新",
+   "pre_close": 270.0,
+   "ref_price": 269.5,
+   "value": 0.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "6669",
+   "name": "緯穎",
+   "pre_close": 7800.0,
+   "ref_price": 2614.99,
+   "value": 5185.002642,
+   "type": "權"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "6753",
+   "name": "龍德造船",
+   "pre_close": 142.5,
+   "ref_price": 141.25,
+   "value": 1.249351,
    "type": "息"
   }
  ]

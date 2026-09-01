@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-08-27",
+ "updated_at": "2026-09-01",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87096,6 +87096,132 @@
    "ref_price": 87.47,
    "value": 17.529107,
    "type": "除權息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "00966B",
+   "name": "統一ESG投等債15+",
+   "pre_close": 13.54,
+   "ref_price": 13.47,
+   "value": 0.068,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "00986B",
+   "name": "FT金融債10+",
+   "pre_close": 9.55,
+   "ref_price": 9.51,
+   "value": 0.042,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "3078",
+   "name": "僑威",
+   "pre_close": 51.9,
+   "ref_price": 47.9,
+   "value": 4.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "3455",
+   "name": "由田",
+   "pre_close": 260.5,
+   "ref_price": 257.0,
+   "value": 3.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "4760",
+   "name": "勤凱",
+   "pre_close": 261.0,
+   "ref_price": 255.9,
+   "value": 5.100626,
+   "type": "除權"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "6245",
+   "name": "立端",
+   "pre_close": 81.8,
+   "ref_price": 78.0,
+   "value": 3.8,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "8086",
+   "name": "宏捷科",
+   "pre_close": 118.0,
+   "ref_price": 116.32,
+   "value": 1.68,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/01",
+   "sid": "8436",
+   "name": "大江",
+   "pre_close": 126.0,
+   "ref_price": 119.99,
+   "value": 6.013434,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "00950B",
+   "name": "凱基A級公司債",
+   "pre_close": 13.58,
+   "ref_price": 13.52,
+   "value": 0.063,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "00959B",
+   "name": "大華投等美債15Y+",
+   "pre_close": 9.09,
+   "ref_price": 9.04,
+   "value": 0.048,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "00983B",
+   "name": "大華優利美公債20",
+   "pre_close": 15.03,
+   "ref_price": 14.97,
+   "value": 0.06,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "00984B",
+   "name": "大華優利美A債15",
+   "pre_close": 15.74,
+   "ref_price": 15.66,
+   "value": 0.079,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "1240",
+   "name": "茂生農經",
+   "pre_close": 58.0,
+   "ref_price": 55.24,
+   "value": 2.761905,
+   "type": "除權"
+  },
+  {
+   "date": "2026/09/02",
+   "sid": "8076",
+   "name": "伍豐",
+   "pre_close": 23.3,
+   "ref_price": 22.6,
+   "value": 0.7,
+   "type": "除息"
   }
  ]
 }
