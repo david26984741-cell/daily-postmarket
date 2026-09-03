@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-09-01",
+ "updated_at": "2026-09-03",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87221,6 +87221,105 @@
    "pre_close": 23.3,
    "ref_price": 22.6,
    "value": 0.7,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "2732",
+   "name": "六角",
+   "pre_close": 65.3,
+   "ref_price": 63.3,
+   "value": 2.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "2756",
+   "name": "聯發國際",
+   "pre_close": 64.0,
+   "ref_price": 62.5,
+   "value": 1.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "3114",
+   "name": "好德",
+   "pre_close": 34.65,
+   "ref_price": 32.36,
+   "value": 2.294231,
+   "type": "除權息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "3484",
+   "name": "崧騰",
+   "pre_close": 51.0,
+   "ref_price": 48.5,
+   "value": 2.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "6126",
+   "name": "信音",
+   "pre_close": 30.2,
+   "ref_price": 29.6,
+   "value": 0.597917,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "6146",
+   "name": "耕興",
+   "pre_close": 192.5,
+   "ref_price": 187.0,
+   "value": 5.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "6234",
+   "name": "高僑",
+   "pre_close": 35.55,
+   "ref_price": 35.3,
+   "value": 0.25,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "6279",
+   "name": "胡連",
+   "pre_close": 127.0,
+   "ref_price": 121.5,
+   "value": 5.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "6874",
+   "name": "倍力",
+   "pre_close": 83.6,
+   "ref_price": 73.27,
+   "value": 10.327273,
+   "type": "除權息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "8908",
+   "name": "欣雄",
+   "pre_close": 41.4,
+   "ref_price": 40.18,
+   "value": 1.222757,
+   "type": "除權"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "9951",
+   "name": "皇田",
+   "pre_close": 54.3,
+   "ref_price": 51.05,
+   "value": 3.253214,
    "type": "除息"
   }
  ]

@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-09-01",
+ "updated_at": "2026-09-03",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -98750,6 +98750,42 @@
    "pre_close": 142.5,
    "ref_price": 141.25,
    "value": 1.249351,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "1203",
+   "name": "味王",
+   "pre_close": 44.35,
+   "ref_price": 43.35,
+   "value": 1.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "3661",
+   "name": "世芯-KY",
+   "pre_close": 4200.0,
+   "ref_price": 4167.44,
+   "value": 32.551656,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "7780",
+   "name": "大研生醫*",
+   "pre_close": 17.05,
+   "ref_price": 16.93,
+   "value": 0.116588,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/03",
+   "sid": "8466",
+   "name": "美吉吉-KY",
+   "pre_close": 15.65,
+   "ref_price": 15.34,
+   "value": 0.301938,
    "type": "息"
   }
  ]
