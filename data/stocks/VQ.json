@@ -1,0 +1,49 @@
+{
+ "code": "VQ",
+ "name": "中光電投控期貨",
+ "sid": "3718",
+ "records": {
+  "2026/09/03": [
+   {
+    "month": "202609",
+    "type": "0",
+    "top5_buy": 13,
+    "top5_sell": 16,
+    "top10_buy": 16,
+    "top10_sell": 16,
+    "market_oi": 1405,
+    "scope": "當月"
+   },
+   {
+    "month": "202609",
+    "type": "1",
+    "top5_buy": 0,
+    "top5_sell": 0,
+    "top10_buy": 1,
+    "top10_sell": 0,
+    "market_oi": 1405,
+    "scope": "當月"
+   },
+   {
+    "month": "999999",
+    "type": "0",
+    "top5_buy": 653,
+    "top5_sell": 1380,
+    "top10_buy": 741,
+    "top10_sell": 1410,
+    "market_oi": 1414,
+    "scope": "所有契約"
+   },
+   {
+    "month": "999999",
+    "type": "1",
+    "top5_buy": 75,
+    "top5_sell": 1380,
+    "top10_buy": 130,
+    "top10_sell": 1388,
+    "market_oi": 1414,
+    "scope": "所有契約"
+   }
+  ]
+ }
+}
