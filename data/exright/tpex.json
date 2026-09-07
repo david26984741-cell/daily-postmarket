@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-09-03",
+ "updated_at": "2026-09-07",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87321,6 +87321,69 @@
    "ref_price": 51.05,
    "value": 3.253214,
    "type": "除息"
+  },
+  {
+   "date": "2026/09/07",
+   "sid": "1268",
+   "name": "漢來美食",
+   "pre_close": 182.0,
+   "ref_price": 174.0,
+   "value": 8.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/07",
+   "sid": "7738",
+   "name": "東聯互動",
+   "pre_close": 175.0,
+   "ref_price": 165.0,
+   "value": 10.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/07",
+   "sid": "8099",
+   "name": "大世科",
+   "pre_close": 61.2,
+   "ref_price": 59.1,
+   "value": 2.1,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/08",
+   "sid": "2743",
+   "name": "山富",
+   "pre_close": 59.3,
+   "ref_price": 56.1,
+   "value": 3.2,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/08",
+   "sid": "4549",
+   "name": "桓達",
+   "pre_close": 103.5,
+   "ref_price": 101.47,
+   "value": 2.02941,
+   "type": "除權"
+  },
+  {
+   "date": "2026/09/08",
+   "sid": "6584",
+   "name": "南俊國際",
+   "pre_close": 619.0,
+   "ref_price": 616.56,
+   "value": 2.440707,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/08",
+   "sid": "6590",
+   "name": "普鴻",
+   "pre_close": 67.0,
+   "ref_price": 58.26,
+   "value": 8.740959,
+   "type": "除權"
   }
  ]
 }
