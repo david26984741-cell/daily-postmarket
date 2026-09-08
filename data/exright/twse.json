@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-09-07",
+ "updated_at": "2026-09-08",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -98895,6 +98895,42 @@
    "ref_price": 38.79,
    "value": 1.503161,
    "type": "權息"
+  },
+  {
+   "date": "2026/09/09",
+   "sid": "1438",
+   "name": "三地開發",
+   "pre_close": 23.3,
+   "ref_price": 21.38,
+   "value": 1.911112,
+   "type": "權息"
+  },
+  {
+   "date": "2026/09/09",
+   "sid": "3059",
+   "name": "華晶科",
+   "pre_close": 38.5,
+   "ref_price": 37.5,
+   "value": 0.998614,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/09",
+   "sid": "3706",
+   "name": "神達",
+   "pre_close": 91.3,
+   "ref_price": 80.27,
+   "value": 11.027273,
+   "type": "權息"
+  },
+  {
+   "date": "2026/09/09",
+   "sid": "6133",
+   "name": "金橋",
+   "pre_close": 24.5,
+   "ref_price": 23.5,
+   "value": 1.0,
+   "type": "息"
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-09-07",
+ "updated_at": "2026-09-08",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87384,6 +87384,60 @@
    "ref_price": 58.26,
    "value": 8.740959,
    "type": "除權"
+  },
+  {
+   "date": "2026/09/09",
+   "sid": "1815",
+   "name": "富喬",
+   "pre_close": 135.0,
+   "ref_price": 128.1,
+   "value": 6.904987,
+   "type": "除權息"
+  },
+  {
+   "date": "2026/09/09",
+   "sid": "4160",
+   "name": "訊聯基因",
+   "pre_close": 39.8,
+   "ref_price": 37.92,
+   "value": 1.880196,
+   "type": "除權"
+  },
+  {
+   "date": "2026/09/09",
+   "sid": "6163",
+   "name": "華電網",
+   "pre_close": 40.65,
+   "ref_price": 40.07,
+   "value": 0.577664,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/09",
+   "sid": "6603",
+   "name": "富強鑫",
+   "pre_close": 24.95,
+   "ref_price": 24.55,
+   "value": 0.401354,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/09",
+   "sid": "6971",
+   "name": "惠民實業",
+   "pre_close": 26.65,
+   "ref_price": 25.15,
+   "value": 1.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/09",
+   "sid": "8096",
+   "name": "擎亞",
+   "pre_close": 101.0,
+   "ref_price": 100.5,
+   "value": 0.5,
+   "type": "除息"
   }
  ]
 }
