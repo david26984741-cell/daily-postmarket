@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-09-08",
+ "updated_at": "2026-09-09",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -98931,6 +98931,60 @@
    "ref_price": 23.5,
    "value": 1.0,
    "type": "息"
+  },
+  {
+   "date": "2026/09/10",
+   "sid": "2062",
+   "name": "橋椿",
+   "pre_close": 19.55,
+   "ref_price": 18.55,
+   "value": 1.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/10",
+   "sid": "4912",
+   "name": "聯德控股-KY",
+   "pre_close": 97.5,
+   "ref_price": 96.69,
+   "value": 0.800477,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/10",
+   "sid": "5906",
+   "name": "台南-KY",
+   "pre_close": 41.55,
+   "ref_price": 39.38,
+   "value": 2.169048,
+   "type": "權息"
+  },
+  {
+   "date": "2026/09/10",
+   "sid": "6504",
+   "name": "南六",
+   "pre_close": 37.9,
+   "ref_price": 36.9,
+   "value": 1.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/10",
+   "sid": "9802",
+   "name": "鈺齊-KY",
+   "pre_close": 71.2,
+   "ref_price": 68.1,
+   "value": 3.1,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/10",
+   "sid": "9906",
+   "name": "欣巴巴",
+   "pre_close": 41.4,
+   "ref_price": 41.05,
+   "value": 0.348374,
+   "type": "權"
   }
  ]
 }

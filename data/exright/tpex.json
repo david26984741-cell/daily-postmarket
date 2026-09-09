@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-09-08",
+ "updated_at": "2026-09-09",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87437,6 +87437,33 @@
    "pre_close": 101.0,
    "ref_price": 100.5,
    "value": 0.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/10",
+   "sid": "4541",
+   "name": "晟田",
+   "pre_close": 60.0,
+   "ref_price": 59.31,
+   "value": 0.688259,
+   "type": "除權"
+  },
+  {
+   "date": "2026/09/10",
+   "sid": "5328",
+   "name": "華容",
+   "pre_close": 58.8,
+   "ref_price": 58.45,
+   "value": 0.35,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/10",
+   "sid": "8234",
+   "name": "新漢",
+   "pre_close": 65.6,
+   "ref_price": 65.2,
+   "value": 0.4,
    "type": "除息"
   }
  ]
