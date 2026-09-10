@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-09-09",
+ "updated_at": "2026-09-10",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87464,6 +87464,15 @@
    "pre_close": 65.6,
    "ref_price": 65.2,
    "value": 0.4,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/11",
+   "sid": "3141",
+   "name": "晶宏",
+   "pre_close": 92.1,
+   "ref_price": 91.74,
+   "value": 0.357788,
    "type": "除息"
   }
  ]
