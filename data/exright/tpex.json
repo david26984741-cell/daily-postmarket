@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-09-10",
+ "updated_at": "2026-09-11",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87473,6 +87473,33 @@
    "pre_close": 92.1,
    "ref_price": 91.74,
    "value": 0.357788,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/14",
+   "sid": "5278",
+   "name": "尚凡*",
+   "pre_close": 23.9,
+   "ref_price": 23.63,
+   "value": 0.266182,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/14",
+   "sid": "6204",
+   "name": "艾華",
+   "pre_close": 88.8,
+   "ref_price": 88.3,
+   "value": 0.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/14",
+   "sid": "8423",
+   "name": "保綠-KY",
+   "pre_close": 18.35,
+   "ref_price": 17.65,
+   "value": 0.7,
    "type": "除息"
   }
  ]
