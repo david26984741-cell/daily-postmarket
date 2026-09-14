@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-09-11",
+ "updated_at": "2026-09-14",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87500,6 +87500,69 @@
    "pre_close": 18.35,
    "ref_price": 17.65,
    "value": 0.7,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/15",
+   "sid": "00942B",
+   "name": "台新美A公司債20+",
+   "pre_close": 13.52,
+   "ref_price": 13.46,
+   "value": 0.062,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/15",
+   "sid": "00970B",
+   "name": "台新BBB投等債20+",
+   "pre_close": 8.92,
+   "ref_price": 8.87,
+   "value": 0.05,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/15",
+   "sid": "00980B",
+   "name": "台新特選IG債10+",
+   "pre_close": 9.03,
+   "ref_price": 8.98,
+   "value": 0.047,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/15",
+   "sid": "00988B",
+   "name": "玉山嚴選非投債",
+   "pre_close": 19.41,
+   "ref_price": 19.27,
+   "value": 0.141,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/15",
+   "sid": "00989B",
+   "name": "台新美國非投等債",
+   "pre_close": 10.02,
+   "ref_price": 9.93,
+   "value": 0.088,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/15",
+   "sid": "3675",
+   "name": "德微",
+   "pre_close": 284.5,
+   "ref_price": 280.5,
+   "value": 4.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/15",
+   "sid": "5426",
+   "name": "振發",
+   "pre_close": 27.75,
+   "ref_price": 27.45,
+   "value": 0.3,
    "type": "除息"
   }
  ]

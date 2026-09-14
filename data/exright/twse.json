@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-09-11",
+ "updated_at": "2026-09-14",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99011,6 +99011,51 @@
    "pre_close": 89.6,
    "ref_price": 87.4,
    "value": 2.2,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/15",
+   "sid": "00936",
+   "name": "台新永續高息中小",
+   "pre_close": 21.28,
+   "ref_price": 21.12,
+   "value": 0.16,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/15",
+   "sid": "00962",
+   "name": "台新AI優息動能",
+   "pre_close": 15.0,
+   "ref_price": 14.75,
+   "value": 0.25,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/15",
+   "sid": "009803",
+   "name": "玉山市值動能50",
+   "pre_close": 21.64,
+   "ref_price": 20.74,
+   "value": 0.9,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/15",
+   "sid": "01009T",
+   "name": "王道圓滿R1",
+   "pre_close": 5.67,
+   "ref_price": 5.53,
+   "value": 0.130476,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/15",
+   "sid": "6924",
+   "name": "榮惠-KY創",
+   "pre_close": 142.5,
+   "ref_price": 139.0,
+   "value": 3.5,
    "type": "息"
   }
  ]
