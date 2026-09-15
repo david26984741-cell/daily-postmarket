@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-09-14",
+ "updated_at": "2026-09-15",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87563,6 +87563,222 @@
    "pre_close": 27.75,
    "ref_price": 27.45,
    "value": 0.3,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00687B",
+   "name": "國泰20年美債",
+   "pre_close": 26.66,
+   "ref_price": 26.33,
+   "value": 0.335,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00740B",
+   "name": "富邦全球投等債",
+   "pre_close": 36.85,
+   "ref_price": 36.67,
+   "value": 0.185,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00741B",
+   "name": "富邦全球非投等債",
+   "pre_close": 37.06,
+   "ref_price": 36.86,
+   "value": 0.199,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00764B",
+   "name": "群益25年美債",
+   "pre_close": 26.58,
+   "ref_price": 26.28,
+   "value": 0.304,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00772B",
+   "name": "中信高評級公司債",
+   "pre_close": 31.92,
+   "ref_price": 31.78,
+   "value": 0.14,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00773B",
+   "name": "中信優先金融債",
+   "pre_close": 34.15,
+   "ref_price": 34.01,
+   "value": 0.145,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00777B",
+   "name": "凱基AAA至A公司債",
+   "pre_close": 30.77,
+   "ref_price": 30.63,
+   "value": 0.14,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00778B",
+   "name": "凱基金融債20+",
+   "pre_close": 32.66,
+   "ref_price": 32.52,
+   "value": 0.145,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00779B",
+   "name": "凱基美債25+",
+   "pre_close": 26.92,
+   "ref_price": 26.56,
+   "value": 0.36,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00781B",
+   "name": "國泰A級科技債",
+   "pre_close": 26.77,
+   "ref_price": 26.22,
+   "value": 0.55,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00792B",
+   "name": "群益A級公司債",
+   "pre_close": 30.28,
+   "ref_price": 29.83,
+   "value": 0.447,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00840B",
+   "name": "凱基IG精選15+",
+   "pre_close": 28.35,
+   "ref_price": 28.22,
+   "value": 0.127,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00859B",
+   "name": "群益0-1年美債",
+   "pre_close": 41.17,
+   "ref_price": 40.61,
+   "value": 0.563,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00862B",
+   "name": "中信投資級公司債",
+   "pre_close": 30.34,
+   "ref_price": 29.89,
+   "value": 0.45,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00863B",
+   "name": "中信全球電信債",
+   "pre_close": 30.48,
+   "ref_price": 30.06,
+   "value": 0.42,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00890B",
+   "name": "凱基ESG BBB債15+",
+   "pre_close": 30.8,
+   "ref_price": 30.66,
+   "value": 0.145,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00933B",
+   "name": "國泰10Y+金融債",
+   "pre_close": 15.3,
+   "ref_price": 15.23,
+   "value": 0.073,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00937B",
+   "name": "群益ESG投等債20+",
+   "pre_close": 14.13,
+   "ref_price": 14.06,
+   "value": 0.072,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00948B",
+   "name": "中信優息投資級債",
+   "pre_close": 9.03,
+   "ref_price": 8.99,
+   "value": 0.045,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00957B",
+   "name": "兆豐US優選投等債",
+   "pre_close": 12.79,
+   "ref_price": 12.73,
+   "value": 0.063,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00980D",
+   "name": "主動聯博投等入息",
+   "pre_close": 19.87,
+   "ref_price": 19.76,
+   "value": 0.114,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00981D",
+   "name": "主動中信非投等債",
+   "pre_close": 10.26,
+   "ref_price": 10.19,
+   "value": 0.07,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "00982B",
+   "name": "FT投資級債20+",
+   "pre_close": 9.34,
+   "ref_price": 9.3,
+   "value": 0.045,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/16",
+   "sid": "1599",
+   "name": "宏佳騰",
+   "pre_close": 23.45,
+   "ref_price": 22.95,
+   "value": 0.5,
    "type": "除息"
   }
  ]
