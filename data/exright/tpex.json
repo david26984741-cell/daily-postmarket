@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-09-15",
+ "updated_at": "2026-09-16",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87779,6 +87779,69 @@
    "pre_close": 23.45,
    "ref_price": 22.95,
    "value": 0.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/17",
+   "sid": "00853B",
+   "name": "統一美債10年Aa-A",
+   "pre_close": 26.5,
+   "ref_price": 26.15,
+   "value": 0.347,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/17",
+   "sid": "00985D",
+   "name": "主動貝萊德優投等",
+   "pre_close": 9.72,
+   "ref_price": 9.66,
+   "value": 0.061,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/17",
+   "sid": "00986D",
+   "name": "主動復華金融債息",
+   "pre_close": 14.22,
+   "ref_price": 14.13,
+   "value": 0.09,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/17",
+   "sid": "00998A",
+   "name": "主動復華金融股息",
+   "pre_close": 17.78,
+   "ref_price": 17.36,
+   "value": 0.424,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/17",
+   "sid": "4420",
+   "name": "光明",
+   "pre_close": 38.5,
+   "ref_price": 36.5,
+   "value": 2.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/17",
+   "sid": "4533",
+   "name": "協易機",
+   "pre_close": 24.9,
+   "ref_price": 24.72,
+   "value": 0.177595,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/17",
+   "sid": "5498",
+   "name": "凱崴",
+   "pre_close": 50.8,
+   "ref_price": 50.55,
+   "value": 0.25,
    "type": "除息"
   }
  ]

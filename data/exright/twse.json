@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-09-15",
+ "updated_at": "2026-09-16",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99327,6 +99327,51 @@
    "ref_price": 528.83,
    "value": 3.161725,
    "type": "權"
+  },
+  {
+   "date": "2026/09/17",
+   "sid": "00710B",
+   "name": "復華彭博非投等債",
+   "pre_close": 19.06,
+   "ref_price": 18.67,
+   "value": 0.39,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/17",
+   "sid": "00711B",
+   "name": "復華彭博新興債",
+   "pre_close": 15.34,
+   "ref_price": 15.14,
+   "value": 0.2,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/17",
+   "sid": "00712",
+   "name": "復華富時不動產",
+   "pre_close": 8.21,
+   "ref_price": 8.01,
+   "value": 0.2,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/17",
+   "sid": "00929",
+   "name": "復華台灣科技優息",
+   "pre_close": 28.84,
+   "ref_price": 28.46,
+   "value": 0.38,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/17",
+   "sid": "5306",
+   "name": "桂盟",
+   "pre_close": 89.7,
+   "ref_price": 88.62,
+   "value": 1.074628,
+   "type": "息"
   }
  ]
 }
