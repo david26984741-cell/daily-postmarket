@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-09-16",
+ "updated_at": "2026-09-17",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99371,6 +99371,33 @@
    "pre_close": 89.7,
    "ref_price": 88.62,
    "value": 1.074628,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/18",
+   "sid": "00728",
+   "name": "第一金工業30",
+   "pre_close": 68.5,
+   "ref_price": 67.73,
+   "value": 0.77,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/18",
+   "sid": "00918",
+   "name": "大華優利高填息30",
+   "pre_close": 36.25,
+   "ref_price": 34.5,
+   "value": 1.75,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/18",
+   "sid": "00994A",
+   "name": "主動第一金台股優",
+   "pre_close": 16.37,
+   "ref_price": 16.11,
+   "value": 0.257,
    "type": "息"
   }
  ]
