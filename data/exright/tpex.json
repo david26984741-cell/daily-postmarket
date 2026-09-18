@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-09-17",
+ "updated_at": "2026-09-18",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87842,6 +87842,78 @@
    "pre_close": 50.8,
    "ref_price": 50.55,
    "value": 0.25,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/21",
+   "sid": "00697B",
+   "name": "元大美債7-10",
+   "pre_close": 34.82,
+   "ref_price": 34.51,
+   "value": 0.31,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/21",
+   "sid": "00751B",
+   "name": "元大AAA至A公司債",
+   "pre_close": 30.47,
+   "ref_price": 30.04,
+   "value": 0.43,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/21",
+   "sid": "00787B",
+   "name": "元大10年IG醫療債",
+   "pre_close": 31.74,
+   "ref_price": 31.33,
+   "value": 0.41,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/21",
+   "sid": "00967B",
+   "name": "元大優息美債",
+   "pre_close": 8.84,
+   "ref_price": 8.81,
+   "value": 0.033,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/21",
+   "sid": "00968B",
+   "name": "元大優息投等債",
+   "pre_close": 8.98,
+   "ref_price": 8.94,
+   "value": 0.043,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/21",
+   "sid": "00981B",
+   "name": "第一金優選非投債",
+   "pre_close": 9.14,
+   "ref_price": 9.08,
+   "value": 0.063,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/21",
+   "sid": "3260",
+   "name": "威剛",
+   "pre_close": 396.5,
+   "ref_price": 373.35,
+   "value": 23.145117,
+   "type": "除權息"
+  },
+  {
+   "date": "2026/09/21",
+   "sid": "5314",
+   "name": "世紀*",
+   "pre_close": 30.5,
+   "ref_price": 30.45,
+   "value": 0.048527,
    "type": "除息"
   }
  ]

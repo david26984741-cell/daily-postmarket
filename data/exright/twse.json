@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-09-17",
+ "updated_at": "2026-09-18",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99398,6 +99398,15 @@
    "pre_close": 16.37,
    "ref_price": 16.11,
    "value": 0.257,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/21",
+   "sid": "00713",
+   "name": "元大台灣高息低波",
+   "pre_close": 65.1,
+   "ref_price": 63.85,
+   "value": 1.25,
    "type": "息"
   }
  ]
