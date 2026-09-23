@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-09-18",
+ "updated_at": "2026-09-23",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87914,6 +87914,78 @@
    "pre_close": 30.5,
    "ref_price": 30.45,
    "value": 0.048527,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/22",
+   "sid": "8042",
+   "name": "金山電",
+   "pre_close": 113.5,
+   "ref_price": 112.52,
+   "value": 0.976512,
+   "type": "除權"
+  },
+  {
+   "date": "2026/09/23",
+   "sid": "00836B",
+   "name": "永豐10年A公司債",
+   "pre_close": 27.81,
+   "ref_price": 27.43,
+   "value": 0.382,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/23",
+   "sid": "00856B",
+   "name": "永豐1-3年美公債",
+   "pre_close": 37.21,
+   "ref_price": 36.88,
+   "value": 0.335,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/23",
+   "sid": "00857B",
+   "name": "永豐20年美公債",
+   "pre_close": 22.38,
+   "ref_price": 22.13,
+   "value": 0.255,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/23",
+   "sid": "00958B",
+   "name": "永豐ESG銀行債15+",
+   "pre_close": 8.97,
+   "ref_price": 8.93,
+   "value": 0.041,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/23",
+   "sid": "00990B",
+   "name": "國泰收益非投等債",
+   "pre_close": 9.96,
+   "ref_price": 9.88,
+   "value": 0.08,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/23",
+   "sid": "1595",
+   "name": "川寶",
+   "pre_close": 74.6,
+   "ref_price": 74.13,
+   "value": 0.467447,
+   "type": "除息"
+  },
+  {
+   "date": "2026/09/23",
+   "sid": "4109",
+   "name": "加捷生醫",
+   "pre_close": 11.1,
+   "ref_price": 10.9,
+   "value": 0.2,
    "type": "除息"
   }
  ]

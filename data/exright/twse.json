@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-09-18",
+ "updated_at": "2026-09-23",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99408,6 +99408,60 @@
    "ref_price": 63.85,
    "value": 1.25,
    "type": "息"
+  },
+  {
+   "date": "2026/09/23",
+   "sid": "00930",
+   "name": "永豐ESG低碳高息",
+   "pre_close": 24.81,
+   "ref_price": 23.99,
+   "value": 0.815,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/23",
+   "sid": "1442",
+   "name": "名軒",
+   "pre_close": 31.15,
+   "ref_price": 28.75,
+   "value": 2.4,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/23",
+   "sid": "1808",
+   "name": "潤隆",
+   "pre_close": 35.0,
+   "ref_price": 33.5,
+   "value": 1.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/23",
+   "sid": "2542",
+   "name": "興富發",
+   "pre_close": 45.45,
+   "ref_price": 41.45,
+   "value": 4.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/23",
+   "sid": "5258",
+   "name": "虹堡",
+   "pre_close": 42.4,
+   "ref_price": 41.39,
+   "value": 1.007326,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/24",
+   "sid": "1235",
+   "name": "興泰",
+   "pre_close": 41.15,
+   "ref_price": 38.71,
+   "value": 2.435714,
+   "type": "權息"
   }
  ]
 }
