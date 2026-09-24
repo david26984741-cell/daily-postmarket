@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-09-23",
+ "updated_at": "2026-09-24",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99462,6 +99462,24 @@
    "ref_price": 38.71,
    "value": 2.435714,
    "type": "權息"
+  },
+  {
+   "date": "2026/09/29",
+   "sid": "2109",
+   "name": "華豐",
+   "pre_close": 15.0,
+   "ref_price": 14.5,
+   "value": 0.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/09/29",
+   "sid": "7631",
+   "name": "聚賢研發-創",
+   "pre_close": 138.5,
+   "ref_price": 137.7,
+   "value": 0.8,
+   "type": "息"
   }
  ]
 }
