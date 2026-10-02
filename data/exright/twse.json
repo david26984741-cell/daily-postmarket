@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-09-28",
+ "updated_at": "2026-10-02",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99479,6 +99479,51 @@
    "pre_close": 138.5,
    "ref_price": 137.7,
    "value": 0.8,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/01",
+   "sid": "9927",
+   "name": "泰銘",
+   "pre_close": 70.1,
+   "ref_price": 65.1,
+   "value": 5.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/02",
+   "sid": "6834",
+   "name": "天二科技",
+   "pre_close": 119.5,
+   "ref_price": 115.48,
+   "value": 4.01133,
+   "type": "權"
+  },
+  {
+   "date": "2026/10/05",
+   "sid": "00406A",
+   "name": "主動中信台灣收益",
+   "pre_close": 10.13,
+   "ref_price": 9.99,
+   "value": 0.138,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/05",
+   "sid": "00939",
+   "name": "統一台灣高息動能",
+   "pre_close": 24.0,
+   "ref_price": 23.87,
+   "value": 0.125,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/05",
+   "sid": "00984D",
+   "name": "主動聯博全球非投",
+   "pre_close": 9.74,
+   "ref_price": 9.65,
+   "value": 0.085,
    "type": "息"
   }
  ]

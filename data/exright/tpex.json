@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-09-28",
+ "updated_at": "2026-10-02",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -87986,6 +87986,105 @@
    "pre_close": 11.1,
    "ref_price": 10.9,
    "value": 0.2,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/01",
+   "sid": "1784",
+   "name": "訊聯",
+   "pre_close": 61.2,
+   "ref_price": 60.32,
+   "value": 0.880964,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/01",
+   "sid": "6523",
+   "name": "達爾膚",
+   "pre_close": 91.0,
+   "ref_price": 89.0,
+   "value": 2.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/02",
+   "sid": "6171",
+   "name": "大城地產",
+   "pre_close": 27.35,
+   "ref_price": 25.35,
+   "value": 2.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/05",
+   "sid": "00950B",
+   "name": "凱基A級公司債",
+   "pre_close": 13.12,
+   "ref_price": 13.06,
+   "value": 0.063,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/05",
+   "sid": "00959B",
+   "name": "大華投等美債15Y+",
+   "pre_close": 8.72,
+   "ref_price": 8.67,
+   "value": 0.048,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/05",
+   "sid": "00966B",
+   "name": "統一ESG投等債15+",
+   "pre_close": 12.96,
+   "ref_price": 12.89,
+   "value": 0.068,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/05",
+   "sid": "00983B",
+   "name": "大華優利美公債20",
+   "pre_close": 14.41,
+   "ref_price": 14.35,
+   "value": 0.06,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/05",
+   "sid": "00984B",
+   "name": "大華優利美A債15",
+   "pre_close": 15.13,
+   "ref_price": 15.05,
+   "value": 0.079,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/05",
+   "sid": "00986B",
+   "name": "FT金融債10+",
+   "pre_close": 9.19,
+   "ref_price": 9.15,
+   "value": 0.042,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/05",
+   "sid": "020035",
+   "name": "元大上櫃ESG高息N",
+   "pre_close": 14.04,
+   "ref_price": 13.69,
+   "value": 0.348,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/05",
+   "sid": "5512",
+   "name": "力麒",
+   "pre_close": 7.69,
+   "ref_price": 7.59,
+   "value": 0.1,
    "type": "除息"
   }
  ]
