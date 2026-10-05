@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-10-02",
+ "updated_at": "2026-10-05",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99525,6 +99525,24 @@
    "ref_price": 9.65,
    "value": 0.085,
    "type": "息"
+  },
+  {
+   "date": "2026/10/06",
+   "sid": "2614",
+   "name": "東森",
+   "pre_close": 19.1,
+   "ref_price": 16.13,
+   "value": 2.964737,
+   "type": "權息"
+  },
+  {
+   "date": "2026/10/06",
+   "sid": "8021",
+   "name": "尖點",
+   "pre_close": 560.0,
+   "ref_price": 555.45,
+   "value": 4.546368,
+   "type": "權"
   }
  ]
 }
