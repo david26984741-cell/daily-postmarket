@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-10-05",
+ "updated_at": "2026-10-06",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99543,6 +99543,69 @@
    "ref_price": 555.45,
    "value": 4.546368,
    "type": "權"
+  },
+  {
+   "date": "2026/10/07",
+   "sid": "00940",
+   "name": "元大台灣價值高息",
+   "pre_close": 13.3,
+   "ref_price": 13.24,
+   "value": 0.055,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/07",
+   "sid": "00946",
+   "name": "群益科技高息成長",
+   "pre_close": 15.56,
+   "ref_price": 15.5,
+   "value": 0.058,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/07",
+   "sid": "00953B",
+   "name": "群益優選非投等債",
+   "pre_close": 9.48,
+   "ref_price": 9.41,
+   "value": 0.067,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/07",
+   "sid": "00985B",
+   "name": "群益ESG投等債0-5",
+   "pre_close": 10.05,
+   "ref_price": 9.99,
+   "value": 0.053,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/07",
+   "sid": "2890",
+   "name": "永豐金",
+   "pre_close": 45.4,
+   "ref_price": 44.97,
+   "value": 0.425362,
+   "type": "權"
+  },
+  {
+   "date": "2026/10/07",
+   "sid": "6108",
+   "name": "競國",
+   "pre_close": 25.4,
+   "ref_price": 24.4,
+   "value": 1.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/07",
+   "sid": "6947",
+   "name": "台鎔科技",
+   "pre_close": 68.8,
+   "ref_price": 68.26,
+   "value": 0.533326,
+   "type": "息"
   }
  ]
 }

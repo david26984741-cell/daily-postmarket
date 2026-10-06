@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-10-05",
+ "updated_at": "2026-10-06",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88086,6 +88086,24 @@
    "ref_price": 7.59,
    "value": 0.1,
    "type": "除息"
+  },
+  {
+   "date": "2026/10/07",
+   "sid": "2947",
+   "name": "振宇五金",
+   "pre_close": 62.6,
+   "ref_price": 61.6,
+   "value": 1.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/07",
+   "sid": "6129",
+   "name": "普誠",
+   "pre_close": 14.4,
+   "ref_price": 14.11,
+   "value": 0.293508,
+   "type": "除權"
   }
  ]
 }
