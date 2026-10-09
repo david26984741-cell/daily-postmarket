@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-10-06",
+ "updated_at": "2026-10-09",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88104,6 +88104,15 @@
    "ref_price": 14.11,
    "value": 0.293508,
    "type": "除權"
+  },
+  {
+   "date": "2026/10/12",
+   "sid": "1565",
+   "name": "精華",
+   "pre_close": 97.5,
+   "ref_price": 91.7,
+   "value": 5.8,
+   "type": "除息"
   }
  ]
 }
