@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-10-09",
+ "updated_at": "2026-10-13",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88112,6 +88112,24 @@
    "pre_close": 97.5,
    "ref_price": 91.7,
    "value": 5.8,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/13",
+   "sid": "2938",
+   "name": "床的世界",
+   "pre_close": 18.85,
+   "ref_price": 18.23,
+   "value": 0.61725,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/14",
+   "sid": "4903",
+   "name": "聯光通",
+   "pre_close": 51.3,
+   "ref_price": 51.0,
+   "value": 0.3,
    "type": "除息"
   }
  ]

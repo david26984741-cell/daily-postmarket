@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-10-09",
+ "updated_at": "2026-10-13",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99623,6 +99623,15 @@
    "pre_close": 13.2,
    "ref_price": 13.06,
    "value": 0.130693,
+   "type": "權"
+  },
+  {
+   "date": "2026/10/13",
+   "sid": "1727",
+   "name": "中華化",
+   "pre_close": 103.5,
+   "ref_price": 101.31,
+   "value": 2.189402,
    "type": "權"
   }
  ]
