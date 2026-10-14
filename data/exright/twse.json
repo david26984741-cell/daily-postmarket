@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-10-13",
+ "updated_at": "2026-10-14",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99633,6 +99633,24 @@
    "ref_price": 101.31,
    "value": 2.189402,
    "type": "權"
+  },
+  {
+   "date": "2026/10/15",
+   "sid": "00401A",
+   "name": "主動摩根台灣鑫收",
+   "pre_close": 14.39,
+   "ref_price": 14.25,
+   "value": 0.131,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/15",
+   "sid": "1463",
+   "name": "強盛新",
+   "pre_close": 17.95,
+   "ref_price": 17.82,
+   "value": 0.1273,
+   "type": "息"
   }
  ]
 }

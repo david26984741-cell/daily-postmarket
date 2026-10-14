@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-10-13",
+ "updated_at": "2026-10-14",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88130,6 +88130,15 @@
    "pre_close": 51.3,
    "ref_price": 51.0,
    "value": 0.3,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/15",
+   "sid": "6548",
+   "name": "長科*",
+   "pre_close": 82.9,
+   "ref_price": 82.45,
+   "value": 0.451055,
    "type": "除息"
   }
  ]
