@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-10-14",
+ "updated_at": "2026-10-15",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99650,6 +99650,60 @@
    "pre_close": 17.95,
    "ref_price": 17.82,
    "value": 0.1273,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/16",
+   "sid": "00851",
+   "name": "台新全球AI",
+   "pre_close": 71.85,
+   "ref_price": 69.35,
+   "value": 2.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/16",
+   "sid": "00904",
+   "name": "台新臺灣半導體30",
+   "pre_close": 41.22,
+   "ref_price": 39.02,
+   "value": 2.2,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/16",
+   "sid": "00936",
+   "name": "台新永續高息中小",
+   "pre_close": 21.51,
+   "ref_price": 21.35,
+   "value": 0.16,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/16",
+   "sid": "00947",
+   "name": "台新臺灣IC設計",
+   "pre_close": 37.34,
+   "ref_price": 35.34,
+   "value": 2.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/16",
+   "sid": "00962",
+   "name": "台新AI優息動能",
+   "pre_close": 14.92,
+   "ref_price": 14.67,
+   "value": 0.25,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/16",
+   "sid": "009805",
+   "name": "台新美國電力基建",
+   "pre_close": 15.0,
+   "ref_price": 14.7,
+   "value": 0.3,
    "type": "息"
   }
  ]
