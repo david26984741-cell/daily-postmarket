@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-10-16",
+ "updated_at": "2026-10-19",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88490,6 +88490,24 @@
    "pre_close": 9.43,
    "ref_price": 9.39,
    "value": 0.045,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/20",
+   "sid": "00931B",
+   "name": "統一美債20年",
+   "pre_close": 13.08,
+   "ref_price": 12.94,
+   "value": 0.141,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/20",
+   "sid": "00985D",
+   "name": "主動貝萊德優投等",
+   "pre_close": 9.82,
+   "ref_price": 9.76,
+   "value": 0.061,
    "type": "除息"
   }
  ]

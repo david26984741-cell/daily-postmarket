@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-10-16",
+ "updated_at": "2026-10-19",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99956,6 +99956,33 @@
    "pre_close": 14.3,
    "ref_price": 13.57,
    "value": 0.73,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/20",
+   "sid": "00991B",
+   "name": "貝萊德A級公司債",
+   "pre_close": 14.91,
+   "ref_price": 14.84,
+   "value": 0.067,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/20",
+   "sid": "1711",
+   "name": "永光",
+   "pre_close": 44.65,
+   "ref_price": 43.75,
+   "value": 0.890838,
+   "type": "權"
+  },
+  {
+   "date": "2026/10/20",
+   "sid": "4155",
+   "name": "訊映",
+   "pre_close": 16.1,
+   "ref_price": 15.8,
+   "value": 0.3,
    "type": "息"
   }
  ]
