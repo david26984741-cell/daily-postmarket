@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-10-19",
+ "updated_at": "2026-10-20",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -99983,6 +99983,24 @@
    "pre_close": 16.1,
    "ref_price": 15.8,
    "value": 0.3,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/21",
+   "sid": "00408A",
+   "name": "主動第一金優股息",
+   "pre_close": 9.98,
+   "ref_price": 9.77,
+   "value": 0.21,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/21",
+   "sid": "00929",
+   "name": "復華台灣科技優息",
+   "pre_close": 29.26,
+   "ref_price": 28.88,
+   "value": 0.38,
    "type": "息"
   }
  ]

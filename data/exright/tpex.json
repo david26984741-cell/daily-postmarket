@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-10-19",
+ "updated_at": "2026-10-20",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88508,6 +88508,33 @@
    "pre_close": 9.82,
    "ref_price": 9.76,
    "value": 0.061,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/21",
+   "sid": "00789B",
+   "name": "復華公司債A3",
+   "pre_close": 46.18,
+   "ref_price": 45.51,
+   "value": 0.67,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/21",
+   "sid": "00791B",
+   "name": "復華信用債1-5",
+   "pre_close": 57.75,
+   "ref_price": 57.1,
+   "value": 0.65,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/21",
+   "sid": "00986D",
+   "name": "主動復華金融債息",
+   "pre_close": 14.23,
+   "ref_price": 14.14,
+   "value": 0.09,
    "type": "除息"
   }
  ]
