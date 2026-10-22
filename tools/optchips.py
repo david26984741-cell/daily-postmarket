@@ -18,7 +18,7 @@ CALL 在左(紅)、PUT 在右(綠);標籤 = 金額 (增減口數)。減少 = 負
 
 rows.json 格式: [[履約價, ΔC口, C結算, C收盤, ΔP口, P結算, P收盤], ...]
 """
-import os, json, argparse, urllib.request, urllib.parse, datetime
+import os, json, time, argparse, urllib.request, urllib.parse, urllib.error, datetime
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -53,17 +53,51 @@ def f_e(v):
 UA = "Mozilla/5.0"
 
 
-def _post(url, params):
+# 期交所偶爾回 5xx(2026/10/22 實測 HTTP 520), 一次就掛掉的話當天就少一張圖。
+# 這些都是對方暫時性的毛病, 隔幾十秒再打通常就好了, 所以退避重試。
+_RETRY_CODES = {429, 500, 502, 503, 504, 520, 521, 522, 524}
+
+
+def _post(url, params, tries=4):
     data = urllib.parse.urlencode(params).encode()
-    req = urllib.request.Request(url, data=data, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        return r.read().decode("big5", errors="replace")
+    last = None
+    for i in range(tries):
+        try:
+            req = urllib.request.Request(url, data=data, headers={"User-Agent": UA})
+            with urllib.request.urlopen(req, timeout=60) as r:
+                return r.read().decode("big5", errors="replace")
+        except urllib.error.HTTPError as e:
+            last = e
+            if e.code not in _RETRY_CODES:
+                raise                      # 4xx 之類重試也沒用, 直接拋出
+            print(f"  期交所回 HTTP {e.code}, 第 {i+1}/{tries} 次, 等候後重試")
+        except (urllib.error.URLError, TimeoutError, OSError) as e:
+            last = e
+            print(f"  連線失敗({type(e).__name__}), 第 {i+1}/{tries} 次, 等候後重試")
+        if i < tries - 1:
+            time.sleep(20 * (i + 1))       # 20s / 40s / 60s — 520 多半撐不過一分鐘
+    raise last
 
 
-def _get_json(url):
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        return json.loads(r.read().decode("utf-8"))
+def _get_json(url, tries=4):
+    """同 _post 的重試理由 — 台指期/加權指數這兩個來源也會偶發 5xx。"""
+    last = None
+    for i in range(tries):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": UA})
+            with urllib.request.urlopen(req, timeout=60) as r:
+                return json.loads(r.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            last = e
+            if e.code not in _RETRY_CODES:
+                raise
+            print(f"  來源回 HTTP {e.code}, 第 {i+1}/{tries} 次, 等候後重試")
+        except (urllib.error.URLError, TimeoutError, OSError, ValueError) as e:
+            last = e
+            print(f"  取得失敗({type(e).__name__}), 第 {i+1}/{tries} 次, 等候後重試")
+        if i < tries - 1:
+            time.sleep(20 * (i + 1))
+    raise last
 
 
 def fetch_all():
