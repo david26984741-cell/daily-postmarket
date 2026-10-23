@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-10-20",
+ "updated_at": "2026-10-23",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88536,6 +88536,123 @@
    "ref_price": 14.14,
    "value": 0.09,
    "type": "除息"
+  },
+  {
+   "date": "2026/10/22",
+   "sid": "00719B",
+   "name": "元大美債1-3",
+   "pre_close": 31.68,
+   "ref_price": 31.41,
+   "value": 0.27,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/22",
+   "sid": "00720B",
+   "name": "元大投資級公司債",
+   "pre_close": 31.88,
+   "ref_price": 31.42,
+   "value": 0.46,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/22",
+   "sid": "00788B",
+   "name": "元大10年IG電能債",
+   "pre_close": 29.33,
+   "ref_price": 28.96,
+   "value": 0.37,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/22",
+   "sid": "00834B",
+   "name": "第一金金融債10+",
+   "pre_close": 33.11,
+   "ref_price": 32.7,
+   "value": 0.415,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/22",
+   "sid": "00870B",
+   "name": "元大15年EM主權債",
+   "pre_close": 27.12,
+   "ref_price": 26.74,
+   "value": 0.38,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/22",
+   "sid": "00967B",
+   "name": "元大優息美債",
+   "pre_close": 8.87,
+   "ref_price": 8.84,
+   "value": 0.033,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/22",
+   "sid": "00968B",
+   "name": "元大優息投等債",
+   "pre_close": 8.9,
+   "ref_price": 8.86,
+   "value": 0.043,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/22",
+   "sid": "00981B",
+   "name": "第一金優選非投債",
+   "pre_close": 9.0,
+   "ref_price": 8.94,
+   "value": 0.063,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/22",
+   "sid": "8102",
+   "name": "傑霖科技",
+   "pre_close": 56.9,
+   "ref_price": 56.0,
+   "value": 0.9,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/22",
+   "sid": "8936",
+   "name": "國統",
+   "pre_close": 51.2,
+   "ref_price": 48.2,
+   "value": 3.0,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/27",
+   "sid": "00888",
+   "name": "永豐台灣ESG",
+   "pre_close": 33.94,
+   "ref_price": 32.44,
+   "value": 1.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/27",
+   "sid": "00958B",
+   "name": "永豐ESG銀行債15+",
+   "pre_close": 8.94,
+   "ref_price": 8.9,
+   "value": 0.041,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/27",
+   "sid": "3691",
+   "name": "碩禾",
+   "pre_close": 109.0,
+   "ref_price": 106.15,
+   "value": 2.846391,
+   "type": "除權"
   }
  ]
 }
