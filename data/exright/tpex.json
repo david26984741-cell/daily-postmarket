@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-10-26",
+ "updated_at": "2026-10-27",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88653,6 +88653,33 @@
    "ref_price": 106.15,
    "value": 2.846391,
    "type": "除權"
+  },
+  {
+   "date": "2026/10/28",
+   "sid": "00726B",
+   "name": "國泰新興投等債",
+   "pre_close": 32.22,
+   "ref_price": 31.76,
+   "value": 0.46,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/28",
+   "sid": "00990B",
+   "name": "國泰收益非投等債",
+   "pre_close": 9.97,
+   "ref_price": 9.89,
+   "value": 0.08,
+   "type": "除息"
+  },
+  {
+   "date": "2026/10/28",
+   "sid": "2063",
+   "name": "世鎧",
+   "pre_close": 24.35,
+   "ref_price": 21.68,
+   "value": 2.668201,
+   "type": "除權息"
   }
  ]
 }

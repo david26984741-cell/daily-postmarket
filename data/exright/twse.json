@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-10-26",
+ "updated_at": "2026-10-27",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -100037,6 +100037,24 @@
    "pre_close": 18.62,
    "ref_price": 18.35,
    "value": 0.268,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/28",
+   "sid": "2025",
+   "name": "千興",
+   "pre_close": 14.0,
+   "ref_price": 13.24,
+   "value": 0.752373,
+   "type": "權"
+  },
+  {
+   "date": "2026/10/28",
+   "sid": "4552",
+   "name": "力達-KY",
+   "pre_close": 15.15,
+   "ref_price": 14.55,
+   "value": 0.6,
    "type": "息"
   }
  ]
