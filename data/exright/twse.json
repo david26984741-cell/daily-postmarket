@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-10-27",
+ "updated_at": "2026-10-29",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -100055,6 +100055,33 @@
    "pre_close": 15.15,
    "ref_price": 14.55,
    "value": 0.6,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/29",
+   "sid": "2762",
+   "name": "世界健身-KY",
+   "pre_close": 80.0,
+   "ref_price": 78.19,
+   "value": 1.807197,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/29",
+   "sid": "3563",
+   "name": "牧德",
+   "pre_close": 687.0,
+   "ref_price": 686.0,
+   "value": 1.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/10/29",
+   "sid": "5522",
+   "name": "遠雄",
+   "pre_close": 64.1,
+   "ref_price": 63.1,
+   "value": 1.0,
    "type": "息"
   }
  ]
