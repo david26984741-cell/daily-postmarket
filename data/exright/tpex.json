@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-10-30",
+ "updated_at": "2026-11-02",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88680,6 +88680,60 @@
    "ref_price": 21.68,
    "value": 2.668201,
    "type": "除權息"
+  },
+  {
+   "date": "2026/11/03",
+   "sid": "00950B",
+   "name": "凱基A級公司債",
+   "pre_close": 13.79,
+   "ref_price": 13.73,
+   "value": 0.063,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/03",
+   "sid": "00959B",
+   "name": "大華投等美債15Y+",
+   "pre_close": 9.03,
+   "ref_price": 8.98,
+   "value": 0.048,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/03",
+   "sid": "00966B",
+   "name": "統一ESG投等債15+",
+   "pre_close": 13.57,
+   "ref_price": 13.5,
+   "value": 0.068,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/03",
+   "sid": "00983B",
+   "name": "大華優利美公債20",
+   "pre_close": 15.43,
+   "ref_price": 15.37,
+   "value": 0.062,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/03",
+   "sid": "00984B",
+   "name": "大華優利美A債15",
+   "pre_close": 15.86,
+   "ref_price": 15.78,
+   "value": 0.08,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/03",
+   "sid": "00986B",
+   "name": "FT金融債10+",
+   "pre_close": 9.61,
+   "ref_price": 9.59,
+   "value": 0.022,
+   "type": "除息"
   }
  ]
 }
