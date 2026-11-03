@@ -63,6 +63,16 @@ jobs:
           pip install --quiet pandas numpy
           python tools/strategy610.py
 
+      # 盤後籌碼快報 (報告第一張圖) 的資料:證交所/櫃買/期交所當日數字 + 歷史回補 → data/flash.json
+      # 掛了不影響其他資料; 證交所三大法人 15:35 常未公布, 備援班次會補上 (報告會因完整度指紋改變而補寄)。
+      - name: 盤後籌碼快報資料
+        continue-on-error: true
+        timeout-minutes: 15
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.date }}" ]; then ARGS="--date ${{ github.event.inputs.date }}"; fi
+          python tools/flash.py collect $ARGS
+
       - name: Commit 資料更新
         run: |
           git config user.name  "github-actions[bot]"

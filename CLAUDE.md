@@ -65,6 +65,10 @@ https://david26984741-cell.github.io/daily-postmarket/
   午夜守衛(台北 <14 時抓前一交易日)、_rank_row 產 data/rank.json(含 price/price_prev)。
 - `tools/backfill.py` — 回補部位(逐日呼叫 scrape.run,skip_kline=True)。
 - `tools/backfill_kline.py` — 回補日K(每 40 個交易日 flush 一次,防逾時丟失)。
+- `tools/flash.py` + `tools/flash_render.py` — **盤後籌碼快報**(報告第一張圖 `0_盤後籌碼快報.png`,版面仿統一期貨)。
+  `collect`(daily.yml)抓證交所/櫃買/期交所 → `data/flash.json`(依日期累積,證交所只補缺的日子);
+  `render`(report.yml)只讀 flash.json 畫圖。口徑與 11/03 對帳結果寫在 flash.py 開頭 docstring。
+  完整度指紋含 flash 各項(缺什麼信件標題會標「快報(…)」)。
 - `tools/analyze.py` — 研究管線(IC/五分位/walk-forward LightGBM/規則回測)→ data/analysis.json。
 - 頁面:`index.html`(總覽)、`stocks.html`(個股圖表:K棒+主力/自然人/法人面板、滾輪縮放、
   拖曳平移、雙擊查價十字線、金額開關、偏好記憶)、`rank.html`(增減排行+概念股框框)、
@@ -978,3 +982,15 @@ large_fut_index 會長到約 40 MB 並且每天陪著重寫。前端目前尚未
 - 驗證(本機注入假錯誤, 不連外):520 兩次後成功→共 3 次;一直 520→4 次後拋出;404→1 次不重試。
 - **怎麼補當天的圖**:手動觸發 report.yml 填 `force=yes` —— 會重抓期交所並重寄整封信。
   註:這張圖**不在內容指紋裡**(它不進 repo), 所以不會像現貨那樣自動補寄, 必須手動。
+
+### 2026/11/03(家用電腦)— 新增「盤後籌碼快報」圖(信件第一張)
+- 使用者要求:仿統一期貨「盤後籌碼快報」做一張一模一樣的, 資料自己從證交所/期交所抓。
+  品牌(logo/公司名/地址/許可證號)換成本站名稱與資料來源。
+- 資料源全部先用 11/03 數字逐項對過(指數/成交金額/法人現貨/期貨/選擇權/PC/大額/散戶/VIX 全一致)。
+  唯一差異:類股雷達的群組統一期貨未公開, 我們用證交所官方產業別歸類, 半導體/傳產等差 ≤0.1pp。
+- 新檔:`tools/flash.py`(collect/render)、`tools/flash_render.py`、`data/flash.json`。
+  daily.yml 加「盤後籌碼快報資料」步驟(continue-on-error, 15 分鐘上限);
+  report.yml 加「產生盤後籌碼快報」步驟;report.py 指紋/缺漏標記納入 flash。
+- 第一次跑會回補:證交所三大法人 40 天、類股 6 天(一天一請求, 約 2~3 分鐘)。
+- 注意:期交所 futDataDown / pcRatioDown 單次查詢**限一個月內**, 超過回 HTML 錯誤頁;
+  futContractsDate / callsAndPuts / largeTrader 可跨月(largeTrader 量大, 只抓 18 天)。

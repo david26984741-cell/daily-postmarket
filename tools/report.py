@@ -442,6 +442,8 @@ def content_sig():
                               + "/" + ("spot" if rec.get("spot") else "-"))
         else:
             parts.append(fn + "=ok")
+    # ⓪ 盤後籌碼快報 (data/flash.json, 結構是 days 而非 records):逐項看當日有沒有到齊
+    parts.append("flash=" + ",".join(flash_gaps(date)))
     return hashlib.sha256("|".join(parts).encode("utf-8")).hexdigest()[:12]
 
 
@@ -474,7 +476,21 @@ def data_gaps():
                 gaps.append("外資現貨")
             if not rec.get("fut"):
                 gaps.append("外資期貨")
+    fg = flash_gaps(date)
+    if fg:
+        gaps.append("快報(" + "/".join(fg) + ")")
     return gaps
+
+
+def flash_gaps(date):
+    """盤後籌碼快報當日缺的項目 (中文名稱清單); flash.json 不存在 → ["全部"]。"""
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from flash import missing_parts
+        doc = json.load(open(os.path.join(DATA, "flash.json"), encoding="utf-8"))
+        return missing_parts(doc, date)
+    except Exception:
+        return ["全部"]
 
 
 def main():

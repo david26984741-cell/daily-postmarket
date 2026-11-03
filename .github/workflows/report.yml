@@ -86,6 +86,13 @@ jobs:
           pip install --quiet matplotlib playwright
           python -m playwright install --with-deps chromium
 
+      # 圖 0: 盤後籌碼快報 — 讀 data/flash.json (daily.yml 已抓好), 檔名 0_ 排在信件第一張
+      - name: 產生盤後籌碼快報 (1 張)
+        id: flash
+        if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
+        continue-on-error: true
+        run: python tools/flash.py render --out .shots
+
       # 圖 1~4: 直接讀 data/*.json 自己畫 (不截網頁 → 不受版面限制、不必等部署)
       - name: 產生圖表 (4 張)
         id: charts
@@ -120,7 +127,7 @@ jobs:
 
       # 供除錯: 在 Actions 頁面可直接下載當次截圖, 不進 repo
       - name: 保留圖片供檢視 (artifact)
-        if: always() && (steps.charts.outcome == 'success' || steps.shots.outcome == 'success')
+        if: always() && (steps.flash.outcome == 'success' || steps.charts.outcome == 'success' || steps.shots.outcome == 'success')
         uses: actions/upload-artifact@v4
         with:
           name: shots-${{ steps.d.outputs.date }}
