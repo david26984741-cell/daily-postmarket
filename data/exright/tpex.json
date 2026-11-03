@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-11-02",
+ "updated_at": "2026-11-03",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88733,6 +88733,15 @@
    "pre_close": 9.61,
    "ref_price": 9.59,
    "value": 0.022,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/04",
+   "sid": "009823",
+   "name": "群益S&P500",
+   "pre_close": 10.55,
+   "ref_price": 10.5,
+   "value": 0.054,
    "type": "除息"
   }
  ]
