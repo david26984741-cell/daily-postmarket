@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-11-03",
+ "updated_at": "2026-11-04",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88742,6 +88742,24 @@
    "pre_close": 10.55,
    "ref_price": 10.5,
    "value": 0.054,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/05",
+   "sid": "3289",
+   "name": "宜特",
+   "pre_close": 127.0,
+   "ref_price": 125.4,
+   "value": 1.6,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/05",
+   "sid": "5523",
+   "name": "豐謙",
+   "pre_close": 30.35,
+   "ref_price": 29.85,
+   "value": 0.5,
    "type": "除息"
   }
  ]
