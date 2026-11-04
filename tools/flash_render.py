@@ -198,7 +198,8 @@ def render(doc, date_slash, out):
     # ---------------- ② 三大法人現貨買賣超
     y = 247
     section(cv, y, 183, "三大法人現貨買賣超", "單位：億元　含近 5 / 10 日累積")
-    bseries = [(k, days[k]["bfi"]) for k in keys if days[k].get("bfi")]
+    # 依「交易日」排, 缺資料的日子留 {} → 連N/近N日遇到缺口就停, 不會跳過缺口拿更舊的日子湊數
+    bseries = [(k, days[k].get("bfi") or {}) for k in keys]
     b = T.get("bfi") or {}
     colx = [53, 247, 442, 636]
     colr = [217, 411, 605, 800]

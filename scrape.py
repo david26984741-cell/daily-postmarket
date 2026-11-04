@@ -573,7 +573,7 @@ def parse_twse_spot(date_yyyymmdd):
     obj = None
     for i in range(3):
         try:
-            txt = http_get(TWSE_BFI, {"response": "json", "date": date_yyyymmdd, "type": "day"}, headers=hdr)
+            txt = http_get(TWSE_BFI, {"response": "json", "dayDate": date_yyyymmdd, "date": date_yyyymmdd, "type": "day"}, headers=hdr)
             obj = json.loads(txt)
             if obj.get("stat") == "OK":
                 break

@@ -287,8 +287,13 @@ def twse_json(path, params, referer):
 
 
 def fetch_bfi(ymd):
-    """三大法人買賣金額 (億)。未公布/非交易日回 None。"""
-    obj = twse_json("fund/BFI82U", {"date": ymd, "type": "day", "response": "json"},
+    """三大法人買賣金額 (億)。未公布/非交易日回 None。
+
+    ⚠ 日期參數是 **dayDate** 不是 date (2026/11/05 查證):
+      BFI82U?date=20261028 會「忽略日期」直接回最新一天 → 下面的日期檢查擋掉 → 歷史永遠抓不到,
+      11/03~11/04 的快報「近5日/近10日」因此空白、「連N買賣」只算到 2 天。
+      dayDate=20261028 才會回 10/28 那天。兩個都帶, 以防哪天證交所又改回來。"""
+    obj = twse_json("fund/BFI82U", {"dayDate": ymd, "date": ymd, "type": "day", "response": "json"},
                     "https://www.twse.com.tw/zh/trading/foreign/bfi82u.html")
     if obj.get("stat") != "OK" or str(obj.get("date", "")) != ymd:
         return None
@@ -516,7 +521,8 @@ def collect(date_slash):
     log(f"  期貨法人: {len(fc)} 天, TX/MTX/TMF 行情: {len(oi['TX'])}/{len(oi['MTX'])}/{len(oi['TMF'])} 天")
 
     # 交易日清單: 期交所有資料的日子 (+ 今天, 期交所還沒出來也要先抓證交所)
-    tdays = sorted(k for k in set(fc) | set(oi["TX"]) if k <= date_slash)
+    # 再併入 flash.json 既有日期 (都是過去抓到過資料的交易日) → 期交所今天掛了也照樣能回補證交所
+    tdays = sorted(k for k in set(fc) | set(oi["TX"]) | set(days) if k <= date_slash)
     if date_slash not in tdays and D.weekday() < 5:
         tdays.append(date_slash)
     tdays = sorted(tdays)
@@ -525,16 +531,26 @@ def collect(date_slash):
     def ymd(k):
         return k.replace("/", "")
 
+    save_flash(doc)          # 期交所部分先落地, 後面證交所就算被 timeout 砍掉也不會全丟
     n = 0
-    for k in tdays[-BFI_DAYS:]:
-        if "bfi" in days.get(k, {}):
+    deadline = time.time() + 420     # 證交所回補最多 7 分鐘 (step 上限 20 分鐘), 沒補完下一班會接著補
+    # 由新到舊:時間不夠時優先補「近 5/10 日、連N買賣」用得到的最近幾天
+    for k in reversed(tdays[-BFI_DAYS:]):
+        if time.time() > deadline:
+            log("  證交所三大法人: 回補達時間上限, 剩下的下一班再補")
+            break
+        # 最近 2 個交易日每次都重抓:證交所 15:0x 先給初版, 晚上會修正
+        # (例:11/04 投信 276.31 → 272.58 億), 只補缺的話初版數字會永遠留在歷史裡。
+        if "bfi" in days.get(k, {}) and k not in tdays[-2:]:
             continue
         r = _try(f"BFI82U {k}", fetch_bfi, ymd(k))
         n += 1
         if r:
             day(k)["bfi"] = r
         time.sleep(2.5)
-    log(f"  證交所三大法人: 補抓 {n} 天")
+    have = sum(1 for k in tdays[-10:] if days.get(k, {}).get("bfi"))
+    log(f"  證交所三大法人: 補抓 {n} 天; 近 10 個交易日有 {have}/{len(tdays[-10:])} 天"
+        + ("" if have == len(tdays[-10:]) else "  ⚠ 不足 → 快報「近5/10日」會空白"))
 
     sec_need = [k for k in tdays[-SEC_DAYS:] if "sec" not in days.get(k, {})]
     if sec_need:
