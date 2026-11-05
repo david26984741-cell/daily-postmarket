@@ -38,9 +38,11 @@ DATA = os.path.join(BASE, "data")
 FLASH = os.path.join(DATA, "flash.json")
 
 TAIFEX = "https://www.taifex.com.tw/cht/3/"
+TAIFEX_VIX_DAY = "https://www.taifex.com.tw/cht/7/getVixData?filesname={ymd}"
 TAIFEX_VIX = "https://www.taifex.com.tw/file/taifex/Dailydownload/vix/log2data/{ym}new.txt"
 TWSE = "https://www.twse.com.tw/rwd/zh/"
 TWSE_OPENAPI_IND = "https://openapi.twse.com.tw/v1/opendata/t187ap03_L"
+TPEX_SECTINX = "https://www.tpex.org.tw/www/zh-tw/indexInfo/sectinx"
 TPEX_HL = "https://www.tpex.org.tw/www/zh-tw/afterTrading/highlight"
 
 BROWSER_UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -271,6 +273,26 @@ def fetch_vix(d):
                 v = num(f[2])
                 if v:
                     out[f"{f[0][:4]}/{f[0][4:6]}/{f[0][6:]}"] = v
+    # 月檔當天傍晚才更新 (11/04、11/05 15:1x 的班次都抓不到當天) → 改抓「當日分鐘檔」,
+    # 取 13:45:00 那筆 = 收盤值 (11/04 驗證: 分鐘檔 13450000 = 35.65 = 月檔收盤)。
+    key = d.strftime("%Y/%m/%d")
+    if key not in out and d.weekday() < 5:
+        try:
+            txt = _req(TAIFEX_VIX_DAY.format(ymd=d.strftime("%Y%m%d")), big5=True, tries=2,
+                       headers={"Referer": TAIFEX.replace("/3/", "/7/") + "vixMinNew"})
+            last = None
+            for ln in txt.splitlines():
+                f = [x.strip() for x in ln.split("\t") if x.strip()]
+                if len(f) >= 3 and f[0] == d.strftime("%Y%m%d") and f[1].isdigit():
+                    v = num(f[2])
+                    if v:
+                        last = (f[1], v)
+                        if f[1] == "13450000":
+                            break
+            if last and last[0] >= "13450000":
+                out[key] = last[1]
+        except Exception as e:
+            log(f"  VIX 當日分鐘檔失敗: {e}")
     return out
 
 
@@ -392,8 +414,27 @@ def fetch_twse_stocks(ymd):
 
 
 def fetch_tpex(ymd):
-    """上櫃指數 收盤與漲跌%。"""
+    """上櫃指數 收盤與漲跌%。
+
+    主來源:櫃買「指數日查詢」sectinx 的「櫃買指數」列 —— 收盤後就有。
+    備援:市場現況 highlight —— 公布得晚 (11/05 15:29 還查無資料), 原本只用這支,
+          15:xx 的班次「上櫃」就一定空白。11/03 兩支都是 345.52 / -23.72, 口徑一致。"""
     dslash = f"{ymd[:4]}/{ymd[4:6]}/{ymd[6:]}"
+    try:
+        obj = json.loads(_req(TPEX_SECTINX, data={"date": dslash, "response": "json"}, tries=3,
+                              headers={"Referer": "https://www.tpex.org.tw/zh-tw/mainboard/trading/info/highlight.html",
+                                       "Accept": "application/json"}))
+        if str(obj.get("stat", "")).lower() == "ok" and str(obj.get("date", "")) == ymd:
+            for tb in obj.get("tables") or []:
+                f = tb.get("fields") or []
+                i_c, i_d = _col(f, "收市"), _col(f, "漲跌")
+                for r in tb.get("data") or []:
+                    if str(r[0]).strip() == "櫃買指數" and i_c is not None and i_d is not None:
+                        close, chg = num(r[i_c]), num(r[i_d])
+                        if close and chg is not None:
+                            return [close, round(chg / (close - chg) * 100, 4)]
+    except Exception as e:
+        log(f"  櫃買 sectinx 失敗, 改用 highlight: {e}")
     txt = _req(TPEX_HL, data={"date": dslash, "response": "json"}, tries=3,
                headers={"Referer": "https://www.tpex.org.tw/zh-tw/mainboard/trading/info/highlight.html",
                         "Accept": "application/json"})
