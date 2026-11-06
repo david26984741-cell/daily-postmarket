@@ -27,7 +27,9 @@ jobs:
   report:
     # workflow_run: 只在來源 workflow 成功時才寄; 手動觸發則一律執行
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
-    runs-on: ubuntu-latest
+    # 2026/11/06 事故:ubuntu-latest 開始換成 Ubuntu 26.04, 安裝步驟卡死 12 分鐘被砍 → 整封信沒有附圖。
+    # 固定 24.04 (11/05 以前都在這版本跑, 安裝約 1 分鐘)。要升級時先手動 force 測過再改。
+    runs-on: ubuntu-24.04
     # 2026/08/19 事故:安裝步驟(Chromium + apt 相依)在 runner 慢的日子跑了 9m16s,
     # 撞上原本的 10 分鐘上限被 cancel → 三次班次全部沒寄信, 而且不會有任何錯誤通知。
     # 上限放寬到 25 分鐘當保險;真正的解法是下面那個相依套件快取。
@@ -71,20 +73,32 @@ jobs:
             ~/.cache/ms-playwright
           key: report-deps-${{ runner.os }}-v1
 
-      # 中文字型: runner 預設沒有 CJK 字型, 不裝的話 matplotlib 圖與截圖都變豆腐方塊 (□□□)。
-      - name: 安裝中文字型、matplotlib 與 Playwright
+      # 中文字型 + matplotlib:附圖 0~4、9 都靠它。跟 Playwright 分開裝 ——
+      # 2026/11/06 三樣綁在同一步, 其中一樣卡住就整步逾時 → 連不需要瀏覽器的圖也全部沒了。
+      # 每個指令都有自己的 timeout, 輸出不再靜音, 卡在哪一行 log 看得到。
+      - name: 安裝中文字型與 matplotlib
         if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
-        timeout-minutes: 12       # 卡住就讓這一步失敗, 不要把整個 job 的時間吃光
-        # 關鍵:這些套件只給「附圖」用, report.py 本身是純標準庫。
-        # 裝不起來時讓它過去 → 後面 charts/shots/optchips 會失敗(它們也都 continue-on-error),
-        # 但信照樣寄得出去, 只是沒有附圖。附圖掛掉不該讓整封報告消失。
-        continue-on-error: true
+        timeout-minutes: 8
+        continue-on-error: true    # 裝不起來只是沒附圖, 信照寄
+        env:
+          DEBIAN_FRONTEND: noninteractive
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-noto-cjk >/dev/null
+          timeout 180 sudo apt-get update -q -o Acquire::Retries=3 || echo "apt update 失敗/逾時, 仍嘗試安裝"
+          timeout 240 sudo apt-get install -y -q --no-install-recommends fonts-noto-cjk
           fc-cache -f >/dev/null
-          pip install --quiet matplotlib playwright
-          python -m playwright install --with-deps chromium
+          timeout 180 pip install --quiet matplotlib
+          fc-list :lang=zh family | head -3
+
+      # Playwright + Chromium:只有排行截圖 5~8 需要。
+      - name: 安裝 Playwright (排行截圖用)
+        if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
+        timeout-minutes: 10
+        continue-on-error: true
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          timeout 180 pip install --quiet playwright
+          timeout 480 python -m playwright install --with-deps chromium
 
       # 圖 0: 盤後籌碼快報 — 讀 data/flash.json (daily.yml 已抓好), 檔名 0_ 排在信件第一張
       - name: 產生盤後籌碼快報 (1 張)

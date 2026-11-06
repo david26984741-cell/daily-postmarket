@@ -1016,3 +1016,13 @@ large_fut_index 會長到約 40 MB 並且每天陪著重寫。前端目前尚未
   · 期交所 VIX 月檔(log2data/YYYYMMnew.txt)傍晚才更新 → 當天缺時改抓 **`/cht/7/getVixData?filesname=YYYYMMDD`**
     (當日分鐘檔), 取 13:45:00 那筆;盤中檔案還沒到 13:45 不寫入。11/04 分鐘檔 13:45 = 35.65 = 月檔收盤值。
 - 其餘 10 項在 15:15 都已齊全(證交所三大法人 40 天回補也已正常)。
+
+### 2026/11/06 — 報告整封沒有附圖:runner 換成 Ubuntu 26.04, 安裝步驟卡死
+- 症狀:11/06 的信沒有任何附圖。report.yml #254 綠燈但跑了 13 分半,
+  「安裝中文字型、matplotlib 與 Playwright」**12 分鐘逾時**(continue-on-error 所以整體仍成功),
+  之後 4 個畫圖步驟全部 exit 1 → 信照寄、0 張圖。
+- 根因:Set up job 顯示 `Image: ubuntu-26.04` —— GitHub 從 10/19 起把 ubuntu-latest 逐步換成 26.04
+  (annotation 有預告)。11/05 的 run 還在 24.04, 安裝 58 秒。卡在哪一行看不到, 因為原本全部 -qq / >/dev/null / --quiet。
+- 修法:report.yml `runs-on: ubuntu-24.04` 固定版本;安裝拆兩步(字型+matplotlib / Playwright),
+  每個指令包 `timeout`、拿掉靜音、DEBIAN_FRONTEND=noninteractive。Playwright 掛了只少 5~8 排行截圖, 不再拖垮全部。
+- 其他 workflow 仍是 ubuntu-latest(純 Python 抓資料, 11/06 daily 在 26.04 正常)。之後要升 26.04 先手動 force 測。
