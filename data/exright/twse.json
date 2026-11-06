@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-11-04",
+ "updated_at": "2026-11-06",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -100164,6 +100164,24 @@
    "ref_price": 90.9,
    "value": 2.0,
    "type": "息"
+  },
+  {
+   "date": "2026/11/06",
+   "sid": "00400A",
+   "name": "主動國泰動能高息",
+   "pre_close": 12.06,
+   "ref_price": 11.94,
+   "value": 0.12,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/06",
+   "sid": "2414",
+   "name": "精技",
+   "pre_close": 48.3,
+   "ref_price": 48.04,
+   "value": 0.253115,
+   "type": "權"
   }
  ]
 }
