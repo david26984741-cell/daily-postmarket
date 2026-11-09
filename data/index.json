@@ -1,5 +1,6 @@
 {
  "dates": [
+  "2026/11/09",
   "2026/11/06",
   "2026/11/05",
   "2026/11/04",
@@ -2518,8 +2519,8 @@
   "2014/01/03",
   "2014/01/02"
  ],
- "latest_date": "2026/11/06",
- "updated_at": "2026-11-07T04:03:31+08:00",
+ "latest_date": "2026/11/09",
+ "updated_at": "2026-11-09T20:08:48+08:00",
  "stocks": [
   {
    "code": "CA",
@@ -24657,6 +24658,19 @@
    "large_fut_index": "ok (26 契約)",
    "kline": "ok (287 檔)",
    "fkline": "ok (314 檔 · 每日行情(全部))",
+   "txf": "ok",
+   "txk": "ok (5 商品, 4 含夜盤)"
+  },
+  "2026/11/09": {
+   "options_foreign": "ok",
+   "options_dealer": "ok",
+   "foreign_fut_spot": "ok",
+   "large_opt": "ok",
+   "large_fut_txf": "ok",
+   "stocks": "ok (326 檔)",
+   "large_fut_index": "ok (26 契約)",
+   "kline": "ok (340 檔)",
+   "fkline": "ok (312 檔 · 每日行情(全部))",
    "txf": "ok",
    "txk": "ok (5 商品, 4 含夜盤)"
   }
