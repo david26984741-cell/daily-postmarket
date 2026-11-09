@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-11-06",
+ "updated_at": "2026-11-09",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -100182,6 +100182,15 @@
    "ref_price": 48.04,
    "value": 0.253115,
    "type": "權"
+  },
+  {
+   "date": "2026/11/10",
+   "sid": "00940",
+   "name": "元大台灣價值高息",
+   "pre_close": 12.09,
+   "ref_price": 12.03,
+   "value": 0.06,
+   "type": "息"
   }
  ]
 }
