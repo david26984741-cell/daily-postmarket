@@ -2,7 +2,7 @@ name: 每日股期報告
 
 # 「每日盤後資料抓取與部署」一跑完就自動接著跑 (workflow_run 事件觸發, 非定時輪詢),
 # 所以不論是排程 15:35 主班次、21:35 備援, 還是手動 Run workflow, 報告都會緊接著寄出。
-# 只有抓取「成功」才寄; 同一個資料日期只寄一次 (用 cache 防重複, 避免主班次+備援各寄一封)。
+# 來源成功或失敗都會接著跑 (部署失敗不擋寄信); 同一份資料只寄一次 (用 cache 防重複, 避免多個班次各寄一封)。
 # 注意: 本 repo 為公開, 報告不寫檔、不 commit、不部署, 僅在記憶體處理後寄出。
 
 on:
@@ -25,8 +25,14 @@ concurrency:
 
 jobs:
   report:
-    # workflow_run: 只在來源 workflow 成功時才寄; 手動觸發則一律執行
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    # workflow_run: 來源 workflow「成功或失敗」都接著跑 (取消/略過不跑);手動觸發一律執行。
+    # 2026/11/10 改:以前只在成功時寄, 結果「網站部署」逾時 → workflow 失敗 → 不寄信,
+    # 但資料其實早已 commit。現在部署失敗不影響寄信;真的沒抓到新資料時,
+    # 下面的「防重複」(資料日期 + 完整度指紋) 會判定已寄過而略過, 不會重寄舊資料。
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success' ||
+      github.event.workflow_run.conclusion == 'failure'
     # 2026/11/06 事故:ubuntu-latest 開始換成 Ubuntu 26.04, 安裝步驟卡死 12 分鐘被砍 → 整封信沒有附圖。
     # 固定 24.04 (11/05 以前都在這版本跑, 安裝約 1 分鐘)。要升級時先手動 force 測過再改。
     runs-on: ubuntu-24.04

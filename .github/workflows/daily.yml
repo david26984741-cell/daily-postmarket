@@ -9,6 +9,11 @@ on:
     # 備援班次 UTC 13:35 = 台北 21:35:主班次被 GitHub 跳過時的保險 (2026/07/09 即發生過)。
     # 同日重跑僅覆蓋當日資料、不影響歷史;若主班次已成功, 此班次抓到相同資料, 無資料變更即不 commit。
     - cron: "35 13 * * 1-5"
+    # 補位班次 (2026/11/10 加):台北 16:05~20:05、22:05、23:05 每小時一次。
+    # GitHub 排程近期常延遲 4~15 小時甚至整個不來 (11/09 兩班都遲到、11/10 的 15:35 到 23 點都沒出現),
+    # 只靠上面兩班, 運氣不好整天沒資料、沒信。補位班次先跑 check:資料已齊全就整個略過 (不抓、不部署、不重寄)。
+    # 改這幾行 cron 字串時, 下面 check job 的判斷也要一起改。
+    - cron: "5 8-12,14-15 * * 1-5"
   workflow_dispatch:
     inputs:
       date:
@@ -30,12 +35,43 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  scrape-and-deploy:
+  # ① 這班要不要跑?  手動觸發、15:35 主班次、21:35 備援 → 一律跑;補位班次 → 資料已齊全就略過。
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.s.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout: |       # 只拿判斷要用的小檔, 不拉整個 repo (完整 checkout 要 1 分鐘)
+            scrape.py
+            tools/
+            data/*.json
+            data/holidays.txt
+          sparse-checkout-cone-mode: false
+      - id: s
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ] \
+             || [ "${{ github.event.schedule }}" = "35 7 * * 1-5" ] \
+             || [ "${{ github.event.schedule }}" = "35 13 * * 1-5" ]; then
+            echo "run=true" >> $GITHUB_OUTPUT; echo "主班次/備援/手動 → 一律執行"; exit 0
+          fi
+          python3 tools/status.py | tee st.txt
+          if grep -q "^done=true" st.txt; then
+            echo "run=false" >> $GITHUB_OUTPUT; echo "資料已齊全 → 本補位班次略過"
+          else
+            echo "run=true" >> $GITHUB_OUTPUT
+          fi
+
+  # ② 抓資料 + commit。與部署拆開:2026/11/09~10 連續三次「Deploy to GitHub Pages」逾時,
+  #    以前抓取與部署同一個 job, 部署失敗 = 整個 workflow 失敗 = report.yml 不寄信 (資料其實早已 commit)。
+  scrape:
+    needs: check
+    if: needs.check.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 330
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     env:
       TZ: Asia/Taipei
       RETRY_WAIT: "1800"   # 30 分鐘
@@ -95,7 +131,20 @@ jobs:
           done
           exit 1
 
-      # ---- 由工作流程直接部署網站 (取代不穩定的分支自動部署) ----
+  # ③ 部署網站。重新 checkout main (含剛 commit 的資料)。
+  #    deploy-pages 偶爾卡在 syncing_files 10 分鐘逾時 (11/09~10 連三次) → 等 1 分鐘自動重試一次。
+  deploy:
+    needs: scrape
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment2.outputs.page_url || steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
       - name: 準備網站檔案
         run: |
           rm -rf _site && mkdir -p _site
@@ -111,7 +160,21 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
+        continue-on-error: true
         uses: actions/deploy-pages@v4
+        with:
+          timeout: 600000
+
+      - name: 部署失敗 → 等 1 分鐘重試
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 60
+
+      - name: Deploy to GitHub Pages (重試)
+        id: deployment2
+        if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 900000
 
 # 部署方式:GitHub 官方 Actions 部署 (Settings → Pages → Source 設為 "GitHub Actions")。
 # 每次工作流程執行都會直接把最新網站內容部署上去, 不再依賴不穩定的分支自動部署;

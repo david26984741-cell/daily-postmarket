@@ -32,7 +32,7 @@ https://david26984741-cell.github.io/daily-postmarket/
 
 | 檔案 | 用途 | 排程/觸發 | concurrency group |
 |---|---|---|---|
-| daily.yml | 每日抓取+部署 | 台北 15:35 主班次、21:35 備援(週一~五);可手動指定日期 | daily-postmarket |
+| daily.yml | 每日抓取+部署(check → scrape → deploy 三個 job) | 台北 15:35 主班次、21:35 備援、16~20/22~23 點 :05 補位(資料齊全即略過)(週一~五);可手動指定日期 | daily-postmarket |
 | backfill.yml | 回補歷史部位資料 | 手動(起訖日期) | daily-postmarket |
 | kline.yml | 回補現貨日K | 手動(起訖日期) | daily-postmarket-kline |
 | analysis.yml | 籌碼研究分析 | 週日 02:00 UTC + 手動 | daily-postmarket-analysis |
@@ -1026,3 +1026,18 @@ large_fut_index 會長到約 40 MB 並且每天陪著重寫。前端目前尚未
 - 修法:report.yml `runs-on: ubuntu-24.04` 固定版本;安裝拆兩步(字型+matplotlib / Playwright),
   每個指令包 `timeout`、拿掉靜音、DEBIAN_FRONTEND=noninteractive。Playwright 掛了只少 5~8 排行截圖, 不再拖垮全部。
 - 其他 workflow 仍是 ubuntu-latest(純 Python 抓資料, 11/06 daily 在 26.04 正常)。之後要升 26.04 先手動 force 測。
+
+### 2026/11/10 — 排程大延遲 + 網站部署逾時 → 整天沒信
+- 症狀:11/10 使用者手動跑兩次 daily 都失敗(GitHub 寄「Run failed」通知), 當天沒收到報告。
+- 查證(API `actions/runs/<id>/jobs` 與 `check-runs/<id>/annotations`, 公開 repo 免登入可查):
+  · #290(11/10 01:44)、#292(15:18)、#293(16:27) 三次都是抓取/commit 全部成功, 只有
+    **Deploy to GitHub Pages 卡 10 分鐘「Timeout reached, aborting!」**。
+  · 部署跟抓取在同一個 job → workflow 判定失敗 → report.yml 只在 success 才跑 → **資料齊了卻不寄信**。
+  · 同時 GitHub 排程大延遲:11/09 15:35 班次拖到 11/10 07:06 才跑、21:35 拖到 01:44;11/10 15:35 到 23 點都沒來。
+- 修法(三層):
+  1. daily.yml 拆成 `check` / `scrape` / `deploy` 三個 job;deploy 失敗等 1 分鐘自動重試一次(第二次 15 分鐘上限)。
+  2. report.yml 改成來源 **success 或 failure** 都跑 —— 部署掛了照樣寄;沒新資料時防重複指紋會擋掉, 不會重寄。
+  3. 加補位排程 `5 8-12,14-15 * * 1-5`(台北 16:05~20:05、22:05、23:05), check job 用 `tools/status.py`
+     判斷「目標日資料已齊全 / 非交易日」就整個略過(不抓、不 commit、不部署)。15:35、21:35 兩班與手動一律完整跑。
+     ⚠ check job 用 cron 字串比對分辨班次, 改 cron 時要一起改。
+- 仍然做不到的:GitHub 排程本身「整天都不來」時沒有辦法(那是 GitHub 端), 補位班次只是把機率壓低。
