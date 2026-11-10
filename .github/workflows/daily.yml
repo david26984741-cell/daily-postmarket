@@ -132,14 +132,16 @@ jobs:
           exit 1
 
   # ③ 部署網站。重新 checkout main (含剛 commit 的資料)。
-  #    deploy-pages 偶爾卡在 syncing_files 10 分鐘逾時 (11/09~10 連三次) → 等 1 分鐘自動重試一次。
+  #    11/09~10 Pages 後端卡住:deployment_queued 排隊 ~5 分 + syncing_files 一直不結束 → 10 分鐘逾時。
+  #    11/10 實測:逾時取消後等 1 分鐘重新部署, 44 秒就成功 → 失敗就重試, 最多 3 次。
+  #    部署成敗不影響寄信 (report.yml 在來源 failure 時也會跑)。
   deploy:
     needs: scrape
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 50
     environment:
       name: github-pages
-      url: ${{ steps.deployment2.outputs.page_url || steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment3.outputs.page_url || steps.deployment2.outputs.page_url || steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -172,6 +174,18 @@ jobs:
       - name: Deploy to GitHub Pages (重試)
         id: deployment2
         if: steps.deployment.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 600000
+
+      - name: 第二次也失敗 → 等 2 分鐘再試最後一次
+        if: steps.deployment.outcome == 'failure' && steps.deployment2.outcome == 'failure'
+        run: sleep 120
+
+      - name: Deploy to GitHub Pages (最後一次)
+        id: deployment3
+        if: steps.deployment.outcome == 'failure' && steps.deployment2.outcome == 'failure'
         uses: actions/deploy-pages@v4
         with:
           timeout: 900000
