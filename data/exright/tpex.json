@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-11-09",
+ "updated_at": "2026-11-10",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88761,6 +88761,15 @@
    "ref_price": 29.85,
    "value": 0.5,
    "type": "除息"
+  },
+  {
+   "date": "2026/11/11",
+   "sid": "8390",
+   "name": "金益鼎",
+   "pre_close": 81.9,
+   "ref_price": 80.37,
+   "value": 1.529062,
+   "type": "除權"
   }
  ]
 }
