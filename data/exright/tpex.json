@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-11-10",
+ "updated_at": "2026-11-12",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88770,6 +88770,15 @@
    "ref_price": 80.37,
    "value": 1.529062,
    "type": "除權"
+  },
+  {
+   "date": "2026/11/12",
+   "sid": "3680",
+   "name": "家登",
+   "pre_close": 435.5,
+   "ref_price": 425.59,
+   "value": 9.914746,
+   "type": "除息"
   }
  ]
 }
