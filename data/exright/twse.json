@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-11-12",
+ "updated_at": "2026-11-16",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -100199,6 +100199,267 @@
    "pre_close": 12.42,
    "ref_price": 12.28,
    "value": 0.138,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "00775B",
+   "name": "台新投等債15+",
+   "pre_close": 31.28,
+   "ref_price": 30.93,
+   "value": 0.35,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "00936",
+   "name": "台新永續高息中小",
+   "pre_close": 19.61,
+   "ref_price": 19.45,
+   "value": 0.16,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "00951",
+   "name": "台新日本半導體",
+   "pre_close": 14.02,
+   "ref_price": 12.02,
+   "value": 2.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "00962",
+   "name": "台新AI優息動能",
+   "pre_close": 12.73,
+   "ref_price": 12.65,
+   "value": 0.08,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "006208",
+   "name": "富邦台50",
+   "pre_close": 220.85,
+   "ref_price": 216.97,
+   "value": 3.88,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00690",
+   "name": "兆豐藍籌30",
+   "pre_close": 66.2,
+   "ref_price": 64.2,
+   "value": 2.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00692",
+   "name": "富邦公司治理",
+   "pre_close": 83.65,
+   "ref_price": 81.92,
+   "value": 1.721,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00730",
+   "name": "富邦臺灣優質高息",
+   "pre_close": 26.1,
+   "ref_price": 25.99,
+   "value": 0.11,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00878",
+   "name": "國泰永續高股息",
+   "pre_close": 32.43,
+   "ref_price": 31.18,
+   "value": 1.25,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00891",
+   "name": "中信關鍵半導體",
+   "pre_close": 30.4,
+   "ref_price": 28.85,
+   "value": 1.55,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00892",
+   "name": "富邦台灣半導體",
+   "pre_close": 34.17,
+   "ref_price": 30.17,
+   "value": 4.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00894",
+   "name": "中信小資高價30",
+   "pre_close": 38.71,
+   "ref_price": 37.71,
+   "value": 1.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00900",
+   "name": "富邦特選高股息30",
+   "pre_close": 18.1,
+   "ref_price": 18.02,
+   "value": 0.075,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00932",
+   "name": "兆豐永續高息等權",
+   "pre_close": 15.96,
+   "ref_price": 15.73,
+   "value": 0.23,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00934",
+   "name": "中信成長高股息",
+   "pre_close": 26.67,
+   "ref_price": 26.17,
+   "value": 0.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00938",
+   "name": "凱基優選30",
+   "pre_close": 26.02,
+   "ref_price": 25.67,
+   "value": 0.35,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00943",
+   "name": "兆豐電子高息等權",
+   "pre_close": 18.64,
+   "ref_price": 18.29,
+   "value": 0.35,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00944",
+   "name": "野村趨勢動能高息",
+   "pre_close": 19.84,
+   "ref_price": 19.73,
+   "value": 0.109,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00945B",
+   "name": "凱基美國非投等債",
+   "pre_close": 14.67,
+   "ref_price": 14.57,
+   "value": 0.097,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00952",
+   "name": "凱基台灣AI50",
+   "pre_close": 14.3,
+   "ref_price": 14.18,
+   "value": 0.12,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00961",
+   "name": "FT臺灣永續高息",
+   "pre_close": 12.6,
+   "ref_price": 12.51,
+   "value": 0.09,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00963",
+   "name": "中信全球高股息",
+   "pre_close": 12.68,
+   "ref_price": 12.58,
+   "value": 0.1,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00964",
+   "name": "中信亞太高股息",
+   "pre_close": 13.72,
+   "ref_price": 13.52,
+   "value": 0.2,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "009808",
+   "name": "華南永昌優選50",
+   "pre_close": 27.99,
+   "ref_price": 27.23,
+   "value": 0.76,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00980A",
+   "name": "主動野村臺灣優選",
+   "pre_close": 19.47,
+   "ref_price": 18.78,
+   "value": 0.688,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00981T",
+   "name": "平衡凱基雙核收息",
+   "pre_close": 11.3,
+   "ref_price": 11.21,
+   "value": 0.082,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00982A",
+   "name": "主動群益台灣強棒",
+   "pre_close": 17.89,
+   "ref_price": 17.11,
+   "value": 0.78,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00982D",
+   "name": "主動富邦動態入息",
+   "pre_close": 9.54,
+   "ref_price": 9.48,
+   "value": 0.052,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00983D",
+   "name": "主動富邦複合收益",
+   "pre_close": 9.89,
+   "ref_price": 9.82,
+   "value": 0.061,
    "type": "息"
   }
  ]

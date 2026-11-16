@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-11-12",
+ "updated_at": "2026-11-16",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -88778,6 +88778,348 @@
    "pre_close": 435.5,
    "ref_price": 425.59,
    "value": 9.914746,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "00844B",
+   "name": "台新15年IG金融債",
+   "pre_close": 30.8,
+   "ref_price": 30.39,
+   "value": 0.41,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "00867B",
+   "name": "台新A-BBB電信債",
+   "pre_close": 29.38,
+   "ref_price": 28.97,
+   "value": 0.41,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "00942B",
+   "name": "台新美A公司債20+",
+   "pre_close": 13.82,
+   "ref_price": 13.76,
+   "value": 0.062,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "00970B",
+   "name": "台新BBB投等債20+",
+   "pre_close": 9.04,
+   "ref_price": 8.99,
+   "value": 0.05,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "009806",
+   "name": "台新標普500",
+   "pre_close": 14.01,
+   "ref_price": 13.61,
+   "value": 0.4,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "009807",
+   "name": "台新標普科技精選",
+   "pre_close": 16.28,
+   "ref_price": 15.68,
+   "value": 0.6,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "00980B",
+   "name": "台新特選IG債10+",
+   "pre_close": 9.15,
+   "ref_price": 9.1,
+   "value": 0.047,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "00988B",
+   "name": "玉山嚴選非投債",
+   "pre_close": 19.24,
+   "ref_price": 19.09,
+   "value": 0.148,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "00989B",
+   "name": "台新美國非投等債",
+   "pre_close": 9.99,
+   "ref_price": 9.92,
+   "value": 0.066,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/16",
+   "sid": "5475",
+   "name": "德宏",
+   "pre_close": 211.0,
+   "ref_price": 204.88,
+   "value": 6.1239,
+   "type": "除權"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00740B",
+   "name": "富邦全球投等債",
+   "pre_close": 37.19,
+   "ref_price": 37.01,
+   "value": 0.185,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00741B",
+   "name": "富邦全球非投等債",
+   "pre_close": 37.6,
+   "ref_price": 37.4,
+   "value": 0.199,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00754B",
+   "name": "群益AAA-AA公司債",
+   "pre_close": 31.71,
+   "ref_price": 31.24,
+   "value": 0.475,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00755B",
+   "name": "群益投資級公用債",
+   "pre_close": 32.21,
+   "ref_price": 31.76,
+   "value": 0.45,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00756B",
+   "name": "群益投等新興公債",
+   "pre_close": 30.28,
+   "ref_price": 29.77,
+   "value": 0.514,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00761B",
+   "name": "國泰A級公司債",
+   "pre_close": 33.5,
+   "ref_price": 33.03,
+   "value": 0.47,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00772B",
+   "name": "中信高評級公司債",
+   "pre_close": 32.58,
+   "ref_price": 32.44,
+   "value": 0.14,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00773B",
+   "name": "中信優先金融債",
+   "pre_close": 34.96,
+   "ref_price": 34.82,
+   "value": 0.145,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00777B",
+   "name": "凱基AAA至A公司債",
+   "pre_close": 31.36,
+   "ref_price": 31.22,
+   "value": 0.14,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00778B",
+   "name": "凱基金融債20+",
+   "pre_close": 33.38,
+   "ref_price": 33.24,
+   "value": 0.145,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00780B",
+   "name": "國泰A級金融債",
+   "pre_close": 37.04,
+   "ref_price": 36.54,
+   "value": 0.5,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00795B",
+   "name": "中信美國公債20年",
+   "pre_close": 26.21,
+   "ref_price": 25.9,
+   "value": 0.315,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00799B",
+   "name": "國泰A級醫療債",
+   "pre_close": 28.98,
+   "ref_price": 28.58,
+   "value": 0.4,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00840B",
+   "name": "凱基IG精選15+",
+   "pre_close": 28.91,
+   "ref_price": 28.79,
+   "value": 0.125,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00841B",
+   "name": "凱基AAA-AA公司債",
+   "pre_close": 27.64,
+   "ref_price": 27.29,
+   "value": 0.35,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00845B",
+   "name": "富邦新興投等債",
+   "pre_close": 32.97,
+   "ref_price": 32.55,
+   "value": 0.417,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00846B",
+   "name": "富邦歐洲銀行債",
+   "pre_close": 35.57,
+   "ref_price": 35.11,
+   "value": 0.465,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00860B",
+   "name": "群益1-5Y投資級債",
+   "pre_close": 39.23,
+   "ref_price": 38.81,
+   "value": 0.42,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00864B",
+   "name": "中信美國公債0-1",
+   "pre_close": 48.0,
+   "ref_price": 47.44,
+   "value": 0.56,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00890B",
+   "name": "凱基ESG BBB債15+",
+   "pre_close": 31.05,
+   "ref_price": 30.9,
+   "value": 0.15,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00933B",
+   "name": "國泰10Y+金融債",
+   "pre_close": 15.64,
+   "ref_price": 15.57,
+   "value": 0.073,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00937B",
+   "name": "群益ESG投等債20+",
+   "pre_close": 14.22,
+   "ref_price": 14.15,
+   "value": 0.072,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00948B",
+   "name": "中信優息投資級債",
+   "pre_close": 9.14,
+   "ref_price": 9.1,
+   "value": 0.045,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00957B",
+   "name": "兆豐US優選投等債",
+   "pre_close": 12.97,
+   "ref_price": 12.91,
+   "value": 0.065,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00980D",
+   "name": "主動聯博投等入息",
+   "pre_close": 19.75,
+   "ref_price": 19.64,
+   "value": 0.114,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00981D",
+   "name": "主動中信非投等債",
+   "pre_close": 10.26,
+   "ref_price": 10.19,
+   "value": 0.07,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00982B",
+   "name": "FT投資級債20+",
+   "pre_close": 9.51,
+   "ref_price": 9.47,
+   "value": 0.045,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/17",
+   "sid": "00987B",
+   "name": "野村10+澳洲公債",
+   "pre_close": 15.68,
+   "ref_price": 15.48,
+   "value": 0.202,
    "type": "除息"
   }
  ]
