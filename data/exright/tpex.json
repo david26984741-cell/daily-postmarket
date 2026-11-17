@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-11-16",
+ "updated_at": "2026-11-17",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -89120,6 +89120,60 @@
    "pre_close": 15.68,
    "ref_price": 15.48,
    "value": 0.202,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/18",
+   "sid": "00758B",
+   "name": "復華能源債",
+   "pre_close": 50.8,
+   "ref_price": 50.18,
+   "value": 0.62,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/18",
+   "sid": "00759B",
+   "name": "復華製藥債",
+   "pre_close": 53.6,
+   "ref_price": 52.95,
+   "value": 0.65,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/18",
+   "sid": "00760B",
+   "name": "復華新興企業債",
+   "pre_close": 52.25,
+   "ref_price": 51.54,
+   "value": 0.71,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/18",
+   "sid": "00768B",
+   "name": "復華20年美債",
+   "pre_close": 48.61,
+   "ref_price": 47.76,
+   "value": 0.85,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/18",
+   "sid": "00985D",
+   "name": "主動貝萊德優投等",
+   "pre_close": 9.8,
+   "ref_price": 9.74,
+   "value": 0.061,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/18",
+   "sid": "00986D",
+   "name": "主動復華金融債息",
+   "pre_close": 14.3,
+   "ref_price": 14.21,
+   "value": 0.09,
    "type": "除息"
   }
  ]

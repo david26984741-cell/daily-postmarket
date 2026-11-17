@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-11-16",
+ "updated_at": "2026-11-17",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -100461,6 +100461,60 @@
    "ref_price": 9.82,
    "value": 0.061,
    "type": "息"
+  },
+  {
+   "date": "2026/11/18",
+   "sid": "00731",
+   "name": "復華富時高息低波",
+   "pre_close": 96.3,
+   "ref_price": 94.47,
+   "value": 1.828,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/18",
+   "sid": "00929",
+   "name": "復華台灣科技優息",
+   "pre_close": 23.89,
+   "ref_price": 23.51,
+   "value": 0.38,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/18",
+   "sid": "00949",
+   "name": "復華日本龍頭",
+   "pre_close": 22.35,
+   "ref_price": 19.33,
+   "value": 3.02,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/18",
+   "sid": "00991B",
+   "name": "貝萊德A級公司債",
+   "pre_close": 14.95,
+   "ref_price": 14.87,
+   "value": 0.073,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/18",
+   "sid": "2344",
+   "name": "華邦電",
+   "pre_close": 110.5,
+   "ref_price": 108.5,
+   "value": 2.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/18",
+   "sid": "5434",
+   "name": "崇越",
+   "pre_close": 478.0,
+   "ref_price": 477.0,
+   "value": 0.992326,
+   "type": "權"
   }
  ]
 }
