@@ -2527,7 +2527,7 @@
   "2014/01/02"
  ],
  "latest_date": "2026/11/18",
- "updated_at": "2026-11-19T00:42:01+08:00",
+ "updated_at": "2026-11-19T05:44:54+08:00",
  "stocks": [
   {
    "code": "CA",
@@ -24768,7 +24768,7 @@
    "stocks": "ok (326 檔)",
    "large_fut_index": "ok (26 契約)",
    "kline": "ok (341 檔)",
-   "fkline": "ok (320 檔 · 每日行情(全部))",
+   "fkline": "ok (309 檔 · futDataDown逐檔)",
    "txf": "ok",
    "txk": "ok (5 商品, 2 含夜盤)"
   }
