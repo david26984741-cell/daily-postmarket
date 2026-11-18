@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-11-17",
+ "updated_at": "2026-11-18",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -100514,6 +100514,24 @@
    "pre_close": 478.0,
    "ref_price": 477.0,
    "value": 0.992326,
+   "type": "權"
+  },
+  {
+   "date": "2026/11/19",
+   "sid": "01007T",
+   "name": "兆豐國泰R2",
+   "pre_close": 11.1,
+   "ref_price": 10.88,
+   "value": 0.215313,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/19",
+   "sid": "6924",
+   "name": "榮惠-KY創",
+   "pre_close": 134.5,
+   "ref_price": 132.19,
+   "value": 2.307226,
    "type": "權"
   }
  ]
