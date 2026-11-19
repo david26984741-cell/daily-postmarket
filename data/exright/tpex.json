@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-11-18",
+ "updated_at": "2026-11-19",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -89174,6 +89174,60 @@
    "pre_close": 14.3,
    "ref_price": 14.21,
    "value": 0.09,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/20",
+   "sid": "006201",
+   "name": "元大富櫃50",
+   "pre_close": 29.71,
+   "ref_price": 28.81,
+   "value": 0.9,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/20",
+   "sid": "00679B",
+   "name": "元大美債20年",
+   "pre_close": 26.36,
+   "ref_price": 26.08,
+   "value": 0.28,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/20",
+   "sid": "00786B",
+   "name": "元大10年IG銀行債",
+   "pre_close": 32.36,
+   "ref_price": 31.98,
+   "value": 0.38,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/20",
+   "sid": "00967B",
+   "name": "元大優息美債",
+   "pre_close": 9.03,
+   "ref_price": 9.0,
+   "value": 0.033,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/20",
+   "sid": "00968B",
+   "name": "元大優息投等債",
+   "pre_close": 9.02,
+   "ref_price": 8.98,
+   "value": 0.043,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/20",
+   "sid": "00981B",
+   "name": "第一金優選非投債",
+   "pre_close": 9.03,
+   "ref_price": 8.97,
+   "value": 0.064,
    "type": "除息"
   }
  ]

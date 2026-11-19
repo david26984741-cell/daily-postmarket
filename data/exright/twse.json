@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-11-18",
+ "updated_at": "2026-11-19",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -100532,6 +100532,51 @@
    "pre_close": 134.5,
    "ref_price": 132.19,
    "value": 2.307226,
+   "type": "權"
+  },
+  {
+   "date": "2026/11/20",
+   "sid": "0051",
+   "name": "元大中型100",
+   "pre_close": 117.8,
+   "ref_price": 113.3,
+   "value": 4.5,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/20",
+   "sid": "0055",
+   "name": "元大MSCI金融",
+   "pre_close": 46.98,
+   "ref_price": 44.28,
+   "value": 2.7,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/20",
+   "sid": "00771",
+   "name": "元大US高息特別股",
+   "pre_close": 14.84,
+   "ref_price": 14.63,
+   "value": 0.21,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/20",
+   "sid": "00850",
+   "name": "元大臺灣ESG永續",
+   "pre_close": 76.4,
+   "ref_price": 75.4,
+   "value": 1.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/20",
+   "sid": "4562",
+   "name": "穎漢",
+   "pre_close": 25.65,
+   "ref_price": 25.3,
+   "value": 0.343777,
    "type": "權"
   }
  ]
