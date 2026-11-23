@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-11-20",
+ "updated_at": "2026-11-23",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -89228,6 +89228,24 @@
    "pre_close": 9.03,
    "ref_price": 8.97,
    "value": 0.064,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/24",
+   "sid": "00958B",
+   "name": "永豐ESG銀行債15+",
+   "pre_close": 9.08,
+   "ref_price": 9.04,
+   "value": 0.042,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/24",
+   "sid": "00990B",
+   "name": "國泰收益非投等債",
+   "pre_close": 9.88,
+   "ref_price": 9.8,
+   "value": 0.077,
    "type": "除息"
   }
  ]

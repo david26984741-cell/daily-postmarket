@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-11-20",
+ "updated_at": "2026-11-23",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -100578,6 +100578,33 @@
    "ref_price": 25.3,
    "value": 0.343777,
    "type": "權"
+  },
+  {
+   "date": "2026/11/24",
+   "sid": "00901",
+   "name": "永豐智能車供應鏈",
+   "pre_close": 34.18,
+   "ref_price": 27.18,
+   "value": 7.0,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/24",
+   "sid": "00930",
+   "name": "永豐ESG低碳高息",
+   "pre_close": 20.18,
+   "ref_price": 19.43,
+   "value": 0.75,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/24",
+   "sid": "6655",
+   "name": "科定",
+   "pre_close": 135.5,
+   "ref_price": 132.9,
+   "value": 2.6,
+   "type": "息"
   }
  ]
 }
