@@ -372,6 +372,25 @@ def collect_shots():
     return out
 
 
+# 一封完整的信應該有這 10 張圖 (檔名前綴 → 中文簡稱)。少了哪張會標在信件標題上,
+# report.yml 也用 --missing-shots 判斷「這封算不算完整」:不完整就不記成已寄, 下一班次會再試。
+# 2026/11/24 事故:安裝步驟失敗只附了 4 張圖, 標題卻沒有任何標記, 也被當成「今天寄過了」不再補寄。
+EXPECTED_SHOTS = [("0_", "快報"), ("1_", "外資選擇權"), ("2_", "自營選擇權"), ("3_", "外資期現貨"),
+                  ("4_", "大額期貨"), ("5_", "前十大主力"), ("6_", "6-10大主力"),
+                  ("7_", "6-10大自然人"), ("8_", "6-10大法人"), ("9_", "選擇權籌碼")]
+
+
+def shots_missing():
+    """該有而沒有的附圖 (中文簡稱清單); 全到齊 → 空清單。只看檔名前綴與檔案非空。"""
+    have = []
+    if os.path.isdir(SHOTS_DIR):
+        for fn in os.listdir(SHOTS_DIR):
+            path = os.path.join(SHOTS_DIR, fn)
+            if fn.lower().endswith(".png") and os.path.getsize(path) > 0:
+                have.append(fn)
+    return [label for pre, label in EXPECTED_SHOTS if not any(fn.startswith(pre) for fn in have)]
+
+
 # ---------------------------------------------------------------- 寄信
 def send(subject, html, text, shots=None):
     user = os.environ.get("MAIL_USER", "").strip()
@@ -497,6 +516,9 @@ def main():
     if "--sig" in sys.argv:          # 給 workflow 取指紋用, 不做其他事
         print(content_sig())
         return
+    if "--missing-shots" in sys.argv:   # 給 workflow 判斷附圖是否到齊, 只印缺的張數
+        print(len(shots_missing()))
+        return
     rank = json.load(open(os.path.join(DATA, "rank.json"), encoding="utf-8"))
     date = rank.get("date", "")
     fill_samt5(rank)
@@ -512,6 +534,10 @@ def main():
     n = sum(len(r) for _, _, _, r, _ in blocks)
     gaps = data_gaps()
     # 資料補齊後會再寄一封, 標題沒有「⚠缺」的那封才是完整版
+    # 附圖沒到齊 (安裝/繪圖/截圖失敗) 也標出來 —— 與「資料缺」分開算, 不影響 status.py 的補位判斷
+    miss = shots_missing()
+    if miss:
+        gaps = gaps + [f"附圖{len(miss)}張(" + "/".join(miss) + ")"]
     tag = ("　⚠缺:" + "、".join(gaps)) if gaps else ""
     send(f"[股期報告] {date} ・ {len(blocks)} 張排行{tag}", html, text, shots)
 
