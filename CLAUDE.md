@@ -23,16 +23,19 @@ https://david26984741-cell.github.io/daily-postmarket/
 
 - **push 程式碼不會更新網站**。網站只在 workflow 執行時部署(每個 workflow 的
   deploy 步驟把檔案複製到 _site 再上傳 Pages)。
-- 要立即部署前端修改:手動觸發 `回補日K股價`(kline.yml),起訖日期都填最近交易日
-  (例 2026/07/09),約 1 分鐘跑完並部署。
+- 要立即部署前端修改:手動觸發 `網站部署`(deploy.yml, 2026/11/24 新增), 不必填任何參數。
+  (舊做法是借 kline.yml 跑一次, 已不需要。)
 - 新增 HTML 頁面時,必須把檔名加進**六個** workflow 的「準備網站檔案」cp 清單
-  (daily.yml / backfill.yml / kline.yml / analysis.yml / txf.yml / fkline.yml),否則不會被部署。
+  (deploy.yml / backfill.yml / kline.yml / analysis.yml / txf.yml / fkline.yml),否則不會被部署。
+  (daily.yml 自 2026/11/24 起不再部署, 它的 cp 清單搬到 deploy.yml。)
 
 ## Workflows(.github/workflows/)
 
 | 檔案 | 用途 | 排程/觸發 | concurrency group |
 |---|---|---|---|
-| daily.yml | 每日抓取+部署(check → scrape → deploy 三個 job) | 台北 15:35 主班次、21:35 備援、16~20/22~23 點 :05 補位(資料齊全即略過)(週一~五);可手動指定日期 | daily-postmarket |
+| daily.yml | 每日抓取(check → scrape 兩個 job;跑完同時觸發 report.yml 寄信與 deploy.yml 部署) | 台北 15:35 主班次、21:35 備援、16~20/22~23 點 :05 補位(資料齊全即略過)(週一~五);可手動指定日期 | daily-postmarket |
+| deploy.yml | 網站部署(main 的 commit 沒變就略過) | daily.yml 跑完自動 + 手動(手動一律部署) | daily-postmarket-deploy |
+| report.yml | 每日股期報告 Email(10 張附圖) | daily.yml 跑完自動 + 手動(force=yes 強制重寄) | daily-postmarket-report |
 | backfill.yml | 回補歷史部位資料 | 手動(起訖日期) | daily-postmarket |
 | kline.yml | 回補現貨日K | 手動(起訖日期) | daily-postmarket-kline |
 | analysis.yml | 籌碼研究分析 | 週日 02:00 UTC + 手動 | daily-postmarket-analysis |
@@ -109,7 +112,8 @@ https://david26984741-cell.github.io/daily-postmarket/
 
 ## 待辦
 
-### ① 輕量部署 workflow(可隨時做 — 原本說要等額度重置, 但已查證公開 repo 不計費)
+### ① 輕量部署 workflow —— ✅ 2026/11/24 已完成(deploy.yml, 見變更日誌), 以下為原始記錄
+### (原標題)輕量部署 workflow(可隨時做 — 原本說要等額度重置, 但已查證公開 repo 不計費)
 - **問題**:要讓前端(HTML/CSS/JS)改動上線, 目前都是手動觸發 `kline.yml`, 每次 1~3 分鐘。
   但它會真的去抓日K —— 那段對「只改前端」完全多餘, 我們要的只是它尾巴的 deploy 步驟。
   2026/08 為了部署前端改動就跑了 6 次 kline.yml。
@@ -1054,3 +1058,25 @@ large_fut_index 會長到約 40 MB 並且每天陪著重寫。前端目前尚未
   · Playwright 先 `playwright install chromium`(自家 CDN + 快取)後試啟動, 真的缺系統函式庫才跑 install-deps(apt)。
   · job 上限 25 → 35 分鐘。
 - 原則:**report 不要依賴 apt**。apt 鏡像速度不可控, 能從 PyPI/GitHub/快取拿的都不要走 apt。
+
+### 2026/11/24 傍晚(Claude 雲端 session, 使用者要求檢查 action 並直接修改)— 缺圖不補寄、寄信等部署、checkout 太肥
+檢查 daily.yml / report.yml 後改了四件事。**都還沒有經過實際排程驗證**(推上去時 21:35 備援班次尚未跑),
+下次開工先看當晚與隔天的 run 是否正常。
+1. **缺圖的信不再被當成「已寄過」**(本日 15:57 那封只有 4 張圖、標題卻沒標記、也不會補寄的根因)。
+   - `tools/report.py`:新增 `EXPECTED_SHOTS`(0~9 共 10 張)與 `shots_missing()`;標題加「⚠缺:附圖N張(…)」;
+     新增 `--missing-shots`(只印缺的張數, 給 workflow 用)。**刻意不併進 `data_gaps()`** —— status.py 用它判斷補位班次要不要抓資料, 附圖不該影響。
+   - `report.yml`:10 張到齊才寫 `.sent/ok`。缺圖時改寫 `.partial/ok`(另一個 cache, key `report-partial-<日期>-<指紋>`),
+     下一班次會重畫;到齊 → 補寄完整版;仍缺且缺圖版已寄過 → 不重寄。所以同一份資料最多「缺圖版一封 + 完整版一封」。
+   - ⚠ 新增第 11 張圖時, `EXPECTED_SHOTS` 要一起加, 否則永遠算「到齊」。
+2. **部署從 daily.yml 拆到新的 `deploy.yml`**。以前 report.yml 要等 daily.yml 整個結束(含 deploy job, 重試最長 50 分鐘)才觸發。
+   現在 daily.yml 只剩 check + scrape, commit 完就結束, report.yml 與 deploy.yml 同時起跑。
+   - deploy.yml 先用 `git ls-remote` 取 main 的 sha, 以 cache key `pages-deployed-<sha>` 判斷是否已部署過 —— 補位班次沒有新 commit 時不會空轉部署 600MB。
+   - deploy.yml 有 `workflow_dispatch`, 手動觸發一律部署 → 待辦①「輕量部署」順便完成, 之後只改前端不必再借 kline.yml。
+   - daily.yml 的 permissions 只剩 `contents: write`(pages / id-token 移到 deploy.yml)。workflow 名稱「每日盤後資料抓取與部署」**沒改**(report.yml / deploy.yml 都用這個名字掛 workflow_run, 改名會斷線)。
+3. **report.yml 改 sparse checkout**(`/*.html`、`/*.py`、`/assets/`、`/tools/`、`/data/*.json`、`/data/holidays.txt`):
+   工作目錄 612MB → 11MB。已在本機模擬同一份清單跑過 `--sig`(指紋不變)、status.py、flash render、charts.py、DRY_RUN。
+   shots.py(Playwright)與 optchips.py 沒辦法在雲端環境實跑, 依程式看只用到 rank.html / assets / data/*.json 與對外連線。
+   ⚠ 報告若新增會讀的檔案或目錄(例如 data/kline), 要加進這份清單。`fill_samt5()` 的 data/kline 退路在 sparse 下拿不到檔案 —— 現行 rank.json 312 檔全部都有 samt5, 不會走到。
+4. **Playwright 鎖版本**(`PLAYWRIGHT_VERSION: "1.65.2"`, 即當天未鎖版時實際裝到的版本), 相依快取 key 改 `report-deps-<os>-v2-pw<版本>`。
+   原本不鎖版本 + 固定 key `v1`:Playwright 每次升版換一版 Chromium, 8 月存的快取早就對不上(推測, 沒看到快取內容)。
+- 沒動的:`data/stocks/` 全史一檔每天整檔重寫(現已 438MB)仍是 repo 膨脹與部署慢的主因, 治本(按年切檔)維持 8/22 的「暫時跳過」。
