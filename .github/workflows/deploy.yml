@@ -1,0 +1,118 @@
+name: 網站部署
+
+# 把網站 (HTML/CSS/JS + data/) 部署到 GitHub Pages。2026/11/24 從 daily.yml 拆出來:
+#   ① daily.yml 資料 commit 完 → 本 workflow 與 report.yml (寄信) 同時起跑, 寄信不必再等部署。
+#   ② 手動 Run workflow → 立即部署目前的 main (只改前端時用這個, 不必再借 kline.yml)。
+# 防空轉:main 的 commit 沒變就不重新部署 (補位班次資料已齊全時 daily.yml 不會有新 commit)。
+# 手動觸發一律部署。
+
+on:
+  workflow_run:
+    workflows: ["每日盤後資料抓取與部署"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write      # 允許部署 GitHub Pages
+  id-token: write   # 部署身分驗證
+
+concurrency:
+  group: daily-postmarket-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # 來源成功或失敗都看一下 (失敗但資料已 commit 的情況也要部署);取消/略過不跑。
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success' ||
+      github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment3.outputs.page_url || steps.deployment2.outputs.page_url || steps.deployment.outputs.page_url }}
+    steps:
+      # 先問遠端 main 現在是哪個 commit (不必 checkout 600MB 就能判斷要不要部署)
+      - name: 讀取 main 最新 commit
+        id: head
+        run: |
+          SHA=$(git ls-remote "https://github.com/${{ github.repository }}" refs/heads/main | cut -f1)
+          test -n "$SHA"
+          echo "sha=$SHA" >> $GITHUB_OUTPUT
+          echo "main = $SHA"
+
+      - name: 這個 commit 部署過了嗎
+        id: done
+        uses: actions/cache@v4
+        with:
+          path: .deployed
+          key: pages-deployed-${{ steps.head.outputs.sha }}
+
+      - name: 已部署過 → 略過
+        if: steps.done.outputs.cache-hit == 'true' && github.event_name != 'workflow_dispatch'
+        run: echo "main (${{ steps.head.outputs.sha }}) 已部署過, 略過。"
+
+      - uses: actions/checkout@v4
+        if: steps.done.outputs.cache-hit != 'true' || github.event_name == 'workflow_dispatch'
+        with:
+          ref: ${{ steps.head.outputs.sha }}
+
+      - name: 準備網站檔案
+        if: steps.done.outputs.cache-hit != 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          rm -rf _site && mkdir -p _site
+          cp -r index.html stocks.html detail.html stock.html rank.html concept.html screener.html strategy.html help.html analysis.html assets data .nojekyll _site/ 2>/dev/null || true
+
+      - name: Setup Pages
+        if: steps.done.outputs.cache-hit != 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        if: steps.done.outputs.cache-hit != 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      # 11/09~10 Pages 後端卡住:deployment_queued 排隊 ~5 分 + syncing_files 一直不結束 → 10 分鐘逾時。
+      # 11/10 實測:逾時取消後等 1 分鐘重新部署, 44 秒就成功 → 失敗就重試, 最多 3 次。
+      - name: Deploy to GitHub Pages
+        id: deployment
+        if: steps.done.outputs.cache-hit != 'true' || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 600000
+
+      - name: 部署失敗 → 等 1 分鐘重試
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 60
+
+      - name: Deploy to GitHub Pages (重試)
+        id: deployment2
+        if: steps.deployment.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 600000
+
+      - name: 第二次也失敗 → 等 2 分鐘再試最後一次
+        if: steps.deployment.outcome == 'failure' && steps.deployment2.outcome == 'failure'
+        run: sleep 120
+
+      - name: Deploy to GitHub Pages (最後一次)
+        id: deployment3
+        if: steps.deployment.outcome == 'failure' && steps.deployment2.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 900000
+
+      # 走到這裡 = 三次之中有一次成功 (全失敗時上一步會讓 job 失敗, 不會記成已部署)
+      - name: 記錄已部署
+        if: steps.deployment.outcome == 'success' || steps.deployment2.outcome == 'success' || steps.deployment3.outcome == 'success'
+        run: mkdir -p .deployed && date > .deployed/ok
+
+# 部署方式:GitHub 官方 Actions 部署 (Settings → Pages → Source 設為 "GitHub Actions")。
+# 新增 HTML 頁面時, 上面「準備網站檔案」的 cp 清單要加 (其他會部署的 workflow 也要, 見 CLAUDE.md)。
+# 固定網址: https://<帳號>.github.io/<倉庫名>/

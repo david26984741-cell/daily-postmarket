@@ -1,6 +1,7 @@
 name: 每日股期報告
 
-# 「每日盤後資料抓取與部署」一跑完就自動接著跑 (workflow_run 事件觸發, 非定時輪詢),
+# 「每日盤後資料抓取與部署」(daily.yml, 現在只剩抓取 + commit) 一跑完就自動接著跑 (workflow_run 事件觸發, 非定時輪詢),
+# 與 deploy.yml (網站部署) 同時起跑、互不等待 —— 2026/11/24 以前寄信要等部署跑完。
 # 所以不論是排程 15:35 主班次、21:35 備援, 還是手動 Run workflow, 報告都會緊接著寄出。
 # 來源成功或失敗都會接著跑 (部署失敗不擋寄信); 同一份資料只寄一次 (用 cache 防重複, 避免多個班次各寄一封)。
 # 注意: 本 repo 為公開, 報告不寫檔、不 commit、不部署, 僅在記憶體處理後寄出。
@@ -23,6 +24,11 @@ concurrency:
   group: daily-postmarket-report
   cancel-in-progress: false
 
+env:
+  # Playwright 鎖版本:不鎖的話它每次升版都換一版 Chromium, 下面那個固定 key 的快取就對不上,
+  # 變成每天重新下載 ~150MB。要升級:改這個數字即可 (快取 key 跟著變, 會自動重建)。
+  PLAYWRIGHT_VERSION: "1.65.2"
+
 jobs:
   report:
     # workflow_run: 來源 workflow「成功或失敗」都接著跑 (取消/略過不跑);手動觸發一律執行。
@@ -41,9 +47,19 @@ jobs:
     # 上限放寬到 25 分鐘當保險;真正的解法是下面那個相依套件快取。
     timeout-minutes: 35
     steps:
+      # 只取報告用得到的檔案。整個 repo 有 600MB+ (data/stocks 佔 440MB), 報告完全用不到那些。
+      # 新增報告會讀的檔案/目錄時, 記得加進這份清單。
       - uses: actions/checkout@v4
         with:
           ref: main            # 取開跑當下最新版 (資料已由來源 workflow commit)
+          sparse-checkout: |
+            /*.html
+            /*.py
+            /assets/
+            /tools/
+            /data/*.json
+            /data/holidays.txt
+          sparse-checkout-cone-mode: false
 
       - uses: actions/setup-python@v5
         with:
@@ -67,9 +83,19 @@ jobs:
           path: .sent
           key: report-sent-${{ steps.d.outputs.date }}-${{ steps.d.outputs.sig }}
 
+      # 「缺圖版已寄過」的記號 (2026/11/24 加)。附圖沒到齊的信不算寄完 (不寫 .sent),
+      # 下一個班次會重畫重寄;但同一份資料的缺圖版最多只寄一封 —— 之後幾班若還是缺就不再寄,
+      # 直到 10 張到齊才補寄完整版。避免安裝整天壞掉時每小時收一封。
+      - name: 缺圖版記號
+        if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
+        uses: actions/cache@v4
+        with:
+          path: .partial
+          key: report-partial-${{ steps.d.outputs.date }}-${{ steps.d.outputs.sig }}
+
       # 相依套件快取: pip 輪子 + Playwright 的 Chromium(約 150MB)。
       # 不快取的話每天重下, 慢的日子整步驟要 9 分鐘以上 (2026/08/19 就是這樣被 timeout 砍掉)。
-      # key 固定不帶 hash — 這些相依很穩定, 要強制更新就把 v1 改成 v2。
+      # key 帶 Playwright 版本 (Chromium 版本跟著它走);其餘相依很穩定, 要強制更新就把 v2 改成 v3。
       - name: 相依套件快取 (pip / Chromium)
         if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
         uses: actions/cache@v4
@@ -77,7 +103,7 @@ jobs:
           path: |
             ~/.cache/pip
             ~/.cache/ms-playwright
-          key: report-deps-${{ runner.os }}-v1
+          key: report-deps-${{ runner.os }}-v2-pw${{ env.PLAYWRIGHT_VERSION }}
 
       # 中文字型檔 (Noto Sans CJK, 約 40MB) 也快取起來。
       # 2026/11/24 事故:Ubuntu 套件鏡像只有 ~300 kB/s, apt 下載 61MB 的 fonts-noto-cjk 撞到 240 秒上限,
@@ -132,7 +158,7 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          timeout 180 pip install --quiet playwright
+          timeout 180 pip install --quiet "playwright==$PLAYWRIGHT_VERSION"
           timeout 300 python -m playwright install chromium
           if python -c "from playwright.sync_api import sync_playwright as s; p=s().start(); p.chromium.launch().close(); p.stop()"; then
             echo "Chromium 可直接啟動, 略過 install-deps"
@@ -177,8 +203,18 @@ jobs:
           MAIL_TO:   ${{ secrets.MAIL_TO }}
           SHOTS_DIR: .shots
         run: |
+          MISS=$(python tools/report.py --missing-shots)
+          if [ "$MISS" != "0" ] && [ -f .partial/ok ] && [ "${{ github.event.inputs.force }}" != "yes" ]; then
+            echo "::warning::附圖仍缺 $MISS 張, 但這份資料的缺圖版已寄過 → 本次不重寄, 等下一班次"
+            exit 0
+          fi
           python tools/report.py
-          mkdir -p .sent && date > .sent/ok
+          if [ "$MISS" = "0" ]; then
+            mkdir -p .sent && date > .sent/ok          # 10 張到齊才算寄完
+          else
+            mkdir -p .partial && date > .partial/ok    # 缺圖版:記一筆, 下一班次到齊會補寄完整版
+            echo "::warning::本次寄出的信缺 $MISS 張附圖 (標題已標 ⚠缺), 下一班次到齊後會補寄"
+          fi
 
       # 供除錯: 在 Actions 頁面可直接下載當次截圖, 不進 repo
       - name: 保留圖片供檢視 (artifact)
