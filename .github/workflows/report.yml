@@ -39,7 +39,7 @@ jobs:
     # 2026/08/19 事故:安裝步驟(Chromium + apt 相依)在 runner 慢的日子跑了 9m16s,
     # 撞上原本的 10 分鐘上限被 cancel → 三次班次全部沒寄信, 而且不會有任何錯誤通知。
     # 上限放寬到 25 分鐘當保險;真正的解法是下面那個相依套件快取。
-    timeout-minutes: 25
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
@@ -79,32 +79,67 @@ jobs:
             ~/.cache/ms-playwright
           key: report-deps-${{ runner.os }}-v1
 
-      # 中文字型 + matplotlib:附圖 0~4、9 都靠它。跟 Playwright 分開裝 ——
-      # 2026/11/06 三樣綁在同一步, 其中一樣卡住就整步逾時 → 連不需要瀏覽器的圖也全部沒了。
-      # 每個指令都有自己的 timeout, 輸出不再靜音, 卡在哪一行 log 看得到。
-      - name: 安裝中文字型與 matplotlib
+      # 中文字型檔 (Noto Sans CJK, 約 40MB) 也快取起來。
+      # 2026/11/24 事故:Ubuntu 套件鏡像只有 ~300 kB/s, apt 下載 61MB 的 fonts-noto-cjk 撞到 240 秒上限,
+      # 腳本中斷 → 排在後面的 matplotlib 也沒裝 → 附圖 0~4、9 全部失敗, 信裡只剩 4 張排行截圖。
+      - name: 中文字型快取
+        id: fontcache
         if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
-        timeout-minutes: 8
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/noto-cjk
+          key: report-font-noto-cjk-v1
+
+      # matplotlib + 中文字型:附圖 0~4、9 都靠它。
+      #   ① 先裝 matplotlib (PyPI, 快且有 pip 快取), 不再排在字型後面被連坐。
+      #   ② 字型優先用快取;沒有才從 GitHub 官方 noto-cjk repo 直接下載 .ttc (GitHub→GitHub 很快),
+      #      最後才退回 apt (慢、會卡)。都失敗也照樣畫圖 (中文變方塊), 不讓整張圖消失。
+      - name: 安裝 matplotlib 與中文字型
+        if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
+        timeout-minutes: 10
         continue-on-error: true    # 裝不起來只是沒附圖, 信照寄
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          timeout 180 sudo apt-get update -q -o Acquire::Retries=3 || echo "apt update 失敗/逾時, 仍嘗試安裝"
-          timeout 240 sudo apt-get install -y -q --no-install-recommends fonts-noto-cjk
+          set +e
+          timeout 300 pip install --quiet matplotlib || echo "::warning::matplotlib 安裝失敗"
+          D=~/.cache/noto-cjk; mkdir -p "$D"
+          RAW=https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/OTC
+          for w in Regular Bold; do
+            f="$D/NotoSansCJK-$w.ttc"
+            if [ ! -s "$f" ]; then
+              timeout 180 curl -fsSL --retry 3 --retry-delay 5 -o "$f.part" "$RAW/NotoSansCJK-$w.ttc" \
+                && head -c4 "$f.part" | grep -q ttcf && mv "$f.part" "$f" || { rm -f "$f.part"; echo "下載 $w 失敗"; }
+            fi
+          done
+          if [ ! -s "$D/NotoSansCJK-Regular.ttc" ]; then
+            echo "::warning::GitHub 下載字型失敗, 退回 apt"
+            timeout 420 sudo apt-get install -y -q --no-install-recommends fonts-noto-cjk \
+              && cp /usr/share/fonts/opentype/noto/NotoSansCJK-{Regular,Bold}.ttc "$D/" 2>/dev/null
+          fi
+          sudo mkdir -p /usr/share/fonts/opentype/noto && sudo cp "$D"/*.ttc /usr/share/fonts/opentype/noto/ 2>/dev/null
           fc-cache -f >/dev/null
-          timeout 180 pip install --quiet matplotlib
-          fc-list :lang=zh family | head -3
+          ls -la "$D"; fc-list :lang=zh family | head -3
+          python -c "import matplotlib; print('matplotlib', matplotlib.__version__)"
 
       # Playwright + Chromium:只有排行截圖 5~8 需要。
+      # Chromium 本體走 Playwright 自己的 CDN 且有快取;系統函式庫 runner 映像檔多半已具備 (內建 Google Chrome),
+      # 先試著直接啟動, 真的缺函式庫才跑 install-deps (那一步走 apt, 11/24 花了將近 7 分鐘)。
       - name: 安裝 Playwright (排行截圖用)
         if: steps.sent.outputs.cache-hit != 'true' || github.event.inputs.force == 'yes'
-        timeout-minutes: 10
+        timeout-minutes: 12
         continue-on-error: true
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
           timeout 180 pip install --quiet playwright
-          timeout 480 python -m playwright install --with-deps chromium
+          timeout 300 python -m playwright install chromium
+          if python -c "from playwright.sync_api import sync_playwright as s; p=s().start(); p.chromium.launch().close(); p.stop()"; then
+            echo "Chromium 可直接啟動, 略過 install-deps"
+          else
+            echo "缺系統函式庫 → install-deps"
+            timeout 540 sudo -E env "PATH=$PATH" python -m playwright install-deps chromium
+          fi
 
       # 圖 0: 盤後籌碼快報 — 讀 data/flash.json (daily.yml 已抓好), 檔名 0_ 排在信件第一張
       - name: 產生盤後籌碼快報 (1 張)

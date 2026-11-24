@@ -1042,3 +1042,15 @@ large_fut_index 會長到約 40 MB 並且每天陪著重寫。前端目前尚未
      判斷「目標日資料已齊全 / 非交易日」就整個略過(不抓、不 commit、不部署)。15:35、21:35 兩班與手動一律完整跑。
      ⚠ check job 用 cron 字串比對分辨班次, 改 cron 時要一起改。
 - 仍然做不到的:GitHub 排程本身「整天都不來」時沒有辦法(那是 GitHub 端), 補位班次只是把機率壓低。
+
+### 2026/11/24 — 信只有 4 張附圖、report 跑 13 分鐘:Ubuntu 套件鏡像極慢
+- report.yml #302:「安裝中文字型與 matplotlib」4m51s 失敗(exit 124)、「安裝 Playwright」6m48s。
+  log:apt 鏡像 333 kB/s, fonts-noto-cjk 61MB 下載撞到 `timeout 240` → bash -e 中斷 →
+  **排在後面的 `pip install matplotlib` 根本沒跑** → 圖 0~4、9 全失敗;Playwright 慢慢裝完 → 只剩 5~8 四張。
+- 修法:
+  · matplotlib 先裝(PyPI 快、有 pip 快取), 字型失敗不再連坐;step 內 `set +e`。
+  · 字型改從 GitHub `notofonts/noto-cjk/main/Sans/OTC/NotoSansCJK-{Regular,Bold}.ttc` 直接下載
+    (已驗證是真 ttc, 非 LFS 指標), 並用 actions/cache(`report-font-noto-cjk-v1`)保存;apt 只當最後備援。
+  · Playwright 先 `playwright install chromium`(自家 CDN + 快取)後試啟動, 真的缺系統函式庫才跑 install-deps(apt)。
+  · job 上限 25 → 35 分鐘。
+- 原則:**report 不要依賴 apt**。apt 鏡像速度不可控, 能從 PyPI/GitHub/快取拿的都不要走 apt。
