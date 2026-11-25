@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-11-24",
+ "updated_at": "2026-11-25",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -100604,6 +100604,15 @@
    "pre_close": 135.5,
    "ref_price": 132.9,
    "value": 2.6,
+   "type": "息"
+  },
+  {
+   "date": "2026/11/26",
+   "sid": "009817",
+   "name": "國泰日本不動產",
+   "pre_close": 8.8,
+   "ref_price": 8.47,
+   "value": 0.33,
    "type": "息"
   }
  ]

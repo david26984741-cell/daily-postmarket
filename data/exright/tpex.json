@@ -1,6 +1,6 @@
 {
  "source": "TPEX",
- "updated_at": "2026-11-24",
+ "updated_at": "2026-11-25",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -89246,6 +89246,15 @@
    "pre_close": 9.88,
    "ref_price": 9.8,
    "value": 0.077,
+   "type": "除息"
+  },
+  {
+   "date": "2026/11/26",
+   "sid": "6523",
+   "name": "達爾膚",
+   "pre_close": 90.7,
+   "ref_price": 86.7,
+   "value": 4.0,
    "type": "除息"
   }
  ]
