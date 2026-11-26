@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-11-25",
+ "updated_at": "2026-11-26",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -100614,6 +100614,15 @@
    "ref_price": 8.47,
    "value": 0.33,
    "type": "息"
+  },
+  {
+   "date": "2026/11/27",
+   "sid": "3706",
+   "name": "神達",
+   "pre_close": 60.1,
+   "ref_price": 59.48,
+   "value": 0.615216,
+   "type": "權"
   }
  ]
 }
