@@ -1,6 +1,6 @@
 {
  "source": "TWSE",
- "updated_at": "2026-11-26",
+ "updated_at": "2026-11-27",
  "months_fetched": 1,
  "failed_months": [],
  "records": [
@@ -100623,6 +100623,15 @@
    "ref_price": 59.48,
    "value": 0.615216,
    "type": "權"
+  },
+  {
+   "date": "2026/11/30",
+   "sid": "2543",
+   "name": "皇昌",
+   "pre_close": 24.95,
+   "ref_price": 24.45,
+   "value": 0.5,
+   "type": "息"
   }
  ]
 }
